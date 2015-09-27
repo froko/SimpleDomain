@@ -28,6 +28,11 @@ namespace SimpleDomain.TestDoubles
 
     public class ValueCommand : ICommand
     {
-        public int Value { get; set; }
+        public ValueCommand(int value)
+        {
+            this.Value = value;
+        }
+
+        public int Value { get; private set; }
     }
 }

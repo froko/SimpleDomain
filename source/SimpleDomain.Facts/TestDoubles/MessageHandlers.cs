@@ -19,20 +19,20 @@
 namespace SimpleDomain.TestDoubles
 {
     using System.Threading.Tasks;
-
-    public class MyCommandHandler : IHandleAsync<MyCommand>
+    
+    public class ValueCommandHandler : IHandleAsync<ValueCommand>
     {
-        public Task HandleAsync(MyCommand message)
+        public Task HandleAsync(ValueCommand message)
         {
-            return Task.FromResult(0);
+            return Task.FromResult(message);
         }
     }
 
-    public class MyEventHandler : IHandleAsync<MyEvent>
+    public class ValueEventHandler : IHandleAsync<ValueEvent>
     {
-        public Task HandleAsync(MyEvent message)
+        public Task HandleAsync(ValueEvent message)
         {
-            return Task.FromResult(0);
+            return Task.FromResult(message);
         }
     }
 }

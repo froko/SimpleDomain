@@ -44,7 +44,7 @@ namespace SimpleDomain
         [Fact]
         public void CanApplyChange()
         {
-            var @event = new MyEvent(11);
+            var @event = new ValueEvent(11);
             this.testee.ApplyEvent(@event);
 
             this.testee.Value.Should().Be(11);
@@ -53,7 +53,7 @@ namespace SimpleDomain
         [Fact]
         public void AppliedChangeIsAddedToUncommittedEvents()
         {
-            var @event = new MyEvent(11);
+            var @event = new ValueEvent(11);
             this.testee.ApplyEvent(@event);
 
             this.testee.UncommittedEvents.OfType<VersionableEvent>().Should().Contain(e => e.InnerEvent == @event);
@@ -62,8 +62,8 @@ namespace SimpleDomain
         [Fact]
         public void AggregateVersionIsIncremented_WhenChangeIsApplied()
         {
-            var firstEvent = new MyEvent(11);
-            var secondEvent = new MyEvent(22);
+            var firstEvent = new ValueEvent(11);
+            var secondEvent = new ValueEvent(22);
 
             this.testee.ApplyEvent(firstEvent);
             this.testee.ApplyEvent(secondEvent);
@@ -74,8 +74,8 @@ namespace SimpleDomain
         [Fact]
         public void IncrementedAggregateVersionIsAppliedToEvent()
         {
-            var firstEvent = new MyEvent(11);
-            var secondEvent = new MyEvent(22);
+            var firstEvent = new ValueEvent(11);
+            var secondEvent = new ValueEvent(22);
 
             this.testee.ApplyEvent(firstEvent);
             this.testee.ApplyEvent(secondEvent);
@@ -87,7 +87,7 @@ namespace SimpleDomain
         [Fact]
         public void CanCommitUncommittedEvents()
         {
-            var @event = new MyEvent(11);
+            var @event = new ValueEvent(11);
             this.testee.ApplyEvent(@event);
 
             this.testee.CommitEvents();
@@ -98,7 +98,7 @@ namespace SimpleDomain
         [Fact]
         public void CanLoadFromEventHistory()
         {
-            var eventHistory = new[] { new MyEvent(11),  new MyEvent(22), new MyEvent(33) };
+            var eventHistory = new[] { new ValueEvent(11),  new ValueEvent(22), new ValueEvent(33) };
             this.testee.LoadFromEventHistory(eventHistory);
 
             this.testee.Value.Should().Be(33);

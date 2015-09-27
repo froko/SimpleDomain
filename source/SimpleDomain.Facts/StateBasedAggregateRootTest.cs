@@ -63,7 +63,7 @@ namespace SimpleDomain
         {
             this.testee.UpdateValue(11);
 
-            this.testee.UncommittedEvents.Should().Contain(e => (e as MyEvent).Value == 11);
+            this.testee.UncommittedEvents.Should().Contain(e => (e as ValueEvent).Value == 11);
         }
 
         [Fact]

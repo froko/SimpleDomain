@@ -31,7 +31,7 @@ namespace SimpleDomain
         [Fact]
         public void CanCreateInstanceWithInnerEvent()
         {
-            var innerEvent = new MyEvent(42);
+            var innerEvent = new ValueEvent(42);
             var instance = new VersionableEvent(innerEvent);
 
             instance.InnerEvent.Should().Be(innerEvent);
@@ -40,7 +40,7 @@ namespace SimpleDomain
         [Fact]
         public void InstanceIsAssignableToIEvent()
         {
-            var innerEvent = new MyEvent(42);
+            var innerEvent = new ValueEvent(42);
             var instance = new VersionableEvent(innerEvent);
 
             instance.Should().BeAssignableTo<IEvent>();
@@ -57,7 +57,7 @@ namespace SimpleDomain
         [Fact]
         public void CanFluentlyAssignVersion()
         {
-            var innerEvent = new MyEvent(42);
+            var innerEvent = new ValueEvent(42);
             var instance = new VersionableEvent(innerEvent).With(2);
 
             instance.Version.Should().Be(2);

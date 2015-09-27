@@ -20,28 +20,27 @@ namespace SimpleDomain
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The event sourced repository interface for aggregate roots
     /// </summary>
     public interface IEventSourcedRepository
     {
-        // Todo: Change to async
-
         /// <summary>
         /// Gets an aggregate root identified by its id
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateId">The aggregate root id</param>
         /// <returns></returns>
-        TAggregateRoot GetById<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot;
+        Task<TAggregateRoot> GetByIdAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot;
 
         /// <summary>
         /// Persits a new or modified aggregate root
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateRoot">The aggregate root</param>
-        void Save<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot;
+        Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot;
 
         /// <summary>
         /// Persists a new or modified aggregate root
@@ -49,6 +48,6 @@ namespace SimpleDomain
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateRoot">The aggregate root</param>
         /// <param name="headers">A list of arbitrary headers which serve as meta information</param>
-        void Save<TAggregateRoot>(TAggregateRoot aggregateRoot, IDictionary<string, object> headers) where TAggregateRoot : IEventSourcedAggregateRoot;
+        Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot, IDictionary<string, object> headers) where TAggregateRoot : IEventSourcedAggregateRoot;
     }
 }

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IDeliverMessages.cs" company="frokonet.ch">
+// <copyright file="IResolveTypes.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,25 +18,25 @@
 
 namespace SimpleDomain
 {
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
-    /// The message delivery interface
+    /// Wrapper interface for resolving types from an IoC container
     /// </summary>
-    public interface IDeliverMessages
+    public interface IResolveTypes
     {
         /// <summary>
-        /// Sends a command to its registered handler
+        /// Resolves an instance for a given interface
         /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="command">The command</param>
-        Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
+        /// <typeparam name="TInterface">The type of the interface</typeparam>
+        /// <returns>An instance for the registered class of the given interface</returns>
+        TInterface Resolve<TInterface>();
 
         /// <summary>
-        /// Sends an event to its registered handlers
+        /// Resolves all instances for a given interface
         /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="event">The event</param>
-        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
+        /// <typeparam name="TInterface">The type of the interface</typeparam>
+        /// <returns>All instances for the registered classes of the given interface</returns>
+        IEnumerable<TInterface> ResolveAll<TInterface>();
     }
 }

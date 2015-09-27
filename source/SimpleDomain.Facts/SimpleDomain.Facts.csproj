@@ -79,6 +79,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus\BlockingJitneyTest.cs" />
+    <Compile Include="Bus\CommandSubscriptionExceptionTest.cs" />
+    <Compile Include="Bus\CommandSubscriptionTest.cs" />
+    <Compile Include="Bus\EventSubscriptionTest.cs" />
+    <Compile Include="Bus\JitneySubscriptionsTest.cs" />
+    <Compile Include="Bus\NoSubscriptionExceptionTest.cs" />
     <Compile Include="Common\DisposableTest.cs" />
     <Compile Include="Common\ExceptionHelperTest.cs" />
     <Compile Include="Common\GuardTest.cs" />

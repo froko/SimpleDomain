@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="Events.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="NoSubscriptionExceptionTest.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,26 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.TestDoubles
+namespace SimpleDomain.Bus
 {
-    public class MyEvent : IEvent
-    {
-    }
+    using System;
 
-    public class OtherEvent : IEvent
-    {
-    }
+    using FluentAssertions;
 
-    public class ValueEvent : IEvent
+    using SimpleDomain.TestDoubles;
+
+    using Xunit;
+
+    public class NoSubscriptionExceptionTest
     {
-        public ValueEvent(int value)
+        [Fact]
+        public void CanCreateInstance()
         {
-            this.Value = value;
-        }
+            var @event = new ValueEvent(42);
+            var testee = new NoSubscriptionException(@event);
 
-        public int Value { get; private set; }
+            testee.Should().BeAssignableTo<Exception>();
+            testee.Message.Should().Be("Cannot process message of type SimpleDomain.TestDoubles.ValueEvent since no subscription was found.");
+        }
     }
 }

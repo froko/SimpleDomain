@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="Events.cs" company="frokonet.ch">
+// <copyright file="CommandSubscriptionException.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,23 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.TestDoubles
+namespace SimpleDomain.Bus
 {
-    public class MyEvent : IEvent
-    {
-    }
+    using System;
 
-    public class OtherEvent : IEvent
+    /// <summary>
+    /// The exception that is thrown when trying to add more than one handler per command
+    /// </summary>
+    /// <typeparam name="TCommand">The type of the command</typeparam>
+    [Serializable]
+    public class CommandSubscriptionException<TCommand> : Exception
     {
-    }
-
-    public class ValueEvent : IEvent
-    {
-        public ValueEvent(int value)
+        /// <summary>
+        /// Creates a new instance of <see cref="CommandSubscription{TCommand}"/>
+        /// </summary>
+        public CommandSubscriptionException()
+            : base(string.Format(ExceptionMessages.CannotSubscribeMoreThanOneHandlerForCommand, typeof(TCommand).FullName))
         {
-            this.Value = value;
         }
-
-        public int Value { get; private set; }
     }
 }

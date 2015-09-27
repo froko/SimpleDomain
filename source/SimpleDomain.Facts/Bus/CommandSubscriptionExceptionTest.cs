@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="Events.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="CommandSubscriptionExceptionTest.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,25 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.TestDoubles
+namespace SimpleDomain.Bus
 {
-    public class MyEvent : IEvent
-    {
-    }
+    using System;
 
-    public class OtherEvent : IEvent
-    {
-    }
+    using FluentAssertions;
 
-    public class ValueEvent : IEvent
+    using SimpleDomain.TestDoubles;
+
+    using Xunit;
+
+    public class CommandSubscriptionExceptionTest
     {
-        public ValueEvent(int value)
+        [Fact]
+        public void CanCreateInstance()
         {
-            this.Value = value;
-        }
+            var testee = new CommandSubscriptionException<MyCommand>();
 
-        public int Value { get; private set; }
+            testee.Should().BeAssignableTo<Exception>();
+            testee.Message.Should().Be("Cannot subscribe more than one handler for command of type SimpleDomain.TestDoubles.MyCommand.");
+        }
     }
 }

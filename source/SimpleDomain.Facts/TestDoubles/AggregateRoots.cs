@@ -55,10 +55,10 @@ namespace SimpleDomain.TestDoubles
 
         public void ChangeValue(int value)
         {
-            base.ApplyEvent(new MyEvent(value));
+            base.ApplyEvent(new ValueEvent(value));
         }
 
-        private void Apply(MyEvent @event)
+        private void Apply(ValueEvent @event)
         {
             this.Value = @event.Value;
         }
@@ -77,7 +77,7 @@ namespace SimpleDomain.TestDoubles
     {
         public MyStaticEventSourcedAggregateRoot()
         {
-            this.RegisterTransition<MyEvent>(this.Apply);
+            this.RegisterTransition<ValueEvent>(this.Apply);
         }
 
         public MyStaticEventSourcedAggregateRoot(Guid aggregateId)
@@ -92,7 +92,7 @@ namespace SimpleDomain.TestDoubles
             base.ApplyEvent(@event);
         }
 
-        private void Apply(MyEvent @event)
+        private void Apply(ValueEvent @event)
         {
             this.Value = @event.Value;
         }
@@ -117,7 +117,7 @@ namespace SimpleDomain.TestDoubles
         public void UpdateValue(int value)
         {
             this.State.Value = value;
-            this.ApplyEvent(new MyEvent(value));
+            this.ApplyEvent(new ValueEvent(value));
         }
     }
 

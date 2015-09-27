@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IDeliverMessages.cs" company="frokonet.ch">
+// <copyright file="LocalJitney.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,27 +16,29 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using System.Threading.Tasks;
-
     /// <summary>
-    /// The message delivery interface
+    /// The abstract local bus
     /// </summary>
-    public interface IDeliverMessages
+    public abstract class LocalJitney : Jitney
     {
         /// <summary>
-        /// Sends a command to its registered handler
+        /// Creates a new instance of <see cref="LocalJitney"/>
         /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="command">The command</param>
-        Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
+        /// <param name="messageSubscriptions">Dependency injection for <see cref="JitneySubscriptions"/></param>
+        protected LocalJitney(JitneySubscriptions messageSubscriptions) : base(messageSubscriptions)
+        {
+        }
 
-        /// <summary>
-        /// Sends an event to its registered handlers
-        /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="event">The event</param>
-        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
+        /// <inheritdoc />
+        public override void Load(params JitneyComposer[] jitneyComposers)
+        {
+            foreach (var jitneyComposer in jitneyComposers)
+            {
+                jitneyComposer.Initialize(this);
+                jitneyComposer.Subscribe(this.MessageSubscriptions);
+            }
+        }
     }
 }

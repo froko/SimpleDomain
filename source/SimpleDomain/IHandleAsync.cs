@@ -27,7 +27,7 @@ namespace SimpleDomain
     public interface IHandleAsync<in TMessage> where TMessage : IMessage
     {
         /// <summary>
-        /// Handles the typed message asynchronously
+        /// Handles the typed message
         /// </summary>
         /// <param name="message">The message</param>
         /// <returns>A Task</returns>

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IDeliverMessages.cs" company="frokonet.ch">
+// <copyright file="JitneyComposer.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,27 +16,33 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using System.Threading.Tasks;
-
     /// <summary>
-    /// The message delivery interface
+    /// Base class used to compose the <see cref="Jitney"/> bus
     /// </summary>
-    public interface IDeliverMessages
+    public abstract class JitneyComposer
     {
         /// <summary>
-        /// Sends a command to its registered handler
+        /// Gets the bus to send commands or publish events
         /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="command">The command</param>
-        Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
+        protected IDeliverMessages Bus { get; private set; }
 
         /// <summary>
-        /// Sends an event to its registered handlers
+        /// Sets the bus to send commands or publish events
         /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="event">The event</param>
-        Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
+        /// <param name="bus">The bus</param>
+        public virtual void Initialize(IDeliverMessages bus)
+        {
+            this.Bus = bus;
+        }
+        
+        /// <summary>
+        /// Subscribes command and/or event handlers to the bus
+        /// </summary>
+        /// <param name="bus">The bus</param>
+        public virtual void Subscribe(ISubscribeHandlers bus)
+        {
+        }
     }
 }

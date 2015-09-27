@@ -58,8 +58,20 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="AggregateRootNotFoundException.cs" />
+    <Compile Include="Bus\SimpleJitney.cs" />
+    <Compile Include="Bus\CommandSubscription.cs" />
+    <Compile Include="Bus\CommandSubscriptionException.cs" />
     <Compile Include="Bus\EndpointAddress.cs" />
+    <Compile Include="Bus\EventSubscription.cs" />
+    <Compile Include="Bus\ISubscribeHandlers.cs" />
+    <Compile Include="Bus\Jitney.cs" />
+    <Compile Include="Bus\JitneyComposer.cs" />
+    <Compile Include="Bus\JitneySubscriptions.cs" />
+    <Compile Include="Bus\LocalJitney.cs" />
+    <Compile Include="Bus\NoSubscriptionException.cs" />
+    <Compile Include="Bus\Subscription.cs" />
     <Compile Include="Bus\SubscriptionMessage.cs" />
+    <Compile Include="Bus\TypeExtensions.cs" />
     <Compile Include="Common\Disposable.cs" />
     <Compile Include="Common\DynamicExtensions.g.cs" />
     <Compile Include="Common\ExceptionExtensions.cs" />
@@ -88,6 +100,8 @@
     <Compile Include="IHandleAsync.cs" />
     <Compile Include="IMessage.cs" />
     <Compile Include="INeedVersion.cs" />
+    <Compile Include="IRegisterTypes.cs" />
+    <Compile Include="IResolveTypes.cs" />
     <Compile Include="ISnapshot.cs" />
     <Compile Include="MessageExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>

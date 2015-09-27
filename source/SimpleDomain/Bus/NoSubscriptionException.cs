@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="Events.cs" company="frokonet.ch">
+// <copyright file="NoSubscriptionException.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,23 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.TestDoubles
+namespace SimpleDomain.Bus
 {
-    public class MyEvent : IEvent
-    {
-    }
+    using System;
 
-    public class OtherEvent : IEvent
+    /// <summary>
+    /// The exception that is thrown when trying to process am message with no subscription(s)
+    /// </summary>
+    [Serializable]
+    public class NoSubscriptionException : Exception
     {
-    }
-
-    public class ValueEvent : IEvent
-    {
-        public ValueEvent(int value)
+        /// <summary>
+        /// Creates a new instance of <see cref="NoSubscriptionException"/>
+        /// </summary>
+        /// <param name="message">The message</param>
+        public NoSubscriptionException(IMessage message)
+            : base(string.Format(ExceptionMessages.CannotProcessMessageWithoutSubscription, message.GetFullName()))
         {
-            this.Value = value;
         }
-
-        public int Value { get; private set; }
     }
 }
