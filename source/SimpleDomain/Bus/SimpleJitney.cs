@@ -21,28 +21,29 @@ namespace SimpleDomain.Bus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// A simple in-memory bus without queueing
+    /// The most simple <see cref="Jitney"/> you may can think of
     /// </summary>
-    public class SimpleJitney : LocalJitney
+    public class SimpleJitney : Jitney
     {
         /// <summary>
         /// Creates a new instance of <see cref="SimpleJitney"/>
         /// </summary>
-        /// <param name="messageSubscriptions">Dependency injection for <see cref="JitneySubscriptions"/></param>
-        public SimpleJitney(JitneySubscriptions messageSubscriptions) : base(messageSubscriptions)
+        /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
+        public SimpleJitney(IHaveJitneyConfiguration configuration)
+            : base(configuration)
         {
         }
 
         /// <inheritdoc />
-        public override async Task SendAsync<TCommand>(TCommand command)
+        public override Task SendAsync<TCommand>(TCommand command)
         {
-            await this.HandleCommandAsync(command);
+            return this.HandleCommandAsync(command);
         }
 
         /// <inheritdoc />
-        public override async Task PublishAsync<TEvent>(TEvent @event)
+        public override Task PublishAsync<TEvent>(TEvent @event)
         {
-            await this.HandleEventAsync(@event);
+            return this.HandleEventAsync(@event);
         }
     }
 }

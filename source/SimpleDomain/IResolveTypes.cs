@@ -21,22 +21,22 @@ namespace SimpleDomain
     using System.Collections.Generic;
 
     /// <summary>
-    /// Wrapper interface for resolving types from an IoC container
+    /// The type resolver interface
     /// </summary>
     public interface IResolveTypes
     {
         /// <summary>
-        /// Resolves an instance for a given interface
+        /// Resolves the registered instance of a given type
         /// </summary>
-        /// <typeparam name="TInterface">The type of the interface</typeparam>
-        /// <returns>An instance for the registered class of the given interface</returns>
-        TInterface Resolve<TInterface>();
+        /// <typeparam name="T">The type to resolve</typeparam>
+        /// <returns>An instance of the given type</returns>
+        T Resolve<T>();
 
         /// <summary>
-        /// Resolves all instances for a given interface
+        /// Resolves all registered instances of a given type
         /// </summary>
-        /// <typeparam name="TInterface">The type of the interface</typeparam>
-        /// <returns>All instances for the registered classes of the given interface</returns>
-        IEnumerable<TInterface> ResolveAll<TInterface>();
+        /// <typeparam name="T">The type to resolve</typeparam>
+        /// <returns>A list of instances of the given type</returns>
+        IEnumerable<T> ResolveAll<T>();
     }
 }

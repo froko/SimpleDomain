@@ -126,6 +126,9 @@
   <data name="CannotSubscribeMoreThanOneHandlerForCommand" xml:space="preserve">
     <value>Cannot subscribe more than one handler for command of type {0}.</value>
   </data>
+  <data name="LocalEndpointAddressNotDefined" xml:space="preserve">
+    <value>The local endpoint address has not yet been defined</value>
+  </data>
   <data name="ParameterCannotBeEmpty" xml:space="preserve">
     <value>Parameter cannot be empty.</value>
   </data>

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="LocalJitney.cs" company="frokonet.ch">
+// <copyright file="NinjectTypeResolver.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,38 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus
+namespace SimpleDomain
 {
+    using System.Collections.Generic;
+
+    using Ninject;
+
     /// <summary>
-    /// The abstract local bus
+    /// The Ninject type resolver
     /// </summary>
-    public abstract class LocalJitney : Jitney
+    public class NinjectTypeResolver : IResolveTypes
     {
+        private readonly IKernel kernel;
+
         /// <summary>
-        /// Creates a new instance of <see cref="LocalJitney"/>
+        /// Creates a new instance of <see cref="NinjectTypeResolver"/>
         /// </summary>
-        /// <param name="messageSubscriptions">Dependency injection for <see cref="JitneySubscriptions"/></param>
-        protected LocalJitney(JitneySubscriptions messageSubscriptions) : base(messageSubscriptions)
+        /// <param name="kernel">Dependency injection for <see cref="IKernel"/></param>
+        public NinjectTypeResolver(IKernel kernel)
         {
+            this.kernel = kernel;
         }
 
         /// <inheritdoc />
-        public override void Load(params JitneyComposer[] jitneyComposers)
+        public T Resolve<T>()
         {
-            foreach (var jitneyComposer in jitneyComposers)
-            {
-                jitneyComposer.Initialize(this);
-                jitneyComposer.Subscribe(this.MessageSubscriptions);
-            }
+            return this.kernel.Get<T>();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<T> ResolveAll<T>()
+        {
+            return this.kernel.GetAll<T>();
         }
     }
 }

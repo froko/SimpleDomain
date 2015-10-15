@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="ISubscribeHandlers.cs" company="frokonet.ch">
+// <copyright file="IConfigureThisJitney.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,36 +20,43 @@ namespace SimpleDomain.Bus
 {
     using System;
     using System.Threading.Tasks;
-
+    
     /// <summary>
-    /// The handler subscription interface
+    /// The Jitney configuration interface
     /// </summary>
-    public interface ISubscribeHandlers
+    public interface IConfigureThisJitney
     {
         /// <summary>
-        /// Subscribes all handlers in this assembly
+        /// Defines the endpoint name for this bus
         /// </summary>
-        void SubscribeAllHandlersInThisAssembly();
+        /// <param name="endpointName">The endpoint name</param>
+        void DefineEndpointName(string endpointName);
 
         /// <summary>
-        /// Subscribes a handler for a given message
+        /// Subscribes a handler by its type
         /// </summary>
         /// <typeparam name="TMessage">The type of the message</typeparam>
         /// <typeparam name="THandler">The type of the handler</typeparam>
         void Subscribe<TMessage, THandler>() where TMessage : IMessage where THandler : IHandleAsync<TMessage>;
 
         /// <summary>
-        /// Subscribes an async handler action for a given command
+        /// Subscribes a handler action for a given command
         /// </summary>
         /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="handler">The action to handle the command asynchronously</param>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
         void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand;
 
         /// <summary>
-        /// Subscribes an async handler action for a given event
+        /// Subscribes a handler action for a given event
         /// </summary>
         /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="handler">The action to handle the event asynchronously</param>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
         void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent;
+
+        /// <summary>
+        /// Registers a specific type of <see cref="Jitney"/> in the IoC container
+        /// </summary>
+        /// <typeparam name="TJitney">The type of the <see cref="Jitney"/></typeparam>
+        void Use<TJitney>() where TJitney : Jitney;
     }
 }

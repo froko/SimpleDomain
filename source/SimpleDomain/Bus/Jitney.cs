@@ -26,32 +26,23 @@ namespace SimpleDomain.Bus
     /// </summary>
     public abstract class Jitney : IDeliverMessages
     {
+        private readonly IHaveJitneyConfiguration configuration;
+        
         /// <summary>
         /// Creates a new instance of <see cref="Jitney"/>
         /// </summary>
-        /// <param name="messageSubscriptions">Dependency injection for <see cref="JitneySubscriptions"/></param>
-        protected Jitney(JitneySubscriptions messageSubscriptions)
+        /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
+        protected Jitney(IHaveJitneyConfiguration configuration)
         {
-            this.MessageSubscriptions = messageSubscriptions;
+            this.configuration = configuration;
         }
-
-        /// <summary>
-        /// Gets the message subscriptions
-        /// </summary>
-        protected JitneySubscriptions MessageSubscriptions { get; private set; }
-
-        /// <summary>
-        /// Initializes the bus with the given composers
-        /// </summary>
-        /// <param name="jitneyComposers">A list of <see cref="JitneyComposer"/></param>
-        public abstract void Load(params JitneyComposer[] jitneyComposers);
 
         /// <inheritdoc />
         public abstract Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
 
         /// <inheritdoc />
         public abstract Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
-
+        
         /// <summary>
         /// Executes the command subscription which is registered for this command
         /// </summary>
@@ -59,7 +50,7 @@ namespace SimpleDomain.Bus
         /// <param name="command">The instance of the command</param>
         protected async Task HandleCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
-            var commandSubscription = this.MessageSubscriptions.GetCommandSubscription(command);
+            var commandSubscription = this.configuration.HandlerSubscriptions.GetCommandSubscription(command);
             await commandSubscription.HandleAsync(command);
         }
 
@@ -70,7 +61,7 @@ namespace SimpleDomain.Bus
         /// <param name="@event">The instance of the event</param>
         protected async Task HandleEventAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            var eventSubscriptions = this.MessageSubscriptions.GetEventSubscriptions(@event);
+            var eventSubscriptions = this.configuration.HandlerSubscriptions.GetEventSubscriptions(@event);
             var handlerTasks = eventSubscriptions.Select(s => s.HandleAsync(@event));
 
             await Task.WhenAll(handlerTasks);

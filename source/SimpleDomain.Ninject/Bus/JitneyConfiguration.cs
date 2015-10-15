@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="JitneyComposer.cs" company="frokonet.ch">
+// <copyright file="JitneyConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,31 +18,35 @@
 
 namespace SimpleDomain.Bus
 {
-    /// <summary>
-    /// Base class used to compose the <see cref="Jitney"/> bus
-    /// </summary>
-    public abstract class JitneyComposer
-    {
-        /// <summary>
-        /// Gets the bus to send commands or publish events
-        /// </summary>
-        protected IDeliverMessages Bus { get; private set; }
+    using Ninject;
 
-        /// <summary>
-        /// Sets the bus to send commands or publish events
-        /// </summary>
-        /// <param name="bus">The bus</param>
-        public virtual void Initialize(IDeliverMessages bus)
-        {
-            this.Bus = bus;
-        }
+    /// <summary>
+    /// The Jitney configuration
+    /// </summary>
+    public class JitneyConfiguration : AbstractJitneyConfiguration
+    {
+        private readonly IKernel kernel;
         
         /// <summary>
-        /// Subscribes command and/or event handlers to the bus
+        /// Creates a new instance of <see cref="JitneyConfiguration"/>
         /// </summary>
-        /// <param name="bus">The bus</param>
-        public virtual void Subscribe(ISubscribeHandlers bus)
+        /// <param name="kernel">Dependency injection for <see cref="IKernel"/></param>
+        public JitneyConfiguration(IKernel kernel) : base(new NinjectTypeResolver(kernel))
         {
+            this.kernel = kernel;
+            this.kernel.Bind<IHaveJitneyConfiguration>().ToConstant(this);
+        }
+        
+        /// <inheritdoc />
+        public override void Subscribe<TMessage, THandler>()
+        {
+            this.kernel.Bind<IHandleAsync<TMessage>>().To<THandler>().Named(nameof(THandler));
+        }
+
+        /// <inheritdoc />
+        public override void Use<TJitney>()
+        {
+            this.kernel.Bind<IDeliverMessages>().To<TJitney>();
         }
     }
 }

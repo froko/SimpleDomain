@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain", "SimpleDomai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Facts", "SimpleDomain.Facts\SimpleDomain.Facts.csproj", "{56F7E927-6286-4BE7-8C27-471B47FEF17A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Ninject", "SimpleDomain.Ninject\SimpleDomain.Ninject.csproj", "{B3CB1E04-64FC-4806-9445-992D745BD24B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Ninject.Facts", "SimpleDomain.Ninject.Facts\SimpleDomain.Ninject.Facts.csproj", "{291941A6-74C3-475C-B0ED-09B4E5EB07D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{56F7E927-6286-4BE7-8C27-471B47FEF17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56F7E927-6286-4BE7-8C27-471B47FEF17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56F7E927-6286-4BE7-8C27-471B47FEF17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3CB1E04-64FC-4806-9445-992D745BD24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3CB1E04-64FC-4806-9445-992D745BD24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3CB1E04-64FC-4806-9445-992D745BD24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3CB1E04-64FC-4806-9445-992D745BD24B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{291941A6-74C3-475C-B0ED-09B4E5EB07D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291941A6-74C3-475C-B0ED-09B4E5EB07D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291941A6-74C3-475C-B0ED-09B4E5EB07D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291941A6-74C3-475C-B0ED-09B4E5EB07D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

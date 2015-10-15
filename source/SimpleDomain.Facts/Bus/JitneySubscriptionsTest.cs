@@ -33,46 +33,14 @@ namespace SimpleDomain.Bus
     public class JitneySubscriptionsTest
     {
         private const int Value = 42;
-
-        private readonly IRegisterTypes typeRegistrar;
+        
         private readonly IResolveTypes typeResolver;
         private readonly JitneySubscriptions testee;
 
         public JitneySubscriptionsTest()
         {
-            this.typeRegistrar = A.Fake<IRegisterTypes>();
             this.typeResolver = A.Fake<IResolveTypes>();
-            this.testee = new JitneySubscriptions(this.typeRegistrar, this.typeResolver);
-        }
-
-        [Fact]
-        public void CanSubscribeAllHandlersInThisAssembly()
-        {
-            this.testee.SubscribeAllHandlersInThisAssembly();
-
-            A.CallTo(() => this.typeRegistrar.Register(typeof(IHandleAsync<ValueCommand>), typeof(ValueCommandHandler)))
-                .MustHaveHappened();
-
-            A.CallTo(() => this.typeRegistrar.Register(typeof(IHandleAsync<ValueEvent>), typeof(ValueEventHandler)))
-                .MustHaveHappened();
-        }
-
-        [Fact]
-        public void CanSubscribeCommandHandlerWithTypes()
-        {
-            this.testee.Subscribe<ValueCommand, ValueCommandHandler>();
-
-            A.CallTo(() => this.typeRegistrar.Register<IHandleAsync<ValueCommand>, ValueCommandHandler>())
-                .MustHaveHappened();
-        }
-
-        [Fact]
-        public void CanSubscribeEventHandlerWithTypes()
-        {
-            this.testee.Subscribe<ValueEvent, ValueEventHandler>();
-
-            A.CallTo(() => this.typeRegistrar.Register<IHandleAsync<ValueEvent>, ValueEventHandler>())
-                .MustHaveHappened();
+            this.testee = new JitneySubscriptions(this.typeResolver);
         }
         
         [Fact]

@@ -22,7 +22,7 @@ namespace SimpleDomain {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExceptionMessages {
+    public class ExceptionMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SimpleDomain {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleDomain.ExceptionMessages", typeof(ExceptionMessages).Assembly);
@@ -51,7 +51,7 @@ namespace SimpleDomain {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SimpleDomain {
         /// <summary>
         ///   Looks up a localized string similar to An aggregate of type {0} with key {1} could not be found..
         /// </summary>
-        internal static string AggregateCouldNotBeFound {
+        public static string AggregateCouldNotBeFound {
             get {
                 return ResourceManager.GetString("AggregateCouldNotBeFound", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SimpleDomain {
         /// <summary>
         ///   Looks up a localized string similar to Cannot process message of type {0} since no subscription was found..
         /// </summary>
-        internal static string CannotProcessMessageWithoutSubscription {
+        public static string CannotProcessMessageWithoutSubscription {
             get {
                 return ResourceManager.GetString("CannotProcessMessageWithoutSubscription", resourceCulture);
             }
@@ -81,16 +81,25 @@ namespace SimpleDomain {
         /// <summary>
         ///   Looks up a localized string similar to Cannot subscribe more than one handler for command of type {0}..
         /// </summary>
-        internal static string CannotSubscribeMoreThanOneHandlerForCommand {
+        public static string CannotSubscribeMoreThanOneHandlerForCommand {
             get {
                 return ResourceManager.GetString("CannotSubscribeMoreThanOneHandlerForCommand", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The local endpoint address has not yet been defined.
+        /// </summary>
+        public static string LocalEndpointAddressNotDefined {
+            get {
+                return ResourceManager.GetString("LocalEndpointAddressNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter cannot be empty..
         /// </summary>
-        internal static string ParameterCannotBeEmpty {
+        public static string ParameterCannotBeEmpty {
             get {
                 return ResourceManager.GetString("ParameterCannotBeEmpty", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace SimpleDomain {
         /// <summary>
         ///   Looks up a localized string similar to Parameter cannot be null..
         /// </summary>
-        internal static string ParameterCannotBeNull {
+        public static string ParameterCannotBeNull {
             get {
                 return ResourceManager.GetString("ParameterCannotBeNull", resourceCulture);
             }
@@ -108,7 +117,7 @@ namespace SimpleDomain {
         /// <summary>
         ///   Looks up a localized string similar to Value {0} must be between {1} and {2}.
         /// </summary>
-        internal static string ValueMustBeBetweenRange {
+        public static string ValueMustBeBetweenRange {
             get {
                 return ResourceManager.GetString("ValueMustBeBetweenRange", resourceCulture);
             }

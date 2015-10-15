@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="MessageHandlers.cs" company="frokonet.ch">
+// <copyright file="IHaveJitneyConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,21 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.TestDoubles
+namespace SimpleDomain.Bus
 {
-    using System.Threading.Tasks;
-    
-    public class ValueCommandHandler : IHandleAsync<ValueCommand>
+    /// <summary>
+    /// The Jitney configuration holder interface
+    /// </summary>
+    public interface IHaveJitneyConfiguration
     {
-        public static int Value { get; private set; }
+        /// <summary>
+        /// Gets the handler subscriptions
+        /// </summary>
+        IHaveJitneySubscriptions HandlerSubscriptions { get; }
 
-        public Task HandleAsync(ValueCommand message)
-        {
-            Value = message.Value;
-            return Task.FromResult(message);
-        }
-    }
-
-    public class ValueEventHandler : IHandleAsync<ValueEvent>
-    {
-        public static int Value { get; private set; }
-
-        public Task HandleAsync(ValueEvent message)
-        {
-            Value = message.Value;
-            return Task.FromResult(message);
-        }
+        /// <summary>
+        /// Gets the local endpoint address
+        /// </summary>
+        EndpointAddress LocalEndpointAddress { get; }
     }
 }
