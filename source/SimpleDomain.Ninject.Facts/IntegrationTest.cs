@@ -23,8 +23,10 @@ namespace SimpleDomain
     using FluentAssertions;
 
     using Ninject;
+    using Ninject.Modules;
 
     using SimpleDomain.Bus;
+    using SimpleDomain.EventStore;
     using SimpleDomain.TestDoubles;
 
     using Xunit;
@@ -34,12 +36,9 @@ namespace SimpleDomain
         [Fact]
         public async Task CanConfigureAndCreateAndUseSimpleJitney()
         {
-            var kernel = new StandardKernel();
-
-            var configuration = new JitneyConfiguration(kernel);
-            configuration.Subscribe<ValueCommand, ValueCommandHandler>();
-            configuration.Subscribe<ValueEvent, ValueEventHandler>();
-            configuration.Use<SimpleJitney>();
+            var kernel = new StandardKernel(
+                new JitneyModule(),
+                new EventStoreModule());
             
             var bus = kernel.Get<IDeliverMessages>();
             
@@ -48,6 +47,29 @@ namespace SimpleDomain
 
             ValueCommandHandler.Value.Should().Be(42);
             ValueEventHandler.Value.Should().Be(666);
+        }
+    }
+
+    public class JitneyModule : NinjectModule
+    {
+        public override void Load()
+        {
+            var configuration = new JitneyConfiguration(this.Kernel);
+
+            configuration.Subscribe<ValueCommand, ValueCommandHandler>();
+            configuration.Subscribe<ValueEvent, ValueEventHandler>();
+            configuration.Use<SimpleJitney>();
+        }
+    }
+
+    public class EventStoreModule : NinjectModule
+    {
+        public override void Load()
+        {
+            var configuration = new EventStoreConfiguration(this.Kernel);
+
+            configuration.DefineAsyncEventDispatching(
+                (container, @event) => container.Resolve<IDeliverMessages>().PublishAsync(@event));
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="JitneyConfiguration.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="EventStoreConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,42 +16,47 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus
+namespace SimpleDomain.EventStore
 {
+    using System;
+    using System.Threading.Tasks;
+
     using Ninject;
 
     /// <summary>
-    /// The Jitney configuration
+    /// The EventStore configuration
     /// </summary>
-    public class JitneyConfiguration : AbstractJitneyConfiguration
+    public class EventStoreConfiguration
     {
         private readonly IKernel kernel;
         
         /// <summary>
-        /// Creates a new instance of <see cref="JitneyConfiguration"/>
+        /// Creates a new instance of <see cref="EventStoreConfiguration"/>
         /// </summary>
         /// <param name="kernel">Dependency injection for <see cref="IKernel"/></param>
-        public JitneyConfiguration(IKernel kernel) : base(new NinjectTypeResolver(kernel))
+        public EventStoreConfiguration(IKernel kernel)
         {
             this.kernel = kernel;
-            this.kernel.Bind<IHaveJitneyConfiguration>().ToConstant(this);
+            this.DispatchEvents = @event => Task.FromResult(0);
 
             if (!this.kernel.HasModule(typeof(SimpleDomainModule).FullName))
             {
                 this.kernel.Load(new SimpleDomainModule());
             }
         }
-        
-        /// <inheritdoc />
-        public override void Subscribe<TMessage, THandler>()
-        {
-            this.kernel.Bind<IHandleAsync<TMessage>>().To<THandler>().Named(nameof(THandler));
-        }
 
-        /// <inheritdoc />
-        public override void Use<TJitney>()
+        /// <summary>
+        /// Gets the async action how to dispatch events
+        /// </summary>
+        public Func<IEvent, Task> DispatchEvents { get; private set; }
+
+        /// <summary>
+        /// Defines the action how to resolve a bus and asynchronously publish events over this bus
+        /// </summary>
+        /// <param name="dispatchEventsUsingResolvedBus">The async resolve and publish action</param>
+        public void DefineAsyncEventDispatching(Func<NinjectTypeResolver, IEvent, Task> dispatchEventsUsingResolvedBus)
         {
-            this.kernel.Bind<IDeliverMessages>().To<TJitney>();
+            this.DispatchEvents = @event => dispatchEventsUsingResolvedBus(new NinjectTypeResolver(this.kernel), @event);
         }
     }
 }

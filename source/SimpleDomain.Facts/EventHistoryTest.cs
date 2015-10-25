@@ -1,0 +1,68 @@
+﻿//-------------------------------------------------------------------------------
+// <copyright file="EventHistoryTest.cs" company="frokonet.ch">
+//   Copyright (c) 2014-2015
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//-------------------------------------------------------------------------------
+
+namespace SimpleDomain
+{
+    using System.Linq;
+
+    using FluentAssertions;
+
+    using SimpleDomain.TestDoubles;
+
+    using Xunit;
+
+    public class EventHistoryTest
+    {
+        [Fact]
+        public void CanCreateAnEmptyEventHistoryByConstructor()
+        {
+            var testee = new EventHistory(Enumerable.Empty<IEvent>());
+
+            testee.IsEmpty.Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanCreateAnEmptyEventHistoryByFactoryMethod()
+        {
+            var testee = EventHistory.Create();
+
+            testee.IsEmpty.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ReturnsProvidedEvents_WhenCreatedByConstructor()
+        {
+            var events = new[] { new ValueEvent(11), new ValueEvent(22) };
+            var testee = new EventHistory(events);
+
+            testee.Should().HaveCount(2);
+            testee.First().As<ValueEvent>().Value.Should().Be(11);
+            testee.Last().As<ValueEvent>().Value.Should().Be(22);
+        }
+
+        [Fact]
+        public void ReturnsProvidedEvents_WhenCreatedByFactoryMethod()
+        {
+            var testee = EventHistory.Create(new ValueEvent(11), new ValueEvent(22));
+
+            testee.Should().HaveCount(2);
+            testee.First().As<ValueEvent>().Value.Should().Be(11);
+            testee.Last().As<ValueEvent>().Value.Should().Be(22);
+        }
+    }
+}

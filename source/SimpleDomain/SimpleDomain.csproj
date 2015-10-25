@@ -60,8 +60,8 @@
     </Compile>
     <Compile Include="AggregateRootNotFoundException.cs" />
     <Compile Include="Bus\AbstractJitneyConfiguration.cs">
-		<ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-	</Compile>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\CommandSubscription.cs" />
     <Compile Include="Bus\CommandSubscriptionException.cs" />
     <Compile Include="Bus\EndpointAddress.cs" />
@@ -89,7 +89,19 @@
     <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="DynamicEventSourcedAggregateRoot.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EventHistory.cs">
+	  <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+	</Compile>
     <Compile Include="EventSourcedAggregateRoot.cs" />
+    <Compile Include="EventStore\EventDescriptor.cs" />
+    <Compile Include="EventStore\EventStoreRepository.cs" />
+    <Compile Include="EventStore\EventStream.cs" />
+    <Compile Include="EventStore\IEventStore.cs" />
+    <Compile Include="EventStore\IEventStream.cs" />
+    <Compile Include="EventStore\Persistence\InMemoryEventStore.cs" />
+    <Compile Include="EventStore\Persistence\InMemoryEventStream.cs" />
+    <Compile Include="EventStore\SnapshotDescriptor.cs" />
+    <Compile Include="EventStore\SnapshotStrategy.cs" />
     <Compile Include="ExceptionMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

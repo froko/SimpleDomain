@@ -19,7 +19,6 @@
 namespace SimpleDomain
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Interface for all event sourced aggregate roots
@@ -46,7 +45,7 @@ namespace SimpleDomain
         /// <summary>
         /// Builds up the Aggregate Root from a list of events
         /// </summary>
-        /// <param name="history">The event history as list of events</param>
-        void LoadFromEventHistory(IEnumerable<IEvent> history);
+        /// <param name="eventHistory">The history as list of events</param>
+        void LoadFromEventHistory(EventHistory eventHistory);
     }
 }

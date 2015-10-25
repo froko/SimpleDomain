@@ -19,7 +19,6 @@
 namespace SimpleDomain
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Base class for all event sourced aggregate roots
@@ -52,9 +51,9 @@ namespace SimpleDomain
         }
 
         /// <inheritdoc />
-        public void LoadFromEventHistory(IEnumerable<IEvent> history)
+        public void LoadFromEventHistory(EventHistory eventHistory)
         {
-            foreach (var @event in history)
+            foreach (var @event in eventHistory)
             {
                 this.ApplyEvent(@event, false);
             }
