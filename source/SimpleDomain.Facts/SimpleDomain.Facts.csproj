@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,6 +96,10 @@
     <Compile Include="EventStore\EventDescriptorTest.cs" />
     <Compile Include="EventStore\EventStoreRepositoryTest.cs" />
     <Compile Include="EventStore\Persistence\InMemoryIntegrationTest.cs" />
+    <Compile Include="EventStore\Persistence\SqlEventDescriptorTest.cs" />
+    <Compile Include="EventStore\Persistence\SqlIntegrationTest.cs" />
+    <Compile Include="EventStore\Persistence\SqlSnapshotDescriptorTest.cs" />
+    <Compile Include="EventStore\Persistence\WithTransactionAttribute.cs" />
     <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
     <Compile Include="FluentTestingExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
