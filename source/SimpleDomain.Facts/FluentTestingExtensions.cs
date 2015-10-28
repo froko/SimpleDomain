@@ -38,7 +38,7 @@ namespace SimpleDomain
         {
             var logMessage = InMemoryTraceListener.LogMessages.LastOrDefault(s => s.Contains(stringAssertions.Subject));
 
-            logMessage.Should().NotBeNullOrEmpty($"{stringAssertions.Subject} should have been logged");
+            logMessage.Should().NotBeNullOrEmpty(string.Format("{0} should have been logged", stringAssertions.Subject));
 
             return new LogLevelAware(logMessage);
         }
@@ -71,6 +71,6 @@ namespace SimpleDomain
             this.LogMessage = logMessage;
         }
 
-        public string LogMessage { get; }
+        public string LogMessage { get; private set; }
     }
 }

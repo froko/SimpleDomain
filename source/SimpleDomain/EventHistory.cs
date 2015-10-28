@@ -40,6 +40,14 @@ namespace SimpleDomain
         }
 
         /// <summary>
+        /// Returns the fact that no events have been found/loaded
+        /// </summary>
+        public bool IsEmpty
+        {
+            get { return !this.events.Any(); }
+        }
+
+        /// <summary>
         /// Factory method to create a new instance of <see cref="EventHistory"/>
         /// </summary>
         /// <param name="events">All events that have been applied to the Aggregate Root in the past</param>
@@ -48,11 +56,6 @@ namespace SimpleDomain
         {
             return new EventHistory(events);
         }
-
-        /// <summary>
-        /// Returns the fact that no events have been found/loaded
-        /// </summary>
-        public bool IsEmpty => !this.events.Any();
 
         /// <inheritdoc />
         public IEnumerator<IEvent> GetEnumerator()

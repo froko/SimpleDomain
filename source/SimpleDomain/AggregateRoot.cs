@@ -28,7 +28,10 @@ namespace SimpleDomain
         private readonly List<IEvent> uncommittedEvents = new List<IEvent>();
 
         /// <inheritdoc />
-        public IEnumerable<IEvent> UncommittedEvents => this.uncommittedEvents;
+        public IEnumerable<IEvent> UncommittedEvents
+        {
+            get { return this.uncommittedEvents; }
+        }
 
         /// <inheritdoc />
         public void CommitEvents()

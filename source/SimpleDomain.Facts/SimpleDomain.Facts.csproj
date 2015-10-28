@@ -101,9 +101,7 @@
     <Compile Include="EventStore\Persistence\SqlSnapshotDescriptorTest.cs" />
     <Compile Include="EventStore\Persistence\WithTransactionAttribute.cs" />
     <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
-    <Compile Include="FluentTestingExtensions.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="FluentTestingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotTest.cs" />
     <Compile Include="StateBasedAggregateRootTest.cs" />

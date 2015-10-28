@@ -40,7 +40,10 @@ namespace SimpleDomain.Bus
         }
 
         /// <inheritdoc />
-        public IHaveJitneySubscriptions HandlerSubscriptions => this.JitneySubscriptions;
+        public IHaveJitneySubscriptions HandlerSubscriptions
+        {
+            get { return this.JitneySubscriptions; }
+        }
 
         /// <inheritdoc />
         public EndpointAddress LocalEndpointAddress

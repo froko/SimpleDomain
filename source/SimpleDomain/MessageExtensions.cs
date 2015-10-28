@@ -70,8 +70,12 @@ namespace SimpleDomain
         public static T WithVersion<T>(this T message, int version) where T : INeedVersion
         {
             var versionProperty = message.GetType().GetProperty("Version");
-            versionProperty?.SetValue(message, version);
 
+            if (versionProperty != null)
+            {
+                versionProperty.SetValue(message, version);
+            }
+            
             return message;
         }
     }

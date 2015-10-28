@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override void Subscribe<TMessage, THandler>()
         {
-            this.kernel.Bind<IHandleAsync<TMessage>>().To<THandler>().Named(nameof(THandler));
+            this.kernel.Bind<IHandleAsync<TMessage>>().To<THandler>().Named(typeof(THandler).FullName);
         }
 
         /// <inheritdoc />
