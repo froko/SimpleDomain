@@ -29,7 +29,9 @@ namespace SimpleDomain.EventStore.Persistence
 
         public override void Before(MethodInfo methodUnderTest)
         {
-            this.transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew);
+            this.transactionScope = new TransactionScope(
+                TransactionScopeOption.Required,
+                TransactionScopeAsyncFlowOption.Enabled);
         }
 
         public override void After(MethodInfo methodUnderTest)
