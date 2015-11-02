@@ -59,7 +59,7 @@ namespace SimpleDomain.Bus
 
         public virtual IEnumerable<Subscription> GetEventSubscriptions<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            var subscriptions = this.eventSubscriptions.Where(s => s.CanHandle<TEvent>());
+            var subscriptions = this.eventSubscriptions.Where(s => s.CanHandle(@event));
             var handlers = this.typeResolver.ResolveAll<IHandleAsync<TEvent>>();
 
             return subscriptions.Union(handlers.Select(h => new EventSubscription<TEvent>(h.HandleAsync)));
