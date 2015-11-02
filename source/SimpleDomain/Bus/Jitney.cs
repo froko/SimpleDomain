@@ -73,7 +73,7 @@ namespace SimpleDomain.Bus
             var subscriptions = this.configuration.HandlerSubscriptions as JitneySubscriptions;
             if (subscriptions != null)
             {
-                subscriptions.SubscribeEventHandler(handler);
+                subscriptions.SubscribeEventHandler<TEvent>(handler);
             }
         }
 
