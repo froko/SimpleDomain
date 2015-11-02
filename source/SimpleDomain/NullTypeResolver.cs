@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+// <copyright file="NullTypeResolver.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,22 +18,24 @@
 
 namespace SimpleDomain
 {
-    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// An implementation of <see cref="IResolveTypes"/> where no IoC container is involved
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public class NullTypeResolver : IResolveTypes
     {
-        /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
-        /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
+        /// <inheritdoc />
+        public T Resolve<T>()
         {
+            return default(T);
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<T> ResolveAll<T>()
+        {
+            return Enumerable.Empty<T>();
         }
     }
 }

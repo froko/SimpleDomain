@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="AbstractJitneyConfigurationExtensions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,24 +16,19 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using System;
-
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// Configuation extensions for the Jitney configuration base class
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public static class AbstractJitneyConfigurationExtensions
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
+        /// Registers the <see cref="SimpleJitney"/> bus
         /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
+        public static void RegisterSimpleJitney(this AbstractJitneyConfiguration configuration)
         {
+            configuration.Register<SimpleJitney>();
         }
     }
 }

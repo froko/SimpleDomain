@@ -39,6 +39,8 @@ namespace SimpleDomain
             var kernel = new StandardKernel(
                 new JitneyModule(),
                 new EventStoreModule());
+
+            kernel.SignalJitneyToStartWork();
             
             var bus = kernel.Get<IDeliverMessages>();
             
@@ -58,7 +60,7 @@ namespace SimpleDomain
 
             configuration.Subscribe<ValueCommand, ValueCommandHandler>();
             configuration.Subscribe<ValueEvent, ValueEventHandler>();
-            configuration.Use<SimpleJitney>();
+            configuration.Register<SimpleJitney>();
         }
     }
 

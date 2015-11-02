@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IHaveJitneyConfiguration.cs" company="frokonet.ch">
+// <copyright file="AbstractJitneyConfigurationExtensionsTest.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,27 +18,19 @@
 
 namespace SimpleDomain.Bus
 {
-    /// <summary>
-    /// The Jitney configuration holder interface
-    /// </summary>
-    public interface IHaveJitneyConfiguration
+    using FakeItEasy;
+
+    using Xunit;
+
+    public class AbstractJitneyConfigurationExtensionsTest
     {
-        /// <summary>
-        /// Gets the handler subscriptions
-        /// </summary>
-        IHaveJitneySubscriptions HandlerSubscriptions { get; }
+        [Fact]
+        public void CanRegisterSimpleJitney()
+        {
+            var configuration = A.Fake<AbstractJitneyConfiguration>();
+            configuration.RegisterSimpleJitney();
 
-        /// <summary>
-        /// Gets the local endpoint address
-        /// </summary>
-        EndpointAddress LocalEndpointAddress { get; }
-
-        /// <summary>
-        /// Gets a typed configuration item by its key
-        /// </summary>
-        /// <typeparam name="T">The type of the configuration item</typeparam>
-        /// <param name="key">The key</param>
-        /// <returns>A typed configuration item</returns>
-        T Get<T>(string key);
+            A.CallTo(() => configuration.Register<SimpleJitney>()).MustHaveHappened();
+        } 
     }
 }

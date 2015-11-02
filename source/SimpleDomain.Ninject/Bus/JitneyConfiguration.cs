@@ -34,24 +34,30 @@ namespace SimpleDomain.Bus
         public JitneyConfiguration(IKernel kernel) : base(new NinjectTypeResolver(kernel))
         {
             this.kernel = kernel;
-            this.kernel.Bind<IHaveJitneyConfiguration>().ToConstant(this);
+            this.kernel.Bind<IHaveJitneyConfiguration>().ToConstant(this).InSingletonScope();
 
             if (!this.kernel.HasModule(typeof(SimpleDomainModule).FullName))
             {
                 this.kernel.Load(new SimpleDomainModule());
             }
         }
-        
-        /// <inheritdoc />
-        public override void Subscribe<TMessage, THandler>()
+
+        /// <summary>
+        /// Subscribes a handler by its type
+        /// </summary>
+        /// <typeparam name="TMessage">The type of the message</typeparam>
+        /// <typeparam name="THandler">The type of the handler</typeparam>
+        public void Subscribe<TMessage, THandler>()
+            where TMessage : IMessage
+            where THandler : IHandleAsync<TMessage>
         {
             this.kernel.Bind<IHandleAsync<TMessage>>().To<THandler>().Named(typeof(THandler).FullName);
         }
 
         /// <inheritdoc />
-        public override void Use<TJitney>()
+        public override void Register<TJitney>()
         {
-            this.kernel.Bind<IDeliverMessages>().To<TJitney>();
+            this.kernel.Bind<IDeliverMessages, Jitney>().To<TJitney>().InSingletonScope();
         }
     }
 }

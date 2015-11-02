@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+// <copyright file="ContainerLessEventStoreConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,24 +16,17 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.EventStore
 {
-    using System;
-
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// An EventStore configuration class for the use without any IoC container
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public class ContainerLessEventStoreConfiguration : AbstractEventStoreConfiguration
     {
-        /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
-        /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
+        /// <inheritdoc />
+        public override void Register<TEventStore>()
         {
+            throw new LiskovSubstitutionException("You cannot register an EventStore when there is no IoC container");
         }
     }
 }

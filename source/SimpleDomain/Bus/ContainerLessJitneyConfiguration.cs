@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="ContainerLessJitneyConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,24 +16,24 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using System;
-
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// A Jitney configuration class for the use without any IoC container
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public class ContainerLessJitneyConfiguration : AbstractJitneyConfiguration
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
+        /// Creates a new instance of <see cref="ContainerLessJitneyConfiguration"/>
         /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
+        public ContainerLessJitneyConfiguration() : base(new NullTypeResolver())
         {
+        }
+
+        /// <inheritdoc />
+        public override void Register<TJitney>()
+        {
+            throw new LiskovSubstitutionException("You cannot register a Bus when there is no IoC container");
         }
     }
 }

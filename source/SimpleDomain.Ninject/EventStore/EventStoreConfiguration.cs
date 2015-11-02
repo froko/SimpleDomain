@@ -26,7 +26,7 @@ namespace SimpleDomain.EventStore
     /// <summary>
     /// The EventStore configuration
     /// </summary>
-    public class EventStoreConfiguration
+    public class EventStoreConfiguration : AbstractEventStoreConfiguration
     {
         private readonly IKernel kernel;
         
@@ -46,17 +46,18 @@ namespace SimpleDomain.EventStore
         }
 
         /// <summary>
-        /// Gets the async action how to dispatch events
-        /// </summary>
-        public Func<IEvent, Task> DispatchEvents { get; private set; }
-
-        /// <summary>
         /// Defines the action how to resolve a bus and asynchronously publish events over this bus
         /// </summary>
         /// <param name="dispatchEventsUsingResolvedBus">The async resolve and publish action</param>
-        public void DefineAsyncEventDispatching(Func<NinjectTypeResolver, IEvent, Task> dispatchEventsUsingResolvedBus)
+        public void DefineAsyncEventDispatching(Func<IResolveTypes, IEvent, Task> dispatchEventsUsingResolvedBus)
         {
             this.DispatchEvents = @event => dispatchEventsUsingResolvedBus(new NinjectTypeResolver(this.kernel), @event);
+        }
+
+        /// <inheritdoc />
+        public override void Register<TEventStore>()
+        {
+            this.kernel.Bind<IEventStore>().To<TEventStore>();
         }
     }
 }

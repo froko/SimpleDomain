@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+// <copyright file="JitneyKernelExtensions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,24 +16,22 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using System;
+    using Ninject;
 
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// Kernel extensions for the Jitney bus
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public static class JitneyKernelExtensions
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
+        /// Tells the Jitney bus to start receiving messages
         /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
+        /// <param name="kernel">The Ninject kernel</param>
+        public static void SignalJitneyToStartWork(this IKernel kernel)
         {
+            kernel.Get<Jitney>().Start();
         }
     }
 }

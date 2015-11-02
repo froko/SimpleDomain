@@ -55,17 +55,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractCompositionRoot.cs" />
     <Compile Include="AggregateRoot.cs" />
     <Compile Include="AggregateRootNotFoundException.cs" />
+    <Compile Include="BoundedContext.cs" />
     <Compile Include="Bus\AbstractJitneyConfiguration.cs" />
+    <Compile Include="Bus\AbstractJitneyConfigurationExtensions.cs" />
     <Compile Include="Bus\CommandSubscription.cs" />
     <Compile Include="Bus\CommandSubscriptionException.cs" />
     <Compile Include="Bus\EndpointAddress.cs" />
     <Compile Include="Bus\EventSubscription.cs" />
-    <Compile Include="Bus\IConfigureThisJitney.cs" />
     <Compile Include="Bus\IHaveJitneyConfiguration.cs" />
     <Compile Include="Bus\IHaveJitneySubscriptions.cs" />
     <Compile Include="Bus\Jitney.cs" />
+    <Compile Include="Bus\ContainerLessJitneyConfiguration.cs" />
     <Compile Include="Bus\JitneySubscriptions.cs" />
     <Compile Include="Bus\NoSubscriptionException.cs" />
     <Compile Include="Bus\SimpleJitney.cs" />
@@ -85,11 +88,15 @@
     <Compile Include="Entity.cs" />
     <Compile Include="EventHistory.cs" />
     <Compile Include="EventSourcedAggregateRoot.cs" />
+    <Compile Include="EventStore\AbstractEventStoreConfiguration.cs" />
     <Compile Include="EventStore\EventDescriptor.cs" />
+    <Compile Include="EventStore\ContainerLessEventStoreConfiguration.cs" />
+    <Compile Include="EventStore\AbstractEventStoreConfigurationExtensions.cs" />
     <Compile Include="EventStore\EventStoreRepository.cs" />
     <Compile Include="EventStore\EventStream.cs" />
     <Compile Include="EventStore\IEventStore.cs" />
     <Compile Include="EventStore\IEventStream.cs" />
+    <Compile Include="EventStore\IHaveEventStoreConfiguration.cs" />
     <Compile Include="EventStore\Persistence\DataReaderExtensions.cs" />
     <Compile Include="EventStore\Persistence\DbCommandExtensions.cs" />
     <Compile Include="EventStore\Persistence\DbConnectionFactory.cs" />
@@ -122,8 +129,11 @@
     <Compile Include="INeedVersion.cs" />
     <Compile Include="IResolveTypes.cs" />
     <Compile Include="ISnapshot.cs" />
+    <Compile Include="LiskovSubstitutionException.cs" />
     <Compile Include="MessageExtensions.cs" />
     <Compile Include="MessageIntent.cs" />
+    <Compile Include="MissingConfigurationException.cs" />
+    <Compile Include="NullTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateBasedAggregateRoot.cs" />
     <Compile Include="StaticEventSourcedAggregateRoot.cs" />

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bus\JitneyConfiguration.cs" />
+    <Compile Include="Bus\JitneyKernelExtensions.cs" />
     <Compile Include="EventStore\EventStoreConfiguration.cs" />
     <Compile Include="NinjectTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

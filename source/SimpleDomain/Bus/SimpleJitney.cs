@@ -35,6 +35,12 @@ namespace SimpleDomain.Bus
         }
 
         /// <inheritdoc />
+        public override void Start()
+        {
+            // Nothing to do here since there is no external queuing system.
+        }
+
+        /// <inheritdoc />
         public override Task SendAsync<TCommand>(TCommand command)
         {
             return this.HandleCommandAsync(command);

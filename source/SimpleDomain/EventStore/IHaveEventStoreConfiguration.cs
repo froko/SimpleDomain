@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+// <copyright file="IHaveEventStoreConfiguration.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,24 +16,24 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.EventStore
 {
     using System;
+    using System.Threading.Tasks;
 
-    /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
-    /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public interface IHaveEventStoreConfiguration
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
+        /// Gets the async action how to dispatch events
         /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
-        {
-        }
+        Func<IEvent, Task> DispatchEvents { get; }
+
+        /// <summary>
+        /// Gets a typed configuration item by its key
+        /// </summary>
+        /// <typeparam name="T">The type of the configuration item</typeparam>
+        /// <param name="key">The key</param>
+        /// <returns>A typed configuration item</returns>
+        T Get<T>(string key);
     }
 }

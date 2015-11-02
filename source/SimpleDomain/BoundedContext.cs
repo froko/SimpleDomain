@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregateRootNotFoundException.cs" company="frokonet.ch">
+// <copyright file="BoundedContext.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,22 +18,24 @@
 
 namespace SimpleDomain
 {
-    using System;
+    using SimpleDomain.Bus;
 
     /// <summary>
-    /// The exception that is thrown when an aggregate root could not be found by its key
+    /// The abstract technical definition of a bounded context
     /// </summary>
-    [Serializable]
-    public class AggregateRootNotFoundException : Exception
+    public abstract class BoundedContext
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AggregateRootNotFoundException"/>
+        /// Gets the name of the bounded context
         /// </summary>
-        /// <param name="aggregateType">the type of the aggregate root</param>
-        /// <param name="aggregateKey">The key of the aggregate root</param>
-        public AggregateRootNotFoundException(Type aggregateType, Guid aggregateKey) 
-            : base(string.Format(ExceptionMessages.AggregateCouldNotBeFound, aggregateType.Name, aggregateKey))
-        {
-        }
+        public abstract string Name { get; }
+
+        /// <summary>
+        /// Configures the bounded context
+        /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
+        /// </summary>
+        /// <param name="bus">The Jitney bus</param>
+        /// <param name="repository">The repository</param>
+        public abstract void Configure(Jitney bus, IEventSourcedRepository repository);
     }
 }

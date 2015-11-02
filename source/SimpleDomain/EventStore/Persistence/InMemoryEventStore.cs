@@ -20,28 +20,24 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-
+    
     /// <summary>
     /// The InMemory event store
     /// </summary>
     public class InMemoryEventStore : IEventStore
     {
-        private readonly Func<IEvent, Task> dispatchAsync;
-        
-        private readonly IList<EventDescriptor> eventDescriptors;
-        private readonly IList<SnapshotDescriptor> snapshotDescriptors;
+        public const string EventDescriptors = "EventDescriptors";
+        public const string SnapshotDescriptors = "SnapshotDescriptors";
+
+        private readonly IHaveEventStoreConfiguration configuration;
 
         /// <summary>
         /// Creates a new instance of <see cref="InMemoryEventStore"/>
         /// </summary>
-        /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
-        public InMemoryEventStore(Func<IEvent, Task> dispatchAsync)
+        /// <param name="configuration">Dependency injection for <see cref="IHaveEventStoreConfiguration"/></param>
+        public InMemoryEventStore(IHaveEventStoreConfiguration configuration)
         {
-            this.dispatchAsync = dispatchAsync;
-            
-            this.eventDescriptors = new List<EventDescriptor>();
-            this.snapshotDescriptors = new List<SnapshotDescriptor>();
+            this.configuration = configuration;
         }
 
         /// <inheritdoc />
@@ -49,9 +45,9 @@ namespace SimpleDomain.EventStore.Persistence
         {
             return new InMemoryEventStream<T>(
                 aggregateId,
-                this.dispatchAsync,
-                this.eventDescriptors,
-                this.snapshotDescriptors);
+                this.configuration.DispatchEvents,
+                this.configuration.Get<List<EventDescriptor>>(EventDescriptors),
+                this.configuration.Get<List<SnapshotDescriptor>>(SnapshotDescriptors));
         }
     }
 }

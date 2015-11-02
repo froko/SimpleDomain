@@ -78,11 +78,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus\AbstractJitneyConfigurationExtensionsTest.cs" />
     <Compile Include="Bus\CommandSubscriptionExceptionTest.cs" />
     <Compile Include="Bus\CommandSubscriptionTest.cs" />
+    <Compile Include="Bus\ContainerLessJitneyConfigurationTest.cs" />
+    <Compile Include="Bus\EndpointAddressTest.cs" />
     <Compile Include="Bus\EventSubscriptionTest.cs" />
     <Compile Include="Bus\JitneySubscriptionsTest.cs" />
     <Compile Include="Bus\NoSubscriptionExceptionTest.cs" />
+    <Compile Include="Bus\SubscriptionMessageTest.cs" />
     <Compile Include="Common\DisposableTest.cs" />
     <Compile Include="Common\ExceptionHelperTest.cs" />
     <Compile Include="Common\GuardTest.cs" />
@@ -91,6 +95,8 @@
     <Compile Include="DynamicEventSourcedAggregateRootTest.cs" />
     <Compile Include="EntityTest.cs" />
     <Compile Include="EventHistoryTest.cs" />
+    <Compile Include="EventStore\AbstractEventStoreConfigurationExtensionsTest.cs" />
+    <Compile Include="EventStore\ContainerLessEventStoreConfigurationTest.cs" />
     <Compile Include="EventStore\EventDescriptorTest.cs" />
     <Compile Include="EventStore\EventStoreRepositoryTest.cs" />
     <Compile Include="EventStore\Persistence\InMemoryIntegrationTest.cs" />
@@ -100,6 +106,10 @@
     <Compile Include="EventStore\Persistence\WithTransactionAttribute.cs" />
     <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
     <Compile Include="FluentTestingExtensions.cs" />
+    <Compile Include="CompositionRootTest.cs" />
+    <Compile Include="LiskovSubstitutionExceptionTest.cs" />
+    <Compile Include="MissingConfigurationExceptionTest.cs" />
+    <Compile Include="NullTypeResolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotTest.cs" />
     <Compile Include="StateBasedAggregateRootTest.cs" />

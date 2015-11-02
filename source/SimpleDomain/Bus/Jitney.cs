@@ -18,6 +18,7 @@
 
 namespace SimpleDomain.Bus
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -37,12 +38,45 @@ namespace SimpleDomain.Bus
             this.configuration = configuration;
         }
 
+        /// <summary>
+        /// Starts the message reception process
+        /// </summary>
+        public abstract void Start();
+
         /// <inheritdoc />
         public abstract Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
 
         /// <inheritdoc />
         public abstract Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
-        
+
+        /// <summary>
+        /// Subscribes an async handler action for a given command
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
+        {
+            var subscriptions = this.configuration.HandlerSubscriptions as JitneySubscriptions;
+            if (subscriptions != null)
+            {
+                subscriptions.SubscribeCommandHandler(handler);
+            }
+        }
+
+        /// <summary>
+        /// Subscribes an async handler action for a given event
+        /// </summary>
+        /// <typeparam name="TEvent">The type of the event</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
+        {
+            var subscriptions = this.configuration.HandlerSubscriptions as JitneySubscriptions;
+            if (subscriptions != null)
+            {
+                subscriptions.SubscribeEventHandler(handler);
+            }
+        }
+
         /// <summary>
         /// Executes the command subscription which is registered for this command
         /// </summary>

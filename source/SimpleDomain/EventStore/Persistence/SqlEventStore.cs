@@ -20,38 +20,45 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
     using System.Data.SqlClient;
-    using System.Threading.Tasks;
-
+    
     public class SqlEventStore : IEventStore
     {
+        public const string ConnectionFactory = "ConnectionFactory";
+
         private const string EventStoreConnectionStringName = "EventStore";
 
-        private readonly Func<IEvent, Task> dispatchAsync;
-        private readonly DbConnectionFactory factory;
+        private readonly IHaveEventStoreConfiguration configuration;
 
         /// <summary>
         /// Creates a new instance of <see cref="SqlEventStore"/>
         /// </summary>
-        /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
-        /// <param name="factory">Dependency injection for <see cref="DbConnectionFactory"/></param>
-        public SqlEventStore(Func<IEvent, Task> dispatchAsync, DbConnectionFactory factory)
+        /// <param name="configuration">Dependency injection for <see cref="IHaveEventStoreConfiguration"/></param>
+        public SqlEventStore(IHaveEventStoreConfiguration configuration)
         {
-            this.dispatchAsync = dispatchAsync;
-            this.factory = factory;
+            this.configuration = configuration;
 
             this.CreateEventStoreTableIfNeeded();
             this.CreateSnapshotTableIfNeeded();
         }
 
+        private DbConnectionFactory Factory
+        {
+            get { return this.configuration.Get<DbConnectionFactory>(ConnectionFactory); }
+        }
+
         /// <inheritdoc />
         public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
         {
-            return new SqlEventStream<T>(aggregateId, this.dispatchAsync, this.factory, EventStoreConnectionStringName);
+            return new SqlEventStream<T>(
+                aggregateId, 
+                this.configuration.DispatchEvents,
+                this.Factory, 
+                EventStoreConnectionStringName);
         }
 
         private void CreateEventStoreTableIfNeeded()
         {
-            using (var connection = this.factory.Create(EventStoreConnectionStringName))
+            using (var connection = this.Factory.Create(EventStoreConnectionStringName))
             using (var command = new SqlCommand(SqlCommands.CreateEventsTable, connection))
             {
                 command.ExecuteNonQuery();
@@ -60,7 +67,7 @@ namespace SimpleDomain.EventStore.Persistence
 
         private void CreateSnapshotTableIfNeeded()
         {
-            using (var connection = this.factory.Create(EventStoreConnectionStringName))
+            using (var connection = this.Factory.Create(EventStoreConnectionStringName))
             using (var command = new SqlCommand(SqlCommands.CreateSnapshotsTable, connection))
             {
                 command.ExecuteNonQuery();

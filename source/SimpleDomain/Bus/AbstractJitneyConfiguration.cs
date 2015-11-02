@@ -18,16 +18,16 @@
 
 namespace SimpleDomain.Bus
 {
-    using System;
-    using System.Configuration;
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The Jitney configuration base class
     /// </summary>
-    public abstract class AbstractJitneyConfiguration : IConfigureThisJitney, IHaveJitneyConfiguration
+    public abstract class AbstractJitneyConfiguration : IHaveJitneyConfiguration
     {
         protected readonly JitneySubscriptions JitneySubscriptions;
+
+        private readonly IDictionary<string, object> configurationItems;
 
         /// <summary>
         /// Creates a new instance of <see cref="AbstractJitneyConfiguration"/>
@@ -35,6 +35,7 @@ namespace SimpleDomain.Bus
         /// <param name="typeResolver">Dependency injection for <see cref="IResolveTypes"/></param>
         protected AbstractJitneyConfiguration(IResolveTypes typeResolver)
         {
+            this.configurationItems = new Dictionary<string, object>();
             this.JitneySubscriptions = new JitneySubscriptions(typeResolver);
             this.EndpointAddress = null;
         }
@@ -52,7 +53,7 @@ namespace SimpleDomain.Bus
             {
                 if (this.EndpointAddress == null)
                 {
-                    throw new ConfigurationErrorsException(ExceptionMessages.LocalEndpointAddressNotDefined);
+                    throw new MissingConfigurationException(ExceptionMessages.LocalEndpointAddressNotDefined);
                 }
 
                 return this.EndpointAddress;
@@ -65,27 +66,35 @@ namespace SimpleDomain.Bus
         protected EndpointAddress EndpointAddress { get; set; }
 
         /// <inheritdoc />
-        public abstract void Subscribe<TMessage, THandler>() where TMessage : IMessage where THandler : IHandleAsync<TMessage>;
-
-        /// <inheritdoc />
-        public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
+        public T Get<T>(string key)
         {
-            this.JitneySubscriptions.SubscribeCommandHandler(handler);
+            return (T)this.configurationItems[key];
         }
 
-        /// <inheritdoc />
-        public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
+        /// <summary>
+        /// Adds a configuration item
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <param name="item">The item</param>
+        public void AddConfigurationItem(string key, object item)
         {
-            this.JitneySubscriptions.SubscribeEventHandler(handler);
+            this.configurationItems.Add(key, item);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Defines the endpoint name for this bus
+        /// </summary>
+        /// <param name="endpointName">The endpoint name</param>
         public void DefineEndpointName(string endpointName)
         {
             this.EndpointAddress = new EndpointAddress(endpointName);
         }
 
-        /// <inheritdoc />
-        public abstract void Use<TJitney>() where TJitney : Jitney;
+        /// <summary>
+        /// Registers a specific type of <see cref="Jitney"/> in the IoC container.
+        /// <remarks>This method is intended for extension methods only</remarks>
+        /// </summary>
+        /// <typeparam name="TJitney">The type of the <see cref="Jitney"/> bus</typeparam>
+        public abstract void Register<TJitney>() where TJitney : Jitney;
     }
 }

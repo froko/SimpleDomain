@@ -42,9 +42,11 @@ namespace SimpleDomain.EventStore.Persistence
             this.aggregateId = Guid.NewGuid();
             this.dispatcher = A.Fake<IDeliverMessages>();
 
-            this.testee = new SqlEventStore(
-                @event => this.dispatcher.PublishAsync(@event),
-                new DbConnectionFactory());
+            var configuration = new ContainerLessEventStoreConfiguration();
+            configuration.DefineAsyncEventDispatching(@event => this.dispatcher.PublishAsync(@event));
+            configuration.PrepareSqlEventStore();
+
+            this.testee = new SqlEventStore(configuration);
         }
 
         [Fact, WithTransaction]

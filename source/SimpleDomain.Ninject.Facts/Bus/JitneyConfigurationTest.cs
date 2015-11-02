@@ -20,7 +20,6 @@ namespace SimpleDomain.Bus
 {
     using System;
     using System.Configuration;
-    using System.Threading.Tasks;
 
     using FluentAssertions;
 
@@ -55,22 +54,6 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
-        public void CanSubscribeCommandHandlerAction()
-        {
-            this.testee.SubscribeCommandHandler<ValueCommand>(c => Task.FromResult(0));
-
-            this.testee.HandlerSubscriptions.GetCommandSubscription(new ValueCommand(42)).Should().NotBeNull();
-        }
-
-        [Fact]
-        public void CanSubscribeEventHandlerAction()
-        {
-            this.testee.SubscribeEventHandler<ValueEvent>(e => Task.FromResult(0));
-
-            this.testee.HandlerSubscriptions.GetEventSubscriptions(new ValueEvent(42)).Should().HaveCount(1);
-        }
-
-        [Fact]
         public void CanDefineEndpointName()
         {
             const string EndpointName = "MyEndpoint";
@@ -85,7 +68,7 @@ namespace SimpleDomain.Bus
         {
             Action action = () => { var endpointAddress = this.testee.LocalEndpointAddress; };
 
-            action.ShouldThrow<ConfigurationErrorsException>()
+            action.ShouldThrow<MissingConfigurationException>()
                 .WithMessage(ExceptionMessages.LocalEndpointAddressNotDefined);
         }
     }
