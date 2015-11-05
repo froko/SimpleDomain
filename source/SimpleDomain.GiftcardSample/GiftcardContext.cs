@@ -34,6 +34,7 @@ namespace GiftcardSample
         private readonly IReadStore readStore;
 
         private readonly ICardNumberQuery cardNumberQuery;
+        private readonly InMemoryCardNumberEventHandler cardNumberEventHandler;
         private readonly InMemoryGiftcardOverviewEventHandler giftcardOverviewEventHandler;
         private readonly InMemoryGiftcardTransactionEventHandler giftcardTransactionEventHandler;
 
@@ -42,6 +43,7 @@ namespace GiftcardSample
             this.readStore = readStore;
 
             this.cardNumberQuery = new InMemoryCardNumberQuery(this.readStore);
+            this.cardNumberEventHandler = new InMemoryCardNumberEventHandler(this.readStore);
             this.giftcardOverviewEventHandler = new InMemoryGiftcardOverviewEventHandler(this.readStore);
             this.giftcardTransactionEventHandler = new InMemoryGiftcardTransactionEventHandler(this.readStore);
         }
@@ -62,11 +64,7 @@ namespace GiftcardSample
             bus.SubscribeCommandHandler<RedeemGiftcard>(this.HandleAsync);
             bus.SubscribeCommandHandler<LoadGiftcard>(this.HandleAsync);
 
-            bus.SubscribeEventHandler<GiftcardCreated>(e =>
-            {
-                this.readStore.CardNumbers.Add(e.CardNumber);
-                return Task.FromResult(0);
-            });
+            bus.SubscribeEventHandler<GiftcardCreated>(this.cardNumberEventHandler.HandleAsync);
 
             bus.SubscribeEventHandler<GiftcardCreated>(this.giftcardOverviewEventHandler.HandleAsync);
             bus.SubscribeEventHandler<GiftcardActivated>(this.giftcardOverviewEventHandler.HandleAsync);

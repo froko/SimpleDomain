@@ -41,6 +41,26 @@ namespace GiftcardSample.ReadStore.InMemory
 
         public Task HandleAsync(GiftcardCreated message)
         {
+            return Task.Run(() => this.Handle(message));
+        }
+
+        public Task HandleAsync(GiftcardActivated message)
+        {
+            return Task.Run(() => this.Handle(message));
+        }
+
+        public Task HandleAsync(GiftcardRedeemed message)
+        {
+            return Task.Run(() => this.Handle(message));
+        }
+
+        public Task HandleAsync(GiftcardLoaded message)
+        {
+            return Task.Run(() => this.Handle(message));
+        }
+
+        private void Handle(GiftcardCreated message)
+        {
             this.readStore.GiftcardTransactions.Add(new GiftcardTransaction
             {
                 CardId = message.CardId,
@@ -51,11 +71,9 @@ namespace GiftcardSample.ReadStore.InMemory
                 Amount = 0,
                 Revision = 0
             });
-
-            return Task.FromResult(0);
         }
 
-        public Task HandleAsync(GiftcardActivated message)
+        private void Handle(GiftcardActivated message)
         {
             var previousTransaction = this.readStore.GiftcardTransactions.Last(g => g.CardId == message.CardId);
             var newRevision = previousTransaction.Revision;
@@ -71,11 +89,9 @@ namespace GiftcardSample.ReadStore.InMemory
                 Amount = previousTransaction.Amount,
                 Revision = newRevision
             });
-
-            return Task.FromResult(0);
         }
 
-        public Task HandleAsync(GiftcardRedeemed message)
+        private void Handle(GiftcardRedeemed message)
         {
             var previousTransaction = this.readStore.GiftcardTransactions.Last(g => g.CardId == message.CardId);
             var newRevision = previousTransaction.Revision;
@@ -91,11 +107,9 @@ namespace GiftcardSample.ReadStore.InMemory
                 Amount = message.Amount,
                 Revision = newRevision
             });
-
-            return Task.FromResult(0);
         }
 
-        public Task HandleAsync(GiftcardLoaded message)
+        private void Handle(GiftcardLoaded message)
         {
             var previousTransaction = this.readStore.GiftcardTransactions.Last(g => g.CardId == message.CardId);
             var newRevision = previousTransaction.Revision;
@@ -111,8 +125,6 @@ namespace GiftcardSample.ReadStore.InMemory
                 Amount = message.Amount,
                 Revision = newRevision
             });
-
-            return Task.FromResult(0);
         }
     }
 }

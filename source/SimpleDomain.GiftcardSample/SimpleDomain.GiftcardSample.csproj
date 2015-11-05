@@ -51,6 +51,7 @@
     <Compile Include="ReadStore\ICardNumberQuery.cs" />
     <Compile Include="ReadStore\IGiftcardOverviewQuery.cs" />
     <Compile Include="ReadStore\IGiftcardTransactionQuery.cs" />
+    <Compile Include="ReadStore\InMemory\InMemoryCardNumberEventHandler.cs" />
     <Compile Include="ReadStore\InMemory\InMemoryCardNumberQuery.cs" />
     <Compile Include="ReadStore\InMemory\InMemoryGiftcardOverviewEventHandler.cs" />
     <Compile Include="ReadStore\InMemory\InMemoryGiftcardOverviewQuery.cs" />
