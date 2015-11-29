@@ -43,8 +43,8 @@ namespace SimpleDomain
         [Fact]
         public void CanRegisterBoundedContexts()
         {
-            var firstBoundedContext = A.Fake<BoundedContext>();
-            var secondBoundedContext = A.Fake<BoundedContext>();
+            var firstBoundedContext = A.Fake<IBoundedContext>();
+            var secondBoundedContext = A.Fake<IBoundedContext>();
             var testee = new CompositionRoot();
 
             testee.Register(firstBoundedContext);
@@ -57,16 +57,23 @@ namespace SimpleDomain
 
     public class CompositionRoot : AbstractCompositionRoot
     {
-        protected override Jitney CreateBus(ContainerLessJitneyConfiguration configuration)
+        protected override void ConfigureBus(IConfigureThisJitney configuration)
+        {
+        }
+
+        protected override Jitney CreateBus(IHaveJitneyConfiguration configuration)
         {
             return new SimpleJitney(configuration);
         }
 
-        protected override IEventStore CreateEventStore(ContainerLessEventStoreConfiguration configuration)
+        protected override void ConfigureEventStore(IConfigureThisEventStore configuration)
         {
             configuration.DefineAsyncEventDispatching(@event => this.Bus.PublishAsync(@event));
             configuration.PrepareInMemoryEventStore();
+        }
 
+        protected override IEventStore CreateEventStore(IHaveEventStoreConfiguration configuration)
+        {
             return new InMemoryEventStore(configuration);
         }
     }

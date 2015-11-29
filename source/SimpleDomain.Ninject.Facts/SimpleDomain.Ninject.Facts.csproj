@@ -70,8 +70,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bus\JitneyConfigurationTest.cs" />
-    <Compile Include="IntegrationTest.cs" />
+    <Compile Include="Bus\Configuration\HandlerRegistryTest.cs" />
+    <Compile Include="Bus\Configuration\JitneyConfigurationTest.cs" />
+    <Compile Include="Bus\JitneyKernelExtensionsTest.cs" />
+    <Compile Include="EventStore\Configuration\EventStoreConfigurationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

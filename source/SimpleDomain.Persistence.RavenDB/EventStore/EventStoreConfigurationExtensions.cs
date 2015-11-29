@@ -21,6 +21,7 @@ namespace SimpleDomain.EventStore
     using Raven.Client;
     using Raven.Client.Document;
 
+    using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.EventStore.Persistence;
 
     /// <summary>
@@ -53,7 +54,7 @@ namespace SimpleDomain.EventStore
         }
 
         /// <summary>
-        /// Uses the RavenDB EventStore
+        /// Registers the RavenDB EventStore
         /// </summary>
         /// <param name="configuration">The abstract EventStore configuration</param>
         public static void UseRavenEventStore(this AbstractEventStoreConfiguration configuration)
@@ -62,7 +63,7 @@ namespace SimpleDomain.EventStore
         }
 
         /// <summary>
-        /// Uses the RavenDB EventStore
+        /// Registers the RavenDB EventStore
         /// </summary>
         /// <param name="configuration">The abstract EventStore configuration</param>
         /// <param name="documentStore">The RavenDB document store</param>

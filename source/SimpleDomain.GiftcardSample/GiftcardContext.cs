@@ -29,10 +29,8 @@ namespace GiftcardSample
     using SimpleDomain;
     using SimpleDomain.Bus;
 
-    public class GiftcardContext : BoundedContext
+    public class GiftcardContext : IBoundedContext
     {
-        private readonly IReadStore readStore;
-
         private readonly ICardNumberQuery cardNumberQuery;
         private readonly InMemoryCardNumberEventHandler cardNumberEventHandler;
         private readonly InMemoryGiftcardOverviewEventHandler giftcardOverviewEventHandler;
@@ -40,22 +38,20 @@ namespace GiftcardSample
 
         public GiftcardContext(IReadStore readStore)
         {
-            this.readStore = readStore;
-
-            this.cardNumberQuery = new InMemoryCardNumberQuery(this.readStore);
-            this.cardNumberEventHandler = new InMemoryCardNumberEventHandler(this.readStore);
-            this.giftcardOverviewEventHandler = new InMemoryGiftcardOverviewEventHandler(this.readStore);
-            this.giftcardTransactionEventHandler = new InMemoryGiftcardTransactionEventHandler(this.readStore);
+            this.cardNumberQuery = new InMemoryCardNumberQuery(readStore);
+            this.cardNumberEventHandler = new InMemoryCardNumberEventHandler(readStore);
+            this.giftcardOverviewEventHandler = new InMemoryGiftcardOverviewEventHandler(readStore);
+            this.giftcardTransactionEventHandler = new InMemoryGiftcardTransactionEventHandler(readStore);
         }
 
-        public override string Name
+        public string Name
         {
             get { return "Giftcards"; }
         }
 
         private IEventSourcedRepository Repository { get; set; }
 
-        public override void Configure(Jitney bus, IEventSourcedRepository repository)
+        public void Configure(Jitney bus, IEventSourcedRepository repository)
         {
             this.Repository = repository;
 

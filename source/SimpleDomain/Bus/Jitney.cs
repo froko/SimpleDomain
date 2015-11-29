@@ -56,11 +56,7 @@ namespace SimpleDomain.Bus
         /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
         public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
         {
-            var subscriptions = this.configuration.HandlerSubscriptions as JitneySubscriptions;
-            if (subscriptions != null)
-            {
-                subscriptions.SubscribeCommandHandler(handler);
-            }
+            this.configuration.SubscribeCommandHandler(handler);
         }
 
         /// <summary>
@@ -70,11 +66,7 @@ namespace SimpleDomain.Bus
         /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
         public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
         {
-            var subscriptions = this.configuration.HandlerSubscriptions as JitneySubscriptions;
-            if (subscriptions != null)
-            {
-                subscriptions.SubscribeEventHandler<TEvent>(handler);
-            }
+            this.configuration.SubscribeEventHandler(handler);
         }
 
         /// <summary>
@@ -84,7 +76,7 @@ namespace SimpleDomain.Bus
         /// <param name="command">The instance of the command</param>
         protected async Task HandleCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
-            var commandSubscription = this.configuration.HandlerSubscriptions.GetCommandSubscription(command);
+            var commandSubscription = this.configuration.Subscriptions.GetCommandSubscription(command);
             await commandSubscription.HandleAsync(command);
         }
 
@@ -92,10 +84,10 @@ namespace SimpleDomain.Bus
         /// Executes all event subscriptions which are registered for this event
         /// </summary>
         /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="@event">The instance of the event</param>
+        /// <param name="event">The instance of the event</param>
         protected async Task HandleEventAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            var eventSubscriptions = this.configuration.HandlerSubscriptions.GetEventSubscriptions(@event);
+            var eventSubscriptions = this.configuration.Subscriptions.GetEventSubscriptions(@event);
             var handlerTasks = eventSubscriptions.Select(s => s.HandleAsync(@event));
 
             await Task.WhenAll(handlerTasks);

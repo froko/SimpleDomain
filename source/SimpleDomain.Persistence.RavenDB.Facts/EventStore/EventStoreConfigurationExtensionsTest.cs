@@ -23,7 +23,8 @@ namespace SimpleDomain.EventStore
     using FluentAssertions;
 
     using Raven.Client;
-    
+
+    using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.EventStore.Persistence;
 
     using Xunit;

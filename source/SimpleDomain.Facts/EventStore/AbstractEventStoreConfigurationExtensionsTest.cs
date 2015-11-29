@@ -24,6 +24,7 @@ namespace SimpleDomain.EventStore
 
     using FluentAssertions;
 
+    using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.EventStore.Persistence;
 
     using Xunit;

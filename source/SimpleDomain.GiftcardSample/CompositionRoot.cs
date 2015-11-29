@@ -22,19 +22,26 @@ namespace GiftcardSample
     using SimpleDomain.Bus;
     using SimpleDomain.EventStore;
     using SimpleDomain.EventStore.Persistence;
-
+    
     public class CompositionRoot : AbstractCompositionRoot
     {
-        protected override Jitney CreateBus(ContainerLessJitneyConfiguration configuration)
+        protected override void ConfigureBus(IConfigureThisJitney configuration)
+        {
+        }
+
+        protected override Jitney CreateBus(IHaveJitneyConfiguration configuration)
         {
             return new SimpleJitney(configuration);
         }
 
-        protected override IEventStore CreateEventStore(ContainerLessEventStoreConfiguration configuration)
+        protected override void ConfigureEventStore(IConfigureThisEventStore configuration)
         {
             configuration.DefineAsyncEventDispatching(@event => this.Bus.PublishAsync(@event));
             configuration.PrepareInMemoryEventStore();
+        }
 
+        protected override IEventStore CreateEventStore(IHaveEventStoreConfiguration configuration)
+        {
             return new InMemoryEventStore(configuration);
         }
     }

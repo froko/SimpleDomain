@@ -18,27 +18,37 @@
 
 namespace SimpleDomain.Bus
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    
     /// <summary>
     /// The Jitney configuration holder interface
     /// </summary>
-    public interface IHaveJitneyConfiguration
+    public interface IHaveJitneyConfiguration : IHaveDynamicConfiguration
     {
         /// <summary>
-        /// Gets the handler subscriptions
+        /// Gets the Jitney subscriptions
         /// </summary>
-        IHaveJitneySubscriptions HandlerSubscriptions { get; }
+        IHaveJitneySubscriptions Subscriptions { get; }
 
         /// <summary>
-        /// Gets the local endpoint address
+        /// Gets the contract map
         /// </summary>
-        EndpointAddress LocalEndpointAddress { get; }
+        IDictionary<Type, EndpointAddress> ContractMap { get; }
+        
+        /// <summary>
+        /// Subscribes an async handler action for a given command
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand;
 
         /// <summary>
-        /// Gets a typed configuration item by its key
+        /// Subscribes an async handler action for a given event
         /// </summary>
-        /// <typeparam name="T">The type of the configuration item</typeparam>
-        /// <param name="key">The key</param>
-        /// <returns>A typed configuration item</returns>
-        T Get<T>(string key);
+        /// <typeparam name="TEvent">The type of the event</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent;
     }
 }

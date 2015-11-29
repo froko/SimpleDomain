@@ -22,23 +22,31 @@ namespace SimpleDomain.TestDoubles
     
     public class ValueCommandHandler : IHandleAsync<ValueCommand>
     {
-        public static int Value { get; private set; }
+        public int Value { get; private set; }
 
         public Task HandleAsync(ValueCommand message)
         {
-            Value = message.Value;
-            return Task.FromResult(message);
+            return Task.Run(() => this.Handle(message));
+        }
+
+        private void Handle(ValueCommand message)
+        {
+            this.Value = message.Value;
         }
     }
 
     public class ValueEventHandler : IHandleAsync<ValueEvent>
     {
-        public static int Value { get; private set; }
+        public int Value { get; private set; }
 
         public Task HandleAsync(ValueEvent message)
         {
-            Value = message.Value;
-            return Task.FromResult(message);
+            return Task.Run(() => this.Handle(message));
+        }
+
+        private void Handle(ValueEvent message)
+        {
+            this.Value = message.Value;
         }
     }
 }

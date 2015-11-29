@@ -47,12 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bus\JitneyConfiguration.cs" />
+    <Compile Include="Bus\Configuration\HandlerRegistry.cs" />
+    <Compile Include="Bus\Configuration\JitneyConfiguration.cs" />
     <Compile Include="Bus\JitneyKernelExtensions.cs" />
-    <Compile Include="EventStore\EventStoreConfiguration.cs" />
-    <Compile Include="NinjectTypeResolver.cs" />
+    <Compile Include="EventStore\Configuration\EventStoreConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleDomainModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

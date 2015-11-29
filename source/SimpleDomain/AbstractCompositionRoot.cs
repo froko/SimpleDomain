@@ -19,7 +19,9 @@
 namespace SimpleDomain
 {
     using SimpleDomain.Bus;
+    using SimpleDomain.Bus.Configuration;
     using SimpleDomain.EventStore;
+    using SimpleDomain.EventStore.Configuration;
 
     /// <summary>
     /// An abstract composition root which helps wiring up the Jitney bus, 
@@ -32,8 +34,14 @@ namespace SimpleDomain
         /// </summary>
         protected AbstractCompositionRoot()
         {
-            this.Bus = this.CreateBus(new ContainerLessJitneyConfiguration());
-            this.EventStore = this.CreateEventStore(new ContainerLessEventStoreConfiguration());
+            var jitneyConfiguration = new ContainerLessJitneyConfiguration();
+            var eventStoreConfiguration = new ContainerLessEventStoreConfiguration();
+
+            this.ConfigureBus(jitneyConfiguration);
+            this.ConfigureEventStore(eventStoreConfiguration);
+
+            this.Bus = this.CreateBus(jitneyConfiguration);
+            this.EventStore = this.CreateEventStore(eventStoreConfiguration);
         }
 
         /// <summary>
@@ -55,26 +63,38 @@ namespace SimpleDomain
         }
 
         /// <summary>
-        /// Registers a <see cref="BoundedContext"/> within this composition root
+        /// Registers a <see cref="IBoundedContext"/> within this composition root
         /// </summary>
         /// <param name="boundedContext">The bounded context</param>
-        public void Register(BoundedContext boundedContext)
+        public void Register(IBoundedContext boundedContext)
         {
             boundedContext.Configure(this.Bus, this.Repository);
         }
+
+        /// <summary>
+        /// Configures the Jitney bus
+        /// </summary>
+        /// <param name="configuration">The Jitney configuration</param>
+        protected abstract void ConfigureBus(IConfigureThisJitney configuration);
 
         /// <summary>
         /// Creates an instance of a Jitney bus
         /// </summary>
         /// <param name="configuration">The Jitney configuration</param>
         /// <returns>An instance of a Jitney bus</returns>
-        protected abstract Jitney CreateBus(ContainerLessJitneyConfiguration configuration);
+        protected abstract Jitney CreateBus(IHaveJitneyConfiguration configuration);
+
+        /// <summary>
+        /// Configures the EventStore
+        /// </summary>
+        /// <param name="configuration">The event store configuration</param>
+        protected abstract void ConfigureEventStore(IConfigureThisEventStore configuration);
 
         /// <summary>
         /// Creates an instance of an EventStore
         /// </summary>
         /// <param name="configuration">The EventStore configuration</param>
         /// <returns>An instance of the EventStore</returns>
-        protected abstract IEventStore CreateEventStore(ContainerLessEventStoreConfiguration configuration);
+        protected abstract IEventStore CreateEventStore(IHaveEventStoreConfiguration configuration);
     }
 }

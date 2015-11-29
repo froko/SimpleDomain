@@ -34,8 +34,6 @@ namespace GiftcardSample
     public abstract class BaseFeatures
     {
         private readonly CompositionRoot compositionRoot;
-        private readonly IGiftcardOverviewQuery overviewQuery;
-        private readonly IGiftcardTransactionQuery transactionQuery;
 
         protected BaseFeatures()
         {
@@ -44,8 +42,8 @@ namespace GiftcardSample
             this.compositionRoot = new CompositionRoot();
             this.compositionRoot.Register(new GiftcardContext(readStore));
 
-            this.overviewQuery = new InMemoryGiftcardOverviewQuery(readStore);
-            this.transactionQuery = new InMemoryGiftcardTransactionQuery(readStore);
+            this.OverviewQuery = new InMemoryGiftcardOverviewQuery(readStore);
+            this.TransactionQuery = new InMemoryGiftcardTransactionQuery(readStore);
         }
 
         protected Jitney Bus
@@ -58,19 +56,13 @@ namespace GiftcardSample
             get { return this.compositionRoot.EventStore; }
         }
 
-        protected IGiftcardOverviewQuery OverviewQuery
-        {
-            get { return this.overviewQuery; }
-        }
+        protected IGiftcardOverviewQuery OverviewQuery { get; private set; }
 
-        protected IGiftcardTransactionQuery TransactionQuery
-        {
-            get { return this.transactionQuery; }
-        }
+        protected IGiftcardTransactionQuery TransactionQuery { get; private set; }
 
         protected async Task PrepareEventsAsync(Guid cardId, params IEvent[] events)
         {
-            var expectedVersion = events.Count() - 1;
+            var expectedVersion = events.Length - 1;
             var version = 0;
 
             var versionableEvents = events.Select(@event => new VersionableEvent(@event).With(version++));

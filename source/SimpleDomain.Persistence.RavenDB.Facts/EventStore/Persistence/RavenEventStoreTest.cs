@@ -22,6 +22,7 @@ namespace SimpleDomain.EventStore.Persistence
 
     using FluentAssertions;
 
+    using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.TestDoubles;
 
     using Xunit;
