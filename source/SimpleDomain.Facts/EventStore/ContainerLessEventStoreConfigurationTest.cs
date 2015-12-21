@@ -48,7 +48,7 @@ namespace SimpleDomain.EventStore
 
             Action action = () => testee.Register<InMemoryEventStore>();
 
-            action.ShouldThrow<LiskovSubstitutionException>()
+            action.ShouldThrow<NotSupportedException>()
                 .WithMessage("You cannot register an EventStore when there is no IoC container");
         }
 

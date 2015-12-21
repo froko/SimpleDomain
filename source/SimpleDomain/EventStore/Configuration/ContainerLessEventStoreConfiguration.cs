@@ -18,6 +18,8 @@
 
 namespace SimpleDomain.EventStore.Configuration
 {
+    using System;
+
     /// <summary>
     /// An EventStore configuration class for the use without any IoC container
     /// </summary>
@@ -26,7 +28,7 @@ namespace SimpleDomain.EventStore.Configuration
         /// <inheritdoc />
         public override void Register<TEventStore>()
         {
-            throw new LiskovSubstitutionException("You cannot register an EventStore when there is no IoC container");
+            throw new NotSupportedException("You cannot register an EventStore when there is no IoC container");
         }
     }
 }

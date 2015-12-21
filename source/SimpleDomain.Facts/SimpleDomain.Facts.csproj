@@ -115,7 +115,6 @@
     <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
     <Compile Include="FluentTestingExtensions.cs" />
     <Compile Include="CompositionRootTest.cs" />
-    <Compile Include="LiskovSubstitutionExceptionTest.cs" />
     <Compile Include="MissingConfigurationExceptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotTest.cs" />
