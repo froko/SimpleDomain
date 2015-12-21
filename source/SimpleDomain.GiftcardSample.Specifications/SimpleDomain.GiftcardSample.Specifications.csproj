@@ -12,7 +12,8 @@
     <AssemblyName>SimpleDomain.GiftcardSample.Specifications</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>eb40b95e</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,12 +37,12 @@
       <HintPath>..\packages\FakeItEasy.1.25.3\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.1.1\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.0.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.1.1\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -107,14 +108,14 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.1.2\Build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.1.2\Build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
     <Error Condition="!Exists('..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets'))" />
     <Error Condition="!Exists('..\packages\froko.csprojSetup.Facts.1.9.0\build\froko.csprojSetup.Facts.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.Facts.1.9.0\build\froko.csprojSetup.Facts.targets'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets'))" />
   </Target>
-  <Import Project="..\packages\GitVersionTask.3.1.2\Build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.1.2\Build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
   <Import Project="..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets')" />
   <Import Project="..\packages\froko.csprojSetup.Facts.1.9.0\build\froko.csprojSetup.Facts.targets" Condition="Exists('..\packages\froko.csprojSetup.Facts.1.9.0\build\froko.csprojSetup.Facts.targets')" />
+  <Import Project="..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
