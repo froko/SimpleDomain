@@ -65,8 +65,8 @@ namespace SimpleDomain.EventStore
 
             foreach (var @event in eventsToSave)
             {
-                await this.SaveAsync(@event, headers);
-                await this.dispatchAsync(@event.InnerEvent);
+                await this.SaveAsync(@event, headers).ConfigureAwait(false);
+                await this.dispatchAsync(@event.InnerEvent).ConfigureAwait(false);
             }
         }
 

@@ -54,7 +54,8 @@ namespace SimpleDomain.EventStore.Persistence
                     .Skip((counter * ElementTakeCount) + skipResults)
                     .Take(ElementTakeCount)
                     .Select(e => e.Event)
-                    .ToListAsync();
+                    .ToListAsync()
+                    .ConfigureAwait(false);
 
                 counter++;
                 skipResults += statistics.SkippedResults;
@@ -90,7 +91,8 @@ namespace SimpleDomain.EventStore.Persistence
                     .Skip((counter * ElementTakeCount) + skipResults)
                     .Take(ElementTakeCount)
                     .Select(e => e.Snapshot)
-                    .ToListAsync();
+                    .ToListAsync()
+                    .ConfigureAwait(false);
 
                 counter++;
                 skipResults += statistics.SkippedResults;

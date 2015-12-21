@@ -52,7 +52,7 @@ namespace SimpleDomain.EventStore.Persistence
             var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
             var connection = new SqlConnection(connectionString);
 
-            await connection.OpenAsync();
+            await connection.OpenAsync().ConfigureAwait(false);
 
             return connection;
         } 

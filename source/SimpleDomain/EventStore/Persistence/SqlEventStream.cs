@@ -53,7 +53,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var snapshotDescriptor = new SqlSnapshotDescriptor(this.AggregateType, this.AggregateId, snapshot);
 
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName))
+            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
             using (var command = new SqlCommand(SqlCommands.InsertSnapshot, connection))
             {
                 command.AddParameter("@AggregateType", snapshotDescriptor.AggregateType);
@@ -63,20 +63,20 @@ namespace SimpleDomain.EventStore.Persistence
                 command.AddParameter("@SnapshotType", snapshotDescriptor.SnapshotType);
                 command.AddParameter("@SnapshotData", snapshotDescriptor.SerializedSnapshot);
 
-                await command.ExecuteNonQueryAsync();
+                await command.ExecuteNonQueryAsync().ConfigureAwait(false);
             }
         }
 
         /// <inheritdoc />
         public override async Task<bool> HasSnapshotAsync()
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName))
+            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
             using (var command = new SqlCommand(SqlCommands.GetSnapshotCount, connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
                 command.AddParameter("@AggregateId", this.AggregateId);
 
-                var resultFromDb = await command.ExecuteScalarAsync();
+                var resultFromDb = await command.ExecuteScalarAsync().ConfigureAwait(false);
                 var snapshotCount = (int)resultFromDb;
 
                 return snapshotCount != 0;
@@ -86,13 +86,13 @@ namespace SimpleDomain.EventStore.Persistence
         /// <inheritdoc />
         public override async Task<ISnapshot> GetLatestSnapshotAsync()
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName))
+            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
             using (var command = new SqlCommand(SqlCommands.GetLatestSnapshot, connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
                 command.AddParameter("@AggregateId", this.AggregateId);
 
-                using (var reader = await command.ExecuteReaderAsync())
+                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
                 {
                     if (reader.Read())
                     {
@@ -109,7 +109,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var eventDescriptor = new SqlEventDescriptor(this.AggregateType, this.AggregateId, versionableEvent, headers);
 
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName))
+            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
             using (var command = new SqlCommand(SqlCommands.InsertEvent, connection))
             {
                 command.AddParameter("@AggregateType", eventDescriptor.AggregateType);
@@ -120,14 +120,14 @@ namespace SimpleDomain.EventStore.Persistence
                 command.AddParameter("@EventData", eventDescriptor.SerializedEvent);
                 command.AddParameter("@Headers", eventDescriptor.SerializedHeaders);
 
-                await command.ExecuteNonQueryAsync();
+                await command.ExecuteNonQueryAsync().ConfigureAwait(false);
             }
         }
 
         /// <inheritdoc />
         protected override async Task<EventHistory> ReplayAsync(int fromVersion, int toVersion)
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName))
+            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
             using (var command = new SqlCommand(SqlCommands.GetEventsByVersion, connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
@@ -135,7 +135,7 @@ namespace SimpleDomain.EventStore.Persistence
                 command.AddParameter("@VersionFrom", fromVersion);
                 command.AddParameter("@VersionTo", toVersion);
 
-                using (var reader = await command.ExecuteReaderAsync())
+                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
                 {
                     return new EventHistory(ReadEvents(reader));
                 }

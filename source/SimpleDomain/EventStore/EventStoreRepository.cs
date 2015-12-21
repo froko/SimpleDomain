@@ -73,17 +73,23 @@ namespace SimpleDomain.EventStore
 
             using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateId))
             {
-                if (await eventStream.HasSnapshotAsync())
+                if (await eventStream.HasSnapshotAsync().ConfigureAwait(false))
                 {
-                    var snapshot = await eventStream.GetLatestSnapshotAsync();
+                    var snapshot = await eventStream
+                        .GetLatestSnapshotAsync()
+                        .ConfigureAwait(false);
+
                     aggregateRoot.LoadFromSnapshot(snapshot);
 
-                    var eventHistory = await eventStream.ReplayAsyncFromSnapshot(snapshot);
+                    var eventHistory = await eventStream
+                        .ReplayAsyncFromSnapshot(snapshot)
+                        .ConfigureAwait(false);
+
                     aggregateRoot.LoadFromEventHistory(eventHistory);
                 }
                 else
                 {
-                    var eventHistory = await eventStream.ReplayAsync();
+                    var eventHistory = await eventStream.ReplayAsync().ConfigureAwait(false);
                     if (eventHistory.IsEmpty)
                     {
                         throw new AggregateRootNotFoundException(typeof(TAggregateRoot), aggregateId);
@@ -99,7 +105,8 @@ namespace SimpleDomain.EventStore
         /// <inheritdoc />
         public async Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            await this.SaveAsync(aggregateRoot, new Dictionary<string, object>());
+            await this.SaveAsync(aggregateRoot, new Dictionary<string, object>())
+                .ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -107,11 +114,15 @@ namespace SimpleDomain.EventStore
         {
             using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateRoot.Id))
             {
-                await eventStream.SaveAsync(aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), aggregateRoot.Version, headers);
+                await eventStream
+                    .SaveAsync(aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), aggregateRoot.Version, headers)
+                    .ConfigureAwait(false);
+
                 aggregateRoot.CommitEvents();
             }
 
-            await this.SaveSnapshotAsyncIfNeeded(aggregateRoot);
+            await this.SaveSnapshotAsyncIfNeeded(aggregateRoot)
+                .ConfigureAwait(false);
         }
 
         private Task SaveSnapshotAsyncIfNeeded<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot

@@ -51,21 +51,21 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var snapshotDescriptor = new SnapshotDescriptor(this.AggregateType, this.AggregateId, snapshot);
 
-            await this.documentSession.StoreAsync(snapshotDescriptor);
-            await this.documentSession.SaveChangesAsync();
+            await this.documentSession.StoreAsync(snapshotDescriptor).ConfigureAwait(false);
+            await this.documentSession.SaveChangesAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public override async Task<bool> HasSnapshotAsync()
         {
-            var snapshots = await this.GetSnapshotsAsync();
+            var snapshots = await this.GetSnapshotsAsync().ConfigureAwait(false);
             return snapshots.Any();
         }
 
         /// <inheritdoc />
         public override async Task<ISnapshot> GetLatestSnapshotAsync()
         {
-            var snapshots = await this.GetSnapshotsAsync();
+            var snapshots = await this.GetSnapshotsAsync().ConfigureAwait(false);
             return snapshots.Last();
         }
 
@@ -74,8 +74,8 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var eventDescriptor = new EventDescriptor(this.AggregateType, this.AggregateId, versionableEvent, headers);
 
-            await this.documentSession.StoreAsync(eventDescriptor);
-            await this.documentSession.SaveChangesAsync();
+            await this.documentSession.StoreAsync(eventDescriptor).ConfigureAwait(false);
+            await this.documentSession.SaveChangesAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -85,7 +85,8 @@ namespace SimpleDomain.EventStore.Persistence
                 .Query<EventDescriptor>(EventStoreIndexes.EventDescriptorsByAggregateIdAndVersion)
                 .Where(e => e.AggregateId == this.AggregateId && e.Version >= fromVersion && e.Version <= toVersion)
                 .OrderBy(e => e.Version)
-                .GetAllEventsAsync();
+                .GetAllEventsAsync()
+                .ConfigureAwait(false);
 
             return new EventHistory(events);
         }
@@ -102,7 +103,8 @@ namespace SimpleDomain.EventStore.Persistence
                 .Query<SnapshotDescriptor>(EventStoreIndexes.SnapshotDescriptorsByAggregateIdAndVersion)
                 .Where(s => s.AggregateId == this.AggregateId)
                 .OrderBy(s => s.Version)
-                .GetAllSnapshotsAsync();
+                .GetAllSnapshotsAsync()
+                .ConfigureAwait(false);
         }
     }
 }

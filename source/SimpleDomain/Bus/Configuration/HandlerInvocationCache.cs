@@ -65,7 +65,7 @@ namespace SimpleDomain.Bus.Configuration
                 .Where(x => x.CanHandle(message))
                 .Select(x => x.InvokeAsync(handler, message));
 
-            await Task.WhenAll(handlerTasks);
+            await Task.WhenAll(handlerTasks).ConfigureAwait(false);
         }
 
         private static Func<object, object, Task> GetMethod(Type targetType, Type messageType, Type interfaceGenericType)

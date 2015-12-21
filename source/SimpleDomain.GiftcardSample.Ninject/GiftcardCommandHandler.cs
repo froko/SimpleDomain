@@ -53,34 +53,40 @@ namespace GiftcardSample
                 message.InitialBalance,
                 message.ValidUntil);
 
-            await this.repository.SaveAsync(giftcard);
+            await this.repository.SaveAsync(giftcard).ConfigureAwait(false);
         }
 
         public async Task HandleAsync(ActivateGiftcard message)
         {
-            var giftcard = await this.repository.GetByIdAsync<Giftcard>(message.CardId);
+            var giftcard = await this.repository
+                .GetByIdAsync<Giftcard>(message.CardId)
+                .ConfigureAwait(false);
 
             giftcard.Activate();
 
-            await this.repository.SaveAsync(giftcard);
+            await this.repository.SaveAsync(giftcard).ConfigureAwait(false);
         }
 
         public async Task HandleAsync(RedeemGiftcard message)
         {
-            var giftcard = await this.repository.GetByIdAsync<Giftcard>(message.CardId);
+            var giftcard = await this.repository
+                .GetByIdAsync<Giftcard>(message.CardId)
+                .ConfigureAwait(false);
 
             giftcard.Redeem(message.Amount);
 
-            await this.repository.SaveAsync(giftcard);
+            await this.repository.SaveAsync(giftcard).ConfigureAwait(false);
         }
 
         public async Task HandleAsync(LoadGiftcard message)
         {
-            var giftcard = await this.repository.GetByIdAsync<Giftcard>(message.CardId);
+            var giftcard = await this.repository
+                .GetByIdAsync<Giftcard>(message.CardId)
+                .ConfigureAwait(false);
 
             giftcard.Load(message.Amount);
 
-            await this.repository.SaveAsync(giftcard);
+            await this.repository.SaveAsync(giftcard).ConfigureAwait(false);
         }
     }
 }

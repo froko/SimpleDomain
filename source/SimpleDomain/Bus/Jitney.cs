@@ -77,7 +77,7 @@ namespace SimpleDomain.Bus
         protected async Task HandleCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
             var commandSubscription = this.configuration.Subscriptions.GetCommandSubscription(command);
-            await commandSubscription.HandleAsync(command);
+            await commandSubscription.HandleAsync(command).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace SimpleDomain.Bus
             var eventSubscriptions = this.configuration.Subscriptions.GetEventSubscriptions(@event);
             var handlerTasks = eventSubscriptions.Select(s => s.HandleAsync(@event));
 
-            await Task.WhenAll(handlerTasks);
+            await Task.WhenAll(handlerTasks).ConfigureAwait(false);
         }
     }
 }
