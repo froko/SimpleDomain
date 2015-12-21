@@ -40,7 +40,7 @@ namespace SimpleDomain.EventStore.Configuration
             this.kernel.Bind<IHaveEventStoreConfiguration>().ToConstant(this).InSingletonScope();
             this.kernel.Bind<IEventSourcedRepository>().To<EventStoreRepository>().InTransientScope();
 
-            this.DispatchEvents = @event => Task.FromResult(0);
+            this.DispatchEvents = @event => Task.CompletedTask;
         }
 
         /// <summary>

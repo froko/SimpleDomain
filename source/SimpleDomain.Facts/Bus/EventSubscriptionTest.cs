@@ -35,7 +35,7 @@ namespace SimpleDomain.Bus
             var eventOfSameType = new MyEvent();
             var eventOfOtherType = new OtherEvent();
 
-            var handler = new Func<MyEvent, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<MyEvent, Task>(cmd => Task.CompletedTask);
             var testee = new EventSubscription<MyEvent>(handler);
 
             testee.CanHandle(eventOfSameType).Should().BeTrue();
@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ShouldDecideIfSubscriptionCanHandleEventByType()
         {
-            var handler = new Func<MyEvent, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<MyEvent, Task>(cmd => Task.CompletedTask);
             var testee = new EventSubscription<MyEvent>(handler);
 
             testee.CanHandle<MyEvent>().Should().BeTrue();
@@ -63,7 +63,7 @@ namespace SimpleDomain.Bus
             var handler = new Func<ValueEvent, Task>(cmd =>
             {
                 expectedValue = cmd.Value;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             });
 
             var testee = new EventSubscription<ValueEvent>(handler);
@@ -76,7 +76,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ThrowsException_WhenTryingToHandleNullAsEvent()
         {
-            var handler = new Func<ValueEvent, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<ValueEvent, Task>(cmd => Task.CompletedTask);
 
             var testee = new EventSubscription<ValueEvent>(handler);
 

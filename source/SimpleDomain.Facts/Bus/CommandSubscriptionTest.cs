@@ -35,7 +35,7 @@ namespace SimpleDomain.Bus
             var commandOfSameType = new MyCommand();
             var commandOfOtherType = new OtherCommand();
 
-            var handler = new Func<MyCommand, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<MyCommand, Task>(cmd => Task.CompletedTask);
             var testee = new CommandSubscription<MyCommand>(handler);
 
             testee.CanHandle(commandOfSameType).Should().BeTrue();
@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ShouldDecideIfSubscriptionCanHandleCommandByType()
         {
-            var handler = new Func<MyCommand, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<MyCommand, Task>(cmd => Task.CompletedTask);
             var testee = new CommandSubscription<MyCommand>(handler);
 
             testee.CanHandle<MyCommand>().Should().BeTrue();
@@ -63,7 +63,7 @@ namespace SimpleDomain.Bus
             var handler = new Func<ValueCommand, Task>(cmd => 
             {
                 expectedValue = cmd.Value;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             });
 
             var testee = new CommandSubscription<ValueCommand>(handler);
@@ -76,7 +76,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ThrowsException_WhenTryingToHandleNullAsCommand()
         {
-            var handler = new Func<ValueCommand, Task>(cmd => Task.FromResult(0));
+            var handler = new Func<ValueCommand, Task>(cmd => Task.CompletedTask);
 
             var testee = new CommandSubscription<ValueCommand>(handler);
 

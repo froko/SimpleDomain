@@ -35,7 +35,7 @@ namespace SimpleDomain.EventStore.Configuration
         protected AbstractEventStoreConfiguration()
         {
             this.configurationItems = new Dictionary<string, object>();
-            this.DispatchEvents = @event => Task.FromResult(0);
+            this.DispatchEvents = @event => Task.CompletedTask;
         }
 
         /// <inheritdoc />

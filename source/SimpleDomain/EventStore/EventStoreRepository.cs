@@ -142,14 +142,14 @@ namespace SimpleDomain.EventStore
                 }
             }
 
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
 
         private Task SaveSnapshotAsync<TAggregateRoot>(Guid aggregateId, ISnapshot snapshot) where TAggregateRoot : IEventSourcedAggregateRoot
         {
             if (snapshot == null)
             {
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
 
             using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateId))

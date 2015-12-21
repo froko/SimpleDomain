@@ -35,7 +35,7 @@ namespace SimpleDomain.EventStore.Persistence
         public RavenEventStreamTest()
         {
             var aggregateId = Guid.NewGuid();
-            Func<IEvent, Task> dispatchAsync = @event => Task.FromResult(0);
+            Func<IEvent, Task> dispatchAsync = @event => Task.CompletedTask;
 
             DocumentStoreSetup.CreateIndexes(this.DocumentStore);
             DocumentStoreSetup.RegisterIdConventions(this.DocumentStore);

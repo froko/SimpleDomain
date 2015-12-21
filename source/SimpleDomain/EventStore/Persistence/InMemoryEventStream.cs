@@ -53,7 +53,7 @@ namespace SimpleDomain.EventStore.Persistence
         public override Task SaveSnapshotAsync(ISnapshot snapshot)
         {
             this.snapshotDescriptors.Add(new SnapshotDescriptor(this.AggregateType, this.AggregateId, snapshot));
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace SimpleDomain.EventStore.Persistence
         protected override Task SaveAsync(VersionableEvent versionableEvent, IDictionary<string, object> headers)
         {
             this.eventDescriptors.Add(new EventDescriptor(this.AggregateType, this.AggregateId, versionableEvent, headers));
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />

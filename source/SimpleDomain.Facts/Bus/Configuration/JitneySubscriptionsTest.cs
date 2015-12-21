@@ -56,7 +56,7 @@ namespace SimpleDomain.Bus.Configuration
             var handler = new Func<ValueCommand, Task>(c =>
             {
                 expectedValue = c.Value;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             });
 
             this.testee.AddCommandHandler(handler);
@@ -96,7 +96,7 @@ namespace SimpleDomain.Bus.Configuration
             var eventHandler = new Func<ValueEvent, Task>(e =>
             {
                 expectedValue = e.Value;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             });
 
             A.CallTo(() => this.handlerRegistry.GetEventHandlers(@event)).Returns(new[] { eventHandlerInstance });
@@ -144,8 +144,8 @@ namespace SimpleDomain.Bus.Configuration
         [Fact]
         public void ThrowsException_WhenTryingToSubscribeCommandHandlerAsAsyncActionTwiceForSameCommand()
         {
-            var firstHandler = new Func<ValueCommand, Task>(cmd => Task.FromResult(0));
-            var secondHandler = new Func<ValueCommand, Task>(cmd => Task.FromResult(0));
+            var firstHandler = new Func<ValueCommand, Task>(cmd => Task.CompletedTask);
+            var secondHandler = new Func<ValueCommand, Task>(cmd => Task.CompletedTask);
 
             this.testee.AddCommandHandler(firstHandler);
 
