@@ -19,9 +19,11 @@
 namespace SimpleDomain.Bus
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    
+
+    using SimpleDomain.Bus.Pipeline.Incomming;
+    using SimpleDomain.Bus.Pipeline.Outgoing;
+
     /// <summary>
     /// The Jitney configuration holder interface
     /// </summary>
@@ -31,24 +33,24 @@ namespace SimpleDomain.Bus
         /// Gets the Jitney subscriptions
         /// </summary>
         IHaveJitneySubscriptions Subscriptions { get; }
-
-        /// <summary>
-        /// Gets the contract map
-        /// </summary>
-        IDictionary<Type, EndpointAddress> ContractMap { get; }
         
         /// <summary>
-        /// Subscribes an async handler action for a given command
+        /// Creates the outgoing pipeline with all registered pipeline steps
         /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand;
+        /// <param name="handleEnvelopeAsync">The last async action to be performed for an outgoing envelope</param>
+        /// <returns>A new instance of <see cref="OutgoingPipeline"/></returns>
+        OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync);
 
         /// <summary>
-        /// Subscribes an async handler action for a given event
+        /// Creates the incomming pipeline with all registered pipeline steps
         /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent;
+        /// <param name="handleCommandAsync">The async handling action if the incomming message is a command</param>
+        /// <param name="handleEventAsync">The async handling action if the incomming message is an event</param>
+        /// <param name="handleSubscriptionMessageAsync">The async handling action if the incomming message is a <see cref="SubscriptionMessage"/></param>
+        /// <returns>A new instance of <see cref="IncommingPipeline"/></returns>
+        IncommingPipeline CreateIncommingPipeline(
+            Func<ICommand, Task> handleCommandAsync,
+            Func<IEvent, Task> handleEventAsync,
+            Func<SubscriptionMessage, Task> handleSubscriptionMessageAsync);
     }
 }

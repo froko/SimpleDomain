@@ -60,6 +60,28 @@
     <Compile Include="AggregateRoot.cs" />
     <Compile Include="AggregateRootNotFoundException.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegate.cs" />
+    <Compile Include="Bus\Envelope.cs" />
+    <Compile Include="Bus\HeaderKeys.cs" />
+    <Compile Include="Bus\IHavePipelineConfiguration.cs" />
+    <Compile Include="Bus\JitneyConfigurationException.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingPipeline.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\StepExtensions.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeContext.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContext.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingPipeline.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\StepExtensions.cs" />
+    <Compile Include="Bus\Pipeline\PipelineContext.cs" />
+    <Compile Include="Bus\Pipeline\PipelineStep.cs" />
     <Compile Include="EventStore\IConfigureThisEventStore.cs" />
     <Compile Include="IBoundedContext.cs" />
     <Compile Include="Bus\Configuration\AbstractHandlerRegistry.cs" />
@@ -163,6 +185,7 @@
       <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

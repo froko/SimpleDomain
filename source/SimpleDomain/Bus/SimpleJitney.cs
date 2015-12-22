@@ -43,13 +43,15 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override Task SendAsync<TCommand>(TCommand command)
         {
-            return this.HandleCommandAsync(command);
+            var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
+            return outgoingPipeline.InvokeAsync(command);
         }
 
         /// <inheritdoc />
         public override Task PublishAsync<TEvent>(TEvent @event)
         {
-            return this.HandleEventAsync(@event);
+            var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
+            return outgoingPipeline.InvokeAsync(@event);
         }
     }
 }

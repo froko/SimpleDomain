@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="CompositionRootTest.cs" company="frokonet.ch">
+// <copyright file="AbstractCompositionRootTest.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ namespace SimpleDomain
 
     using Xunit;
 
-    public class CompositionRootTest
+    public class AbstractCompositionRootTest
     {
         [Fact]
         public void CanBuildBusEventStoreAndRepositoryBasedOnDerivedMethods()
@@ -53,28 +53,28 @@ namespace SimpleDomain
             A.CallTo(() => firstBoundedContext.Configure(A<Jitney>.Ignored, A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
             A.CallTo(() => secondBoundedContext.Configure(A<Jitney>.Ignored, A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
         }
-    }
 
-    public class CompositionRoot : AbstractCompositionRoot
-    {
-        protected override void ConfigureBus(IConfigureThisJitney configuration)
+        private class CompositionRoot : AbstractCompositionRoot
         {
-        }
+            protected override void ConfigureBus(IConfigureThisJitney configuration)
+            {
+            }
 
-        protected override Jitney CreateBus(IHaveJitneyConfiguration configuration)
-        {
-            return new SimpleJitney(configuration);
-        }
+            protected override Jitney CreateBus(IHaveJitneyConfiguration configuration)
+            {
+                return new SimpleJitney(configuration);
+            }
 
-        protected override void ConfigureEventStore(IConfigureThisEventStore configuration)
-        {
-            configuration.DefineAsyncEventDispatching(@event => this.Bus.PublishAsync(@event));
-            configuration.PrepareInMemoryEventStore();
-        }
+            protected override void ConfigureEventStore(IConfigureThisEventStore configuration)
+            {
+                configuration.DefineAsyncEventDispatching(@event => this.Bus.PublishAsync(@event));
+                configuration.PrepareInMemoryEventStore();
+            }
 
-        protected override IEventStore CreateEventStore(IHaveEventStoreConfiguration configuration)
-        {
-            return new InMemoryEventStore(configuration);
+            protected override IEventStore CreateEventStore(IHaveEventStoreConfiguration configuration)
+            {
+                return new InMemoryEventStore(configuration);
+            }
         }
     }
 }

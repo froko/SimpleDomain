@@ -27,6 +27,8 @@ namespace GiftcardSample
     {
         protected override void ConfigureBus(IConfigureThisJitney configuration)
         {
+            configuration.DefineLocalEndpointAddress("gc.sample");
+            configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
         }
 
         protected override Jitney CreateBus(IHaveJitneyConfiguration configuration)

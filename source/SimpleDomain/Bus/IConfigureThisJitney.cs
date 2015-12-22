@@ -22,6 +22,9 @@ namespace SimpleDomain.Bus
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    
+    using SimpleDomain.Bus.Pipeline.Incomming;
+    using SimpleDomain.Bus.Pipeline.Outgoing;
 
     public interface IConfigureThisJitney
     {
@@ -31,6 +34,12 @@ namespace SimpleDomain.Bus
         /// <param name="key">The key</param>
         /// <param name="item">The item</param>
         void AddConfigurationItem(string key, object item);
+
+        /// <summary>
+        /// Defines the local endpoint address
+        /// </summary>
+        /// <param name="queueName">The name of the local endpoint queue</param>
+        void DefineLocalEndpointAddress(string queueName);
 
         /// <summary>
         /// Subscribes an async handler action for a given command
@@ -63,5 +72,29 @@ namespace SimpleDomain.Bus
         /// </summary>
         /// <typeparam name="TJitney">The type of the <see cref="Jitney"/> bus</typeparam>
         void Register<TJitney>() where TJitney : Jitney;
+
+        /// <summary>
+        /// Adds a pipeline step for incomming envelopes
+        /// </summary>
+        /// <param name="pipelineStep">The pipeline step</param>
+        void AddPipelineStep(IncommingEnvelopeStep pipelineStep);
+
+        /// <summary>
+        /// Adds a pipeline step for incomming messages
+        /// </summary>
+        /// <param name="pipelineStep">The pipeline step</param>
+        void AddPipelineStep(IncommingMessageStep pipelineStep);
+
+        /// <summary>
+        /// Adds a pipeline step for outgoing messages
+        /// </summary>
+        /// <param name="pipelineStep">The pipeline step</param>
+        void AddPipelineStep(OutgoingMessageStep pipelineStep);
+
+        /// <summary>
+        /// Adds a pipeline step for outgoing envelopes
+        /// </summary>
+        /// <param name="pipelineStep">The pipeline step</param>
+        void AddPipelineStep(OutgoingEnvelopeStep pipelineStep);
     }
 }

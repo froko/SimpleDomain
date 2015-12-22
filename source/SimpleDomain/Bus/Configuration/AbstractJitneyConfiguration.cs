@@ -24,16 +24,25 @@ namespace SimpleDomain.Bus.Configuration
     using System.Reflection;
     using System.Threading.Tasks;
 
+    using SimpleDomain.Bus.Pipeline.Incomming;
+    using SimpleDomain.Bus.Pipeline.Outgoing;
+
     /// <summary>
     /// The Jitney configuration base class
     /// </summary>
     public abstract class AbstractJitneyConfiguration : 
         IConfigureThisJitney,
-        IHaveJitneyConfiguration
+        IHaveJitneyConfiguration,
+        IHavePipelineConfiguration
     {
         protected readonly JitneySubscriptions JitneySubscriptions;
 
         private readonly IDictionary<string, object> configurationItems;
+
+        private readonly IList<IncommingEnvelopeStep> incommingEnvelopeSteps;
+        private readonly IList<IncommingMessageStep> incommingMessageSteps;
+        private readonly IList<OutgoingMessageStep> outgoingMessageSteps;
+        private readonly IList<OutgoingEnvelopeStep> outgoingEnvelopeSteps; 
         
         /// <summary>
         /// Creates a new instance of <see cref="AbstractJitneyConfiguration"/>
@@ -42,19 +51,28 @@ namespace SimpleDomain.Bus.Configuration
         protected AbstractJitneyConfiguration(AbstractHandlerRegistry handlerRegistry)
         {
             this.configurationItems = new Dictionary<string, object>();
+
+            this.incommingEnvelopeSteps = new List<IncommingEnvelopeStep>();
+            this.incommingMessageSteps = new List<IncommingMessageStep>();
+            this.outgoingMessageSteps = new List<OutgoingMessageStep>();
+            this.outgoingEnvelopeSteps = new List<OutgoingEnvelopeStep>();
             
             this.JitneySubscriptions = new JitneySubscriptions(handlerRegistry, new HandlerInvocationCache());
             this.ContractMap = new Dictionary<Type, EndpointAddress>();
         }
-
+        
         /// <inheritdoc />
         public IHaveJitneySubscriptions Subscriptions
         {
             get { return this.JitneySubscriptions; }
         }
 
+        /// <inheritdoc />
         public IDictionary<Type, EndpointAddress> ContractMap { get; private set; }
-        
+
+        /// <inheritdoc />
+        public EndpointAddress LocalEndpointAddress { get; private set; }
+
         /// <inheritdoc />
         public T Get<T>(string key)
         {
@@ -62,9 +80,36 @@ namespace SimpleDomain.Bus.Configuration
         }
 
         /// <inheritdoc />
+        public IncommingPipeline CreateIncommingPipeline(
+            Func<ICommand, Task> handleCommandAsync,
+            Func<IEvent, Task> handleEventAsync,
+            Func<SubscriptionMessage, Task> handleSubscriptionMessageAsync)
+        {
+            return new IncommingPipeline(
+                this,
+                this.incommingEnvelopeSteps.WithFinalIncommingEnvelopeStep(),
+                this.incommingMessageSteps.WithFinalIncommingMessageStep(handleCommandAsync, handleEventAsync, handleSubscriptionMessageAsync));
+        }
+
+        /// <inheritdoc />
+        public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
+        {
+            return new OutgoingPipeline(
+                this, 
+                this.outgoingMessageSteps.WithFinalOutgoingMessageStep(), 
+                this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(handleEnvelopeAsync));
+        }
+
+        /// <inheritdoc />
         public void AddConfigurationItem(string key, object item)
         {
             this.configurationItems.Add(key, item);
+        }
+
+        /// <inheritdoc />
+        public void DefineLocalEndpointAddress(string queueName)
+        {
+            this.LocalEndpointAddress = new EndpointAddress(queueName);
         }
 
         /// <inheritdoc />
@@ -96,6 +141,30 @@ namespace SimpleDomain.Bus.Configuration
         
         /// <inheritdoc />
         public abstract void Register<TJitney>() where TJitney : Jitney;
+
+        /// <inheritdoc />
+        public void AddPipelineStep(IncommingEnvelopeStep pipelineStep)
+        {
+            this.incommingEnvelopeSteps.Add(pipelineStep);
+        }
+
+        /// <inheritdoc />
+        public void AddPipelineStep(IncommingMessageStep pipelineStep)
+        {
+            this.incommingMessageSteps.Add(pipelineStep);
+        }
+
+        /// <inheritdoc />
+        public void AddPipelineStep(OutgoingMessageStep pipelineStep)
+        {
+            this.outgoingMessageSteps.Add(pipelineStep);
+        }
+
+        /// <inheritdoc />
+        public void AddPipelineStep(OutgoingEnvelopeStep pipelineStep)
+        {
+            this.outgoingEnvelopeSteps.Add(pipelineStep);
+        }
 
         /// <summary>
         /// Registers a handler type in the IoC container

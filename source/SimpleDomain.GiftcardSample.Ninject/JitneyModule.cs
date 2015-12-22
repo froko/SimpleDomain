@@ -34,6 +34,8 @@ namespace GiftcardSample
         {
             var configuration = new JitneyConfiguration(this.Kernel);
 
+            configuration.DefineLocalEndpointAddress("gc.sample");
+            configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
             configuration.SubscribeMessageHandlers(GetHandlerAssemblies());
             configuration.UseSimpleJitney();
         }

@@ -46,6 +46,7 @@
     <Compile Include="Domain\Giftcard.cs" />
     <Compile Include="Domain\GiftcardException.cs" />
     <Compile Include="GiftcardContext.cs" />
+    <Compile Include="LogIncommingEnvelopeStep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadStore\GiftcardOverview.cs" />
     <Compile Include="ReadStore\GiftcardStatus.cs" />

@@ -52,7 +52,7 @@ namespace SimpleDomain.EventStore
                 .WithMessage("You cannot register an EventStore when there is no IoC container");
         }
 
-        public class ConfigurationItem
+        private class ConfigurationItem
         {
         }
     }
