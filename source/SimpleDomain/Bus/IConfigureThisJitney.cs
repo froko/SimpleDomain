@@ -56,13 +56,7 @@ namespace SimpleDomain.Bus
         /// Subscribes all message handlers in the calling assembly
         /// </summary>
         void SubscribeMessageHandlersInThisAssembly();
-
-        /// <summary>
-        /// Adds one or more pipeline behaviors
-        /// </summary>
-        /// <param name="behaviors">A list of pipeline behaviors</param>
-        void AddPipelineBehaviors(params Func<IHaveBehaviorConfiguration, IPipelineBehavior>[] behaviors);
-
+        
         /// <summary>
         /// Registers a specific type of <see cref="Jitney"/> in the IoC container.
         /// <remarks>This method is intended for extension methods only</remarks>

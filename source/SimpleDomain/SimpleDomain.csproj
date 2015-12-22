@@ -76,8 +76,6 @@
     <Compile Include="Bus\Configuration\IHandlerInvocationCache.cs" />
     <Compile Include="Bus\IHaveJitneyConfiguration.cs" />
     <Compile Include="Bus\IHaveJitneySubscriptions.cs" />
-    <Compile Include="Bus\IHaveBehaviorConfiguration.cs" />
-    <Compile Include="Bus\IPipelineBehavior.cs" />
     <Compile Include="Bus\Jitney.cs" />
     <Compile Include="Bus\Configuration\ContainerLessJitneyConfiguration.cs" />
     <Compile Include="Bus\Configuration\JitneySubscriptions.cs" />

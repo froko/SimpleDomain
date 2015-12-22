@@ -29,8 +29,7 @@ namespace SimpleDomain.Bus.Configuration
     /// </summary>
     public abstract class AbstractJitneyConfiguration : 
         IConfigureThisJitney,
-        IHaveJitneyConfiguration, 
-        IHaveBehaviorConfiguration
+        IHaveJitneyConfiguration
     {
         protected readonly JitneySubscriptions JitneySubscriptions;
 
@@ -94,12 +93,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             this.SubscribeMessageHandlers(new[] { Assembly.GetCallingAssembly() });
         }
-
-        /// <inheritdoc />
-        public void AddPipelineBehaviors(params Func<IHaveBehaviorConfiguration, IPipelineBehavior>[] behaviors)
-        {
-        }
-
+        
         /// <inheritdoc />
         public abstract void Register<TJitney>() where TJitney : Jitney;
 
