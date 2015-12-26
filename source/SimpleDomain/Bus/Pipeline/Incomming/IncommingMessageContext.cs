@@ -37,14 +37,11 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <summary>
         /// Gets the incomming message
         /// </summary>
-        public IMessage Message { get; private set; }
+        public IMessage Message { get; }
 
         /// <summary>
         /// Gets the intent of the incomming message
         /// </summary>
-        public MessageIntent MessageIntent
-        {
-            get { return this.Message.GetIntent(); }
-        }
+        public MessageIntent MessageIntent => this.Message.GetIntent();
     }
 }

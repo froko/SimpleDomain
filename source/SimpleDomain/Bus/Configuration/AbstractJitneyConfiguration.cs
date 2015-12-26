@@ -62,13 +62,10 @@ namespace SimpleDomain.Bus.Configuration
         }
         
         /// <inheritdoc />
-        public IHaveJitneySubscriptions Subscriptions
-        {
-            get { return this.JitneySubscriptions; }
-        }
+        public IHaveJitneySubscriptions Subscriptions => this.JitneySubscriptions;
 
         /// <inheritdoc />
-        public IDictionary<Type, EndpointAddress> ContractMap { get; private set; }
+        public IDictionary<Type, EndpointAddress> ContractMap { get; }
 
         /// <inheritdoc />
         public EndpointAddress LocalEndpointAddress { get; private set; }

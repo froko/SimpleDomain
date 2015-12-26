@@ -47,20 +47,17 @@ namespace SimpleDomain
         /// <summary>
         /// Gets the Jitney bus
         /// </summary>
-        public Jitney Bus { get; private set; }
+        public Jitney Bus { get; }
 
         /// <summary>
         /// Gets the EventStore
         /// </summary>
-        public IEventStore EventStore { get; private set; }
+        public IEventStore EventStore { get; }
 
         /// <summary>
         /// Gets the Repository
         /// </summary>
-        public IEventSourcedRepository Repository
-        {
-            get { return new EventStoreRepository(this.EventStore); }
-        }
+        public IEventSourcedRepository Repository => new EventStoreRepository(this.EventStore);
 
         /// <summary>
         /// Registers a <see cref="IBoundedContext"/> within this composition root

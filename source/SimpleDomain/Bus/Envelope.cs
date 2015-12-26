@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Gets the headers
         /// </summary>
-        public Dictionary<string, object> Headers { get; private set; }
+        public Dictionary<string, object> Headers { get; }
 
         /// <summary>
         /// Gets the message body

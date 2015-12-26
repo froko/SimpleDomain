@@ -41,10 +41,7 @@ namespace SimpleDomain.EventStore.Persistence
             this.CreateSnapshotTableIfNeeded();
         }
 
-        private DbConnectionFactory Factory
-        {
-            get { return this.configuration.Get<DbConnectionFactory>(ConnectionFactory); }
-        }
+        private DbConnectionFactory Factory => this.configuration.Get<DbConnectionFactory>(ConnectionFactory);
 
         /// <inheritdoc />
         public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot

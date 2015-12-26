@@ -37,7 +37,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <summary>
         /// Gets the incomming envelope
         /// </summary>
-        public Envelope Envelope { get; private set; }
+        public Envelope Envelope { get; }
 
         /// <summary>
         /// Gets the incomming message

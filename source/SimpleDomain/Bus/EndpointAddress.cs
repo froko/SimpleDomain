@@ -59,21 +59,18 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Gets the name of the queue
         /// </summary>
-        public string QueueName { get; private set; }
+        public string QueueName { get; }
 
         /// <summary>
         /// Gets the name of the machine where the queue resides
         /// </summary>
-        public string MachineName { get; private set; }
+        public string MachineName { get; }
 
         /// <summary>
         /// Gets the fact that this endpoint is local to the current machine
         /// </summary>
         [JsonIgnore]
-        public bool IsLocal
-        {
-            get { return this.MachineName == Environment.MachineName; }
-        }
+        public bool IsLocal => this.MachineName == Environment.MachineName;
 
         /// <summary>
         /// Parses a given string to an <see cref="EndpointAddress"/>
@@ -100,7 +97,7 @@ namespace SimpleDomain.Bus
         {
             Guard.NotNullOrEmpty(() => subScope);
 
-            var subQueueName = string.Format("{0}.{1}", this.QueueName, subScope);
+            var subQueueName = $"{this.QueueName}.{subScope}";
 
             return new EndpointAddress(subQueueName, this.MachineName);
         }
@@ -126,7 +123,7 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override string ToString()
         {
-            return string.Format("{0}@{1}", this.QueueName, this.MachineName);
+            return $"{this.QueueName}@{this.MachineName}";
         }
     }
 }

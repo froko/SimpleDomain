@@ -42,10 +42,7 @@ namespace SimpleDomain
         /// <summary>
         /// Returns the fact that no events have been found/loaded
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return !this.events.Any(); }
-        }
+        public bool IsEmpty => !this.events.Any();
 
         /// <summary>
         /// Factory method to create a new instance of <see cref="EventHistory"/>

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IEventSourcedRepository.cs" company="Daidalos">
+// <copyright file="IEventSourcedRepository.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");

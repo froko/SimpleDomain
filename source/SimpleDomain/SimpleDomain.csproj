@@ -56,11 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractCompositionRoot.cs" />
-    <Compile Include="AggregateRoot.cs" />
+    <Compile Include="AbstractCompositionRoot.cs">
+        <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="AggregateRoot.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="AggregateRootNotFoundException.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegate.cs" />
-    <Compile Include="Bus\Envelope.cs" />
+    <Compile Include="Bus\Envelope.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\HeaderKeys.cs" />
     <Compile Include="Bus\IHavePipelineConfiguration.cs" />
     <Compile Include="Bus\JitneyConfigurationException.cs" />
@@ -71,11 +77,17 @@
     <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeContext.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContext.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContext.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingPipeline.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContext.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeStep.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContext.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Pipeline\Incomming\IncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageStep.cs" />
@@ -85,20 +97,26 @@
     <Compile Include="EventStore\IConfigureThisEventStore.cs" />
     <Compile Include="IBoundedContext.cs" />
     <Compile Include="Bus\Configuration\AbstractHandlerRegistry.cs" />
-    <Compile Include="Bus\Configuration\AbstractJitneyConfiguration.cs" />
+    <Compile Include="Bus\Configuration\AbstractJitneyConfiguration.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\GlobalJitneyConfigurationExtensions.cs" />
     <Compile Include="Bus\Configuration\AssemblyExtensions.cs" />
     <Compile Include="Bus\CommandSubscription.cs" />
     <Compile Include="Bus\CommandSubscriptionException.cs" />
     <Compile Include="Bus\Configuration\ContainerLessHandlerRegistry.cs" />
-    <Compile Include="Bus\EndpointAddress.cs" />
+    <Compile Include="Bus\EndpointAddress.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\EventSubscription.cs" />
     <Compile Include="Bus\Configuration\HandlerInvocationCache.cs" />
     <Compile Include="Bus\IConfigureThisJitney.cs" />
     <Compile Include="Bus\Configuration\IHandlerInvocationCache.cs" />
     <Compile Include="Bus\IHaveJitneyConfiguration.cs" />
     <Compile Include="Bus\IHaveJitneySubscriptions.cs" />
-    <Compile Include="Bus\Jitney.cs" />
+    <Compile Include="Bus\Jitney.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Configuration\ContainerLessJitneyConfiguration.cs" />
     <Compile Include="Bus\Configuration\JitneySubscriptions.cs" />
     <Compile Include="Bus\NoSubscriptionException.cs" />
@@ -110,14 +128,20 @@
     <Compile Include="Common\DynamicExtensions.g.cs" />
     <Compile Include="Common\ExceptionExtensions.cs" />
     <Compile Include="Common\ExceptionHelper.cs" />
-    <Compile Include="Common\Guard.cs" />
+    <Compile Include="Common\Guard.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Common\IAmBetween.cs" />
-    <Compile Include="Common\InMemoryTraceListener.cs" />
+    <Compile Include="Common\InMemoryTraceListener.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Common\Int32BetweenGuard.cs" />
     <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="DynamicEventSourcedAggregateRoot.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EventHistory.cs" />
+    <Compile Include="EventHistory.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="EventSourcedAggregateRoot.cs" />
     <Compile Include="EventStore\Configuration\AbstractEventStoreConfiguration.cs" />
     <Compile Include="EventStore\EventDescriptor.cs" />
@@ -139,7 +163,9 @@
       <DependentUpon>SqlCommands.resx</DependentUpon>
     </Compile>
     <Compile Include="EventStore\Persistence\SqlEventDescriptor.cs" />
-    <Compile Include="EventStore\Persistence\SqlEventStore.cs" />
+    <Compile Include="EventStore\Persistence\SqlEventStore.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="EventStore\Persistence\SqlEventStream.cs" />
     <Compile Include="EventStore\Persistence\SqlSnapshotDescriptor.cs" />
     <Compile Include="EventStore\SnapshotDescriptor.cs" />
@@ -160,7 +186,9 @@
     <Compile Include="IMessage.cs" />
     <Compile Include="INeedVersion.cs" />
     <Compile Include="ISnapshot.cs" />
-    <Compile Include="MessageExtensions.cs" />
+    <Compile Include="MessageExtensions.cs">
+        <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="MessageIntent.cs" />
     <Compile Include="MissingConfigurationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

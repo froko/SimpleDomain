@@ -88,17 +88,9 @@ namespace SimpleDomain.Common
         private static string GetParameterName(Expression expression)
         {
             var lambdaExpression = expression as LambdaExpression;
-            if (lambdaExpression != null)
-            {
-                var memberExpression = lambdaExpression.Body as MemberExpression;
+            var memberExpression = lambdaExpression?.Body as MemberExpression;
 
-                if (memberExpression != null)
-                {
-                    return memberExpression.Member.Name;
-                }
-            }
-
-            return string.Empty;
+            return memberExpression?.Member.Name ?? string.Empty;
         }
     }
 }

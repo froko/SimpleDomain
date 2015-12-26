@@ -71,11 +71,8 @@ namespace SimpleDomain
         {
             var versionProperty = message.GetType().GetProperty("Version");
 
-            if (versionProperty != null)
-            {
-                versionProperty.SetValue(message, version);
-            }
-            
+            versionProperty?.SetValue(message, version);
+
             return message;
         }
     }

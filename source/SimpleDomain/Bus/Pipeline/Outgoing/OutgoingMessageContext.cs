@@ -42,18 +42,12 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// <summary>
         /// Gets the outgoing message
         /// </summary>
-        public IMessage Message { get; private set; }
+        public IMessage Message { get; }
 
         /// <summary>
         /// Gets a list of envelopes for the registered receiving endpoints
         /// </summary>
-        public IEnumerable<Envelope> Envelopes
-        {
-            get
-            {
-                return this.envelopes;
-            }
-        }
+        public IEnumerable<Envelope> Envelopes => this.envelopes;
 
         /// <summary>
         /// Creates a new envelope and adds it to the list of envelopes for the registered receiving endpoints

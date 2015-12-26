@@ -33,18 +33,12 @@ namespace SimpleDomain.Common
         /// <summary>
         /// Gets a singleton instance of this class
         /// </summary>
-        public static TraceListener Instance
-        {
-            get{ return InternalInstance.Value; }
-        }
+        public static TraceListener Instance => InternalInstance.Value;
 
         /// <summary>
         /// Gets all recorded log messages
         /// </summary>
-        public static IEnumerable<string> LogMessages
-        {
-            get { return InternalLogMessages; }
-        }
+        public static IEnumerable<string> LogMessages => InternalLogMessages;
 
         /// <summary>
         /// Clears all recorded log messages

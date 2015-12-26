@@ -39,7 +39,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Gets the Jitney configuration
         /// </summary>
-        protected IHaveJitneyConfiguration Configuration { get; private set; }
+        protected IHaveJitneyConfiguration Configuration { get; }
 
         /// <summary>
         /// Starts the message reception process
@@ -60,10 +60,7 @@ namespace SimpleDomain.Bus
         public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
         {
             var jitneyConfiguration = this.Configuration as IConfigureThisJitney;
-            if (jitneyConfiguration != null)
-            {
-                jitneyConfiguration.SubscribeCommandHandler(handler);
-            }
+            jitneyConfiguration?.SubscribeCommandHandler(handler);
         }
 
         /// <summary>
@@ -74,10 +71,7 @@ namespace SimpleDomain.Bus
         public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
         {
             var jitneyConfiguration = this.Configuration as IConfigureThisJitney;
-            if (jitneyConfiguration != null)
-            {
-                jitneyConfiguration.SubscribeEventHandler(handler);
-            }
+            jitneyConfiguration?.SubscribeEventHandler(handler);
         }
 
         /// <summary>
