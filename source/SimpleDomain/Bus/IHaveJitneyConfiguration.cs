@@ -30,6 +30,11 @@ namespace SimpleDomain.Bus
     public interface IHaveJitneyConfiguration : IHaveDynamicConfiguration
     {
         /// <summary>
+        /// Gets the local endpoint address
+        /// </summary>
+        EndpointAddress LocalEndpointAddress { get; }
+
+        /// <summary>
         /// Gets the Jitney subscriptions
         /// </summary>
         IHaveJitneySubscriptions Subscriptions { get; }
