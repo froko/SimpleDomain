@@ -22,6 +22,8 @@ namespace SimpleDomain.Bus
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SimpleDomain.Common;
+
     /// <summary>
     /// The abstract bus
     /// </summary>
@@ -33,6 +35,7 @@ namespace SimpleDomain.Bus
         /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
         protected Jitney(IHaveJitneyConfiguration configuration)
         {
+            Guard.NotNull(() => configuration);
             this.Configuration = configuration;
         }
 

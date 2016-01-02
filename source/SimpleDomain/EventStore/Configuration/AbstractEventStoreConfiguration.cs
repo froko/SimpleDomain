@@ -22,6 +22,8 @@ namespace SimpleDomain.EventStore.Configuration
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using SimpleDomain.Common;
+
     /// <summary>
     /// The EventStore configuration base class
     /// </summary>
@@ -44,6 +46,18 @@ namespace SimpleDomain.EventStore.Configuration
         /// <inheritdoc />
         public T Get<T>(string key)
         {
+            Guard.NotNullOrEmpty(() => key);
+
+            if (!this.configurationItems.ContainsKey(key))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (!(this.configurationItems[key] is T))
+            {
+                throw new InvalidCastException();
+            }
+
             return (T)this.configurationItems[key];
         }
 

@@ -42,6 +42,14 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
+        public void ThrowsException_WhenTryingToInjectNullAsJitneyConfiguration()
+        {
+            Action action = () => { new SimpleJitney(null); };
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
         public async Task CallsOutgoingPipeline_WhenSendingCommand()
         {
             var command = new ValueCommand(11);
@@ -55,6 +63,14 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
+        public void ThrowsException_WhenTryingToSendNullAsCommand()
+        {
+            Func<Task> action = () => this.testee.SendAsync<ValueCommand>(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
         public async Task CallsOutgoingPipeline_WhenPublishingEvent()
         {
             var @event = new ValueEvent(11);
@@ -65,6 +81,14 @@ namespace SimpleDomain.Bus
             await this.testee.PublishAsync(@event);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToPublishNullAsEvent()
+        {
+            Func<Task> action = () => this.testee.PublishAsync<ValueEvent>(null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

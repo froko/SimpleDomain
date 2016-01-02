@@ -23,6 +23,8 @@ namespace SimpleDomain.Bus
 
     using Newtonsoft.Json;
 
+    using SimpleDomain.Common;
+
     /// <summary>
     /// The message envelope
     /// </summary>
@@ -51,7 +53,7 @@ namespace SimpleDomain.Bus
         /// Gets the message body
         /// </summary>
         public IMessage Body { get; private set; }
-
+        
         /// <summary>
         /// Creates a new instance of <see cref="Envelope"/>
         /// </summary>
@@ -61,12 +63,17 @@ namespace SimpleDomain.Bus
         /// <returns>A new instance of <see cref="Envelope"/></returns>
         public static Envelope Create(EndpointAddress sender, EndpointAddress recipient, IMessage body)
         {
+            Guard.NotNull(() => sender);
+            Guard.NotNull(() => recipient);
+            Guard.NotNull(() => body);
+
             var mesageId = Guid.NewGuid();
             var headers = new Dictionary<string, object>
             {
                 { HeaderKeys.Sender, sender },
                 { HeaderKeys.Recipient, recipient },
                 { HeaderKeys.TimeSent, DateTime.UtcNow },
+                { HeaderKeys.MessageType, body.GetFullName()},
                 { HeaderKeys.MessageId, mesageId },
                 { HeaderKeys.CorrelationId, mesageId }
             };
@@ -106,6 +113,29 @@ namespace SimpleDomain.Bus
 
             this.Headers.Add(key, value);
             return this;
+        }
+
+        /// <summary>
+        /// Gets the typed header item by its key
+        /// </summary>
+        /// <typeparam name="T">The type of the header item</typeparam>
+        /// <param name="key">The header key</param>
+        /// <returns>The typed header item</returns>
+        public T GetHeader<T>(string key)
+        {
+            Guard.NotNullOrEmpty(() => key);
+
+            if (!this.Headers.ContainsKey(key))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (!(this.Headers[key] is T))
+            {
+                throw new InvalidCastException();
+            }
+
+            return (T)this.Headers[key];
         }
     }
 }

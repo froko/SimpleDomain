@@ -20,6 +20,8 @@ namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
 
+    using SimpleDomain.Common;
+
     /// <summary>
     /// The most simple <see cref="Jitney"/> you may can think of
     /// </summary>
@@ -43,6 +45,8 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override Task SendAsync<TCommand>(TCommand command)
         {
+            Guard.NotNull(() => command);
+
             var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
             return outgoingPipeline.InvokeAsync(command);
         }
@@ -50,6 +54,8 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override Task PublishAsync<TEvent>(TEvent @event)
         {
+            Guard.NotNull(() => @event);
+
             var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
             return outgoingPipeline.InvokeAsync(@event);
         }

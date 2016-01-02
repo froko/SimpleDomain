@@ -26,6 +26,7 @@ namespace SimpleDomain.Bus.Configuration
 
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Bus.Pipeline.Outgoing;
+    using SimpleDomain.Common;
 
     /// <summary>
     /// The Jitney configuration base class
@@ -73,6 +74,18 @@ namespace SimpleDomain.Bus.Configuration
         /// <inheritdoc />
         public T Get<T>(string key)
         {
+            Guard.NotNullOrEmpty(() => key);
+
+            if (!this.configurationItems.ContainsKey(key))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (!(this.configurationItems[key] is T))
+            {
+                throw new InvalidCastException();
+            }
+
             return (T)this.configurationItems[key];
         }
 

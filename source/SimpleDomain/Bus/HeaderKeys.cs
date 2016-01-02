@@ -25,8 +25,9 @@ namespace SimpleDomain.Bus
     {
         public const string Sender = "Sender";
         public const string Recipient = "Recipient";
-
         public const string TimeSent = "TimeSent";
+
+        public const string MessageType = "MessageType";
 
         public const string MessageId = "MessageId";
         public const string CorrelationId = "CorrelationId";

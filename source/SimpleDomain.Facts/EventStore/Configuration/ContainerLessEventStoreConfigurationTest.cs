@@ -16,31 +16,18 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore
+namespace SimpleDomain.EventStore.Configuration
 {
     using System;
 
     using FluentAssertions;
 
-    using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.EventStore.Persistence;
 
     using Xunit;
 
     public class ContainerLessEventStoreConfigurationTest
     {
-        [Fact]
-        public void CanAddAndGetConfigurationItem()
-        {
-            var testee = new ContainerLessEventStoreConfiguration();
-
-            testee.AddConfigurationItem("Foo", new ConfigurationItem());
-
-            var configurationItem = testee.Get<ConfigurationItem>("Foo");
-
-            configurationItem.Should().NotBeNull();
-        }
-
         [Fact]
         public void ThrowsException_WhenTryingToRegisterJitney()
         {
@@ -50,10 +37,6 @@ namespace SimpleDomain.EventStore
 
             action.ShouldThrow<NotSupportedException>()
                 .WithMessage("You cannot register an EventStore when there is no IoC container");
-        }
-
-        private class ConfigurationItem
-        {
         }
     }
 }

@@ -18,10 +18,11 @@
 
 namespace SimpleDomain.Bus
 {
+    using System;
     using System.Collections.Generic;
 
     using FluentAssertions;
-
+    
     using SimpleDomain.TestDoubles;
 
     using Xunit;
@@ -60,13 +61,33 @@ namespace SimpleDomain.Bus
         [Fact]
         public void MessageIdAndCorrelationIdAreTheSame_WhenCreatingInstanceWithFactoryMethod()
         {
-            var sender = new EndpointAddress("sender");
-            var recipient = new EndpointAddress("recipient");
-            var body = new ValueCommand(11);
-
-            var testee = Envelope.Create(sender, recipient, body);
+            var testee = CreateTestee();
 
             testee.Headers[HeaderKeys.MessageId].Should().Be(testee.Headers[HeaderKeys.CorrelationId]);
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithNullAsSender()
+        {
+            Action action = () => Envelope.Create(null, new EndpointAddress("recipient"), new ValueCommand(11));
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithNullAsRecipient()
+        {
+            Action action = () => Envelope.Create(new EndpointAddress("sender"), null, new ValueCommand(11));
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithNullAsBody()
+        {
+            Action action = () => Envelope.Create(new EndpointAddress("sender"), new EndpointAddress("recipient"), null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
@@ -96,6 +117,16 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
+        public void ThrowsException_WhenTryingToAddHeaderWithNullAsKey()
+        {
+            var testee = CreateTestee();
+
+            Action action = () => testee.AddHeader(null, 666);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
         public void CanReplaceExistingHeader()
         {
             var headers = new Dictionary<string, object> { { "Existing Header", 42 } };
@@ -119,6 +150,63 @@ namespace SimpleDomain.Bus
             testee.ReplaceHeader("NonExisting Header", 666);
 
             testee.Headers.Should().HaveCount(2).And.ContainKey("NonExisting Header").And.ContainValue(666);
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToReplaceHeaderWithNullAsKey()
+        {
+            var testee = CreateTestee();
+
+            Action action = () => testee.ReplaceHeader(null, 666);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CanGetHeaderByItsKey()
+        {
+            var testee = CreateTestee();
+
+            testee.GetHeader<Guid>(HeaderKeys.CorrelationId).Should().NotBeEmpty();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToGetHeaderWithNullAsKey()
+        {
+            var testee = CreateTestee();
+
+            Action action = () => testee.GetHeader<string>(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenHeaderTypeIsNotOfGivenType()
+        {
+            var testee = CreateTestee();
+
+            Action action = () => testee.GetHeader<string>(HeaderKeys.MessageId);
+
+            action.ShouldThrow<InvalidCastException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenHeaderKeyIsNotFound()
+        {
+            var testee = CreateTestee();
+
+            Action action = () => testee.GetHeader<string>("NotExistingHeaderKey");
+
+            action.ShouldThrow<KeyNotFoundException>();
+        }
+
+        private static Envelope CreateTestee()
+        {
+            var sender = new EndpointAddress("sender");
+            var recipient = new EndpointAddress("recipient");
+            var body = new ValueCommand(11);
+
+            return Envelope.Create(sender, recipient, body);
         }
     }
 }

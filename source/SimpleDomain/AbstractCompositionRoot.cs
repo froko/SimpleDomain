@@ -20,6 +20,7 @@ namespace SimpleDomain
 {
     using SimpleDomain.Bus;
     using SimpleDomain.Bus.Configuration;
+    using SimpleDomain.Common;
     using SimpleDomain.EventStore;
     using SimpleDomain.EventStore.Configuration;
 
@@ -65,6 +66,7 @@ namespace SimpleDomain
         /// <param name="boundedContext">The bounded context</param>
         public void Register(IBoundedContext boundedContext)
         {
+            Guard.NotNull(() => boundedContext);
             boundedContext.Configure(this.Bus, this.Repository);
         }
 

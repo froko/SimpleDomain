@@ -19,6 +19,7 @@
 namespace SimpleDomain.Bus.Configuration
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -51,6 +52,40 @@ namespace SimpleDomain.Bus.Configuration
             var configurationItem = this.testee.Get<ConfigurationItem>("Foo");
 
             configurationItem.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToAddConfigurationItemWithNullAsKey()
+        {
+            Action action = () => this.testee.AddConfigurationItem(null, new ConfigurationItem());
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToGetConfigurationItemWithNullAsKey()
+        {
+            Action action = () => this.testee.Get<string>(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenConfigurationItemTypeIsNotOfGivenType()
+        {
+            this.testee.AddConfigurationItem("Foo", new ConfigurationItem());
+
+            Action action = () => this.testee.Get<string>("Foo");
+
+            action.ShouldThrow<InvalidCastException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenConfigurationItemKeyIsNotFound()
+        {
+            Action action = () => this.testee.Get<string>("NotExistingKey");
+
+            action.ShouldThrow<KeyNotFoundException>();
         }
 
         [Fact]

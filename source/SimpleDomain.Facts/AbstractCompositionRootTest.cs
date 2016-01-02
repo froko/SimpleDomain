@@ -18,6 +18,8 @@
 
 namespace SimpleDomain
 {
+    using System;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -52,6 +54,16 @@ namespace SimpleDomain
 
             A.CallTo(() => firstBoundedContext.Configure(A<Jitney>.Ignored, A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
             A.CallTo(() => secondBoundedContext.Configure(A<Jitney>.Ignored, A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToRegisterNullAsBoundedContext()
+        {
+            var testee = new CompositionRoot();
+
+            Action action = () => testee.Register(null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         private class CompositionRoot : AbstractCompositionRoot

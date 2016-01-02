@@ -47,7 +47,7 @@ namespace SimpleDomain
         }
 
         [Fact]
-        public void ShouldThrowException_WhenTryingToCreateInstanceAndInnerEventIsNull()
+        public void ThrowsException_WhenTryingToCreateInstanceAndInnerEventIsNull()
         {
             Action action = () => { new VersionableEvent(null); };
 

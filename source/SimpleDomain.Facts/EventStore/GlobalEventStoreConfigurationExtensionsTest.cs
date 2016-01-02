@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AbstractEventStoreConfigurationExtensionsTest.cs" company="frokonet.ch">
+// <copyright file="GlobalEventStoreConfigurationExtensionsTest.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ namespace SimpleDomain.EventStore
 
     using Xunit;
 
-    public class AbstractEventStoreConfigurationExtensionsTest
+    public class GlobalEventStoreConfigurationExtensionsTest
     {
         [Fact]
         public void CanPrepareInMemoryEventStore()

@@ -119,8 +119,9 @@
     <Compile Include="DynamicEventSourcedAggregateRootTest.cs" />
     <Compile Include="EntityTest.cs" />
     <Compile Include="EventHistoryTest.cs" />
-    <Compile Include="EventStore\AbstractEventStoreConfigurationExtensionsTest.cs" />
-    <Compile Include="EventStore\ContainerLessEventStoreConfigurationTest.cs" />
+    <Compile Include="EventStore\Configuration\AbstractEventStoreConfigurationTest.cs" />
+    <Compile Include="EventStore\GlobalEventStoreConfigurationExtensionsTest.cs" />
+    <Compile Include="EventStore\Configuration\ContainerLessEventStoreConfigurationTest.cs" />
     <Compile Include="EventStore\EventDescriptorTest.cs" />
     <Compile Include="EventStore\EventStoreRepositoryTest.cs" />
     <Compile Include="EventStore\Persistence\InMemoryIntegrationTest.cs" />
