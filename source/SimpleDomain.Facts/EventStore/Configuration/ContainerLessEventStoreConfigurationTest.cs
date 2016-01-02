@@ -36,7 +36,7 @@ namespace SimpleDomain.EventStore.Configuration
             Action action = () => testee.Register<InMemoryEventStore>();
 
             action.ShouldThrow<NotSupportedException>()
-                .WithMessage("You cannot register an EventStore when there is no IoC container");
+                .WithMessage(ExceptionMessages.EventStoreCannotBeRegistered);
         }
     }
 }

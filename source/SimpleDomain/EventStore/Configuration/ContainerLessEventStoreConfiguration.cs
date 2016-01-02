@@ -28,7 +28,7 @@ namespace SimpleDomain.EventStore.Configuration
         /// <inheritdoc />
         public override void Register<TEventStore>()
         {
-            throw new NotSupportedException("You cannot register an EventStore when there is no IoC container");
+            throw new NotSupportedException(ExceptionMessages.EventStoreCannotBeRegistered);
         }
     }
 }

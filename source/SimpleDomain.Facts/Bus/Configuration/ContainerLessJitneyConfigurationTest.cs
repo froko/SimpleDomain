@@ -36,7 +36,7 @@ namespace SimpleDomain.Bus.Configuration
             Action action = () => testee.Register<SimpleJitney>();
 
             action.ShouldThrow<NotSupportedException>()
-                .WithMessage("You cannot register a Bus when there is no IoC container");
+                .WithMessage(ExceptionMessages.BusCannotBeRegistered);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace SimpleDomain.Bus.Configuration
             Action action = () => testee.SubscribeMessageHandlers(handlerAssemblies);
 
             action.ShouldThrow<NotSupportedException>()
-                .WithMessage("You cannot register a handler when there is no IoC container");
+                .WithMessage(ExceptionMessages.HandlerCannotBeRegistered);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace SimpleDomain.Bus.Configuration
             Action action = () => testee.SubscribeMessageHandlersInThisAssembly();
 
             action.ShouldThrow<NotSupportedException>()
-                .WithMessage("You cannot register a handler when there is no IoC container");
+                .WithMessage(ExceptionMessages.HandlerCannotBeRegistered);
         }
     }
 }

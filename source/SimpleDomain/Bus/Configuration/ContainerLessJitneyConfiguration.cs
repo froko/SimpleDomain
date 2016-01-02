@@ -35,13 +35,13 @@ namespace SimpleDomain.Bus.Configuration
         /// <inheritdoc />
         public override void Register<TJitney>()
         {
-            throw new NotSupportedException("You cannot register a Bus when there is no IoC container");
+            throw new NotSupportedException(ExceptionMessages.BusCannotBeRegistered);
         }
 
         /// <inheritdoc />
         protected override void RegisterHandlerType(Type type)
         {
-            throw new NotSupportedException("You cannot register a handler when there is no IoC container");
+            throw new NotSupportedException(ExceptionMessages.HandlerCannotBeRegistered);
         }
     }
 }

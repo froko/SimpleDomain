@@ -120,11 +120,23 @@
   <data name="AggregateCouldNotBeFound" xml:space="preserve">
     <value>An aggregate of type {0} with key {1} could not be found.</value>
   </data>
+  <data name="BusCannotBeRegistered" xml:space="preserve">
+    <value>Cannot register a Bus when there is no IoC container</value>
+  </data>
   <data name="CannotProcessMessageWithoutSubscription" xml:space="preserve">
     <value>Cannot process message of type {0} since no subscription was found.</value>
   </data>
   <data name="CannotSubscribeMoreThanOneHandlerForCommand" xml:space="preserve">
     <value>Cannot subscribe more than one handler for command of type {0}.</value>
+  </data>
+  <data name="EventStoreCannotBeRegistered" xml:space="preserve">
+    <value>Cannot register an EventStore when there is no IoC container</value>
+  </data>
+  <data name="HandlerCannotBeRegistered" xml:space="preserve">
+    <value>Cannot register a handler when there is no IoC container</value>
+  </data>
+  <data name="LocalEndpointAddressMustBeSet" xml:space="preserve">
+    <value>Local endpoint address must be set</value>
   </data>
   <data name="LocalEndpointAddressNotDefined" xml:space="preserve">
     <value>The local queueName address has not yet been defined</value>

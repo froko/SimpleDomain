@@ -70,6 +70,15 @@ namespace SimpleDomain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot register a Bus when there is no IoC container.
+        /// </summary>
+        public static string BusCannotBeRegistered {
+            get {
+                return ResourceManager.GetString("BusCannotBeRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot process message of type {0} since no subscription was found..
         /// </summary>
         public static string CannotProcessMessageWithoutSubscription {
@@ -88,7 +97,34 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The local endpoint address has not yet been defined.
+        ///   Looks up a localized string similar to Cannot register an EventStore when there is no IoC container.
+        /// </summary>
+        public static string EventStoreCannotBeRegistered {
+            get {
+                return ResourceManager.GetString("EventStoreCannotBeRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot register a handler when there is no IoC container.
+        /// </summary>
+        public static string HandlerCannotBeRegistered {
+            get {
+                return ResourceManager.GetString("HandlerCannotBeRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local endpoint address must be set.
+        /// </summary>
+        public static string LocalEndpointAddressMustBeSet {
+            get {
+                return ResourceManager.GetString("LocalEndpointAddressMustBeSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The local queueName address has not yet been defined.
         /// </summary>
         public static string LocalEndpointAddressNotDefined {
             get {

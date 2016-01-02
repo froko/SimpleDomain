@@ -55,7 +55,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         {
             if (this.configuration.LocalEndpointAddress == null)
             {
-                throw new JitneyConfigurationException("Local endpoint address must be set");
+                throw new JitneyConfigurationException(ExceptionMessages.LocalEndpointAddressNotDefined);
             }
 
             var messageContext = new OutgoingMessageContext(message, this.configuration);
