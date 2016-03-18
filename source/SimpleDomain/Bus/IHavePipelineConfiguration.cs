@@ -27,13 +27,29 @@ namespace SimpleDomain.Bus
     public interface IHavePipelineConfiguration
     {
         /// <summary>
-        /// Gets the contract map
-        /// </summary>
-        IDictionary<Type, EndpointAddress> ContractMap { get; }
-
-        /// <summary>
         /// Gets the local endpoint address
         /// </summary>
         EndpointAddress LocalEndpointAddress { get; }
+        
+        /// <summary>
+        /// Gets the address of the consuming endpoint for a given command
+        /// </summary>
+        /// <param name="command">The command</param>
+        /// <returns>The address of the consuming endpiont</returns>
+        EndpointAddress GetConsumingEndpointAddress(ICommand command);
+
+        /// <summary>
+        /// Gets a list of endpoint addresses for the subscribed enpoints of a given event
+        /// </summary>
+        /// <param name="event">The event</param>
+        /// <returns>A list of endpint addresses for the subscribed endpoints</returns>
+        IEnumerable<EndpointAddress> GetSubscribedEndpointAddresses(IEvent @event);
+
+        /// <summary>
+        /// Gets the address of the publishing endpoint for a given event type
+        /// </summary>
+        /// <param name="fullNameOfEventType">The full name of the event type</param>
+        /// <returns>The address of the publishing endpoint</returns>
+        EndpointAddress GetPublishingEndpointAddress(string fullNameOfEventType);
     }
 }

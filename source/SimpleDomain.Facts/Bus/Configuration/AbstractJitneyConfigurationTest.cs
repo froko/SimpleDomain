@@ -188,12 +188,13 @@ namespace SimpleDomain.Bus.Configuration
         public async Task CanAddOutgoingEnvelopePipelineStep()
         {
             this.testee.DefineLocalEndpointAddress("sender");
+            this.testee.MapContracts(typeof(ValueCommand).Assembly).ToMe();
 
             var pipelineStep = A.Fake<OutgoingEnvelopeStep>();
             this.testee.AddPipelineStep(pipelineStep);
 
             var pipeline = this.testee.CreateOutgoingPipeline(e => Task.CompletedTask);
-            await pipeline.InvokeAsync(A.Fake<IMessage>());
+            await pipeline.InvokeAsync(new ValueCommand(11));
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<OutgoingEnvelopeContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }

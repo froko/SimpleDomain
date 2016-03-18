@@ -42,9 +42,16 @@ namespace SimpleDomain.Bus
         }
 
         /// <inheritdoc />
-        public override void Start()
+        public override async Task StartAsync()
         {
             this.provider.Connect(this.Configuration.LocalEndpointAddress, this.HandleAsync);
+
+            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
+            {
+                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
+                await outgoingPipeline.InvokeAsync(
+                    new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName));
+            }
         }
 
         /// <inheritdoc />
@@ -63,12 +70,6 @@ namespace SimpleDomain.Bus
 
             var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
             return outgoingPipeline.InvokeAsync(@event);
-        }
-
-        /// <inheritdoc />
-        protected override Task HandleSubscriptionMessageAsync(SubscriptionMessage subscriptionMessage)
-        {
-            return Task.CompletedTask;
         }
     }
 }

@@ -16,10 +16,10 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using System;
-    
+
     using FluentAssertions;
 
     using GiftcardSample.Commands;

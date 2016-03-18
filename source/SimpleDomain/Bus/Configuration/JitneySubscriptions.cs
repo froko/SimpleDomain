@@ -35,6 +35,7 @@ namespace SimpleDomain.Bus.Configuration
         private readonly IHandlerInvocationCache handlerInvocationCache;
         private readonly IList<Subscription> commandSubscriptions;
         private readonly IList<Subscription> eventSubscriptions;
+        private readonly IList<Type> eventTypes; 
 
         /// <summary>
         /// Creates a new instance of <see cref="JitneySubscriptions"/>
@@ -49,6 +50,7 @@ namespace SimpleDomain.Bus.Configuration
             this.handlerInvocationCache = handlerInvocationCache;
             this.commandSubscriptions = new List<Subscription>();
             this.eventSubscriptions = new List<Subscription>();
+            this.eventTypes = new List<Type>();
         }
 
         /// <summary>
@@ -78,6 +80,7 @@ namespace SimpleDomain.Bus.Configuration
             Guard.NotNull(() => handler);
 
             this.eventSubscriptions.Add(new EventSubscription<TEvent>(handler));
+            this.eventTypes.Add(typeof(TEvent));
         }
 
         /// <summary>
@@ -125,12 +128,23 @@ namespace SimpleDomain.Bus.Configuration
             return subscriptions.Union(handlerSubscriptions);
         }
 
+        /// <inheritdoc />
+        public IEnumerable<Type> GetSubscribedEventTypes()
+        {
+            return this.eventTypes.Distinct();
+        }
+
         private void RegisterHandlerType(Type asyncHandlerType)
         {
             foreach (var messageType in asyncHandlerType.GetAllMessageTypeThisTypeCanHandle())
             {
                 this.handlerRegistry.Register(asyncHandlerType, messageType);
                 this.handlerInvocationCache.Add(asyncHandlerType, messageType);
+
+                if (typeof(IEvent).IsAssignableFrom(messageType))
+                {
+                    this.eventTypes.Add(messageType);
+                }
             }
         }
     }

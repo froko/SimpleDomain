@@ -42,7 +42,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// <summary>
         /// Gets the outgoing message
         /// </summary>
-        public IMessage Message { get; }
+        public virtual IMessage Message { get; }
 
         /// <summary>
         /// Gets a list of envelopes for the registered receiving endpoints

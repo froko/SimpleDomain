@@ -49,4 +49,12 @@ namespace SimpleDomain.TestDoubles
             this.Value = message.Value;
         }
     }
+
+    public class MyEventHandler : IHandleAsync<MyEvent>
+    {
+        public Task HandleAsync(MyEvent message)
+        {
+            return Task.CompletedTask;
+        }
+    }
 }

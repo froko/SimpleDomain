@@ -16,17 +16,17 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using global::Ninject;
+
     using GiftcardSample.Domain;
     using GiftcardSample.ReadStore;
-
-    using Ninject;
 
     using SimpleDomain;
     using SimpleDomain.Bus;
@@ -42,27 +42,17 @@ namespace GiftcardSample
                 new JitneyModule(),
                 new EventStoreModule(),
                 new ReadStoreModule());
+
+            this.kernel.SignalJitneyToStartWork();
         }
 
-        protected Jitney Bus
-        {
-            get { return this.kernel.Get<Jitney>(); }
-        }
+        protected Jitney Bus => this.kernel.Get<Jitney>();
 
-        protected IEventStore EventStore
-        {
-            get { return this.kernel.Get<IEventStore>(); }
-        }
+        protected IGiftcardOverviewQuery OverviewQuery => this.kernel.Get<IGiftcardOverviewQuery>();
 
-        protected IGiftcardOverviewQuery OverviewQuery
-        {
-            get { return this.kernel.Get<IGiftcardOverviewQuery>(); }
-        }
+        protected IGiftcardTransactionQuery TransactionQuery => this.kernel.Get<IGiftcardTransactionQuery>();
 
-        protected IGiftcardTransactionQuery TransactionQuery
-        {
-            get { return this.kernel.Get<IGiftcardTransactionQuery>(); }
-        }
+        private IEventStore EventStore => this.kernel.Get<IEventStore>();
 
         protected async Task PrepareEventsAsync(Guid cardId, params IEvent[] events)
         {

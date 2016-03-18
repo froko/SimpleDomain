@@ -41,24 +41,19 @@ namespace GiftcardSample
 
             this.compositionRoot = new CompositionRoot();
             this.compositionRoot.Register(new GiftcardContext(readStore));
+            this.compositionRoot.Start();
 
             this.OverviewQuery = new InMemoryGiftcardOverviewQuery(readStore);
             this.TransactionQuery = new InMemoryGiftcardTransactionQuery(readStore);
         }
 
-        protected Jitney Bus
-        {
-            get { return this.compositionRoot.Bus; }
-        }
+        protected Jitney Bus => this.compositionRoot.Bus;
 
-        protected IEventStore EventStore
-        {
-            get { return this.compositionRoot.EventStore; }
-        }
+        protected IGiftcardOverviewQuery OverviewQuery { get; }
 
-        protected IGiftcardOverviewQuery OverviewQuery { get; private set; }
+        protected IGiftcardTransactionQuery TransactionQuery { get; }
 
-        protected IGiftcardTransactionQuery TransactionQuery { get; private set; }
+        private IEventStore EventStore => this.compositionRoot.EventStore;
 
         protected async Task PrepareEventsAsync(Guid cardId, params IEvent[] events)
         {

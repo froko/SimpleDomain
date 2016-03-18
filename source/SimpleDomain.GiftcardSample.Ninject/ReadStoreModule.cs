@@ -16,12 +16,12 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using GiftcardSample.ReadStore;
     using GiftcardSample.ReadStore.InMemory;
 
-    using Ninject.Modules;
+    using global::Ninject.Modules;
 
     public class ReadStoreModule : NinjectModule
     {

@@ -37,11 +37,16 @@ namespace SimpleDomain.Bus
         }
 
         /// <inheritdoc />
-        public override void Start()
+        public override async Task StartAsync()
         {
-            // Nothing to do here since there is no external queuing system.
+            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
+            {
+                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
+                await outgoingPipeline.InvokeAsync(
+                    new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName));
+            }
         }
-
+        
         /// <inheritdoc />
         public override Task SendAsync<TCommand>(TCommand command)
         {

@@ -27,7 +27,7 @@ namespace SimpleDomain.Bus
     /// <summary>
     /// Represents an endpoint address
     /// </summary>
-    public class EndpointAddress
+    public class EndpointAddress : ValueObject<EndpointAddress>
     {
         /// <summary>
         /// Creates a new instance of <see cref="EndpointAddress"/>

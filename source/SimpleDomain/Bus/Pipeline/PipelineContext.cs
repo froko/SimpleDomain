@@ -35,6 +35,6 @@ namespace SimpleDomain.Bus.Pipeline
         /// <summary>
         /// Gets the pipeline configuration
         /// </summary>
-        public IHavePipelineConfiguration Configuration { get; private set; }
+        public virtual IHavePipelineConfiguration Configuration { get; private set; }
     }
 }

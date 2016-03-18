@@ -16,9 +16,9 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
-    using Ninject.Modules;
+    using global::Ninject.Modules;
 
     using SimpleDomain;
     using SimpleDomain.EventStore;

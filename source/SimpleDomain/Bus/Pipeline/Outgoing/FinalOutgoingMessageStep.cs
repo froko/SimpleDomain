@@ -40,8 +40,66 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// <inheritdoc />
         public override Task InvokeAsync(OutgoingMessageContext context, Func<Task> next)
         {
-            context.CreateEnvelope(new EndpointAddress("recipient"));
+            switch (context.Message.GetIntent())
+            {
+                case MessageIntent.Command:
+                    CreateCommandEnvelope(
+                        context.Message as ICommand, 
+                        context.Configuration, 
+                        context.CreateEnvelope);
+                    break;
+
+                case MessageIntent.Event:
+                    CreateEventEnvelopes(
+                        context.Message as IEvent, 
+                        context.Configuration, 
+                        context.CreateEnvelope);
+                    break;
+
+                case MessageIntent.SubscriptionMessage:
+                    CreateSubscriptionMessageEnvelope(
+                        context.Message as SubscriptionMessage, 
+                        context.Configuration, 
+                        context.CreateEnvelope);
+                    break;
+
+                case MessageIntent.Unknown:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             return Task.CompletedTask;
+        }
+
+        private static void CreateCommandEnvelope(
+            ICommand command,
+            IHavePipelineConfiguration configuration, 
+            Action<EndpointAddress> createEnvelope)
+        {
+            var endpointAddress = configuration.GetConsumingEndpointAddress(command);
+            createEnvelope(endpointAddress);
+        }
+
+        private static void CreateEventEnvelopes(
+            IEvent @event,
+            IHavePipelineConfiguration configuration,
+            Action<EndpointAddress> createEnvelope)
+        {
+            foreach (var endpointAddress in configuration.GetSubscribedEndpointAddresses(@event))
+            {
+                createEnvelope(endpointAddress);
+            }
+        }
+
+        private static void CreateSubscriptionMessageEnvelope(
+            SubscriptionMessage subscriptionMessage,
+            IHavePipelineConfiguration configuration,
+            Action<EndpointAddress> createEnvelope)
+        {
+            var endpointAddress = configuration.GetPublishingEndpointAddress(subscriptionMessage.MessageType);
+            createEnvelope(endpointAddress);
         }
     }
 }

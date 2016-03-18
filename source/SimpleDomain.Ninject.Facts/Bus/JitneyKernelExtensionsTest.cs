@@ -56,7 +56,7 @@ namespace SimpleDomain.Bus
             this.kernel.Dispose();
         }
 
-        public class StartableJitney : Jitney
+        private class StartableJitney : Jitney
         {
             public StartableJitney(IHaveJitneyConfiguration configuration)
                 : base(configuration)
@@ -66,9 +66,10 @@ namespace SimpleDomain.Bus
 
             public static bool HasBeenStarted { get; private set; }
 
-            public override void Start()
+            public override Task StartAsync()
             {
                 HasBeenStarted = true;
+                return Task.CompletedTask;
             }
 
             public override Task SendAsync<TCommand>(TCommand command)

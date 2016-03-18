@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -41,13 +41,27 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Concurrent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,14 +78,28 @@
     </Compile>
     <Compile Include="AggregateRootNotFoundException.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegate.cs" />
+    <Compile Include="Bus\ContractsToEndpointMapper.cs" />
     <Compile Include="Bus\Envelope.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Bus\FileSubscriptionStore.cs" />
     <Compile Include="Bus\HeaderKeys.cs" />
     <Compile Include="Bus\IHavePipelineConfiguration.cs" />
+    <Compile Include="Bus\IMapContractsToEndpoints.cs" />
     <Compile Include="Bus\IMessageQueueProvider.cs" />
+    <Compile Include="Bus\InMemorySubscriptionStore.cs" />
+    <Compile Include="Bus\ISaveSubscriptionMessages.cs" />
+    <Compile Include="Bus\ISubscriptionStore.cs" />
     <Compile Include="Bus\JitneyConfigurationException.cs" />
     <Compile Include="Bus\MessageQueueJitney.cs" />
+    <Compile Include="Bus\MSMQ\JsonMessageFormatter.cs" />
+    <Compile Include="Bus\MSMQ\MsmqException.cs" />
+    <Compile Include="Bus\MSMQ\MsmqProvider.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Bus\MSMQ\MsmqUtilities.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\IncommingPipeline.cs" />
@@ -201,9 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Settings.StyleCop">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EventStore\Persistence\SqlCommands.resx">
@@ -217,17 +243,17 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets'))" />
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets'))" />
   </Target>
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.9.0\build\froko.csprojSetup.Targets')" />
-  <Import Project="..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.3.0\Build\dotnet\GitVersionTask.targets')" />
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

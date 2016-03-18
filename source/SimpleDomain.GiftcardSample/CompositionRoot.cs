@@ -18,6 +18,8 @@
 
 namespace GiftcardSample
 {
+    using GiftcardSample.Commands;
+
     using SimpleDomain;
     using SimpleDomain.Bus;
     using SimpleDomain.EventStore;
@@ -28,6 +30,8 @@ namespace GiftcardSample
         protected override void ConfigureBus(IConfigureThisJitney configuration)
         {
             configuration.DefineLocalEndpointAddress("gc.sample");
+            configuration.SetSubscriptionStore(new FileSubscriptionStore());
+            configuration.MapContracts(typeof(CreateGiftcard).Assembly).ToMe();
             configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
         }
 

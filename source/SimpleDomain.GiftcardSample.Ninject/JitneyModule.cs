@@ -16,14 +16,15 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using System.Collections.Generic;
     using System.Reflection;
-
+    
+    using GiftcardSample.Commands;
     using GiftcardSample.ReadStore.InMemory;
 
-    using Ninject.Modules;
+    using global::Ninject.Modules;
 
     using SimpleDomain.Bus;
     using SimpleDomain.Bus.Configuration;
@@ -35,8 +36,12 @@ namespace GiftcardSample
             var configuration = new JitneyConfiguration(this.Kernel);
 
             configuration.DefineLocalEndpointAddress("gc.sample");
-            configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
+            configuration.SetSubscriptionStore(new FileSubscriptionStore());
+            configuration.MapContracts(typeof(CreateGiftcard).Assembly).ToMe();
             configuration.SubscribeMessageHandlers(GetHandlerAssemblies());
+
+            configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
+            
             configuration.UseSimpleJitney();
         }
 

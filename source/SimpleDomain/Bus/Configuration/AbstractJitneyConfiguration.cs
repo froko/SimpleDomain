@@ -36,15 +36,17 @@ namespace SimpleDomain.Bus.Configuration
         IHaveJitneyConfiguration,
         IHavePipelineConfiguration
     {
-        protected readonly JitneySubscriptions JitneySubscriptions;
-
         private readonly IDictionary<string, object> configurationItems;
-
+        private readonly IDictionary<Type, EndpointAddress> contractMap;
+        private readonly JitneySubscriptions jitneySubscriptions;
+        
         private readonly IList<IncommingEnvelopeStep> incommingEnvelopeSteps;
         private readonly IList<IncommingMessageStep> incommingMessageSteps;
         private readonly IList<OutgoingMessageStep> outgoingMessageSteps;
-        private readonly IList<OutgoingEnvelopeStep> outgoingEnvelopeSteps; 
-        
+        private readonly IList<OutgoingEnvelopeStep> outgoingEnvelopeSteps;
+
+        private ISubscriptionStore subscriptionStore;
+
         /// <summary>
         /// Creates a new instance of <see cref="AbstractJitneyConfiguration"/>
         /// </summary>
@@ -52,24 +54,43 @@ namespace SimpleDomain.Bus.Configuration
         protected AbstractJitneyConfiguration(AbstractHandlerRegistry handlerRegistry)
         {
             this.configurationItems = new Dictionary<string, object>();
+            this.contractMap = new Dictionary<Type, EndpointAddress>();
+            this.jitneySubscriptions = new JitneySubscriptions(handlerRegistry, new HandlerInvocationCache());
 
             this.incommingEnvelopeSteps = new List<IncommingEnvelopeStep>();
             this.incommingMessageSteps = new List<IncommingMessageStep>();
             this.outgoingMessageSteps = new List<OutgoingMessageStep>();
             this.outgoingEnvelopeSteps = new List<OutgoingEnvelopeStep>();
-            
-            this.JitneySubscriptions = new JitneySubscriptions(handlerRegistry, new HandlerInvocationCache());
-            this.ContractMap = new Dictionary<Type, EndpointAddress>();
+
+            this.subscriptionStore = new InMemorySubscriptionStore();
         }
         
         /// <inheritdoc />
-        public IHaveJitneySubscriptions Subscriptions => this.JitneySubscriptions;
+        public IHaveJitneySubscriptions Subscriptions => this.jitneySubscriptions;
 
         /// <inheritdoc />
-        public IDictionary<Type, EndpointAddress> ContractMap { get; }
+        public ISaveSubscriptionMessages SubscriptionStore => this.subscriptionStore;
 
         /// <inheritdoc />
         public EndpointAddress LocalEndpointAddress { get; private set; }
+
+        /// <inheritdoc />
+        public EndpointAddress GetConsumingEndpointAddress(ICommand command)
+        {
+            return this.contractMap[command.GetType()];
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<EndpointAddress> GetSubscribedEndpointAddresses(IEvent @event)
+        {
+            return this.subscriptionStore.GetSubscribedEndpoints(@event);
+        }
+
+        /// <inheritdoc />
+        public EndpointAddress GetPublishingEndpointAddress(string fullNameOfEventType)
+        {
+            return this.contractMap[TypeHelper.GetType(fullNameOfEventType)];
+        }
 
         /// <inheritdoc />
         public T Get<T>(string key)
@@ -100,7 +121,7 @@ namespace SimpleDomain.Bus.Configuration
                 this.incommingEnvelopeSteps.WithFinalIncommingEnvelopeStep(),
                 this.incommingMessageSteps.WithFinalIncommingMessageStep(handleCommandAsync, handleEventAsync, handleSubscriptionMessageAsync));
         }
-
+        
         /// <inheritdoc />
         public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
         {
@@ -123,22 +144,28 @@ namespace SimpleDomain.Bus.Configuration
         }
 
         /// <inheritdoc />
+        public void SetSubscriptionStore(ISubscriptionStore store)
+        {
+            this.subscriptionStore = store;
+        }
+
+        /// <inheritdoc />
         public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
         {
-            this.JitneySubscriptions.AddCommandHandler(handler);
+            this.jitneySubscriptions.AddCommandHandler(handler);
         }
 
         /// <inheritdoc />
         public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
         {
-            this.JitneySubscriptions.AddEventHandler(handler);
+            this.jitneySubscriptions.AddEventHandler(handler);
         }
 
         /// <inheritdoc />
         public void SubscribeMessageHandlers(IEnumerable<Assembly> assemblies)
         {
             Action<Assembly> scanAssembly = assembly => 
-                this.JitneySubscriptions.ScanAssemblyForMessageHandlers(assembly, this.RegisterHandlerType);
+                this.jitneySubscriptions.ScanAssemblyForMessageHandlers(assembly, this.RegisterHandlerType);
 
             assemblies.ToList().ForEach(scanAssembly);
         }
@@ -148,7 +175,20 @@ namespace SimpleDomain.Bus.Configuration
         {
             this.SubscribeMessageHandlers(new[] { Assembly.GetCallingAssembly() });
         }
-        
+
+        /// <inheritdoc />
+        public IMapContractsToEndpoints MapContracts(Assembly contractAssembly)
+        {
+            Guard.NotNull(() => contractAssembly);
+
+            if (this.LocalEndpointAddress == null)
+            {
+                throw new JitneyConfigurationException(ExceptionMessages.LocalEndpointAddressNotDefined);
+            }
+
+            return new ContractsToEndpointMapper(this.LocalEndpointAddress, this.contractMap, contractAssembly);
+        }
+
         /// <inheritdoc />
         public abstract void Register<TJitney>() where TJitney : Jitney;
 

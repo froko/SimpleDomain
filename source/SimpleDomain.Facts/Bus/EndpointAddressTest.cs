@@ -27,6 +27,12 @@ namespace SimpleDomain.Bus
     public class EndpointAddressTest
     {
         [Fact]
+        public void IsValueObject()
+        {
+            new EndpointAddress("myQueue").Should().BeAssignableTo<ValueObject<EndpointAddress>>();
+        }
+
+        [Fact]
         public void CanCreateNewInstance_WithQueueName()
         {
             var testee = new EndpointAddress("myQueue");

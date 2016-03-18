@@ -153,5 +153,21 @@ namespace SimpleDomain.Bus.Configuration
 
             action.ShouldThrow<CommandSubscriptionException<ValueCommand>>();
         }
+
+        [Fact]
+        public void CanGetSubscribedEventTypes()
+        {
+            Action<Type> register = t => { };
+
+            this.testee.AddEventHandler<ValueEvent>(e => Task.CompletedTask);
+            this.testee.ScanAssemblyForMessageHandlers(Assembly.GetExecutingAssembly(), register);
+
+            var subscribedEventTypes = this.testee.GetSubscribedEventTypes();
+
+            subscribedEventTypes.Should()
+                .HaveCount(2)
+                .And.Contain(typeof(ValueEvent))
+                .And.Contain(typeof(MyEvent));
+        }
     }
 }

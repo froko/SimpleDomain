@@ -47,7 +47,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Starts the message reception process
         /// </summary>
-        public abstract void Start();
+        public abstract Task StartAsync();
 
         /// <inheritdoc />
         public abstract Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
@@ -91,15 +91,6 @@ namespace SimpleDomain.Bus
             return incommingPipeline.InvokeAsync(envelope);
         }
 
-        /// <summary>
-        /// Handles an incomming subscription message
-        /// </summary>
-        /// <param name="subscriptionMessage">The subscription message</param>
-        protected virtual Task HandleSubscriptionMessageAsync(SubscriptionMessage subscriptionMessage)
-        {
-            return Task.CompletedTask;
-        }
-
         private async Task HandleCommandAsync(ICommand command)
         {
             var commandSubscription = this.Configuration.Subscriptions.GetCommandSubscription(command);
@@ -112,6 +103,11 @@ namespace SimpleDomain.Bus
             var handlerTasks = eventSubscriptions.Select(s => s.HandleAsync(@event));
 
             await Task.WhenAll(handlerTasks).ConfigureAwait(false);
+        }
+
+        private Task HandleSubscriptionMessageAsync(SubscriptionMessage subscriptionMessage)
+        {
+            return this.Configuration.SubscriptionStore.SaveAsync(subscriptionMessage);
         }
     }
 }

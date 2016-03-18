@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using System.Threading.Tasks;
 

@@ -16,13 +16,13 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace GiftcardSample
+namespace GiftcardSample.Ninject
 {
     using System;
 
     using FluentAssertions.Collections;
 
-    using global::GiftcardSample.ReadStore;
+    using GiftcardSample.ReadStore;
 
     public static class FluentTestingExtensions
     {

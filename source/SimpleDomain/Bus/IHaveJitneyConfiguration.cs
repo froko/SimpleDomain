@@ -40,6 +40,11 @@ namespace SimpleDomain.Bus
         IHaveJitneySubscriptions Subscriptions { get; }
         
         /// <summary>
+        /// Gets the subscription store persister interface
+        /// </summary>
+        ISaveSubscriptionMessages SubscriptionStore { get; }
+
+        /// <summary>
         /// Creates the outgoing pipeline with all registered pipeline steps
         /// </summary>
         /// <param name="handleEnvelopeAsync">The last async action to be performed for an outgoing envelope</param>

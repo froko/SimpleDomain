@@ -18,6 +18,7 @@
 
 namespace SimpleDomain.Bus
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -40,5 +41,11 @@ namespace SimpleDomain.Bus
         /// <param name="event">The event</param>
         /// <returns>A list of event subscriptions. This list can also be empty if no subscriptions were found</returns>
         IEnumerable<Subscription> GetEventSubscriptions<TEvent>(TEvent @event) where TEvent : IEvent;
+
+        /// <summary>
+        /// Gets all event types which have been subscribed
+        /// </summary>
+        /// <returns>A list of types</returns>
+        IEnumerable<Type> GetSubscribedEventTypes();
     }
 }

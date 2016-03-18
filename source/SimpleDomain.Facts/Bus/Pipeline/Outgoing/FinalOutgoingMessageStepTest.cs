@@ -23,19 +23,70 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 
     using FakeItEasy;
 
+    using SimpleDomain.TestDoubles;
+
     using Xunit;
 
     public class FinalOutgoingMessageStepTest
     {
         [Fact]
-        public async Task CreatesNewEnvelope()
+        public async Task CreatesNewEnvelopeForCommands()
         {
-            var outgoingMessageContext = A.Fake<OutgoingMessageContext>();
             var testee = new FinalOutgoingMessageStep();
+            var outgoingMessageContext = A.Fake<OutgoingMessageContext>();
+            var configuration = A.Fake<IHavePipelineConfiguration>();
+            var endpointAddress = new EndpointAddress("recipient");
+
+            A.CallTo(() => outgoingMessageContext.Message).Returns(new ValueCommand(11));
+            A.CallTo(() => outgoingMessageContext.Configuration).Returns(configuration);
+
+            A.CallTo(() => configuration.GetConsumingEndpointAddress(A<ICommand>.Ignored))
+                .Returns(endpointAddress);
+            
+            await testee.InvokeAsync(outgoingMessageContext, null);
+
+            A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress)).MustHaveHappened();
+        }
+
+        [Fact]
+        public async Task CreatesNewEnvelopesForEvents()
+        {
+            var testee = new FinalOutgoingMessageStep();
+            var outgoingMessageContext = A.Fake<OutgoingMessageContext>();
+            var configuration = A.Fake<IHavePipelineConfiguration>();
+            var endpointAddress1 = new EndpointAddress("recipient1");
+            var endpointAddress2 = new EndpointAddress("recipient2");
+
+            A.CallTo(() => outgoingMessageContext.Message).Returns(new ValueEvent(11));
+            A.CallTo(() => outgoingMessageContext.Configuration).Returns(configuration);
+
+            A.CallTo(() => configuration.GetSubscribedEndpointAddresses(A<IEvent>.Ignored))
+                .Returns(new[] { endpointAddress1, endpointAddress2 });
 
             await testee.InvokeAsync(outgoingMessageContext, null);
 
-            A.CallTo(() => outgoingMessageContext.CreateEnvelope(A<EndpointAddress>.Ignored)).MustHaveHappened();
+            A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress1)).MustHaveHappened();
+            A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress2)).MustHaveHappened();
+        }
+
+        [Fact]
+        public async Task CreatesNewEnvelopeForSubscriptionMessages()
+        {
+            var testee = new FinalOutgoingMessageStep();
+            var outgoingMessageContext = A.Fake<OutgoingMessageContext>();
+            var configuration = A.Fake<IHavePipelineConfiguration>();
+            var subscriptionMessage = new SubscriptionMessage(new EndpointAddress("recipient"), typeof(ValueEvent).FullName);
+            var endpointAddress = new EndpointAddress("publisher");
+
+            A.CallTo(() => outgoingMessageContext.Message).Returns(subscriptionMessage);
+            A.CallTo(() => outgoingMessageContext.Configuration).Returns(configuration);
+
+            A.CallTo(() => configuration.GetPublishingEndpointAddress(A<string>.Ignored))
+                .Returns(endpointAddress);
+
+            await testee.InvokeAsync(outgoingMessageContext, null);
+
+            A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress)).MustHaveHappened();
         }
 
         [Fact]

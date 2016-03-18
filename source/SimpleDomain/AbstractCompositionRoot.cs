@@ -18,6 +18,8 @@
 
 namespace SimpleDomain
 {
+    using System.Threading.Tasks;
+
     using SimpleDomain.Bus;
     using SimpleDomain.Bus.Configuration;
     using SimpleDomain.Common;
@@ -68,6 +70,22 @@ namespace SimpleDomain
         {
             Guard.NotNull(() => boundedContext);
             boundedContext.Configure(this.Bus, this.Repository);
+        }
+
+        /// <summary>
+        /// Starts the message reception process
+        /// </summary>
+        public void Start()
+        {
+            this.Bus.StartAsync().Wait();
+        }
+
+        /// <summary>
+        /// Starts the message reception process
+        /// </summary>
+        public Task StartAsync()
+        {
+            return this.Bus.StartAsync();
         }
 
         /// <summary>

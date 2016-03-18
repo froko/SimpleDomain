@@ -42,6 +42,12 @@ namespace SimpleDomain.Bus
         void DefineLocalEndpointAddress(string queueName);
 
         /// <summary>
+        /// Sets the subscription store
+        /// </summary>
+        /// <param name="store">The subscription store</param>
+        void SetSubscriptionStore(ISubscriptionStore store);
+
+        /// <summary>
         /// Subscribes an async handler action for a given command
         /// </summary>
         /// <typeparam name="TCommand">The type of the command</typeparam>
@@ -65,7 +71,14 @@ namespace SimpleDomain.Bus
         /// Subscribes all message handlers in the calling assembly
         /// </summary>
         void SubscribeMessageHandlersInThisAssembly();
-        
+
+        /// <summary>
+        /// Maps all message contracts in a given assembly
+        /// </summary>
+        /// <param name="contractAssembly">The contract assembly</param>
+        /// <returns>An instance of <see cref="IMapContractsToEndpoints"/></returns>
+        IMapContractsToEndpoints MapContracts(Assembly contractAssembly);
+
         /// <summary>
         /// Registers a specific type of <see cref="Jitney"/> in the IoC container.
         /// <remarks>This method is intended for extension methods only</remarks>
