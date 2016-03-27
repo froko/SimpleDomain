@@ -48,7 +48,7 @@ namespace SimpleDomain.EventStore.Persistence
             testee.AggregateType.Should().Be(aggregateType);
             testee.AggregateId.Should().Be(aggregateId);
             testee.Version.Should().Be(2);
-            testee.Timestamp.Should().BeCloseTo(DateTime.Now, 1000);
+            testee.Timestamp.Should().BeCloseTo(DateTime.Now, 2000);
             testee.SnapshotType.Should().Be("SimpleDomain.TestDoubles.MySnapshot");
             testee.Snapshot.Should().BeSameAs(snapshot);
             testee.SerializedSnapshot.Should().Contain("\"Value\":22").And.Contain("\"Version\":2");
