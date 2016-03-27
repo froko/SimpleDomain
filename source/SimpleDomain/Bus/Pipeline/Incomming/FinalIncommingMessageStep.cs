@@ -22,11 +22,15 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using global::Common.Logging;
+
     /// <summary>
     /// The final incomming message pipeline step
     /// </summary>
     public class FinalIncommingMessageStep : IncommingMessageStep
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+
         private readonly IDictionary<MessageIntent, Func<IMessage, Task>> handlers; 
         
         /// <summary>
@@ -55,6 +59,12 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <inheritdoc />
         public override Task InvokeAsync(IncommingMessageContext context, Func<Task> next)
         {
+            Logger.InfoFormat(
+                "Received {0} of type {1} from {2}",
+                context.Message.GetIntent(),
+                context.Message.GetFullName(),
+                context.Headers[HeaderKeys.Sender]);
+
             return this.handlers[context.MessageIntent](context.Message);
         }
     }

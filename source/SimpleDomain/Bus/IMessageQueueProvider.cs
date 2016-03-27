@@ -27,6 +27,11 @@ namespace SimpleDomain.Bus
     public interface IMessageQueueProvider : IDisposable
     {
         /// <summary>
+        /// Gets the name of the transport medium which this provider class implements
+        /// </summary>
+        string TransportMediumName { get; }
+
+        /// <summary>
         /// Connects to the local queue
         /// </summary>
         /// <param name="localEndpointAddress">The local endpoint address</param>

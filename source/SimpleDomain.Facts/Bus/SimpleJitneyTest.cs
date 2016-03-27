@@ -19,6 +19,7 @@
 namespace SimpleDomain.Bus
 {
     using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using FakeItEasy;
@@ -26,19 +27,35 @@ namespace SimpleDomain.Bus
     using FluentAssertions;
 
     using SimpleDomain.Bus.Pipeline.Outgoing;
+    using SimpleDomain.Common;
     using SimpleDomain.TestDoubles;
 
     using Xunit;
 
-    public class SimpleJitneyTest
+    public class SimpleJitneyTest : IDisposable
     {
         private readonly IHaveJitneyConfiguration configuration;
+        private readonly OutgoingPipeline outgoingPipeline;
         private readonly SimpleJitney testee;
 
         public SimpleJitneyTest()
         {
+            Trace.Listeners.Add(InMemoryTraceListener.Instance);
+
             this.configuration = A.Fake<IHaveJitneyConfiguration>();
+            this.outgoingPipeline = A.Fake<OutgoingPipeline>();
+
+            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(new EndpointAddress("myQueue"));
+            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
+                .Returns(this.outgoingPipeline);
+
             this.testee = new SimpleJitney(this.configuration);
+        }
+
+        public void Dispose()
+        {
+            InMemoryTraceListener.ClearLogMessages();
+            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
         }
 
         [Fact]
@@ -50,12 +67,30 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
+        public async Task SendsSubscriptionMessages_WhenStartingAsync()
+        {
+            var subscriptions = A.Fake<IHaveJitneySubscriptions>();
+
+            A.CallTo(() => subscriptions.GetSubscribedEventTypes()).Returns(new[] { typeof(MyEvent), typeof(OtherEvent) });
+            A.CallTo(() => this.configuration.Subscriptions).Returns(subscriptions);
+
+            await this.testee.StartAsync();
+
+            A.CallTo(() => outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(Repeated.Exactly.Twice);
+        }
+
+        [Fact]
+        public async Task LogsStart_WhenStartingAsync()
+        {
+            await this.testee.StartAsync();
+
+            "SimpleJitney has been started".Should().HaveBeenLogged().WithInfoLevel();
+        }
+
+        [Fact]
         public async Task CallsOutgoingPipeline_WhenSendingCommand()
         {
             var command = new ValueCommand(11);
-            var outgoingPipeline = A.Fake<OutgoingPipeline>();
-            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
-                .Returns(outgoingPipeline);
             
             await this.testee.SendAsync(command);
 
@@ -74,10 +109,7 @@ namespace SimpleDomain.Bus
         public async Task CallsOutgoingPipeline_WhenPublishingEvent()
         {
             var @event = new ValueEvent(11);
-            var outgoingPipeline = A.Fake<OutgoingPipeline>();
-            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
-                .Returns(outgoingPipeline);
-
+            
             await this.testee.PublishAsync(@event);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();

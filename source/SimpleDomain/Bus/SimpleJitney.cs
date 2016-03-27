@@ -20,6 +20,8 @@ namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
 
+    using global::Common.Logging;
+
     using SimpleDomain.Common;
 
     /// <summary>
@@ -27,6 +29,8 @@ namespace SimpleDomain.Bus
     /// </summary>
     public class SimpleJitney : Jitney
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+
         /// <summary>
         /// Creates a new instance of <see cref="SimpleJitney"/>
         /// </summary>
@@ -42,9 +46,12 @@ namespace SimpleDomain.Bus
             foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
             {
                 var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
-                await outgoingPipeline.InvokeAsync(
-                    new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName));
+                await outgoingPipeline
+                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
+                    .ConfigureAwait(false);
             }
+
+            Logger.Info("SimpleJitney has been started");
         }
         
         /// <inheritdoc />

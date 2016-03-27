@@ -19,15 +19,20 @@
 namespace SimpleDomain.Bus.Pipeline.Incomming
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using FakeItEasy;
 
+    using FluentAssertions;
+
+    using SimpleDomain.Common;
     using SimpleDomain.TestDoubles;
 
     using Xunit;
 
-    public class FinalIncommingMessageStepTest
+    public class FinalIncommingMessageStepTest : IDisposable
     {
         private readonly Func<ICommand, Task> finalActionForCommand;
         private readonly Func<IEvent, Task> finalActionForEvent;
@@ -36,6 +41,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
         public FinalIncommingMessageStepTest()
         {
+            Trace.Listeners.Add(InMemoryTraceListener.Instance);
+
             this.finalActionForCommand = A.Fake<Func<ICommand, Task>>();
             this.finalActionForEvent = A.Fake<Func<IEvent, Task>>();
             this.finalActionForSubscriptionMessage = A.Fake<Func<SubscriptionMessage, Task>>();
@@ -46,11 +53,17 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
                 this.finalActionForSubscriptionMessage);
         }
 
+        public void Dispose()
+        {
+            InMemoryTraceListener.ClearLogMessages();
+            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
+        }
+
         [Fact]
         public async Task ShouldInvokeGivenFinalActionForCommand()
         {
             var message = new ValueCommand(11);
-            var incommingMessageContext = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var incommingMessageContext = CreateIncommingMessageContext(message);
             
             await this.testee.InvokeAsync(incommingMessageContext, null);
 
@@ -61,8 +74,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public async Task ShouldInvokeGivenFinalActionForEvent()
         {
             var message = new ValueEvent(11);
-            var incommingMessageContext = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
-            
+            var incommingMessageContext = CreateIncommingMessageContext(message);
+
             await this.testee.InvokeAsync(incommingMessageContext, null);
 
             A.CallTo(() => this.finalActionForEvent.Invoke(message)).MustHaveHappened();
@@ -72,8 +85,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public async Task ShouldInvokeGivenFinalActionForSubscriptionMessage()
         {
             var message = new SubscriptionMessage(new EndpointAddress("recipient"), typeof(ValueCommand).FullName);
-            var incommingMessageContext = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
-            
+            var incommingMessageContext = CreateIncommingMessageContext(message);
+
             await this.testee.InvokeAsync(incommingMessageContext, null);
 
             A.CallTo(() => this.finalActionForSubscriptionMessage.Invoke(message)).MustHaveHappened();
@@ -83,12 +96,29 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public async Task DoesNotCallNext()
         {
             var message = new ValueCommand(11);
-            var incommingMessageContext = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var incommingMessageContext = CreateIncommingMessageContext(message);
             var next = A.Fake<Func<Task>>();
             
             await this.testee.InvokeAsync(incommingMessageContext, next);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
+        }
+
+        [Fact]
+        public async Task LogsReceptionOfMessage()
+        {
+            var message = new ValueCommand(11);
+            var incommingMessageContext = CreateIncommingMessageContext(message);
+            
+            await this.testee.InvokeAsync(incommingMessageContext, null);
+
+            "Received Command of type SimpleDomain.TestDoubles.ValueCommand from sender".Should().HaveBeenLogged().WithInfoLevel();
+        }
+
+        private static IncommingMessageContext CreateIncommingMessageContext(IMessage message)
+        {
+            var headers = new Dictionary<string, object> { { HeaderKeys.Sender, new EndpointAddress("sender") } };
+            return new IncommingMessageContext(message, headers, A.Fake<IHavePipelineConfiguration>());
         }
     }
 }

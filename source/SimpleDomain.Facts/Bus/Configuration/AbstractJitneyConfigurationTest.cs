@@ -164,8 +164,10 @@ namespace SimpleDomain.Bus.Configuration
             var pipelineStep = A.Fake<IncommingMessageStep>();
             this.testee.AddPipelineStep(pipelineStep);
 
+            var envelope = new Envelope(new Dictionary<string, object> { { HeaderKeys.Sender, "sender@localhost" } }, new MyCommand());
+
             var pipeline = this.testee.CreateIncommingPipeline(c => Task.CompletedTask, e => Task.CompletedTask, m => Task.CompletedTask);
-            await pipeline.InvokeAsync(A.Fake<Envelope>());
+            await pipeline.InvokeAsync(envelope);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<IncommingMessageContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }

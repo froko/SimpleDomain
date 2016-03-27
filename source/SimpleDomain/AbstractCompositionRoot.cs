@@ -77,7 +77,7 @@ namespace SimpleDomain
         /// </summary>
         public void Start()
         {
-            this.Bus.StartAsync().Wait();
+            this.StartAsync().Wait();
         }
 
         /// <summary>

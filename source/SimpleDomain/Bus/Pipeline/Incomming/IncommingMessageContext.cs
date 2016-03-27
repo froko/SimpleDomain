@@ -18,6 +18,8 @@
 
 namespace SimpleDomain.Bus.Pipeline.Incomming
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// The incomming message pipeline context
     /// </summary>
@@ -27,11 +29,15 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// Creates a new instance of <see cref="IncommingMessageContext"/>
         /// </summary>
         /// <param name="message">The incomming message</param>
+        /// <param name="headers">The original envelope headers</param>
         /// <param name="configuration">Dependency injection for <see cref="IHavePipelineConfiguration"/></param>
-        public IncommingMessageContext(IMessage message, IHavePipelineConfiguration configuration)
-            : base(configuration)
+        public IncommingMessageContext(
+            IMessage message,
+            IDictionary<string, object> headers,
+            IHavePipelineConfiguration configuration) : base(configuration)
         {
             this.Message = message;
+            this.Headers = headers;
         }
 
         /// <summary>
@@ -43,5 +49,10 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// Gets the intent of the incomming message
         /// </summary>
         public MessageIntent MessageIntent => this.Message.GetIntent();
+
+        /// <summary>
+        /// Gets the original envelope headers
+        /// </summary>
+        public IDictionary<string, object> Headers { get; }
     }
 }

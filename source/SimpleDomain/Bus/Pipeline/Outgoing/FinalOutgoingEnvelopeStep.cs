@@ -21,11 +21,15 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
     using System;
     using System.Threading.Tasks;
 
+    using global::Common.Logging;
+
     /// <summary>
     /// The final outgoing envelope pipeline step
     /// </summary>
     public class FinalOutgoingEnvelopeStep : OutgoingEnvelopeStep
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+
         private readonly Func<Envelope, Task> handleEnvelopeAsync;
 
         /// <summary>
@@ -44,6 +48,12 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// <inheritdoc />
         public override Task InvokeAsync(OutgoingEnvelopeContext context, Func<Task> next)
         {
+            Logger.InfoFormat(
+                "Sending {0} of type {1} to {2}", 
+                context.Envelope.Body.GetIntent(), 
+                context.Envelope.Body.GetFullName(),
+                context.Envelope.Headers[HeaderKeys.Recipient]);
+
             return this.handleEnvelopeAsync(context.Envelope);
         }
     }

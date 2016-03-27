@@ -73,7 +73,7 @@ namespace SimpleDomain.Bus
                 { HeaderKeys.Sender, sender },
                 { HeaderKeys.Recipient, recipient },
                 { HeaderKeys.TimeSent, DateTime.UtcNow },
-                { HeaderKeys.MessageType, body.GetFullName()},
+                { HeaderKeys.MessageType, body.GetFullName() },
                 { HeaderKeys.MessageId, mesageId },
                 { HeaderKeys.CorrelationId, mesageId }
             };

@@ -19,6 +19,7 @@
 namespace SimpleDomain.Bus
 {
     using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using FakeItEasy;
@@ -26,17 +27,42 @@ namespace SimpleDomain.Bus
     using FluentAssertions;
 
     using SimpleDomain.Bus.Pipeline.Outgoing;
+    using SimpleDomain.Common;
     using SimpleDomain.TestDoubles;
 
     using Xunit;
 
-    public class MessageQueueJitneyTest
+    public class MessageQueueJitneyTest : IDisposable
     {
         private readonly IHaveJitneyConfiguration configuration;
+        private readonly IMessageQueueProvider messageQueueProvider;
+        private readonly OutgoingPipeline outgoingPipeline;
+        private readonly EndpointAddress localEndpointAddress;
+        private readonly MessageQueueJitney testee;
         
         public MessageQueueJitneyTest()
         {
+            Trace.Listeners.Add(InMemoryTraceListener.Instance);
+
             this.configuration = A.Fake<IHaveJitneyConfiguration>();
+            this.messageQueueProvider = A.Fake<IMessageQueueProvider>();
+            this.outgoingPipeline = A.Fake<OutgoingPipeline>();
+            this.localEndpointAddress = new EndpointAddress("myQueue");
+
+            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(this.localEndpointAddress);
+            A.CallTo(() => this.configuration.Get<IMessageQueueProvider>(MessageQueueJitney.MessageQueueProvider))
+                .Returns(this.messageQueueProvider);
+            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
+                .Returns(this.outgoingPipeline);
+            A.CallTo(() => this.messageQueueProvider.TransportMediumName).Returns("Foo");
+
+            this.testee = new MessageQueueJitney(this.configuration);
+        }
+
+        public void Dispose()
+        {
+            InMemoryTraceListener.ClearLogMessages();
+            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
         }
 
         [Fact]
@@ -50,59 +76,40 @@ namespace SimpleDomain.Bus
         [Fact]
         public async Task ConnectsToMessageQueueProvider_WhenStartingAsync()
         {
-            var messageQueueProvider = A.Fake<IMessageQueueProvider>();
-            var localEndpointAddress = new EndpointAddress("myQueue");
+            await this.testee.StartAsync();
 
-            A.CallTo(() => this.configuration.Get<IMessageQueueProvider>(MessageQueueJitney.MessageQueueProvider))
-                .Returns(messageQueueProvider);
-
-            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(localEndpointAddress);
-
-            var testee = this.CreateTestee();
-
-            await testee.StartAsync();
-
-            A.CallTo(() => messageQueueProvider.Connect(localEndpointAddress, A<Func<Envelope, Task>>.Ignored))
+            A.CallTo(() => messageQueueProvider.Connect(this.localEndpointAddress, A<Func<Envelope, Task>>.Ignored))
                 .MustHaveHappened();
         }
 
         [Fact]
-        public async Task FactMethodName()
+        public async Task SendsSubscriptionMessages_WhenStartingAsync()
         {
-            var messageQueueProvider = A.Fake<IMessageQueueProvider>();
-            var localEndpointAddress = new EndpointAddress("myQueue");
-            var eventTypes = new[] { typeof(MyEvent), typeof(OtherEvent) };
-            var outgoingPipeline = A.Fake<OutgoingPipeline>();
+            var subscriptions = A.Fake<IHaveJitneySubscriptions>();
 
-            A.CallTo(() => this.configuration.Get<IMessageQueueProvider>(MessageQueueJitney.MessageQueueProvider))
-                .Returns(messageQueueProvider);
-
-            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(localEndpointAddress);
-
-            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
-                .Returns(outgoingPipeline);
-
-            A.CallTo(() => this.configuration.Subscriptions.GetSubscribedEventTypes()).Returns(eventTypes);
-
-            var testee = this.CreateTestee();
-
-            await testee.StartAsync();
+            A.CallTo(() => subscriptions.GetSubscribedEventTypes()).Returns(new[] { typeof(MyEvent), typeof(OtherEvent) });
+            A.CallTo(() => this.configuration.Subscriptions).Returns(subscriptions);
+            
+            await this.testee.StartAsync();
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(A<SubscriptionMessage>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Twice);
         }
 
         [Fact]
+        public async Task LogsStart_WhenStartingAsync()
+        {
+            await this.testee.StartAsync();
+
+            "MessageQueueJitney has been started with Foo as transport medium".Should().HaveBeenLogged().WithInfoLevel();
+        }
+
+        [Fact]
         public async Task CallsOutgoingPipeline_WhenSendingCommand()
         {
-            var testee = this.CreateTestee();
             var command = new ValueCommand(11);
-            var outgoingPipeline = A.Fake<OutgoingPipeline>();
 
-            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
-                .Returns(outgoingPipeline);
-
-            await testee.SendAsync(command);
+            await this.testee.SendAsync(command);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
         }
@@ -110,9 +117,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ThrowsException_WhenTryingToSendNullAsCommand()
         {
-            var testee = this.CreateTestee();
-
-            Func<Task> action = () => testee.SendAsync<ValueCommand>(null);
+            Func<Task> action = () => this.testee.SendAsync<ValueCommand>(null);
 
             action.ShouldThrow<ArgumentNullException>();
         }
@@ -120,14 +125,9 @@ namespace SimpleDomain.Bus
         [Fact]
         public async Task CallsOutgoingPipeline_WhenPublishingEvent()
         {
-            var testee = this.CreateTestee();
             var @event = new ValueEvent(11);
-            var outgoingPipeline = A.Fake<OutgoingPipeline>();
 
-            A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
-                .Returns(outgoingPipeline);
-
-            await testee.PublishAsync(@event);
+            await this.testee.PublishAsync(@event);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
         }
@@ -135,16 +135,9 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ThrowsException_WhenTryingToPublishNullAsEvent()
         {
-            var testee = this.CreateTestee();
-
-            Func<Task> action = () => testee.PublishAsync<ValueEvent>(null);
+            Func<Task> action = () => this.testee.PublishAsync<ValueEvent>(null);
 
             action.ShouldThrow<ArgumentNullException>();
-        }
-
-        private MessageQueueJitney CreateTestee()
-        {
-            return new MessageQueueJitney(this.configuration);
         }
     }
 }

@@ -18,6 +18,8 @@
 
 namespace SimpleDomain.Bus.Pipeline.Incomming
 {
+    using System.Collections.Generic;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -28,12 +30,19 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
     public class IncommingMessageContextTest
     {
+        private readonly IDictionary<string, object> headers;
+        private readonly IHavePipelineConfiguration pipelineConfiguration;
+
+        public IncommingMessageContextTest()
+        {
+            this.headers = new Dictionary<string, object> { { HeaderKeys.Sender, new EndpointAddress("sender") } };
+            this.pipelineConfiguration = A.Fake<IHavePipelineConfiguration>();
+        }
+
         [Fact]
         public void IsPipelineContext()
         {
-            var testee = new IncommingMessageContext(
-                A.Fake<IMessage>(),
-                A.Fake<IHavePipelineConfiguration>());
+            var testee = this.CreateTestee(A.Fake<IMessage>());
 
             testee.Should().BeAssignableTo<PipelineContext>();
         }
@@ -41,17 +50,16 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         [Fact]
         public void ShouldExposePipelineConfiguration()
         {
-            var pipelineConfiguration = A.Fake<IHavePipelineConfiguration>();
-            var testee = new IncommingMessageContext(A.Fake<IMessage>(), pipelineConfiguration);
+            var testee = this.CreateTestee(A.Fake<IMessage>());
 
-            testee.Configuration.Should().Be(pipelineConfiguration);
+            testee.Configuration.Should().Be(this.pipelineConfiguration);
         }
 
         [Fact]
         public void ShouldExposeMessage()
         {
             var message = A.Fake<IMessage>();
-            var testee = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var testee = this.CreateTestee(message);
 
             testee.Message.Should().Be(message);
         }
@@ -60,7 +68,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public void ShouldExposeMessageIntentForCommands()
         {
             var message = A.Fake<ICommand>();
-            var testee = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var testee = this.CreateTestee(message);
 
             testee.MessageIntent.Should().Be(MessageIntent.Command);
         }
@@ -69,7 +77,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public void ShouldExposeMessageIntentForEvents()
         {
             var message = A.Fake<IEvent>();
-            var testee = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var testee = this.CreateTestee(message);
 
             testee.MessageIntent.Should().Be(MessageIntent.Event);
         }
@@ -78,9 +86,22 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public void ShouldExposeMessageIntentForSubscriptionMessages()
         {
             var message = new SubscriptionMessage(new EndpointAddress("recipient"), typeof(ValueCommand).FullName);
-            var testee = new IncommingMessageContext(message, A.Fake<IHavePipelineConfiguration>());
+            var testee = this.CreateTestee(message);
 
             testee.MessageIntent.Should().Be(MessageIntent.SubscriptionMessage);
+        }
+
+        [Fact]
+        public void ShouldExposeHeadersOfOriginalEnvelope()
+        {
+            var testee = this.CreateTestee(A.Fake<IMessage>());
+
+            testee.Headers.Should().BeSameAs(this.headers);
+        }
+
+        private IncommingMessageContext CreateTestee(IMessage message)
+        {
+            return new IncommingMessageContext(message, this.headers, this.pipelineConfiguration);
         }
     }
 }

@@ -20,6 +20,8 @@ namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
 
+    using global::Common.Logging;
+
     using SimpleDomain.Common;
 
     /// <summary>
@@ -28,6 +30,8 @@ namespace SimpleDomain.Bus
     public class MessageQueueJitney : Jitney
     {
         public const string MessageQueueProvider = "MessageQueueProvider";
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
 
         private readonly IMessageQueueProvider provider;
 
@@ -49,9 +53,12 @@ namespace SimpleDomain.Bus
             foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
             {
                 var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
-                await outgoingPipeline.InvokeAsync(
-                    new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName));
+                await outgoingPipeline
+                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
+                    .ConfigureAwait(false);
             }
+
+            Logger.InfoFormat("MessageQueueJitney has been started with {0} as transport medium", this.provider.TransportMediumName);
         }
 
         /// <inheritdoc />

@@ -38,6 +38,9 @@ namespace SimpleDomain.Bus.MSMQ
         private MessageQueue localQueue;
 
         /// <inheritdoc />
+        public string TransportMediumName => "MSMQ";
+
+        /// <inheritdoc />
         public void Connect(EndpointAddress localEndpointAddress, Func<Envelope, Task> asyncEnvelopeReceivedCallback)
         {
             this.callMeBackWhenEnvelopeArrives = asyncEnvelopeReceivedCallback;
@@ -96,13 +99,13 @@ namespace SimpleDomain.Bus.MSMQ
 
             if (message == null)
             {
-                Logger.Warn("Received a NULL message. That's strange but should cause no error.");
+                Logger.Warn("Received a NULL message. That's strange but should cause no error");
                 return;
             }
 
             if (!(message.Body is Envelope))
             {
-                Logger.Warn("Received a message that is not an Envelope. That's strange but should cause no error.");
+                Logger.Warn("Received a message that is not an Envelope. That's strange but should cause no error");
                 return;
             }
 
