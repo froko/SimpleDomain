@@ -21,10 +21,19 @@ namespace SimpleDomain.EventStore.Persistence
     using System;
     using System.Data.SqlClient;
     
+    /// <summary>
+    /// The SQL event store
+    /// </summary>
     public class SqlEventStore : IEventStore
     {
+        /// <summary>
+        /// Gets the connection factory configuration key
+        /// </summary>
         public const string ConnectionFactory = "ConnectionFactory";
 
+        /// <summary>
+        /// Gets the eventstore connection string name
+        /// </summary>
         private const string EventStoreConnectionStringName = "EventStore";
 
         private readonly IHaveEventStoreConfiguration configuration;

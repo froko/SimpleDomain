@@ -112,13 +112,13 @@
     <Error Condition="!Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets'))" />
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.Facts.1.10.0\build\froko.csprojSetup.Facts.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.Facts.1.10.0\build\froko.csprojSetup.Facts.targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.11.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.11.0\build\froko.csprojSetup.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.Facts.1.11.0\build\froko.csprojSetup.Facts.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.Facts.1.11.0\build\froko.csprojSetup.Facts.targets'))" />
   </Target>
   <Import Project="..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.10.0\build\froko.csprojSetup.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.Facts.1.10.0\build\froko.csprojSetup.Facts.targets" Condition="Exists('..\packages\froko.csprojSetup.Facts.1.10.0\build\froko.csprojSetup.Facts.targets')" />
+  <Import Project="..\packages\froko.csprojSetup.1.11.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.11.0\build\froko.csprojSetup.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.Facts.1.11.0\build\froko.csprojSetup.Facts.targets" Condition="Exists('..\packages\froko.csprojSetup.Facts.1.11.0\build\froko.csprojSetup.Facts.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

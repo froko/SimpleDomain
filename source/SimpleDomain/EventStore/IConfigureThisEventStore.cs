@@ -21,6 +21,9 @@ namespace SimpleDomain.EventStore
     using System;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// The event store configuration interface
+    /// </summary>
     public interface IConfigureThisEventStore
     {
         /// <summary>

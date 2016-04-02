@@ -26,7 +26,14 @@ namespace SimpleDomain.EventStore.Persistence
     /// </summary>
     public class InMemoryEventStore : IEventStore
     {
+        /// <summary>
+        /// Gets the event descriptor list configuration key
+        /// </summary>
         public const string EventDescriptors = "EventDescriptors";
+
+        /// <summary>
+        /// Gets the snapshot descriptor list configuration key
+        /// </summary>
         public const string SnapshotDescriptors = "SnapshotDescriptors";
 
         private readonly IHaveEventStoreConfiguration configuration;

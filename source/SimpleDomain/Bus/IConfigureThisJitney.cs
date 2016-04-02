@@ -26,6 +26,9 @@ namespace SimpleDomain.Bus
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Bus.Pipeline.Outgoing;
 
+    /// <summary>
+    /// The Jitney configuration interface
+    /// </summary>
     public interface IConfigureThisJitney
     {
         /// <summary>

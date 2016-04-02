@@ -29,6 +29,9 @@ namespace SimpleDomain.Bus
     /// </summary>
     public class MessageQueueJitney : Jitney
     {
+        /// <summary>
+        /// Gets the configuration key for the message queue provider
+        /// </summary>
         public const string MessageQueueProvider = "MessageQueueProvider";
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));

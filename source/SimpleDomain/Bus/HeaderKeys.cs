@@ -23,13 +23,34 @@ namespace SimpleDomain.Bus
     /// </summary>
     public static class HeaderKeys
     {
+        /// <summary>
+        /// Gets the header key for the sending endpoint
+        /// </summary>
         public const string Sender = "Sender";
+
+        /// <summary>
+        /// Gets the header key for the receiving endpoint
+        /// </summary>
         public const string Recipient = "Recipient";
+
+        /// <summary>
+        /// Gets the header key for the sending timestamp
+        /// </summary>
         public const string TimeSent = "TimeSent";
 
+        /// <summary>
+        /// Gets the header key for the message type
+        /// </summary>
         public const string MessageType = "MessageType";
 
+        /// <summary>
+        /// Gets the header key for the message id
+        /// </summary>
         public const string MessageId = "MessageId";
+
+        /// <summary>
+        /// Gets the header key for the correlation id
+        /// </summary>
         public const string CorrelationId = "CorrelationId";
     }
 }
