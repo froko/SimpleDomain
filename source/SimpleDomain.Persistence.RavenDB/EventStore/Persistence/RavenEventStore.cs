@@ -27,6 +27,9 @@ namespace SimpleDomain.EventStore.Persistence
     /// </summary>
     public class RavenEventStore : IEventStore
     {
+        /// <summary>
+        /// Gets the configuration key for the Raven DocumentStore
+        /// </summary>
         public const string DocumentStore = "DocumentStore";
 
         private readonly IHaveEventStoreConfiguration configuration;

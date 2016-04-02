@@ -22,15 +22,23 @@ namespace SimpleDomain.Bus.Configuration
 
     using Ninject;
 
+    /// <summary>
+    /// The Ninject handler registry
+    /// </summary>
     public class HandlerRegistry : AbstractHandlerRegistry
     {
         private readonly IKernel kernel;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="HandlerRegistry"/>
+        /// </summary>
+        /// <param name="kernel">Dependency injection for <see cref="IKernel"/></param>
         public HandlerRegistry(IKernel kernel)
         {
             this.kernel = kernel;
         }
 
+        /// <inheritdoc />
         protected override object Resolve(Type handlerType)
         {
             return this.kernel.Get(handlerType);
