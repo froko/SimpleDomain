@@ -74,6 +74,17 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
+        public async Task LogsConfiguration_WhenStartingAsync()
+        {
+            A.CallTo(() => this.configuration.GetSummary(typeof(MessageQueueJitney)))
+                .Returns("Some useful configuration info");
+
+            await this.testee.StartAsync();
+
+            "Some useful configuration info".Should().HaveBeenLogged().WithDebugLevel();
+        }
+
+        [Fact]
         public async Task ConnectsToMessageQueueProvider_WhenStartingAsync()
         {
             await this.testee.StartAsync();

@@ -201,6 +201,30 @@ namespace SimpleDomain.Bus.Configuration
             A.CallTo(() => pipelineStep.InvokeAsync(A<OutgoingEnvelopeContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }
 
+        [Fact]
+        public void CanCreateUserFriendlyConfigurationSummary()
+        {
+            this.testee.DefineLocalEndpointAddress("myQueue");
+            this.testee.SetSubscriptionStore(new FileSubscriptionStore());
+            this.testee.AddPipelineStep(new MyOutgoingMessageStep());
+            this.testee.AddPipelineStep(new MyOutgoingEnvelopeStep());
+            this.testee.AddPipelineStep(new MyIncommingEnvelopeStep());
+            this.testee.AddPipelineStep(new MyIncommingMessageStep());
+
+            this.testee.AddConfigurationItem("Foo", "Bar");
+            this.testee.AddConfigurationItem("Important item", new ConfigurationItem());
+
+            var configurationSummary = this.testee.GetSummary(typeof(MessageQueueJitney));
+
+            configurationSummary.Should().Contain("MessageQueueJitney");
+            configurationSummary.Should().Contain("myQueue");
+            configurationSummary.Should().Contain("FileSubscriptionStore");
+            configurationSummary.Should().Contain("My Outgoing Message Step");
+            configurationSummary.Should().Contain("My Outgoing Envelope Step");
+            configurationSummary.Should().Contain("My Incomming Envelope Step");
+            configurationSummary.Should().Contain("My Incomming Message Step");
+        }
+
         private class JitneyConfiguration : AbstractJitneyConfiguration
         {
             private readonly IContainer container;
@@ -224,6 +248,46 @@ namespace SimpleDomain.Bus.Configuration
 
         private class ConfigurationItem
         {
+        }
+
+        private class MyOutgoingMessageStep : OutgoingMessageStep
+        {
+            public override string Name => "My Outgoing Message Step";
+
+            public override Task InvokeAsync(OutgoingMessageContext context, Func<Task> next)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class MyOutgoingEnvelopeStep : OutgoingEnvelopeStep
+        {
+            public override string Name => "My Outgoing Envelope Step";
+
+            public override Task InvokeAsync(OutgoingEnvelopeContext context, Func<Task> next)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class MyIncommingEnvelopeStep : IncommingEnvelopeStep
+        {
+            public override string Name => "My Incomming Envelope Step";
+
+            public override Task InvokeAsync(IncommingEnvelopeContext context, Func<Task> next)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class MyIncommingMessageStep : IncommingMessageStep
+        {
+            public override string Name => "My Incomming Message Step";
+
+            public override Task InvokeAsync(IncommingMessageContext context, Func<Task> next)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

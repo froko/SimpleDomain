@@ -62,5 +62,11 @@ namespace SimpleDomain.Bus
             Func<ICommand, Task> handleCommandAsync,
             Func<IEvent, Task> handleEventAsync,
             Func<SubscriptionMessage, Task> handleSubscriptionMessageAsync);
+
+        /// <summary>
+        /// Gets a user friendly formatted content summary of this configuration
+        /// </summary>
+        /// <param name="jitneyType">The type of <see cref="Jitney"/> using this configuration</param>
+        string GetSummary(Type jitneyType);
     }
 }

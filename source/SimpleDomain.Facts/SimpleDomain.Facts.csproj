@@ -87,7 +87,9 @@
     <Compile Include="Bus\CommandSubscriptionExceptionTest.cs" />
     <Compile Include="Bus\CommandSubscriptionTest.cs" />
     <Compile Include="Bus\Configuration\AbstractHandlerRegistryTest.cs" />
-    <Compile Include="Bus\Configuration\AbstractJitneyConfigurationTest.cs" />
+    <Compile Include="Bus\Configuration\AbstractJitneyConfigurationTest.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Bus\Configuration\AssemblyExtensionsTest.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegateTest.cs" />
     <Compile Include="Bus\Configuration\ContainerLessHandlerRegistryTest.cs" />

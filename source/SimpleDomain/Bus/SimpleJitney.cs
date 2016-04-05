@@ -43,17 +43,12 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override async Task StartAsync()
         {
-            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
-            {
-                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
-                await outgoingPipeline
-                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
-                    .ConfigureAwait(false);
-            }
+            Logger.Debug(this.Configuration.GetSummary(this.GetType()));
+            await this.SendSubscriptionMessagesAsync();
 
             Logger.Info("SimpleJitney has been started");
         }
-        
+
         /// <inheritdoc />
         public override Task SendAsync<TCommand>(TCommand command)
         {
@@ -70,6 +65,17 @@ namespace SimpleDomain.Bus
 
             var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
             return outgoingPipeline.InvokeAsync(@event);
+        }
+
+        private async Task SendSubscriptionMessagesAsync()
+        {
+            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
+            {
+                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.HandleAsync);
+                await outgoingPipeline
+                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
+                    .ConfigureAwait(false);
+            }
         }
     }
 }

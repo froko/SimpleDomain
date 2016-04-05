@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus
             this.configuration = A.Fake<IHaveJitneyConfiguration>();
             this.outgoingPipeline = A.Fake<OutgoingPipeline>();
 
-            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(new EndpointAddress("myQueue"));
+            A.CallTo(() => this.configuration.LocalEndpointAddress).Returns(new EndpointAddress("myQueue", "localhost"));
             A.CallTo(() => this.configuration.CreateOutgoingPipeline(A<Func<Envelope, Task>>.Ignored))
                 .Returns(this.outgoingPipeline);
 
@@ -64,6 +64,17 @@ namespace SimpleDomain.Bus
             Action action = () => { new SimpleJitney(null); };
 
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public async Task LogsConfiguration_WhenStartingAsync()
+        {
+            A.CallTo(() => this.configuration.GetSummary(typeof(SimpleJitney)))
+                .Returns("Some useful configuration info");
+
+            await this.testee.StartAsync();
+
+            "Some useful configuration info".Should().HaveBeenLogged().WithDebugLevel();
         }
 
         [Fact]

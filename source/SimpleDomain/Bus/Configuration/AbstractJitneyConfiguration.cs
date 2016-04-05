@@ -22,8 +22,10 @@ namespace SimpleDomain.Bus.Configuration
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using System.Threading.Tasks;
 
+    using SimpleDomain.Bus.Pipeline;
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Bus.Pipeline.Outgoing;
     using SimpleDomain.Common;
@@ -121,7 +123,36 @@ namespace SimpleDomain.Bus.Configuration
                 this.incommingEnvelopeSteps.WithFinalIncommingEnvelopeStep(),
                 this.incommingMessageSteps.WithFinalIncommingMessageStep(handleCommandAsync, handleEventAsync, handleSubscriptionMessageAsync));
         }
-        
+
+        /// <inheritdoc />
+        public string GetSummary(Type jitneyType)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"This is {jitneyType.Name} with the following configuration values:");
+            stringBuilder.AppendLine($"Local endpoint name: {this.LocalEndpointAddress}");
+
+            if (typeof(MessageQueueJitney).IsAssignableFrom(jitneyType))
+            {
+                stringBuilder.AppendLine($"Subscription store: {this.SubscriptionStore.GetType().Name}");
+            }
+            AppendPipelineSteps(stringBuilder, "Outgoing message steps", this.outgoingMessageSteps.WithFinalOutgoingMessageStep());
+            AppendPipelineSteps(stringBuilder, "Outgoing envelope steps", this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(null));
+            AppendPipelineSteps(stringBuilder, "Incomming envelope steps", this.incommingEnvelopeSteps.WithFinalIncommingEnvelopeStep());
+            AppendPipelineSteps(stringBuilder, "Incomming message steps", this.incommingMessageSteps.WithFinalIncommingMessageStep(null, null, null));
+            
+            if (this.configurationItems.Any())
+            {
+                stringBuilder.AppendLine("\r\nConfiguration items:");
+                foreach (var configurationItem in this.configurationItems)
+                {
+                    stringBuilder.AppendLine($"- {configurationItem.Key}: {configurationItem.Value}");
+                }    
+            }
+
+            return stringBuilder.ToString();
+        }
+
         /// <inheritdoc />
         public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
         {
@@ -221,5 +252,19 @@ namespace SimpleDomain.Bus.Configuration
         /// </summary>
         /// <param name="type">The handler type</param>
         protected abstract void RegisterHandlerType(Type type);
+
+        private static void AppendPipelineSteps<T>(
+            StringBuilder stringBuilder,
+            string header,
+            IEnumerable<PipelineStep<T>> pipelineSteps) where T : PipelineContext
+        {
+            var pipelineStepCounter = 1;
+
+            stringBuilder.AppendLine($"\r\n{header}:");
+            foreach (var pipelineStep in pipelineSteps)
+            {
+                stringBuilder.AppendLine($"{pipelineStepCounter++}: {pipelineStep.Name}");
+            }
+        }
     }
 }

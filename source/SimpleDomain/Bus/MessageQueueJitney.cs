@@ -51,16 +51,10 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public override async Task StartAsync()
         {
+            Logger.Debug(this.Configuration.GetSummary(this.GetType()));
             this.provider.Connect(this.Configuration.LocalEndpointAddress, this.HandleAsync);
-
-            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
-            {
-                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
-                await outgoingPipeline
-                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
-                    .ConfigureAwait(false);
-            }
-
+            await this.SendSubscriptionMessagesAsync();
+            
             Logger.InfoFormat("MessageQueueJitney has been started with {0} as transport medium", this.provider.TransportMediumName);
         }
 
@@ -80,6 +74,17 @@ namespace SimpleDomain.Bus
 
             var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
             return outgoingPipeline.InvokeAsync(@event);
+        }
+
+        private async Task SendSubscriptionMessagesAsync()
+        {
+            foreach (var eventType in this.Configuration.Subscriptions.GetSubscribedEventTypes())
+            {
+                var outgoingPipeline = this.Configuration.CreateOutgoingPipeline(this.provider.SendAsync);
+                await outgoingPipeline
+                    .InvokeAsync(new SubscriptionMessage(this.Configuration.LocalEndpointAddress, eventType.FullName))
+                    .ConfigureAwait(false);
+            }
         }
     }
 }
