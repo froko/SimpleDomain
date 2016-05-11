@@ -50,6 +50,15 @@ namespace SimpleDomain.TestDoubles
         }
     }
 
+    [PreventAutomaticHandlerRegistration]
+    public class NonRegisterableValueEventHandler : IHandleAsync<ValueEvent>
+    {
+        public Task HandleAsync(ValueEvent message)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
     public class MyEventHandler : IHandleAsync<MyEvent>
     {
         public Task HandleAsync(MyEvent message)
