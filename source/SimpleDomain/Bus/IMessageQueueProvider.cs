@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus
         string TransportMediumName { get; }
 
         /// <summary>
-        /// Connects to the local queue
+        /// Connects to the local queue and starts the message reception process
         /// </summary>
         /// <param name="localEndpointAddress">The local endpoint address</param>
         /// <param name="asyncEnvelopeReceivedCallback">An action which is called when an Envelope arrives</param>
@@ -43,5 +43,10 @@ namespace SimpleDomain.Bus
         /// </summary>
         /// <param name="envelope">The enveloped message</param>
         Task SendAsync(Envelope envelope);
+
+         /// <summary>
+         /// Stopps the message reception process and disconnects from the local queue
+         /// </summary>
+        void Disconnect();
     }
 }

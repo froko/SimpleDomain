@@ -19,14 +19,15 @@
 namespace SimpleDomain.Bus.MSMQ
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Linq;
     using System.Messaging;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
 
     using global::Common.Logging;
-
-    using Nito.AsyncEx;
-
+    
     /// <summary>
     /// The MSMQ message queue provider
     /// </summary>
@@ -36,6 +37,12 @@ namespace SimpleDomain.Bus.MSMQ
 
         private Func<Envelope, Task> callMeBackWhenEnvelopeArrives;
         private MessageQueue localQueue;
+        
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationToken cancellationToken;
+
+        private ConcurrentDictionary<Task, Task> handlerTasks;
+        private Task localQueueReceptionTask;
 
         /// <inheritdoc />
         public string TransportMediumName => "MSMQ";
@@ -44,10 +51,13 @@ namespace SimpleDomain.Bus.MSMQ
         public void Connect(EndpointAddress localEndpointAddress, Func<Envelope, Task> asyncEnvelopeReceivedCallback)
         {
             this.callMeBackWhenEnvelopeArrives = asyncEnvelopeReceivedCallback;
-
             this.localQueue = MsmqUtilities.GetMessageQueue(localEndpointAddress, QueueAccessMode.Receive);
-            this.localQueue.PeekCompleted += this.PeekCompleted;
-            this.localQueue.BeginPeek();
+
+            this.cancellationTokenSource = new CancellationTokenSource();
+            this.cancellationToken = this.cancellationTokenSource.Token;
+
+            this.handlerTasks = new ConcurrentDictionary<Task, Task>();
+            this.localQueueReceptionTask = Task.Run(this.RunMessageReceptionTask, CancellationToken.None);
         }
 
         /// <inheritdoc />
@@ -67,36 +77,106 @@ namespace SimpleDomain.Bus.MSMQ
         }
 
         /// <inheritdoc />
+        public void Disconnect()
+        {
+            this.DisconnectAsync().Wait(this.cancellationToken);
+        }
+
+        /// <inheritdoc />
         public void Dispose()
         {
             this.localQueue.Dispose();
         }
 
-        private void PeekCompleted(object sender, PeekCompletedEventArgs e)
+        private static Task SendAsync(Envelope envelope, EndpointAddress recipientEndpointAddress)
+        {
+            using (var recipientQueue = MsmqUtilities.GetMessageQueue(recipientEndpointAddress, QueueAccessMode.Send))
+            {
+                recipientQueue.Send(envelope, MsmqUtilities.GetTransactionType());
+                return Task.CompletedTask;
+            }
+        }
+
+        private async Task RunMessageReceptionTask()
+        {
+            while (!this.cancellationToken.IsCancellationRequested)
+            {
+                try
+                {
+                    await this.ProcessMessages().ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Do nothing here. This belongs to the shutdown process.
+                }
+                catch (Exception exception)
+                {
+                    Logger.Warn("MSMQ receive task failed", exception);
+                }
+            }
+        }
+
+        private async Task ProcessMessages()
+        {
+            using (var enumerator = this.localQueue.GetMessageEnumerator2())
+            {
+                while (!this.cancellationToken.IsCancellationRequested)
+                {
+                    await this.ProcessMessages(enumerator).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private Task ProcessMessages(MessageEnumerator enumerator)
         {
             try
             {
-                using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                if (!enumerator.MoveNext(TimeSpan.FromMilliseconds(10)))
                 {
-                    AsyncContext.Run(this.HandleMessageAsync);
-                    transactionScope.Complete();
+                    return Task.CompletedTask;
                 }
             }
             catch (Exception exception)
             {
-                Logger.Error("Could not handle message", exception);
+                Logger.Warn("MSMQ receive operation failed", exception);
+                return Task.CompletedTask;
             }
-            finally
+
+            if (this.cancellationToken.IsCancellationRequested)
             {
-                this.localQueue.Refresh();
-                this.localQueue.BeginPeek();
+                return Task.CompletedTask;
             }
+
+            var handlerTask = this.HandleMessageAsync();
+            this.handlerTasks.TryAdd(handlerTask, handlerTask);
+
+            return handlerTask.ContinueWith(t =>
+            {
+                Task toBeRemoved;
+                this.handlerTasks.TryRemove(t, out toBeRemoved);
+            }, TaskContinuationOptions.ExecuteSynchronously);
         }
 
         private async Task HandleMessageAsync()
         {
-            var message = this.localQueue.Receive();
+            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                try
+                {
+                    var message = this.localQueue.Receive();
+                    await this.HandleMessageAsync(message).ConfigureAwait(false);
 
+                    transactionScope.Complete();
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("Could not handle message", exception);
+                }
+            }
+        }
+
+        private async Task HandleMessageAsync(Message message)
+        {
             if (message == null)
             {
                 Logger.Warn("Received a NULL message. That's strange but should cause no error");
@@ -110,16 +190,18 @@ namespace SimpleDomain.Bus.MSMQ
             }
 
             var envelope = (Envelope)message.Body;
-            await this.callMeBackWhenEnvelopeArrives(envelope);
+            await this.callMeBackWhenEnvelopeArrives(envelope).ConfigureAwait(false);
         }
 
-        private static Task SendAsync(Envelope envelope, EndpointAddress recipientEndpointAddress)
+        private async Task DisconnectAsync()
         {
-            using (var recipientQueue = MsmqUtilities.GetMessageQueue(recipientEndpointAddress, QueueAccessMode.Send))
-            {
-                recipientQueue.Send(envelope, MsmqUtilities.GetTransactionType());
-                return Task.CompletedTask;
-            }
+            this.cancellationTokenSource.Cancel();
+
+            var allTasks = this.handlerTasks.Values.Concat(new[] { this.localQueueReceptionTask });
+            await Task.WhenAll(allTasks).ConfigureAwait(false);
+
+            this.handlerTasks.Clear();
+            this.localQueue.Dispose();
         }
     }
 }
