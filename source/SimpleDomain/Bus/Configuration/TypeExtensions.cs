@@ -34,6 +34,11 @@ namespace SimpleDomain.Bus.Configuration
         /// <returns><c>true</c> if the class type implements 1 to many async handler interfaces or <c>false</c> if not</returns>
         public static bool ImplementsAsyncHandlerInterface(this Type classType)
         {
+            if (classType.HasPreventAutomaticHandlerRegistrationAttribute())
+            {
+                return false;
+            }
+
             var asyncHandlerInterfaces = from asyncHandlerInterface in classType.GetInterfaces()
                                          where asyncHandlerInterface.IsGenericType
                                          let baseInterface = asyncHandlerInterface.GetGenericTypeDefinition()
@@ -55,6 +60,12 @@ namespace SimpleDomain.Bus.Configuration
                 let messageType = asyncHandlerInterface.GetGenericArguments()[0]
                 where typeof(IHandleAsync<>).MakeGenericType(messageType).IsAssignableFrom(asyncHandlerInterface)
                 select messageType;
+        }
+
+        private static bool HasPreventAutomaticHandlerRegistrationAttribute(this Type type)
+        {
+            return type.GetCustomAttributes(false)
+                .Any(attribute => attribute is PreventAutomaticHandlerRegistrationAttribute);
         }
     }
 }

@@ -221,6 +221,7 @@
     </Compile>
     <Compile Include="MessageIntent.cs" />
     <Compile Include="MissingConfigurationException.cs" />
+    <Compile Include="PreventAutomaticHandlerRegistrationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateBasedAggregateRoot.cs" />
     <Compile Include="StaticEventSourcedAggregateRoot.cs" />

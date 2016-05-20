@@ -32,6 +32,8 @@ namespace SimpleDomain.Bus.Configuration
             typeof(ValueCommandHandler).ImplementsAsyncHandlerInterface().Should().BeTrue();
             typeof(ValueEventHandler).ImplementsAsyncHandlerInterface().Should().BeTrue();
 
+            typeof(NonRegisterableValueEventHandler).ImplementsAsyncHandlerInterface().Should().BeFalse();
+
             typeof(IHandleAsync<ValueCommand>).ImplementsAsyncHandlerInterface().Should().BeFalse();
             typeof(IHandleAsync<ValueEvent>).ImplementsAsyncHandlerInterface().Should().BeFalse();
 
