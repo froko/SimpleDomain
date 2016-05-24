@@ -79,13 +79,19 @@ namespace SimpleDomain.Bus.MSMQ
         /// <inheritdoc />
         public void Disconnect()
         {
-            this.DisconnectAsync().Wait(this.cancellationToken);
+            this.cancellationTokenSource.Cancel();
+
+            var allTasks = this.handlerTasks.Values.Concat(new[] { this.localQueueReceptionTask });
+            Task.WhenAll(allTasks).Wait();
+
+            this.handlerTasks.Clear();
+            this.localQueue.Dispose();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
-            this.localQueue.Dispose();
+            this.Disconnect();
         }
 
         private static Task SendAsync(Envelope envelope, EndpointAddress recipientEndpointAddress)
@@ -103,7 +109,7 @@ namespace SimpleDomain.Bus.MSMQ
             {
                 try
                 {
-                    await this.ProcessMessages().ConfigureAwait(false);
+                    await this.ProcessMessagesAsync().ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -116,18 +122,18 @@ namespace SimpleDomain.Bus.MSMQ
             }
         }
 
-        private async Task ProcessMessages()
+        private async Task ProcessMessagesAsync()
         {
             using (var enumerator = this.localQueue.GetMessageEnumerator2())
             {
                 while (!this.cancellationToken.IsCancellationRequested)
                 {
-                    await this.ProcessMessages(enumerator).ConfigureAwait(false);
+                    await this.ProcessMessagesAsync(enumerator).ConfigureAwait(false);
                 }
             }
         }
 
-        private Task ProcessMessages(MessageEnumerator enumerator)
+        private Task ProcessMessagesAsync(MessageEnumerator enumerator)
         {
             try
             {
@@ -191,17 +197,6 @@ namespace SimpleDomain.Bus.MSMQ
 
             var envelope = (Envelope)message.Body;
             await this.callMeBackWhenEnvelopeArrives(envelope).ConfigureAwait(false);
-        }
-
-        private async Task DisconnectAsync()
-        {
-            this.cancellationTokenSource.Cancel();
-
-            var allTasks = this.handlerTasks.Values.Concat(new[] { this.localQueueReceptionTask });
-            await Task.WhenAll(allTasks).ConfigureAwait(false);
-
-            this.handlerTasks.Clear();
-            this.localQueue.Dispose();
         }
     }
 }
