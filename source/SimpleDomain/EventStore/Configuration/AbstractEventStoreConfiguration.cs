@@ -58,7 +58,7 @@ namespace SimpleDomain.EventStore.Configuration
         public abstract void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore);
 
         /// <inheritdoc />
-        public T Get<T>(string key)
+        public virtual T Get<T>(string key)
         {
             Guard.NotNullOrEmpty(() => key);
 

@@ -21,12 +21,25 @@ namespace SimpleDomain.EventStore.Configuration
     using System;
 
     using SimpleDomain.EventStore;
+    using SimpleDomain.EventStore.Persistence;
 
     /// <summary>
     /// The event store factory
     /// </summary>
     public class EventStoreFactory
     {
+        /// <summary>
+        /// Creates a new instance of <see cref="EventStoreFactory"/>
+        /// </summary>
+        public EventStoreFactory()
+        {
+            this.Create = (config, bus) =>
+            {
+                config.DefineAsyncEventDispatching(bus.PublishAsync);
+                return new InMemoryEventStore(config);
+            };
+        }
+
         /// <summary>
         /// Gets the function to create an event store using a configuration and an instance of a Jitney bus
         /// </summary>

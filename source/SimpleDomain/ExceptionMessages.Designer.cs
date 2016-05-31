@@ -97,7 +97,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot restart or reconfigure the ComopsitionRoot since it has already been started..
+        ///   Looks up a localized string similar to Cannot restart or reconfigure the CompositionRoot since it has already been started..
         /// </summary>
         public static string CompositionRootHasAlreadyBeenStarted {
             get {

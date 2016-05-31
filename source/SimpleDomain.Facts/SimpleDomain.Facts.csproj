@@ -94,6 +94,7 @@
     <Compile Include="Bus\Configuration\AsyncMessageDelegateTest.cs" />
     <Compile Include="Bus\Configuration\ContainerLessHandlerRegistryTest.cs" />
     <Compile Include="Bus\Configuration\HandlerInvocationCacheTest.cs" />
+    <Compile Include="Bus\Configuration\JitneyFactoryTest.cs" />
     <Compile Include="Bus\Configuration\JitneySubscriptionsTest.cs" />
     <Compile Include="Bus\Configuration\TypeExtensionsTest.cs" />
     <Compile Include="Bus\ContractsToEndpointMapperTest.cs" />
@@ -124,10 +125,13 @@
     <Compile Include="Common\GuardTest.cs" />
     <Compile Include="Common\InMemoryTraceListenerTest.cs" />
     <Compile Include="Common\TypeHelperTest.cs" />
+    <Compile Include="CompositionRootAlreadyStartedExceptionTest.cs" />
+    <Compile Include="CompositionRootTest.cs" />
     <Compile Include="DynamicEventSourcedAggregateRootTest.cs" />
     <Compile Include="EntityTest.cs" />
     <Compile Include="EventHistoryTest.cs" />
     <Compile Include="EventStore\Configuration\AbstractEventStoreConfigurationTest.cs" />
+    <Compile Include="EventStore\Configuration\EventStoreFactoryTest.cs" />
     <Compile Include="EventStore\GlobalEventStoreConfigurationExtensionsTest.cs" />
     <Compile Include="EventStore\EventDescriptorTest.cs" />
     <Compile Include="EventStore\EventStoreRepositoryTest.cs" />

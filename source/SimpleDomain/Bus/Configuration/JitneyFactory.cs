@@ -28,6 +28,14 @@ namespace SimpleDomain.Bus.Configuration
     public class JitneyFactory
     {
         /// <summary>
+        /// Creates a new instance of <see cref="JitneyFactory"/>
+        /// </summary>
+        public JitneyFactory()
+        {
+            this.Create = config => new SimpleJitney(config);
+        }
+
+        /// <summary>
         /// Gets the function to create a Jitney bus using a configuration
         /// </summary>
         public Func<IHaveJitneyConfiguration, Jitney> Create { get; private set; }

@@ -130,7 +130,7 @@
     <value>Cannot subscribe more than one handler for command of type {0}.</value>
   </data>
   <data name="CompositionRootHasAlreadyBeenStarted" xml:space="preserve">
-    <value>Cannot restart or reconfigure the ComopsitionRoot since it has already been started.</value>
+    <value>Cannot restart or reconfigure the CompositionRoot since it has already been started.</value>
   </data>
   <data name="EventStoreCannotBeRegistered" xml:space="preserve">
     <value>Cannot register an EventStore when there is no IoC container.</value>
