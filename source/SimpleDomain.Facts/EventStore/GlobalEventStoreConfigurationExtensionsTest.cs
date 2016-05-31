@@ -18,6 +18,7 @@
 
 namespace SimpleDomain.EventStore
 {
+    using System;
     using System.Collections.Generic;
 
     using FakeItEasy;
@@ -32,16 +33,6 @@ namespace SimpleDomain.EventStore
     public class GlobalEventStoreConfigurationExtensionsTest
     {
         [Fact]
-        public void CanPrepareInMemoryEventStore()
-        {
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.PrepareInMemoryEventStore();
-
-            configuration.Get<List<EventDescriptor>>(InMemoryEventStore.EventDescriptors).Should().NotBeNull();
-            configuration.Get<List<SnapshotDescriptor>>(InMemoryEventStore.SnapshotDescriptors).Should().NotBeNull();
-        }
-
-        [Fact]
         public void CanRegisterInMemoryEventStore()
         {
             var configuration = A.Fake<AbstractEventStoreConfiguration>();
@@ -49,16 +40,7 @@ namespace SimpleDomain.EventStore
 
             A.CallTo(() => configuration.AddConfigurationItem(InMemoryEventStore.EventDescriptors, A<List<EventDescriptor>>.Ignored)).MustHaveHappened();
             A.CallTo(() => configuration.AddConfigurationItem(InMemoryEventStore.SnapshotDescriptors, A<List<SnapshotDescriptor>>.Ignored)).MustHaveHappened();
-            A.CallTo(() => configuration.Register<InMemoryEventStore>()).MustHaveHappened();
-        }
-
-        [Fact]
-        public void CanPrepareSqlEventStore()
-        {
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.PrepareSqlEventStore();
-
-            configuration.Get<DbConnectionFactory>(SqlEventStore.ConnectionFactory).Should().NotBeNull();
+            A.CallTo(() => configuration.Register(A<Func<IHaveEventStoreConfiguration, IEventStore>>.Ignored)).MustHaveHappened();
         }
 
         [Fact]
@@ -68,7 +50,7 @@ namespace SimpleDomain.EventStore
             configuration.UseSqlEventStore();
 
             A.CallTo(() => configuration.AddConfigurationItem(SqlEventStore.ConnectionFactory, A<DbConnectionFactory>.Ignored)).MustHaveHappened();
-            A.CallTo(() => configuration.Register<SqlEventStore>()).MustHaveHappened();
+            A.CallTo(() => configuration.Register(A<Func<IHaveEventStoreConfiguration, IEventStore>>.Ignored)).MustHaveHappened();
         }
     }
 }

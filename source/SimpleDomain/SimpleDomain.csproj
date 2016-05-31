@@ -58,13 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractCompositionRoot.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="AggregateRoot.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="AggregateRootNotFoundException.cs" />
+    <Compile Include="Bus\Configuration\AbstractIoCContainerJitneyConfiguration.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegate.cs" />
     <Compile Include="Bus\ContractsToEndpointMapper.cs" />
     <Compile Include="Bus\Envelope.cs">
@@ -77,6 +75,7 @@
     <Compile Include="Bus\IMessageQueueProvider.cs" />
     <Compile Include="Bus\InMemorySubscriptionStore.cs" />
     <Compile Include="Bus\ISaveSubscriptionMessages.cs" />
+    <Compile Include="Bus\ISubscribeMessageHandlers.cs" />
     <Compile Include="Bus\ISubscriptionStore.cs" />
     <Compile Include="Bus\JitneyConfigurationException.cs" />
     <Compile Include="Bus\MessageQueueJitney.cs" />
@@ -112,7 +111,12 @@
     <Compile Include="Bus\Pipeline\Outgoing\StepExtensions.cs" />
     <Compile Include="Bus\Pipeline\PipelineContext.cs" />
     <Compile Include="Bus\Pipeline\PipelineStep.cs" />
+    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="CompositionRootAlreadyStartedException.cs" />
+    <Compile Include="EventStore\Configuration\AbstractIoCContainerEventStoreConfiguration.cs" />
+    <Compile Include="EventStore\Configuration\EventStoreFactory.cs" />
     <Compile Include="EventStore\IConfigureThisEventStore.cs" />
+    <Compile Include="ExecutionContext.cs" />
     <Compile Include="IBoundedContext.cs" />
     <Compile Include="Bus\Configuration\AbstractHandlerRegistry.cs" />
     <Compile Include="Bus\Configuration\AbstractJitneyConfiguration.cs">
@@ -204,6 +208,7 @@
     <Compile Include="IMessage.cs" />
     <Compile Include="INeedVersion.cs" />
     <Compile Include="ISnapshot.cs" />
+    <Compile Include="Bus\Configuration\JitneyFactory.cs" />
     <Compile Include="MessageExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

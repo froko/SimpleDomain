@@ -27,8 +27,7 @@ namespace GiftcardSample.Ninject
     using global::Ninject.Modules;
 
     using SimpleDomain.Bus;
-    using SimpleDomain.Bus.Configuration;
-
+    
     public class JitneyModule : NinjectModule
     {
         public override void Load()

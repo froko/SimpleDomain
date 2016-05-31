@@ -19,10 +19,8 @@
 namespace SimpleDomain.Bus
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
-    using System.Threading.Tasks;
-    
+
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Bus.Pipeline.Outgoing;
 
@@ -32,48 +30,18 @@ namespace SimpleDomain.Bus
     public interface IConfigureThisJitney
     {
         /// <summary>
-        /// Adds a configuration item
-        /// </summary>
-        /// <param name="key">The key</param>
-        /// <param name="item">The item</param>
-        void AddConfigurationItem(string key, object item);
-
-        /// <summary>
         /// Defines the local endpoint address
         /// </summary>
         /// <param name="queueName">The name of the local endpoint queue</param>
-        void DefineLocalEndpointAddress(string queueName);
-
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney DefineLocalEndpointAddress(string queueName);
+        
         /// <summary>
         /// Sets the subscription store
         /// </summary>
-        /// <param name="store">The subscription store</param>
-        void SetSubscriptionStore(ISubscriptionStore store);
-
-        /// <summary>
-        /// Subscribes an async handler action for a given command
-        /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand;
-
-        /// <summary>
-        /// Subscribes an async handler action for a given event
-        /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent;
-
-        /// <summary>
-        /// Subscribes all message handlers in a given list of assemblies
-        /// </summary>
-        /// <param name="assemblies">The list of assemblies to scan and register for</param>
-        void SubscribeMessageHandlers(IEnumerable<Assembly> assemblies);
-
-        /// <summary>
-        /// Subscribes all message handlers in the calling assembly
-        /// </summary>
-        void SubscribeMessageHandlersInThisAssembly();
+        /// <param name="store">An instance of <see cref="ISubscriptionStore"/></param>
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney SetSubscriptionStore(ISubscriptionStore store);
 
         /// <summary>
         /// Maps all message contracts in a given assembly
@@ -83,34 +51,44 @@ namespace SimpleDomain.Bus
         IMapContractsToEndpoints MapContracts(Assembly contractAssembly);
 
         /// <summary>
-        /// Registers a specific type of <see cref="Jitney"/> in the IoC container.
-        /// <remarks>This method is intended for extension methods only</remarks>
-        /// </summary>
-        /// <typeparam name="TJitney">The type of the <see cref="Jitney"/> bus</typeparam>
-        void Register<TJitney>() where TJitney : Jitney;
-
-        /// <summary>
         /// Adds a pipeline step for incomming envelopes
         /// </summary>
         /// <param name="pipelineStep">The pipeline step</param>
-        void AddPipelineStep(IncommingEnvelopeStep pipelineStep);
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney AddPipelineStep(IncommingEnvelopeStep pipelineStep);
 
         /// <summary>
         /// Adds a pipeline step for incomming messages
         /// </summary>
         /// <param name="pipelineStep">The pipeline step</param>
-        void AddPipelineStep(IncommingMessageStep pipelineStep);
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney AddPipelineStep(IncommingMessageStep pipelineStep);
 
         /// <summary>
         /// Adds a pipeline step for outgoing messages
         /// </summary>
         /// <param name="pipelineStep">The pipeline step</param>
-        void AddPipelineStep(OutgoingMessageStep pipelineStep);
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney AddPipelineStep(OutgoingMessageStep pipelineStep);
 
         /// <summary>
         /// Adds a pipeline step for outgoing envelopes
         /// </summary>
-        /// <param name="pipelineStep">The pipeline step</param>
-        void AddPipelineStep(OutgoingEnvelopeStep pipelineStep);
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney AddPipelineStep(OutgoingEnvelopeStep pipelineStep);
+
+        /// <summary>
+        /// Adds a configuration item
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <param name="item">The item</param>
+        void AddConfigurationItem(string key, object item);
+
+        /// <summary>
+        /// Registers a <see cref="Jitney" /> instance
+        /// <remarks>This method is intended for extension methods only</remarks>
+        /// </summary>
+        /// <param name="createJitney">The action to create a <see cref="Jitney" /> instance using a configuration</param>
+        void Register(Func<IHaveJitneyConfiguration, Jitney> createJitney);
     }
 }

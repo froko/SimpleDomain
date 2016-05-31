@@ -47,7 +47,7 @@ namespace SimpleDomain.EventStore.Configuration
         [Fact]
         public void CanRegisterEventStore()
         {
-            this.testee.Register<InMemoryEventStore>();
+            this.testee.Register(config => new InMemoryEventStore(config));
 
             this.kernel.Get<IEventStore>().Should().BeAssignableTo<InMemoryEventStore>();
         }

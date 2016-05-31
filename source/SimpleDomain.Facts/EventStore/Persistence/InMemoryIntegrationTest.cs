@@ -35,19 +35,19 @@ namespace SimpleDomain.EventStore.Persistence
     public class InMemoryIntegrationTest
     {
         private readonly Guid aggregateId;
-        private readonly IDeliverMessages dispatcher;
-        private readonly InMemoryEventStore testee;
+        private readonly IDeliverMessages bus;
+        private readonly IEventStore testee;
 
         public InMemoryIntegrationTest()
         {
             this.aggregateId = Guid.NewGuid();
-            this.dispatcher = A.Fake<IDeliverMessages>();
+            this.bus = A.Fake<IDeliverMessages>();
 
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.DefineAsyncEventDispatching(@event => this.dispatcher.PublishAsync(@event));
-            configuration.PrepareInMemoryEventStore();
+            var factory = new EventStoreFactory();
+            var configuration = new ContainerLessEventStoreConfiguration(factory);
+            configuration.UseInMemoryEventStore();
 
-            this.testee = new InMemoryEventStore(configuration);
+            this.testee = factory.Create(configuration, this.bus);
         }
 
         [Fact]
@@ -66,9 +66,9 @@ namespace SimpleDomain.EventStore.Persistence
                     new Dictionary<string, object>());
             }
 
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 0))).MustHaveHappened();
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 11))).MustHaveHappened();
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 22))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 0))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 11))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 22))).MustHaveHappened();
         }
 
         [Fact]

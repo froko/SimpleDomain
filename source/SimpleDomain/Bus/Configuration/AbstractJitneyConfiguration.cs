@@ -35,6 +35,7 @@ namespace SimpleDomain.Bus.Configuration
     /// </summary>
     public abstract class AbstractJitneyConfiguration : 
         IConfigureThisJitney,
+        ISubscribeMessageHandlers,
         IHaveJitneyConfiguration,
         IHavePipelineConfiguration
     {
@@ -66,7 +67,10 @@ namespace SimpleDomain.Bus.Configuration
 
             this.subscriptionStore = new InMemorySubscriptionStore();
         }
-        
+
+        /// <inheritdoc />
+        public EndpointAddress LocalEndpointAddress { get; private set; }
+
         /// <inheritdoc />
         public IHaveJitneySubscriptions Subscriptions => this.jitneySubscriptions;
 
@@ -74,42 +78,120 @@ namespace SimpleDomain.Bus.Configuration
         public ISaveSubscriptionMessages SubscriptionStore => this.subscriptionStore;
 
         /// <inheritdoc />
-        public EndpointAddress LocalEndpointAddress { get; private set; }
-
-        /// <inheritdoc />
-        public EndpointAddress GetConsumingEndpointAddress(ICommand command)
+        public IConfigureThisJitney DefineLocalEndpointAddress(string queueName)
         {
-            return this.contractMap[command.GetType()];
+            Guard.NotNullOrEmpty(() => queueName);
+
+            this.LocalEndpointAddress = new EndpointAddress(queueName);
+            return this;
         }
 
         /// <inheritdoc />
-        public IEnumerable<EndpointAddress> GetSubscribedEndpointAddresses(IEvent @event)
+        public IConfigureThisJitney SetSubscriptionStore(ISubscriptionStore store)
         {
-            return this.subscriptionStore.GetSubscribedEndpoints(@event);
+            Guard.NotNull(() => store);
+
+            this.subscriptionStore = store;
+            return this;
         }
 
         /// <inheritdoc />
-        public EndpointAddress GetPublishingEndpointAddress(string fullNameOfEventType)
+        public IMapContractsToEndpoints MapContracts(Assembly contractAssembly)
         {
-            return this.contractMap[TypeHelper.GetType(fullNameOfEventType)];
-        }
+            Guard.NotNull(() => contractAssembly);
 
-        /// <inheritdoc />
-        public T Get<T>(string key)
-        {
-            Guard.NotNullOrEmpty(() => key);
-
-            if (!this.configurationItems.ContainsKey(key))
+            if (this.LocalEndpointAddress == null)
             {
-                throw new KeyNotFoundException();
+                throw new JitneyConfigurationException(ExceptionMessages.LocalEndpointAddressNotDefined);
             }
 
-            if (!(this.configurationItems[key] is T))
+            return new ContractsToEndpointMapper(this, this.LocalEndpointAddress, this.contractMap, contractAssembly);
+        }
+
+        /// <inheritdoc />
+        public IConfigureThisJitney AddPipelineStep(IncommingEnvelopeStep pipelineStep)
+        {
+            Guard.NotNull(() => pipelineStep);
+
+            if (!this.incommingEnvelopeSteps.Contains(pipelineStep))
             {
-                throw new InvalidCastException();
+                this.incommingEnvelopeSteps.Add(pipelineStep);
             }
 
-            return (T)this.configurationItems[key];
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IConfigureThisJitney AddPipelineStep(IncommingMessageStep pipelineStep)
+        {
+            Guard.NotNull(() => pipelineStep);
+
+            if (!this.incommingMessageSteps.Contains(pipelineStep))
+            {
+                this.incommingMessageSteps.Add(pipelineStep);
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IConfigureThisJitney AddPipelineStep(OutgoingMessageStep pipelineStep)
+        {
+            Guard.NotNull(() => pipelineStep);
+
+            if (!this.outgoingMessageSteps.Contains(pipelineStep))
+            {
+                this.outgoingMessageSteps.Add(pipelineStep);
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IConfigureThisJitney AddPipelineStep(OutgoingEnvelopeStep pipelineStep)
+        {
+            Guard.NotNull(() => pipelineStep);
+
+            if (!this.outgoingEnvelopeSteps.Contains(pipelineStep))
+            {
+                this.outgoingEnvelopeSteps.Add(pipelineStep);
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public void AddConfigurationItem(string key, object item)
+        {
+            this.configurationItems.Add(key, item);
+        }
+
+        /// <inheritdoc />
+        public abstract void Register(Func<IHaveJitneyConfiguration, Jitney> createJitney);
+
+        /// <inheritdoc />
+        public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
+        {
+            Guard.NotNull(() => handler);
+
+            this.jitneySubscriptions.AddCommandHandler(handler);
+        }
+
+        /// <inheritdoc />
+        public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
+        {
+            Guard.NotNull(() => handler);
+
+            this.jitneySubscriptions.AddEventHandler(handler);
+        }
+        
+        /// <inheritdoc />
+        public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
+        {
+            return new OutgoingPipeline(
+                this, 
+                this.outgoingMessageSteps.WithFinalOutgoingMessageStep(), 
+                this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(handleEnvelopeAsync));
         }
 
         /// <inheritdoc />
@@ -154,104 +236,62 @@ namespace SimpleDomain.Bus.Configuration
         }
 
         /// <inheritdoc />
-        public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
+        public EndpointAddress GetConsumingEndpointAddress(ICommand command)
         {
-            return new OutgoingPipeline(
-                this, 
-                this.outgoingMessageSteps.WithFinalOutgoingMessageStep(), 
-                this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(handleEnvelopeAsync));
+            return this.contractMap[command.GetType()];
         }
 
         /// <inheritdoc />
-        public void AddConfigurationItem(string key, object item)
+        public IEnumerable<EndpointAddress> GetSubscribedEndpointAddresses(IEvent @event)
         {
-            this.configurationItems.Add(key, item);
+            return this.subscriptionStore.GetSubscribedEndpoints(@event);
         }
 
         /// <inheritdoc />
-        public void DefineLocalEndpointAddress(string queueName)
+        public EndpointAddress GetPublishingEndpointAddress(string fullNameOfEventType)
         {
-            this.LocalEndpointAddress = new EndpointAddress(queueName);
+            return this.contractMap[TypeHelper.GetType(fullNameOfEventType)];
         }
 
         /// <inheritdoc />
-        public void SetSubscriptionStore(ISubscriptionStore store)
+        public T Get<T>(string key)
         {
-            this.subscriptionStore = store;
+            Guard.NotNullOrEmpty(() => key);
+
+            if (!this.configurationItems.ContainsKey(key))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (!(this.configurationItems[key] is T))
+            {
+                throw new InvalidCastException();
+            }
+
+            return (T)this.configurationItems[key];
         }
 
-        /// <inheritdoc />
-        public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
+        /// <summary>
+        /// Subscribes all message handlers in a given list of assemblies
+        /// </summary>
+        /// <param name="assemblies">The list of assemblies to scan and register for</param>
+        /// <param name="registerInContainer">The action to register types in the IoC container</param>
+        protected void SubscribeMessageHandlers(IEnumerable<Assembly> assemblies, Action<Type> registerInContainer)
         {
-            this.jitneySubscriptions.AddCommandHandler(handler);
-        }
-
-        /// <inheritdoc />
-        public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
-        {
-            this.jitneySubscriptions.AddEventHandler(handler);
-        }
-
-        /// <inheritdoc />
-        public void SubscribeMessageHandlers(IEnumerable<Assembly> assemblies)
-        {
-            Action<Assembly> scanAssembly = assembly => 
-                this.jitneySubscriptions.ScanAssemblyForMessageHandlers(assembly, this.RegisterHandlerType);
+            Action<Assembly> scanAssembly = assembly =>
+                this.jitneySubscriptions.ScanAssemblyForMessageHandlers(assembly, registerInContainer);
 
             assemblies.ToList().ForEach(scanAssembly);
         }
 
-        /// <inheritdoc />
-        public void SubscribeMessageHandlersInThisAssembly()
-        {
-            this.SubscribeMessageHandlers(new[] { Assembly.GetCallingAssembly() });
-        }
-
-        /// <inheritdoc />
-        public IMapContractsToEndpoints MapContracts(Assembly contractAssembly)
-        {
-            Guard.NotNull(() => contractAssembly);
-
-            if (this.LocalEndpointAddress == null)
-            {
-                throw new JitneyConfigurationException(ExceptionMessages.LocalEndpointAddressNotDefined);
-            }
-
-            return new ContractsToEndpointMapper(this.LocalEndpointAddress, this.contractMap, contractAssembly);
-        }
-
-        /// <inheritdoc />
-        public abstract void Register<TJitney>() where TJitney : Jitney;
-
-        /// <inheritdoc />
-        public void AddPipelineStep(IncommingEnvelopeStep pipelineStep)
-        {
-            this.incommingEnvelopeSteps.Add(pipelineStep);
-        }
-
-        /// <inheritdoc />
-        public void AddPipelineStep(IncommingMessageStep pipelineStep)
-        {
-            this.incommingMessageSteps.Add(pipelineStep);
-        }
-
-        /// <inheritdoc />
-        public void AddPipelineStep(OutgoingMessageStep pipelineStep)
-        {
-            this.outgoingMessageSteps.Add(pipelineStep);
-        }
-
-        /// <inheritdoc />
-        public void AddPipelineStep(OutgoingEnvelopeStep pipelineStep)
-        {
-            this.outgoingEnvelopeSteps.Add(pipelineStep);
-        }
-
         /// <summary>
-        /// Registers a handler type in the IoC container
+        /// Subscribes all message handlers in the calling assembly
         /// </summary>
-        /// <param name="type">The handler type</param>
-        protected abstract void RegisterHandlerType(Type type);
+        /// <param name="registerInContainer">The action to register types in the IoC container</param>
+        protected void SubscribeMessageHandlersInThisAssembly(Action<Type> registerInContainer)
+        {
+            this.SubscribeMessageHandlers(new[] { Assembly.GetCallingAssembly() }, registerInContainer);
+        }
 
         private static void AppendPipelineSteps<T>(
             StringBuilder stringBuilder,

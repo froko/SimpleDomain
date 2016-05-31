@@ -23,6 +23,7 @@ namespace GiftcardSample
     using System.Linq;
     using System.Threading.Tasks;
 
+    using GiftcardSample.Commands;
     using GiftcardSample.Domain;
     using GiftcardSample.ReadStore;
     using GiftcardSample.ReadStore.InMemory;
@@ -31,29 +32,45 @@ namespace GiftcardSample
     using SimpleDomain.Bus;
     using SimpleDomain.EventStore;
 
-    public abstract class BaseFeatures
+    public abstract class BaseFeatures : IDisposable
     {
-        private readonly CompositionRoot compositionRoot;
+        private readonly ExecutionContext executionContext;
 
         protected BaseFeatures()
         {
             var readStore = new InMemoryReadStore();
+            var compositionRoot = new CompositionRoot();
 
-            this.compositionRoot = new CompositionRoot();
-            this.compositionRoot.Register(new GiftcardContext(readStore));
-            this.compositionRoot.Start();
+            compositionRoot.ConfigureJitney()
+                .DefineLocalEndpointAddress("gc.sample")
+                .SetSubscriptionStore(new FileSubscriptionStore())
+                .MapContracts(typeof(CreateGiftcard).Assembly).ToMe()
+                .AddPipelineStep(new LogIncommingEnvelopeStep())
+                .UseSimpleJitney();
 
+            compositionRoot.ConfigureEventStore()
+                .UseInMemoryEventStore();
+
+            compositionRoot.Register(new GiftcardContext(readStore));
+
+            this.executionContext = compositionRoot.Start();
+            
             this.OverviewQuery = new InMemoryGiftcardOverviewQuery(readStore);
             this.TransactionQuery = new InMemoryGiftcardTransactionQuery(readStore);
         }
-
-        protected Jitney Bus => this.compositionRoot.Bus;
-
+        
         protected IGiftcardOverviewQuery OverviewQuery { get; }
 
         protected IGiftcardTransactionQuery TransactionQuery { get; }
 
-        private IEventStore EventStore => this.compositionRoot.EventStore;
+        protected IDeliverMessages Bus => this.executionContext.Bus;
+
+        private IEventStore EventStore => this.executionContext.EventStore;
+
+        public void Dispose()
+        {
+            this.executionContext.Dispose();
+        }
 
         protected async Task PrepareEventsAsync(Guid cardId, params IEvent[] events)
         {

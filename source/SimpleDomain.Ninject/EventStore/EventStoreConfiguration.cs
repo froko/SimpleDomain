@@ -16,17 +16,19 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore.Configuration
+namespace SimpleDomain.EventStore
 {
     using System;
     using System.Threading.Tasks;
 
     using Ninject;
 
+    using SimpleDomain.EventStore.Configuration;
+
     /// <summary>
     /// The EventStore configuration
     /// </summary>
-    public class EventStoreConfiguration : AbstractEventStoreConfiguration
+    public class EventStoreConfiguration : AbstractIoCContainerEventStoreConfiguration
     {
         private readonly IKernel kernel;
         
@@ -37,25 +39,20 @@ namespace SimpleDomain.EventStore.Configuration
         public EventStoreConfiguration(IKernel kernel)
         {
             this.kernel = kernel;
-            this.kernel.Bind<IHaveEventStoreConfiguration>().ToConstant(this).InSingletonScope();
-            this.kernel.Bind<IEventSourcedRepository>().To<EventStoreRepository>().InTransientScope();
-
-            this.DispatchEvents = @event => Task.CompletedTask;
+            this.DefineAsyncEventDispatching<IDeliverMessages>((bus, @event) => bus.PublishAsync(@event));
         }
 
-        /// <summary>
-        /// Defines the action how to resolve a bus and asynchronously publish events over this bus
-        /// </summary>
-        /// <param name="dispatchEventsUsingResolvedBus">The async resolve and publish action</param>
-        public void DefineAsyncEventDispatching<TBus>(Func<TBus, IEvent, Task> dispatchEventsUsingResolvedBus)
+        /// <inheritdoc />
+        public override void DefineAsyncEventDispatching<TBus>(Func<TBus, IEvent, Task> dispatchEventsUsingResolvedBus)
         {
             this.DispatchEvents = @event => dispatchEventsUsingResolvedBus(this.kernel.Get<TBus>(), @event);
         }
 
         /// <inheritdoc />
-        public override void Register<TEventStore>()
+        public override void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore)
         {
-            this.kernel.Bind<IEventStore>().To<TEventStore>().InSingletonScope();
+            this.kernel.Bind<IEventStore>().ToConstant(createEventStore(this));
+            this.kernel.Bind<IEventSourcedRepository>().To<EventStoreRepository>().InTransientScope();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="ContainerLessEventStoreConfigurationTest.cs" company="frokonet.ch">
+// <copyright file="CompositionRootAlreadyStartedException.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,27 +16,21 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore.Configuration
+namespace SimpleDomain
 {
     using System;
 
-    using FluentAssertions;
-
-    using SimpleDomain.EventStore.Persistence;
-
-    using Xunit;
-
-    public class ContainerLessEventStoreConfigurationTest
+    /// <summary>
+    /// The Exception that is thrown when the CompositionRoot has already been started
+    /// </summary>
+    [Serializable]
+    public class CompositionRootAlreadyStartedException : Exception
     {
-        [Fact]
-        public void ThrowsException_WhenTryingToRegisterJitney()
+        /// <summary>
+        /// Creates a new instance of <see cref="CompositionRootAlreadyStartedException"/>
+        /// </summary>
+        public CompositionRootAlreadyStartedException() : base(ExceptionMessages.CompositionRootHasAlreadyBeenStarted)
         {
-            var testee = new ContainerLessEventStoreConfiguration();
-
-            Action action = () => testee.Register<InMemoryEventStore>();
-
-            action.ShouldThrow<NotSupportedException>()
-                .WithMessage(ExceptionMessages.EventStoreCannotBeRegistered);
         }
     }
 }

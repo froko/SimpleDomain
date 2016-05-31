@@ -44,9 +44,17 @@ namespace SimpleDomain.Bus
         public override async Task StartAsync()
         {
             Logger.Debug(this.Configuration.GetSummary(this.GetType()));
-            await this.SendSubscriptionMessagesAsync();
+            await this.SendSubscriptionMessagesAsync().ConfigureAwait(false);
 
             Logger.Info("SimpleJitney has been started");
+        }
+
+        /// <inheritdoc />
+        public override Task StopAsync()
+        {
+            Logger.Info("SimpleJitney has been stopped");
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />

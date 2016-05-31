@@ -44,9 +44,9 @@ namespace SimpleDomain.Bus
         /// <param name="envelope">The enveloped message</param>
         Task SendAsync(Envelope envelope);
 
-         /// <summary>
-         /// Stopps the message reception process and disconnects from the local queue
-         /// </summary>
-        void Disconnect();
+        /// <summary>
+        /// Stopps the message reception process and disconnects from the local queue
+        /// </summary>
+        Task DisconnectAsync();
     }
 }

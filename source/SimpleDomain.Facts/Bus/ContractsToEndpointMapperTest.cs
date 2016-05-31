@@ -35,15 +35,17 @@ namespace SimpleDomain.Bus
         public void CanMapContractsToQueueName()
         {
             const string QueueName = "RemoteQueue";
-
+            
             var remoteEndpointAddress = new EndpointAddress(QueueName);
+
+            var configuration = A.Fake<IConfigureThisJitney>();
             var localEndpointAddress = new EndpointAddress("local");
             var contractMap = new Dictionary<Type, EndpointAddress>();
             var assembly = typeof(MyCommand).Assembly;
 
-            var testee = new ContractsToEndpointMapper(localEndpointAddress, contractMap, assembly);
+            var testee = new ContractsToEndpointMapper(configuration, localEndpointAddress, contractMap, assembly);
 
-            testee.To(QueueName);
+            var result = testee.To(QueueName);
 
             contractMap.Should()
                 .Contain(typeof(MyCommand), remoteEndpointAddress).And
@@ -52,6 +54,8 @@ namespace SimpleDomain.Bus
                 .Contain(typeof(OtherEvent), remoteEndpointAddress).And
                 .Contain(typeof(MyMessage), remoteEndpointAddress).And
                 .Contain(typeof(OtherMessage), remoteEndpointAddress);
+
+            result.Should().Be(configuration);
         }
 
         [Fact]
@@ -61,13 +65,15 @@ namespace SimpleDomain.Bus
             const string MachineName = "RemoteMachine";
 
             var remoteEndpointAddress = new EndpointAddress(QueueName, MachineName);
+
+            var configuration = A.Fake<IConfigureThisJitney>();
             var localEndpointAddress = new EndpointAddress("local");
             var contractMap = new Dictionary<Type, EndpointAddress>();
             var assembly = typeof(MyCommand).Assembly;
 
-            var testee = new ContractsToEndpointMapper(localEndpointAddress, contractMap, assembly);
+            var testee = new ContractsToEndpointMapper(configuration, localEndpointAddress, contractMap, assembly);
 
-            testee.To(QueueName, MachineName);
+            var result = testee.To(QueueName, MachineName);
 
             contractMap.Should()
                 .Contain(typeof(MyCommand), remoteEndpointAddress).And
@@ -76,39 +82,21 @@ namespace SimpleDomain.Bus
                 .Contain(typeof(OtherEvent), remoteEndpointAddress).And
                 .Contain(typeof(MyMessage), remoteEndpointAddress).And
                 .Contain(typeof(OtherMessage), remoteEndpointAddress);
-        }
 
-        [Fact]
-        public void CanMapContractsToRemoteEndpoint()
-        {
-            var remoteEndpointAddress = new EndpointAddress("RemoteQueue", "RemoteMachine");
-            var localEndpointAddress = new EndpointAddress("local");
-            var contractMap = new Dictionary<Type, EndpointAddress>();
-            var assembly = typeof(MyCommand).Assembly;
-
-            var testee = new ContractsToEndpointMapper(localEndpointAddress, contractMap, assembly);
-
-            testee.To(remoteEndpointAddress);
-
-            contractMap.Should()
-                .Contain(typeof(MyCommand), remoteEndpointAddress).And
-                .Contain(typeof(OtherCommand), remoteEndpointAddress).And
-                .Contain(typeof(MyEvent), remoteEndpointAddress).And
-                .Contain(typeof(OtherEvent), remoteEndpointAddress).And
-                .Contain(typeof(MyMessage), remoteEndpointAddress).And
-                .Contain(typeof(OtherMessage), remoteEndpointAddress);
+            result.Should().Be(configuration);
         }
 
         [Fact]
         public void CanMapContractsToTheLocalEndpoint()
         {
+            var configuration = A.Fake<IConfigureThisJitney>();
             var localEndpointAddress = new EndpointAddress("local");
             var contractMap = new Dictionary<Type, EndpointAddress>();
             var assembly = typeof(MyCommand).Assembly;
 
-            var testee = new ContractsToEndpointMapper(localEndpointAddress, contractMap, assembly);
+            var testee = new ContractsToEndpointMapper(configuration, localEndpointAddress, contractMap, assembly);
 
-            testee.ToMe();
+            var result = testee.ToMe();
 
             contractMap.Should()
                 .Contain(typeof(MyCommand), localEndpointAddress).And
@@ -117,6 +105,8 @@ namespace SimpleDomain.Bus
                 .Contain(typeof(OtherEvent), localEndpointAddress).And
                 .Contain(typeof(MyMessage), localEndpointAddress).And
                 .Contain(typeof(OtherMessage), localEndpointAddress);
+
+            result.Should().Be(configuration);
         }
     }
 }

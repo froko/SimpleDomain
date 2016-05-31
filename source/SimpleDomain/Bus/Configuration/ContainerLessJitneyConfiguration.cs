@@ -25,23 +25,21 @@ namespace SimpleDomain.Bus.Configuration
     /// </summary>
     public class ContainerLessJitneyConfiguration : AbstractJitneyConfiguration
     {
+        private readonly JitneyFactory factory;
+        
         /// <summary>
         /// Creates a new instance of <see cref="ContainerLessJitneyConfiguration"/>
         /// </summary>
-        public ContainerLessJitneyConfiguration() : base(new ContainerLessHandlerRegistry())
+        public ContainerLessJitneyConfiguration(JitneyFactory factory) 
+            : base(new ContainerLessHandlerRegistry())
         {
+            this.factory = factory;
         }
 
         /// <inheritdoc />
-        public override void Register<TJitney>()
+        public override void Register(Func<IHaveJitneyConfiguration, Jitney> createJitney)
         {
-            throw new NotSupportedException(ExceptionMessages.BusCannotBeRegistered);
-        }
-
-        /// <inheritdoc />
-        protected override void RegisterHandlerType(Type type)
-        {
-            throw new NotSupportedException(ExceptionMessages.HandlerCannotBeRegistered);
+            this.factory.Register(createJitney);
         }
     }
 }

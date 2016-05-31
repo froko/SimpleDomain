@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IBoundedContext.cs" company="frokonet.ch">
+// <copyright file="ISubscribeMessageHandlers.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,26 +16,28 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using SimpleDomain.Bus;
+    using System;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// The abstract technical definition of a bounded context
+    /// The Jitney handler subscription interface
     /// </summary>
-    public interface IBoundedContext
+    public interface ISubscribeMessageHandlers
     {
         /// <summary>
-        /// Gets the name of the bounded context
+        /// Subscribes an async handler action for a given command
         /// </summary>
-        string Name { get; }
+        /// <typeparam name="TCommand">The type of the command</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand;
 
         /// <summary>
-        /// Configures the bounded context
-        /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
+        /// Subscribes an async handler action for a given event
         /// </summary>
-        /// <param name="bus">The message handler subscriber</param>
-        /// <param name="repository">The repository</param>
-        void Configure(ISubscribeMessageHandlers bus, IEventSourcedRepository repository);
+        /// <typeparam name="TEvent">The type of the event</typeparam>
+        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
+        void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent;
     }
 }

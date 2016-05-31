@@ -25,7 +25,7 @@ namespace SimpleDomain.Bus.Pipeline
     /// The base class for all pipeline steps
     /// </summary>
     /// <typeparam name="TContext">The type of the pipeline context</typeparam>
-    public abstract class PipelineStep<TContext> where TContext : PipelineContext
+    public abstract class PipelineStep<TContext> : IEquatable<PipelineStep<TContext>> where TContext : PipelineContext
     {
         /// <summary>
         /// Gets the name of this pipeline step
@@ -38,5 +38,17 @@ namespace SimpleDomain.Bus.Pipeline
         /// <param name="context">The pipeline context</param>
         /// <param name="next">The next action in the pipeline</param>
         public abstract Task InvokeAsync(TContext context, Func<Task> next);
+
+        /// <inheritdoc />
+        public bool Equals(PipelineStep<TContext> other)
+        {
+            return other != null && other.Name == this.Name;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
     }
 }

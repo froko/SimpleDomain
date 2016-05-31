@@ -35,19 +35,19 @@ namespace SimpleDomain.EventStore.Persistence
     public class SqlIntegrationTest
     {
         private readonly Guid aggregateId;
-        private readonly IDeliverMessages dispatcher;
-        private readonly SqlEventStore testee;
+        private readonly IDeliverMessages bus;
+        private readonly IEventStore testee;
 
         public SqlIntegrationTest()
         {
             this.aggregateId = Guid.NewGuid();
-            this.dispatcher = A.Fake<IDeliverMessages>();
+            this.bus = A.Fake<IDeliverMessages>();
 
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.DefineAsyncEventDispatching(@event => this.dispatcher.PublishAsync(@event));
-            configuration.PrepareSqlEventStore();
+            var factory = new EventStoreFactory();
+            var configuration = new ContainerLessEventStoreConfiguration(factory);
+            configuration.UseSqlEventStore();
 
-            this.testee = new SqlEventStore(configuration);
+            this.testee = factory.Create(configuration, bus);
         }
 
         [Fact, WithTransaction]
@@ -66,9 +66,9 @@ namespace SimpleDomain.EventStore.Persistence
                     new Dictionary<string, object>());
             }
 
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 0))).MustHaveHappened();
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 11))).MustHaveHappened();
-            A.CallTo(() => this.dispatcher.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 22))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 0))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 11))).MustHaveHappened();
+            A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 22))).MustHaveHappened();
         }
 
         [Fact, WithTransaction]

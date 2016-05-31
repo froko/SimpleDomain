@@ -89,7 +89,7 @@ namespace SimpleDomain.EventStore.Configuration
         [Fact]
         public void CanDefineAsyncEventDispatching()
         {
-            var eventDispatcher = new Func<IEvent, Task>((e) => Task.CompletedTask);
+            var eventDispatcher = new Func<IEvent, Task>(e => Task.CompletedTask);
             this.testee.DefineAsyncEventDispatching(eventDispatcher);
 
             this.testee.DispatchEvents.Should().Be(eventDispatcher);
@@ -98,9 +98,9 @@ namespace SimpleDomain.EventStore.Configuration
         [Fact]
         public void CanRegisterEventStore()
         {
-            this.testee.Register<InMemoryEventStore>();
+            this.testee.Register(config => new InMemoryEventStore(config));
 
-            A.CallTo(() => this.container.Register<InMemoryEventStore>()).MustHaveHappened();
+            A.CallTo(() => this.container.Register(A<InMemoryEventStore>.Ignored)).MustHaveHappened();
         }
 
         private class EventStoreConfiguration : AbstractEventStoreConfiguration
@@ -112,9 +112,9 @@ namespace SimpleDomain.EventStore.Configuration
                 this.container = container;
             }
 
-            public override void Register<TEventStore>()
+            public override void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore)
             {
-                this.container.Register<TEventStore>();
+                this.container.Register(createEventStore(this));
             }
         }
 

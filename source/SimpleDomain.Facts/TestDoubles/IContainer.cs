@@ -18,11 +18,8 @@
 
 namespace SimpleDomain.TestDoubles
 {
-    using System;
-
     public interface IContainer
     {
-        void Register<T>();
-        void Register(Type type);
+        void Register(object instance);
     }
 }

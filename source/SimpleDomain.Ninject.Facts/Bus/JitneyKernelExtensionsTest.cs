@@ -24,9 +24,7 @@ namespace SimpleDomain.Bus
     using FluentAssertions;
 
     using Ninject;
-
-    using SimpleDomain.Bus.Configuration;
-
+    
     using Xunit;
 
     public class JitneyKernelExtensionsTest : IDisposable
@@ -38,7 +36,7 @@ namespace SimpleDomain.Bus
             this.kernel = new StandardKernel();
 
             var jitneyConfiguration = new JitneyConfiguration(this.kernel);
-            jitneyConfiguration.Register<StartableJitney>();
+            jitneyConfiguration.Register(config => new StartableJitney(config));
         }
 
         [Fact]
@@ -49,6 +47,16 @@ namespace SimpleDomain.Bus
             this.kernel.SignalJitneyToStartWork();
 
             StartableJitney.HasBeenStarted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanSignalJitneyToStopWork()
+        {
+            StartableJitney.HasBeenStopped.Should().BeFalse();
+
+            this.kernel.SignalJitneyToStopWork();
+
+            StartableJitney.HasBeenStopped.Should().BeTrue();
         }
 
         public void Dispose()
@@ -66,20 +74,28 @@ namespace SimpleDomain.Bus
 
             public static bool HasBeenStarted { get; private set; }
 
+            public static bool HasBeenStopped { get; private set; }
+
             public override Task StartAsync()
             {
                 HasBeenStarted = true;
                 return Task.CompletedTask;
             }
 
+            public override Task StopAsync()
+            {
+                HasBeenStopped = true;
+                return Task.CompletedTask;
+            }
+
             public override Task SendAsync<TCommand>(TCommand command)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public override Task PublishAsync<TEvent>(TEvent @event)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
     }

@@ -21,6 +21,8 @@ namespace SimpleDomain.EventStore.Persistence
     using System;
     using System.Threading.Tasks;
 
+    using FakeItEasy;
+
     using FluentAssertions;
 
     using SimpleDomain.EventStore.Configuration;
@@ -34,10 +36,13 @@ namespace SimpleDomain.EventStore.Persistence
 
         public IntegrationTest()
         {
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.PrepareRavenEventStore(this.DocumentStore);
+            var factory = new EventStoreFactory();
+            var configuration = new ContainerLessEventStoreConfiguration(factory);
+            configuration.UseRavenEventStore(this.DocumentStore);
 
-            var eventStore = new RavenEventStore(configuration);
+            var bus = A.Fake<IDeliverMessages>();
+
+            var eventStore = factory.Create(configuration, bus);
 
             this.repository = new EventStoreRepository(eventStore).WithGlobalSnapshotStrategy(10);
         }

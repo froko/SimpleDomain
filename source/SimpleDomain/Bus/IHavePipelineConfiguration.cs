@@ -18,7 +18,6 @@
 
 namespace SimpleDomain.Bus
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>

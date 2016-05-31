@@ -48,9 +48,34 @@ namespace SimpleDomain.Bus
         /// Tells the Jitney bus to start receiving messages
         /// </summary>
         /// <param name="kernel">The Ninject kernel</param>
-        public static async Task SignalJitneyToStartWorkAsync(this IKernel kernel)
+        public static Task SignalJitneyToStartWorkAsync(this IKernel kernel)
         {
-            await kernel.Get<Jitney>().StartAsync();
+            return kernel.Get<Jitney>().StartAsync();
+        }
+
+        /// <summary>
+        /// Tells the Jitney bus to stop receiving messages
+        /// </summary>
+        /// <param name="kernel">The Ninject kernel</param>
+        public static void SignalJitneyToStopWork(this IKernel kernel)
+        {
+            try
+            {
+                kernel.Get<Jitney>().StopAsync().Wait();
+            }
+            catch (AggregateException aggregateException)
+            {
+                throw aggregateException.Flatten();
+            }
+        }
+
+        /// <summary>
+        /// Tells the Jitney bus to stop receiving messages
+        /// </summary>
+        /// <param name="kernel">The Ninject kernel</param>
+        public static Task SignalJitneyToStopWorkAsync(this IKernel kernel)
+        {
+            return kernel.Get<Jitney>().StopAsync();
         }
     }
 }

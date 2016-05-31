@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="GlobalJitneyConfigurationExtensions.cs" company="frokonet.ch">
+// <copyright file="EventStoreFactory.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,30 +16,33 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus
+namespace SimpleDomain.EventStore.Configuration
 {
-    using SimpleDomain.Bus.MSMQ;
+    using System;
+
+    using SimpleDomain.EventStore;
 
     /// <summary>
-    /// Configuation extensions for the Jitney configuration base class
+    /// The event store factory
     /// </summary>
-    public static class GlobalJitneyConfigurationExtensions
+    public class EventStoreFactory
     {
         /// <summary>
-        /// Registers the <see cref="SimpleJitney"/> bus
+        /// Gets the function to create an event store using a configuration and an instance of a Jitney bus
         /// </summary>
-        public static void UseSimpleJitney(this IConfigureThisJitney configuration)
-        {
-            configuration.Register(config => new SimpleJitney(config));
-        }
+        public Func<AbstractEventStoreConfiguration, IDeliverMessages, IEventStore> Create { get; private set; }
 
         /// <summary>
-        /// Registers the <see cref="MessageQueueJitney"/> bus
+        /// Registers the function to create an event store using a configuration
         /// </summary>
-        public static void UseMsmqJitney(this IConfigureThisJitney configuration)
+        /// <param name="create"></param>
+        public void Register(Func<IHaveEventStoreConfiguration, IEventStore> create)
         {
-            configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new MsmqProvider());
-            configuration.Register(config => new MessageQueueJitney(config));
+            this.Create = (config, bus) =>
+            {
+                config.DefineAsyncEventDispatching(bus.PublishAsync);
+                return create(config);
+            };
         }
     }
 }

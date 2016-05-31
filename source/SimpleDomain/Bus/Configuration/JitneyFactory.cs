@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="IBoundedContext.cs" company="frokonet.ch">
+//-------------------------------------------------------------------------------
+// <copyright file="JitneyFactory.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,26 +16,29 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus.Configuration
 {
+    using System;
+
     using SimpleDomain.Bus;
 
     /// <summary>
-    /// The abstract technical definition of a bounded context
+    /// The Jitney factory
     /// </summary>
-    public interface IBoundedContext
+    public class JitneyFactory
     {
         /// <summary>
-        /// Gets the name of the bounded context
+        /// Gets the function to create a Jitney bus using a configuration
         /// </summary>
-        string Name { get; }
+        public Func<IHaveJitneyConfiguration, Jitney> Create { get; private set; }
 
         /// <summary>
-        /// Configures the bounded context
-        /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
+        /// Registers the function to create a Jitney bus using a configuration
         /// </summary>
-        /// <param name="bus">The message handler subscriber</param>
-        /// <param name="repository">The repository</param>
-        void Configure(ISubscribeMessageHandlers bus, IEventSourcedRepository repository);
+        /// <param name="create"></param>
+        public void Register(Func<IHaveJitneyConfiguration, Jitney> create)
+        {
+            this.Create = create;
+        }
     }
 }

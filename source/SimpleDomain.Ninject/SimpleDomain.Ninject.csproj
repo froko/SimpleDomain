@@ -49,9 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bus\Configuration\HandlerRegistry.cs" />
-    <Compile Include="Bus\Configuration\JitneyConfiguration.cs" />
+    <Compile Include="Bus\JitneyConfiguration.cs" />
     <Compile Include="Bus\JitneyKernelExtensions.cs" />
-    <Compile Include="EventStore\Configuration\EventStoreConfiguration.cs" />
+    <Compile Include="EventStore\EventStoreConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

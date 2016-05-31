@@ -19,8 +19,7 @@
 namespace SimpleDomain.EventStore
 {
     using System;
-    using System.Threading.Tasks;
-
+    
     /// <summary>
     /// The event store configuration interface
     /// </summary>
@@ -32,18 +31,12 @@ namespace SimpleDomain.EventStore
         /// <param name="key">The key</param>
         /// <param name="item">The item</param>
         void AddConfigurationItem(string key, object item);
-
+        
         /// <summary>
-        /// Defines the action how to asynchronously publish events
-        /// </summary>
-        /// <param name="dispatchEvents">The async resolve action</param>
-        void DefineAsyncEventDispatching(Func<IEvent, Task> dispatchEvents);
-
-        /// <summary>
-        /// Registers a specific implementation of <see cref="IEventStore"/> in the IoC container.
+        /// Registers an <see cref="IEventStore"/> instance
         /// <remarks>This method is intended for extension methods only</remarks>
         /// </summary>
-        /// <typeparam name="TEventStore">The type of the EventStore</typeparam>
-        void Register<TEventStore>() where TEventStore : IEventStore;
+        /// <param name="createEventStore">The action to create a <see cref="IEventStore"/> instance using a configuration</param>
+        void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore);
     }
 }

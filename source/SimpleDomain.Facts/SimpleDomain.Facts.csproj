@@ -93,8 +93,6 @@
     <Compile Include="Bus\Configuration\AssemblyExtensionsTest.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegateTest.cs" />
     <Compile Include="Bus\Configuration\ContainerLessHandlerRegistryTest.cs" />
-    <Compile Include="Bus\Configuration\ContainerLessJitneyConfigurationTest.cs" />
-    <Compile Include="Bus\Configuration\ContractsToEndpointMapperTest.cs" />
     <Compile Include="Bus\Configuration\HandlerInvocationCacheTest.cs" />
     <Compile Include="Bus\Configuration\JitneySubscriptionsTest.cs" />
     <Compile Include="Bus\Configuration\TypeExtensionsTest.cs" />
@@ -131,7 +129,6 @@
     <Compile Include="EventHistoryTest.cs" />
     <Compile Include="EventStore\Configuration\AbstractEventStoreConfigurationTest.cs" />
     <Compile Include="EventStore\GlobalEventStoreConfigurationExtensionsTest.cs" />
-    <Compile Include="EventStore\Configuration\ContainerLessEventStoreConfigurationTest.cs" />
     <Compile Include="EventStore\EventDescriptorTest.cs" />
     <Compile Include="EventStore\EventStoreRepositoryTest.cs" />
     <Compile Include="EventStore\Persistence\InMemoryIntegrationTest.cs" />
@@ -143,7 +140,6 @@
     <Compile Include="FluentTestingExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="AbstractCompositionRootTest.cs" />
     <Compile Include="MissingConfigurationExceptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotTest.cs" />

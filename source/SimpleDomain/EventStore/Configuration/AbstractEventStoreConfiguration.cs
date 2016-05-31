@@ -25,7 +25,7 @@ namespace SimpleDomain.EventStore.Configuration
     using SimpleDomain.Common;
 
     /// <summary>
-    /// The EventStore configuration base class
+    /// The event store configuration base class
     /// </summary>
     public abstract class AbstractEventStoreConfiguration : IConfigureThisEventStore, IHaveEventStoreConfiguration
     {
@@ -37,11 +37,25 @@ namespace SimpleDomain.EventStore.Configuration
         protected AbstractEventStoreConfiguration()
         {
             this.configurationItems = new Dictionary<string, object>();
-            this.DispatchEvents = @event => Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Func<IEvent, Task> DispatchEvents { get; protected set; }
+
+        /// <inheritdoc />
+        public virtual void AddConfigurationItem(string key, object item)
+        {
+            this.configurationItems.Add(key, item);
+        }
+
+        /// <inheritdoc />
+        public void DefineAsyncEventDispatching(Func<IEvent, Task> dispatchEvents)
+        {
+            this.DispatchEvents = dispatchEvents;
+        }
+
+        /// <inheritdoc />
+        public abstract void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore);
 
         /// <inheritdoc />
         public T Get<T>(string key)
@@ -60,20 +74,5 @@ namespace SimpleDomain.EventStore.Configuration
 
             return (T)this.configurationItems[key];
         }
-
-        /// <inheritdoc />
-        public virtual void AddConfigurationItem(string key, object item)
-        {
-            this.configurationItems.Add(key, item);
-        }
-
-        /// <inheritdoc />
-        public void DefineAsyncEventDispatching(Func<IEvent, Task> dispatchEvents)
-        {
-            this.DispatchEvents = dispatchEvents;
-        }
-
-        /// <inheritdoc />
-        public abstract void Register<TEventStore>() where TEventStore : IEventStore;
     }
 }

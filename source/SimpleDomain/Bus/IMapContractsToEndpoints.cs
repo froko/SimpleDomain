@@ -27,24 +27,24 @@ namespace SimpleDomain.Bus
         /// Maps contracts to a given endpoint on the local machine
         /// </summary>
         /// <param name="queueName">The name of the queue</param>
-        void To(string queueName);
+        IConfigureThisJitney To(string queueName);
 
         /// <summary>
         /// Maps contracts to a given endpoint
         /// </summary>
         /// <param name="queueName">The name of the endpoint</param>
         /// <param name="machineName">The server name where the endpoint resides</param>
-        void To(string queueName, string machineName);
+        IConfigureThisJitney To(string queueName, string machineName);
 
         /// <summary>
         /// Maps contracts to a given endpoint
         /// </summary>
         /// <param name="remoteEndpointAddress">The endpoint</param>
-        void To(EndpointAddress remoteEndpointAddress);
-        
+        IConfigureThisJitney To(EndpointAddress remoteEndpointAddress);
+
         /// <summary>
         /// Maps contracts to the calling endpoint itself
         /// </summary>
-        void ToMe();
+        IConfigureThisJitney ToMe();
     }
 }

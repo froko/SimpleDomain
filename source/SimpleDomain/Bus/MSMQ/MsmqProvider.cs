@@ -77,12 +77,12 @@ namespace SimpleDomain.Bus.MSMQ
         }
 
         /// <inheritdoc />
-        public void Disconnect()
+        public async Task DisconnectAsync()
         {
             this.cancellationTokenSource.Cancel();
 
             var allTasks = this.handlerTasks.Values.Concat(new[] { this.localQueueReceptionTask });
-            Task.WhenAll(allTasks).Wait();
+            await Task.WhenAll(allTasks).ConfigureAwait(false);
 
             this.handlerTasks.Clear();
             this.localQueue.Dispose();
@@ -91,7 +91,7 @@ namespace SimpleDomain.Bus.MSMQ
         /// <inheritdoc />
         public void Dispose()
         {
-            this.Disconnect();
+            this.DisconnectAsync().Wait(TimeSpan.FromSeconds(30));
         }
 
         private static Task SendAsync(Envelope envelope, EndpointAddress recipientEndpointAddress)

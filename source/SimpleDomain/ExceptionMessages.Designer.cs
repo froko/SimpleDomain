@@ -70,7 +70,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot register a Bus when there is no IoC container.
+        ///   Looks up a localized string similar to Cannot register a Bus when there is no IoC container..
         /// </summary>
         public static string BusCannotBeRegistered {
             get {
@@ -97,7 +97,16 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot register an EventStore when there is no IoC container.
+        ///   Looks up a localized string similar to Cannot restart or reconfigure the ComopsitionRoot since it has already been started..
+        /// </summary>
+        public static string CompositionRootHasAlreadyBeenStarted {
+            get {
+                return ResourceManager.GetString("CompositionRootHasAlreadyBeenStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot register an EventStore when there is no IoC container..
         /// </summary>
         public static string EventStoreCannotBeRegistered {
             get {
@@ -106,7 +115,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot register a handler when there is no IoC container.
+        ///   Looks up a localized string similar to Cannot register a handler when there is no IoC container..
         /// </summary>
         public static string HandlerCannotBeRegistered {
             get {
@@ -115,7 +124,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Local endpoint address must be set.
+        ///   Looks up a localized string similar to Local endpoint address must be set..
         /// </summary>
         public static string LocalEndpointAddressMustBeSet {
             get {
@@ -124,7 +133,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The local queueName address has not yet been defined.
+        ///   Looks up a localized string similar to The local queueName address has not yet been defined..
         /// </summary>
         public static string LocalEndpointAddressNotDefined {
             get {
@@ -151,7 +160,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value {0} must be between {1} and {2}.
+        ///   Looks up a localized string similar to Value {0} must be between {1} and {2}..
         /// </summary>
         public static string ValueMustBeBetweenRange {
             get {

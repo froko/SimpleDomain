@@ -18,6 +18,8 @@
 
 namespace SimpleDomain.EventStore
 {
+    using System;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -32,22 +34,13 @@ namespace SimpleDomain.EventStore
     public class EventStoreConfigurationExtensionsTest : EmbeddedRavenDbTest
     {
         [Fact]
-        public void CanPrepareRavenEventStore()
-        {
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.PrepareRavenEventStore(this.DocumentStore);
-
-            configuration.Get<IDocumentStore>(RavenEventStore.DocumentStore).Should().NotBeNull();
-        }
-
-        [Fact]
         public void CanRegisterRavenEventStore()
         {
             var configuration = A.Fake<AbstractEventStoreConfiguration>();
             configuration.UseRavenEventStore(this.DocumentStore);
 
             A.CallTo(() => configuration.AddConfigurationItem(RavenEventStore.DocumentStore, A<IDocumentStore>.Ignored)).MustHaveHappened();
-            A.CallTo(() => configuration.Register<RavenEventStore>()).MustHaveHappened();
+            A.CallTo(() => configuration.Register(A<Func<IHaveEventStoreConfiguration, IEventStore>>.Ignored)).MustHaveHappened();
         }
     }
 }

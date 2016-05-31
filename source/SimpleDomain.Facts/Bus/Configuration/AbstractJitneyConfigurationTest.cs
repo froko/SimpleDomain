@@ -120,30 +120,11 @@ namespace SimpleDomain.Bus.Configuration
         }
 
         [Fact]
-        public void CanSubscribeMessageHandlers()
-        {
-            var handlerAssemblies = new[] { typeof(ValueCommandHandler).Assembly };
-            this.testee.SubscribeMessageHandlers(handlerAssemblies);
-            
-            A.CallTo(() => this.container.Register(typeof(ValueCommandHandler))).MustHaveHappened();
-            A.CallTo(() => this.container.Register(typeof(ValueEventHandler))).MustHaveHappened();
-        }
-
-        [Fact]
-        public void CanSubscribeMessageHandlersInThisAssembly()
-        {
-            this.testee.SubscribeMessageHandlersInThisAssembly();
-
-            A.CallTo(() => this.container.Register(typeof(ValueCommandHandler))).MustHaveHappened();
-            A.CallTo(() => this.container.Register(typeof(ValueEventHandler))).MustHaveHappened();
-        }
-
-        [Fact]
         public void CanRegisterJitney()
         {
-            this.testee.Register<SimpleJitney>();
+            this.testee.Register(config => new SimpleJitney(config));
 
-            A.CallTo(() => this.container.Register<SimpleJitney>()).MustHaveHappened();
+            A.CallTo(() => this.container.Register(A<SimpleJitney>.Ignored)).MustHaveHappened();
         }
 
         [Fact]
@@ -235,14 +216,9 @@ namespace SimpleDomain.Bus.Configuration
                 this.container = container;
             }
 
-            public override void Register<TJitney>()
+            public override void Register(Func<IHaveJitneyConfiguration, Jitney> createJitney)
             {
-                this.container.Register<TJitney>();
-            }
-
-            protected override void RegisterHandlerType(Type type)
-            {
-                this.container.Register(type);
+                this.container.Register(createJitney(this));
             }
         }
 

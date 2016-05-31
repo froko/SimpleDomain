@@ -30,6 +30,7 @@ namespace SimpleDomain.Bus
     /// </summary>
     public class ContractsToEndpointMapper : IMapContractsToEndpoints
     {
+        private readonly IConfigureThisJitney jitneyConfiguration;
         private readonly EndpointAddress localEndpointAddress;
         private readonly IDictionary<Type, EndpointAddress> contractMap;
         private readonly Assembly contractAssembly;
@@ -37,42 +38,55 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Creates a new instance of <see cref="ContractsToEndpointMapper"/>
         /// </summary>
+        /// <param name="jitneyConfiguration">The Jitney configuration</param>
         /// <param name="localEndpointAddress">The local endpoint</param>
         /// <param name="contractMap">The contract map dictionary</param>
         /// <param name="contractAssembly">The contract assembly</param>
         public ContractsToEndpointMapper(
+            IConfigureThisJitney jitneyConfiguration,
             EndpointAddress localEndpointAddress,
             IDictionary<Type, EndpointAddress> contractMap,
             Assembly contractAssembly)
         {
+            this.jitneyConfiguration = jitneyConfiguration;
             this.localEndpointAddress = localEndpointAddress;
             this.contractMap = contractMap;
             this.contractAssembly = contractAssembly;
         }
 
         /// <inheritdoc />
-        public void To(string queueName)
+        public IConfigureThisJitney To(string queueName)
         {
+            Guard.NotNullOrEmpty(() => queueName);
+
             this.To(new EndpointAddress(queueName));
+            return this.jitneyConfiguration;
         }
 
         /// <inheritdoc />
-        public void To(string queueName, string machineName)
+        public IConfigureThisJitney To(string queueName, string machineName)
         {
+            Guard.NotNullOrEmpty(() => queueName);
+            Guard.NotNullOrEmpty(() => machineName);
+
             this.To(new EndpointAddress(queueName, machineName));
+            return this.jitneyConfiguration;
         }
 
         /// <inheritdoc />
-        public void To(EndpointAddress remoteEndpointAddress)
+        public IConfigureThisJitney To(EndpointAddress remoteEndpointAddress)
         {
             Guard.NotNull(() => remoteEndpointAddress);
+
             this.GetMessageContracts().ForEach(messageType => this.AddToContractMap(messageType, remoteEndpointAddress));
+            return this.jitneyConfiguration;
         }
 
         /// <inheritdoc />
-        public void ToMe()
+        public IConfigureThisJitney ToMe()
         {
             this.GetMessageContracts().ForEach(messageType => this.AddToContractMap(messageType, this.localEndpointAddress));
+            return this.jitneyConfiguration;
         }
 
         private List<Type> GetMessageContracts()

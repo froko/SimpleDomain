@@ -42,7 +42,7 @@ namespace SimpleDomain.Bus.Configuration
         [Fact]
         public void CanRegisterJitney()
         {
-            this.testee.Register<SimpleJitney>();
+            this.testee.Register(config => new SimpleJitney(config));
 
             this.kernel.Get<IDeliverMessages>().Should().BeAssignableTo<SimpleJitney>();
             this.kernel.Get<Jitney>().Should().BeAssignableTo<SimpleJitney>();

@@ -44,14 +44,11 @@ namespace GiftcardSample
             this.giftcardTransactionEventHandler = new InMemoryGiftcardTransactionEventHandler(readStore);
         }
 
-        public string Name
-        {
-            get { return "Giftcards"; }
-        }
+        public string Name => "Giftcards";
 
         private IEventSourcedRepository Repository { get; set; }
 
-        public void Configure(Jitney bus, IEventSourcedRepository repository)
+        public void Configure(ISubscribeMessageHandlers bus, IEventSourcedRepository repository)
         {
             this.Repository = repository;
 
@@ -77,7 +74,7 @@ namespace GiftcardSample
         {
             if (this.cardNumberQuery.IsAlreadyInUse(command.CardNumber))
             {
-                throw new GiftcardException(string.Format("A giftcard with number {0} already exists.", command.CardNumber));
+                throw new GiftcardException($"A giftcard with number {command.CardNumber} already exists.");
             }
 
             var giftcard = new Giftcard(

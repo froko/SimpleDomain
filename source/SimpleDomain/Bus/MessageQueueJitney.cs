@@ -53,9 +53,17 @@ namespace SimpleDomain.Bus
         {
             Logger.Debug(this.Configuration.GetSummary(this.GetType()));
             this.provider.Connect(this.Configuration.LocalEndpointAddress, this.HandleAsync);
-            await this.SendSubscriptionMessagesAsync();
+            await this.SendSubscriptionMessagesAsync().ConfigureAwait(false);
             
             Logger.InfoFormat("MessageQueueJitney has been started with {0} as transport medium", this.provider.TransportMediumName);
+        }
+
+        /// <inheritdoc />
+        public override async Task StopAsync()
+        {
+            await this.provider.DisconnectAsync().ConfigureAwait(false);
+
+            Logger.Info("MessageQueueJitney has been stopped");
         }
 
         /// <inheritdoc />

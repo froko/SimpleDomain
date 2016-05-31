@@ -20,6 +20,8 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
 
+    using FakeItEasy;
+
     using FluentAssertions;
 
     using SimpleDomain.EventStore.Configuration;
@@ -32,10 +34,13 @@ namespace SimpleDomain.EventStore.Persistence
         [Fact]
         public void CanOpenTypedEventStream()
         {
-            var configuration = new ContainerLessEventStoreConfiguration();
-            configuration.PrepareRavenEventStore(this.DocumentStore);
+            var factory = new EventStoreFactory();
+            var configuration = new ContainerLessEventStoreConfiguration(factory);
+            configuration.UseRavenEventStore(this.DocumentStore);
 
-            var testee = new RavenEventStore(configuration);
+            var bus = A.Fake<IDeliverMessages>();
+
+            var testee = factory.Create(configuration, bus);
 
             var eventStream = testee.OpenStream<MyStaticEventSourcedAggregateRoot>(Guid.NewGuid());
 

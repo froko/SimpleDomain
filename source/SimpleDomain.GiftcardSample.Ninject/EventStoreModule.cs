@@ -19,18 +19,14 @@
 namespace GiftcardSample.Ninject
 {
     using global::Ninject.Modules;
-
-    using SimpleDomain;
+    
     using SimpleDomain.EventStore;
-    using SimpleDomain.EventStore.Configuration;
 
     public class EventStoreModule : NinjectModule
     {
         public override void Load()
         {
             var configuration = new EventStoreConfiguration(this.Kernel);
-
-            configuration.DefineAsyncEventDispatching<IDeliverMessages>((bus, @event) => bus.PublishAsync(@event));
             configuration.UseInMemoryEventStore();
         }
     }

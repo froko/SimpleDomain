@@ -25,10 +25,21 @@ namespace SimpleDomain.EventStore.Configuration
     /// </summary>
     public class ContainerLessEventStoreConfiguration : AbstractEventStoreConfiguration
     {
-        /// <inheritdoc />
-        public override void Register<TEventStore>()
+        private readonly EventStoreFactory factory;
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ContainerLessEventStoreConfiguration"/>
+        /// </summary>
+        /// <param name="factory">Dependency injection for <see cref="EventStoreFactory"/></param>
+        public ContainerLessEventStoreConfiguration(EventStoreFactory factory)
         {
-            throw new NotSupportedException(ExceptionMessages.EventStoreCannotBeRegistered);
+            this.factory = factory;
+        }
+
+        /// <inheritdoc />
+        public override void Register(Func<IHaveEventStoreConfiguration, IEventStore> createEventStore)
+        {
+            this.factory.Register(createEventStore);
         }
     }
 }

@@ -16,16 +16,18 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.Configuration
+namespace SimpleDomain.Bus
 {
     using System;
 
     using Ninject;
 
+    using SimpleDomain.Bus.Configuration;
+
     /// <summary>
     /// The Jitney configuration
     /// </summary>
-    public class JitneyConfiguration : AbstractJitneyConfiguration
+    public class JitneyConfiguration : AbstractIoCContainerJitneyConfiguration
     {
         private readonly IKernel kernel;
         
@@ -36,15 +38,14 @@ namespace SimpleDomain.Bus.Configuration
         public JitneyConfiguration(IKernel kernel) : base(new HandlerRegistry(kernel))
         {
             this.kernel = kernel;
-            this.kernel.Bind<IHaveJitneyConfiguration>().ToConstant(this).InSingletonScope();
-        }
-        
-        /// <inheritdoc />
-        public override void Register<TJitney>()
-        {
-            this.kernel.Bind<IDeliverMessages, Jitney>().To<TJitney>().InSingletonScope();
         }
 
+        /// <inheritdoc />
+        public override void Register(Func<IHaveJitneyConfiguration, Jitney> createJitney)
+        {
+            this.kernel.Bind<IDeliverMessages, Jitney>().ToConstant(createJitney(this));
+        }
+        
         /// <inheritdoc />
         protected override void RegisterHandlerType(Type type)
         {

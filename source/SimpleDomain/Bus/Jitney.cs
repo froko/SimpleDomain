@@ -18,7 +18,6 @@
 
 namespace SimpleDomain.Bus
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -49,34 +48,18 @@ namespace SimpleDomain.Bus
         /// </summary>
         public abstract Task StartAsync();
 
+        /// <summary>
+        /// Stops the message reception process
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task StopAsync();
+
         /// <inheritdoc />
         public abstract Task SendAsync<TCommand>(TCommand command) where TCommand : class, ICommand;
 
         /// <inheritdoc />
         public abstract Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
-
-        /// <summary>
-        /// Subscribes an async handler action for a given command
-        /// </summary>
-        /// <typeparam name="TCommand">The type of the command</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        public void SubscribeCommandHandler<TCommand>(Func<TCommand, Task> handler) where TCommand : ICommand
-        {
-            var jitneyConfiguration = this.Configuration as IConfigureThisJitney;
-            jitneyConfiguration?.SubscribeCommandHandler(handler);
-        }
-
-        /// <summary>
-        /// Subscribes an async handler action for a given event
-        /// </summary>
-        /// <typeparam name="TEvent">The type of the event</typeparam>
-        /// <param name="handler">The async handler action (must return a <see cref="Task"/>)</param>
-        public void SubscribeEventHandler<TEvent>(Func<TEvent, Task> handler) where TEvent : IEvent
-        {
-            var jitneyConfiguration = this.Configuration as IConfigureThisJitney;
-            jitneyConfiguration?.SubscribeEventHandler(handler);
-        }
-
+        
         /// <summary>
         /// Handles an incomming envelope
         /// </summary>

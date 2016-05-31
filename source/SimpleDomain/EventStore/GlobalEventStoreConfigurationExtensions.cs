@@ -28,29 +28,13 @@ namespace SimpleDomain.EventStore
     public static class GlobalEventStoreConfigurationExtensions
     {
         /// <summary>
-        /// Prepares the use of the InMemory EventStore without registering the EventStore itself
-        /// </summary>
-        public static void PrepareInMemoryEventStore(this IConfigureThisEventStore configuration)
-        {
-            configuration.AddConfigurationItem(InMemoryEventStore.EventDescriptors, new List<EventDescriptor>());
-            configuration.AddConfigurationItem(InMemoryEventStore.SnapshotDescriptors, new List<SnapshotDescriptor>());
-        }
-
-        /// <summary>
         /// Registers the InMemory EventStore
         /// </summary>
         public static void UseInMemoryEventStore(this IConfigureThisEventStore configuration)
         {
-            configuration.PrepareInMemoryEventStore();
-            configuration.Register<InMemoryEventStore>();
-        }
-
-        /// <summary>
-        /// Prepares the use of the SQL EventStore without registering the EventStore itself
-        /// </summary>
-        public static void PrepareSqlEventStore(this IConfigureThisEventStore configuration)
-        {
-            configuration.AddConfigurationItem(SqlEventStore.ConnectionFactory, new DbConnectionFactory());
+            configuration.AddConfigurationItem(InMemoryEventStore.EventDescriptors, new List<EventDescriptor>());
+            configuration.AddConfigurationItem(InMemoryEventStore.SnapshotDescriptors, new List<SnapshotDescriptor>());
+            configuration.Register(config => new InMemoryEventStore(config));
         }
 
         /// <summary>
@@ -58,8 +42,8 @@ namespace SimpleDomain.EventStore
         /// </summary>
         public static void UseSqlEventStore(this IConfigureThisEventStore configuration)
         {
-            configuration.PrepareSqlEventStore();
-            configuration.Register<SqlEventStore>();
+            configuration.AddConfigurationItem(SqlEventStore.ConnectionFactory, new DbConnectionFactory());
+            configuration.Register(config => new SqlEventStore(config));
         }
     }
 }

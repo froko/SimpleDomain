@@ -30,30 +30,6 @@ namespace SimpleDomain.EventStore
     public static class EventStoreConfigurationExtensions
     {
         /// <summary>
-        /// Prepares the use of the RavenDB EventStore without registering the EventStore itself
-        /// </summary>
-        /// <param name="configuration">The abstract EventStore configuration</param>
-        public static void PrepareRavenEventStore(this AbstractEventStoreConfiguration configuration)
-        {
-            configuration.PrepareRavenEventStore(CreateDocumentStore());
-        }
-
-        /// <summary>
-        /// Prepares the use of the RavenDB EventStore without registering the EventStore itself
-        /// </summary>
-        /// <param name="configuration">The abstract EventStore configuration</param>
-        /// <param name="documentStore">The RavenDB document store</param>
-        public static void PrepareRavenEventStore(
-            this AbstractEventStoreConfiguration configuration,
-            IDocumentStore documentStore)
-        {
-            DocumentStoreSetup.CreateIndexes(documentStore);
-            DocumentStoreSetup.RegisterIdConventions(documentStore);
-
-            configuration.AddConfigurationItem(RavenEventStore.DocumentStore, documentStore);
-        }
-
-        /// <summary>
         /// Registers the RavenDB EventStore
         /// </summary>
         /// <param name="configuration">The abstract EventStore configuration</param>
@@ -71,8 +47,11 @@ namespace SimpleDomain.EventStore
             this AbstractEventStoreConfiguration configuration,
             IDocumentStore documentStore)
         {
-            configuration.PrepareRavenEventStore(documentStore);
-            configuration.Register<RavenEventStore>();
+            DocumentStoreSetup.CreateIndexes(documentStore);
+            DocumentStoreSetup.RegisterIdConventions(documentStore);
+
+            configuration.AddConfigurationItem(RavenEventStore.DocumentStore, documentStore);
+            configuration.Register(config => new RavenEventStore(config));
         }
 
         private static IDocumentStore CreateDocumentStore()
