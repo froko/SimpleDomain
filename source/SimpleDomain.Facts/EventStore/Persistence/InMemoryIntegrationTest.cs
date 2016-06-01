@@ -63,7 +63,7 @@ namespace SimpleDomain.EventStore.Persistence
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
                     aggregateRoot.Version,
-                    new Dictionary<string, object>());
+                    new Dictionary<string, object>()).ConfigureAwait(false);
             }
 
             A.CallTo(() => this.bus.PublishAsync<IEvent>(A<ValueEvent>.That.Matches(e => e.Value == 0))).MustHaveHappened();
@@ -84,9 +84,9 @@ namespace SimpleDomain.EventStore.Persistence
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
                     aggregateRoot.Version, 
-                    new Dictionary<string, object>());
+                    new Dictionary<string, object>()).ConfigureAwait(false);
 
-                var eventHistory = await eventStream.ReplayAsync();
+                var eventHistory = await eventStream.ReplayAsync().ConfigureAwait(false);
 
                 eventHistory.Should().HaveCount(3);
                 eventHistory.Should().Contain(e => (e as ValueEvent).Value == 0);
@@ -103,26 +103,26 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            await this.SaveEventsAsync(aggregateRoot);
+            await this.SaveEventsAsync(aggregateRoot).ConfigureAwait(false);
 
             var firstSnapshot = aggregateRoot.CreateSnapshot();
 
-            await this.SaveSnapshotAsync(firstSnapshot);
+            await this.SaveSnapshotAsync(firstSnapshot).ConfigureAwait(false);
 
             aggregateRoot.ChangeValue(33);
             aggregateRoot.ChangeValue(44);
 
-            await this.SaveEventsAsync(aggregateRoot);
+            await this.SaveEventsAsync(aggregateRoot).ConfigureAwait(false);
 
             var secondSnapshot = aggregateRoot.CreateSnapshot();
 
-            await this.SaveSnapshotAsync(secondSnapshot);
+            await this.SaveSnapshotAsync(secondSnapshot).ConfigureAwait(false);
 
             aggregateRoot.ChangeValue(55);
             aggregateRoot.ChangeValue(66);
             aggregateRoot.ChangeValue(77);
 
-            await this.SaveEventsAsync(aggregateRoot);
+            await this.SaveEventsAsync(aggregateRoot).ConfigureAwait(false);
 
             using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
             {
@@ -132,7 +132,9 @@ namespace SimpleDomain.EventStore.Persistence
                 hasSnapshot.Should().BeTrue();
                 snapshotFromEventStore.Should().Be(secondSnapshot);
 
-                var eventHistorySinceLatestSnapshot = await eventStream.ReplayAsyncFromSnapshot(snapshotFromEventStore);
+                var eventHistorySinceLatestSnapshot = await eventStream
+                    .ReplayAsyncFromSnapshot(snapshotFromEventStore)
+                    .ConfigureAwait(false);
 
                 eventHistorySinceLatestSnapshot.Should().HaveCount(3);
                 eventHistorySinceLatestSnapshot.Should().Contain(e => (e as ValueEvent).Value == 55);
@@ -148,7 +150,7 @@ namespace SimpleDomain.EventStore.Persistence
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
                     aggregateRoot.Version, 
-                    new Dictionary<string, object>());
+                    new Dictionary<string, object>()).ConfigureAwait(false);
             }
 
             aggregateRoot.CommitEvents();
@@ -158,7 +160,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
             {
-                await eventStream.SaveSnapshotAsync(snapshot);
+                await eventStream.SaveSnapshotAsync(snapshot).ConfigureAwait(false);
             }
         }
     }

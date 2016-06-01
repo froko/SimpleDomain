@@ -53,7 +53,9 @@ namespace SimpleDomain.EventStore
             var eventHistory = EventHistory.Create(new ValueEvent(0), new ValueEvent(11), new ValueEvent(22));
             A.CallTo(() => this.eventStream.ReplayAsync()).Returns(eventHistory);
 
-            var aggregateRoot = await this.testee.GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId);
+            var aggregateRoot = await this.testee
+                .GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)
+                .ConfigureAwait(false);
 
             aggregateRoot.Version.Should().Be(2);
             aggregateRoot.Value.Should().Be(22);
@@ -69,7 +71,9 @@ namespace SimpleDomain.EventStore
             A.CallTo(() => this.eventStream.GetLatestSnapshotAsync()).Returns(snapshot);
             A.CallTo(() => this.eventStream.ReplayAsyncFromSnapshot(snapshot)).Returns(eventsSinceSnapshot);
 
-            var aggregateRoot = await this.testee.GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId);
+            var aggregateRoot = await this.testee
+                .GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)
+                .ConfigureAwait(false);
 
             aggregateRoot.Version.Should().Be(4);
             aggregateRoot.Value.Should().Be(44);
@@ -80,7 +84,13 @@ namespace SimpleDomain.EventStore
         {
             A.CallTo(() => this.eventStream.ReplayAsync()).Returns(EventHistory.Create());
             
-            Func<Task> action = async () => { await this.testee.GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId); };
+            Func<Task> action = async () =>
+            {
+                await this.testee
+                    .GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)
+                    .ConfigureAwait(false);
+            };
+
             action.ShouldThrow<AggregateRootNotFoundException>();
         }
 
@@ -91,7 +101,7 @@ namespace SimpleDomain.EventStore
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveAsync(A<IEnumerable<VersionableEvent>>.Ignored, 1, A<IDictionary<string, object>>.Ignored)).MustHaveHappened();
         }
@@ -105,7 +115,7 @@ namespace SimpleDomain.EventStore
 
             var headers = new Dictionary<string, object> { { "UserName", "Patrick" }, { "MagicNumber", 42 } };
 
-            await this.testee.SaveAsync(aggregateRoot, headers);
+            await this.testee.SaveAsync(aggregateRoot, headers).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveAsync(A<IEnumerable<VersionableEvent>>.Ignored, 1, headers)).MustHaveHappened();
         }
@@ -117,7 +127,7 @@ namespace SimpleDomain.EventStore
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             aggregateRoot.UncommittedEvents.Should().BeEmpty();
         }
@@ -128,7 +138,7 @@ namespace SimpleDomain.EventStore
             const int Version = 100;
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(Version);
 
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<MySnapshot>.That.Matches(s => s.Version == Version))).MustHaveHappened();
         }
@@ -140,7 +150,7 @@ namespace SimpleDomain.EventStore
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(Version);
 
             this.testee.WithGlobalSnapshotStrategy(30);
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<MySnapshot>.That.Matches(s => s.Version == Version))).MustHaveHappened();
         }
@@ -152,7 +162,7 @@ namespace SimpleDomain.EventStore
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(Version);
             
             this.testee.WithSnapshotStrategyFor<MyDynamicEventSourcedAggregateRoot>(10);
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<MySnapshot>.That.Matches(s => s.Version == Version))).MustHaveHappened();
         }
@@ -163,7 +173,7 @@ namespace SimpleDomain.EventStore
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(100);
 
             this.testee.WithSnapshotStrategyFor<MyDynamicEventSourcedAggregateRoot>(30);
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<MySnapshot>.Ignored)).MustNotHaveHappened();
         }
@@ -173,7 +183,7 @@ namespace SimpleDomain.EventStore
         {
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(0);
 
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<ISnapshot>.Ignored)).MustNotHaveHappened();
         }
@@ -183,7 +193,7 @@ namespace SimpleDomain.EventStore
         {
             var aggregateRoot = new OtherDynamicEventSourcedAggregateRoot().WithVersion(100);
 
-            await this.testee.SaveAsync(aggregateRoot);
+            await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(A<ISnapshot>.Ignored)).MustNotHaveHappened();
             A.CallTo(() => this.eventStream.SaveSnapshotAsync(null)).MustNotHaveHappened();

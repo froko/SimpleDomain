@@ -43,7 +43,7 @@ namespace SimpleDomain.Bus.Configuration
             var handler = new ValueCommandHandler();
             var command = new ValueCommand(11);
 
-            await this.testee.InvokeAsync(handler, command);
+            await this.testee.InvokeAsync(handler, command).ConfigureAwait(false);
 
             handler.Value.Should().Be(11);
         }
@@ -54,7 +54,7 @@ namespace SimpleDomain.Bus.Configuration
             var handler = new ValueCommandHandler();
             var command = new ValueCommand(11);
 
-            await this.testee.InvokeAsync(handler, command);
+            await this.testee.InvokeAsync(handler, command).ConfigureAwait(false);
 
             handler.Value.Should().Be(0);
         }

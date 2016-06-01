@@ -43,7 +43,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             A.CallTo(() => configuration.GetConsumingEndpointAddress(A<ICommand>.Ignored))
                 .Returns(endpointAddress);
             
-            await testee.InvokeAsync(outgoingMessageContext, null);
+            await testee.InvokeAsync(outgoingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress)).MustHaveHappened();
         }
@@ -63,7 +63,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             A.CallTo(() => configuration.GetSubscribedEndpointAddresses(A<IEvent>.Ignored))
                 .Returns(new[] { endpointAddress1, endpointAddress2 });
 
-            await testee.InvokeAsync(outgoingMessageContext, null);
+            await testee.InvokeAsync(outgoingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress1)).MustHaveHappened();
             A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress2)).MustHaveHappened();
@@ -84,7 +84,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             A.CallTo(() => configuration.GetPublishingEndpointAddress(A<string>.Ignored))
                 .Returns(endpointAddress);
 
-            await testee.InvokeAsync(outgoingMessageContext, null);
+            await testee.InvokeAsync(outgoingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress)).MustHaveHappened();
         }
@@ -95,7 +95,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             var next = A.Fake<Func<Task>>();
             var testee = new FinalOutgoingMessageStep();
 
-            await testee.InvokeAsync(A.Fake<OutgoingMessageContext>(), next);
+            await testee.InvokeAsync(A.Fake<OutgoingMessageContext>(), next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
         }

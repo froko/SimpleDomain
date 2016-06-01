@@ -90,7 +90,7 @@ namespace SimpleDomain.Bus
                 this.subscriptions.Add(messageType, new List<EndpointAddress> { handlingEndpoint });
             }
 
-            await this.SaveSubscriptionsToFileAsync();
+            await this.SaveSubscriptionsToFileAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -129,7 +129,7 @@ namespace SimpleDomain.Bus
         {
             using (var fileWriter = new StreamWriter(this.subscriptionFile, false))
             {
-                await fileWriter.WriteAsync(this.Serialize());
+                await fileWriter.WriteAsync(this.Serialize()).ConfigureAwait(false);
             }
         }
 

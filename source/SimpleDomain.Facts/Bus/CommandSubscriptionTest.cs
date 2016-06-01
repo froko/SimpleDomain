@@ -68,7 +68,7 @@ namespace SimpleDomain.Bus
 
             var testee = new CommandSubscription<ValueCommand>(handler);
 
-            await testee.HandleAsync(valueCommand);
+            await testee.HandleAsync(valueCommand).ConfigureAwait(false);
 
             expectedValue.Should().Be(Value);
         }

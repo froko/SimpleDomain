@@ -60,7 +60,7 @@ namespace SimpleDomain.EventStore.Configuration
 
             this.testee.DefineAsyncEventDispatching<Jitney>((bus, @event) => bus.PublishAsync(@event));
 
-            await this.testee.DispatchEvents(new ValueEvent(11));
+            await this.testee.DispatchEvents(new ValueEvent(11)).ConfigureAwait(false);
 
             A.CallTo(() => jitney.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened();
         }

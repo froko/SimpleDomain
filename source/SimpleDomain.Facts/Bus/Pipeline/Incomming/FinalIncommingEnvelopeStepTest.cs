@@ -33,7 +33,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var incommingEnvelopeContext = A.Fake<IncommingEnvelopeContext>();
             var testee = new FinalIncommingEnvelopeStep();
 
-            await testee.InvokeAsync(incommingEnvelopeContext, null);
+            await testee.InvokeAsync(incommingEnvelopeContext, null).ConfigureAwait(false);
 
             A.CallTo(() => incommingEnvelopeContext.SetMessage()).MustHaveHappened();
         }
@@ -45,7 +45,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var next = A.Fake<Func<Task>>();
             var testee = new FinalIncommingEnvelopeStep();
 
-            await testee.InvokeAsync(incommingEnvelopeContext, next);
+            await testee.InvokeAsync(incommingEnvelopeContext, next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
         }

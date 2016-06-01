@@ -51,9 +51,11 @@ namespace SimpleDomain.EventStore.Persistence
 
             var events = new[] { firstEvent, secondEvent };
 
-            await this.testee.SaveAsync(events, 1, new Dictionary<string, object>());
+            await this.testee
+                .SaveAsync(events, 1, new Dictionary<string, object>())
+                .ConfigureAwait(false);
 
-            var replayedEvents = await this.testee.ReplayAsync();
+            var replayedEvents = await this.testee.ReplayAsync().ConfigureAwait(false);
 
             replayedEvents.Should().HaveCount(2);
             replayedEvents.Should().Contain(e => (e as ValueEvent).Value == 11);
@@ -65,14 +67,14 @@ namespace SimpleDomain.EventStore.Persistence
         {
             bool hasSnapshot;
 
-            hasSnapshot = await this.testee.HasSnapshotAsync();
+            hasSnapshot = await this.testee.HasSnapshotAsync().ConfigureAwait(false);
             hasSnapshot.Should().BeFalse();
 
             var snapshot = new MySnapshot(11).WithVersion(0);
 
-            await this.testee.SaveSnapshotAsync(snapshot);
+            await this.testee.SaveSnapshotAsync(snapshot).ConfigureAwait(false);
 
-            hasSnapshot = await this.testee.HasSnapshotAsync();
+            hasSnapshot = await this.testee.HasSnapshotAsync().ConfigureAwait(false);
             hasSnapshot.Should().BeTrue();
         }
 
@@ -82,10 +84,10 @@ namespace SimpleDomain.EventStore.Persistence
             var firstSnapshot = new MySnapshot(11).WithVersion(0);
             var secondSnapshot = new MySnapshot(22).WithVersion(1);
 
-            await this.testee.SaveSnapshotAsync(firstSnapshot);
-            await this.testee.SaveSnapshotAsync(secondSnapshot);
+            await this.testee.SaveSnapshotAsync(firstSnapshot).ConfigureAwait(false);
+            await this.testee.SaveSnapshotAsync(secondSnapshot).ConfigureAwait(false);
 
-            var latestSnapshot = await this.testee.GetLatestSnapshotAsync();
+            var latestSnapshot = await this.testee.GetLatestSnapshotAsync().ConfigureAwait(false);
 
             latestSnapshot.Should().BeAssignableTo<MySnapshot>();
 

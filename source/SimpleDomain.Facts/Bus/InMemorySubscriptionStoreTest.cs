@@ -37,8 +37,8 @@ namespace SimpleDomain.Bus
             var firstSubscriptionMessage = new SubscriptionMessage(new EndpointAddress("Queue1"), typeof(ValueEvent).FullName);
             var secondSubscriptionMessage = new SubscriptionMessage(new EndpointAddress("Queue2"), typeof(ValueEvent).FullName);
 
-            await testee.SaveAsync(firstSubscriptionMessage);
-            await testee.SaveAsync(secondSubscriptionMessage);
+            await testee.SaveAsync(firstSubscriptionMessage).ConfigureAwait(false);
+            await testee.SaveAsync(secondSubscriptionMessage).ConfigureAwait(false);
 
             var subscriptions = testee.GetSubscribedEndpoints(@event);
 

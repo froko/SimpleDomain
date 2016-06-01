@@ -134,7 +134,7 @@ namespace SimpleDomain.Bus.Configuration
             this.testee.AddPipelineStep(pipelineStep);
 
             var pipeline = this.testee.CreateIncommingPipeline(c => Task.CompletedTask, e => Task.CompletedTask, m => Task.CompletedTask);
-            await pipeline.InvokeAsync(A.Fake<Envelope>());
+            await pipeline.InvokeAsync(A.Fake<Envelope>()).ConfigureAwait(false);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<IncommingEnvelopeContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }
@@ -148,7 +148,7 @@ namespace SimpleDomain.Bus.Configuration
             var envelope = new Envelope(new Dictionary<string, object> { { HeaderKeys.Sender, "sender@localhost" } }, new MyCommand());
 
             var pipeline = this.testee.CreateIncommingPipeline(c => Task.CompletedTask, e => Task.CompletedTask, m => Task.CompletedTask);
-            await pipeline.InvokeAsync(envelope);
+            await pipeline.InvokeAsync(envelope).ConfigureAwait(false);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<IncommingMessageContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }
@@ -162,7 +162,7 @@ namespace SimpleDomain.Bus.Configuration
             this.testee.AddPipelineStep(pipelineStep);
 
             var pipeline = this.testee.CreateOutgoingPipeline(e => Task.CompletedTask);
-            await pipeline.InvokeAsync(A.Fake<IMessage>());
+            await pipeline.InvokeAsync(A.Fake<IMessage>()).ConfigureAwait(false);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<OutgoingMessageContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }
@@ -177,7 +177,7 @@ namespace SimpleDomain.Bus.Configuration
             this.testee.AddPipelineStep(pipelineStep);
 
             var pipeline = this.testee.CreateOutgoingPipeline(e => Task.CompletedTask);
-            await pipeline.InvokeAsync(new ValueCommand(11));
+            await pipeline.InvokeAsync(new ValueCommand(11)).ConfigureAwait(false);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<OutgoingEnvelopeContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
         }

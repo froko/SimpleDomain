@@ -68,7 +68,7 @@ namespace SimpleDomain.Bus
 
             var testee = new EventSubscription<ValueEvent>(handler);
 
-            await testee.HandleAsync(valueEvent);
+            await testee.HandleAsync(valueEvent).ConfigureAwait(false);
 
             expectedValue.Should().Be(Value);
         }

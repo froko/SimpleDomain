@@ -65,14 +65,16 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(9);
             aggregateRoot.ChangeValue(10);
 
-            await this.repository.SaveAsync(aggregateRoot); // Adds eleven events and creates a snapshot
+            await this.repository.SaveAsync(aggregateRoot).ConfigureAwait(false); // Adds eleven events and creates a snapshot
 
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(12);
 
-            await this.repository.SaveAsync(aggregateRoot); // Adds two more events
+            await this.repository.SaveAsync(aggregateRoot).ConfigureAwait(false); // Adds two more events
 
-            var aggregateRootFromEventStore = await this.repository.GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(aggregateId);
+            var aggregateRootFromEventStore = await this.repository
+                .GetByIdAsync<MyDynamicEventSourcedAggregateRoot>(aggregateId)
+                .ConfigureAwait(false);
 
             aggregateRootFromEventStore.Value.Should().Be(12);
             aggregateRootFromEventStore.Version.Should().Be(12);
