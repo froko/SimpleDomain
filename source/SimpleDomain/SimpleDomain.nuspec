@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SimpleDomain</id>
+        <version>1.0.0</version>
+        <authors>Patrick Ineichen</authors>
+        <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>A library which supports DDD, CQRS and event sourcing.</description>
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="8.0.3" />
+            <dependency id="Common.Logging" version="3.3.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\SimpleDomain.dll" target="lib\net46" />
+		<file src="bin\Release\SimpleDomain.pdb" target="lib\net46" />
+		<file src="bin\Release\SimpleDomain.xml" target="lib\net46" />
+		<file src="**\*.cs" target="src" />
+    </files>
+</package>

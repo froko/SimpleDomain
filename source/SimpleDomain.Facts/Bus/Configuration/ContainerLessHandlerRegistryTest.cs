@@ -1,0 +1,72 @@
+﻿//-------------------------------------------------------------------------------
+// <copyright file="ContainerLessHandlerRegistryTest.cs" company="frokonet.ch">
+//   Copyright (c) 2014-2016
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//-------------------------------------------------------------------------------
+
+namespace SimpleDomain.Bus.Configuration
+{
+    using FluentAssertions;
+
+    using SimpleDomain.TestDoubles;
+
+    using Xunit;
+
+    public class ContainerLessHandlerRegistryTest
+    {
+        private readonly ContainerLessHandlerRegistry testee;
+
+        public ContainerLessHandlerRegistryTest()
+        {
+            this.testee = new ContainerLessHandlerRegistry();
+        }
+
+        [Fact]
+        public void GetCommandHandlerReturnsNull_WhenNothingHasBeenRegistered()
+        {
+            var handler = this.testee.GetCommandHandler(new ValueCommand(11));
+
+            handler.Should().BeNull();
+        }
+
+        [Fact]
+        public void GetCommandHandlerReturnsNull_EvenWhenItHasBeenRegisteredBefore()
+        {
+            this.testee.Register(typeof(ValueCommandHandler), typeof(ValueCommand));
+
+            var handler = this.testee.GetCommandHandler(new ValueCommand(11));
+
+            handler.Should().BeNull();
+        }
+
+        [Fact]
+        public void GetEventHandlersReturnsEmptyList_WhenNothingHasBeenRegisteredBefore()
+        {
+            var handlers = this.testee.GetEventHandlers(new ValueEvent(11));
+
+            handlers.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void GetEventHandlerReturnsEmptyList_EvenWhenSomeHaveBeenRegisteredBefore()
+        {
+            this.testee.Register(typeof(ValueEventHandler), typeof(ValueEvent));
+        
+            var handlers = this.testee.GetEventHandlers(new ValueEvent(11));
+        
+            handlers.Should().BeEmpty();
+        }
+    }
+}
