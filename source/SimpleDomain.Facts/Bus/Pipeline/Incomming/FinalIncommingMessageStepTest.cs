@@ -65,7 +65,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new ValueCommand(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
             
-            await this.testee.InvokeAsync(incommingMessageContext, null);
+            await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => this.finalActionForCommand.Invoke(message)).MustHaveHappened();
         }
@@ -76,7 +76,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new ValueEvent(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
 
-            await this.testee.InvokeAsync(incommingMessageContext, null);
+            await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => this.finalActionForEvent.Invoke(message)).MustHaveHappened();
         }
@@ -87,7 +87,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new SubscriptionMessage(new EndpointAddress("recipient"), typeof(ValueCommand).FullName);
             var incommingMessageContext = CreateIncommingMessageContext(message);
 
-            await this.testee.InvokeAsync(incommingMessageContext, null);
+            await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => this.finalActionForSubscriptionMessage.Invoke(message)).MustHaveHappened();
         }
@@ -99,7 +99,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var incommingMessageContext = CreateIncommingMessageContext(message);
             var next = A.Fake<Func<Task>>();
             
-            await this.testee.InvokeAsync(incommingMessageContext, next);
+            await this.testee.InvokeAsync(incommingMessageContext, next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
         }
@@ -110,7 +110,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new ValueCommand(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
             
-            await this.testee.InvokeAsync(incommingMessageContext, null);
+            await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             "Received Command of type SimpleDomain.TestDoubles.ValueCommand from sender".Should().HaveBeenLogged().WithInfoLevel();
         }

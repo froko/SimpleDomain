@@ -20,6 +20,7 @@ namespace SimpleDomain.Bus
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Transactions;
 
     using SimpleDomain.Common;
 
@@ -64,14 +65,26 @@ namespace SimpleDomain.Bus
         /// Handles an incomming envelope
         /// </summary>
         /// <param name="envelope">The envelope</param>
-        protected Task HandleAsync(Envelope envelope)
+        protected async Task HandleAsync(Envelope envelope)
         {
-            var incommingPipeline = this.Configuration.CreateIncommingPipeline(
-                this.HandleCommandAsync,
-                this.HandleEventAsync,
-                this.HandleSubscriptionMessageAsync);
+            using (var transactionScope = CreateTransactionScope())
+            {
+                var incommingPipeline = this.Configuration.CreateIncommingPipeline(
+                    this.HandleCommandAsync,
+                    this.HandleEventAsync,
+                    this.HandleSubscriptionMessageAsync);
 
-            return incommingPipeline.InvokeAsync(envelope);
+                await incommingPipeline.InvokeAsync(envelope).ConfigureAwait(false);
+
+                transactionScope.Complete();
+            }
+        }
+
+        private static TransactionScope CreateTransactionScope()
+        {
+            return new TransactionScope(
+                TransactionScopeOption.Required,
+                TransactionScopeAsyncFlowOption.Enabled);
         }
 
         private async Task HandleCommandAsync(ICommand command)

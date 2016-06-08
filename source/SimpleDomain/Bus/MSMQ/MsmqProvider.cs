@@ -103,6 +103,13 @@ namespace SimpleDomain.Bus.MSMQ
             }
         }
 
+        private static TransactionScope CreateTransactionScope()
+        {
+            return new TransactionScope(
+                TransactionScopeOption.RequiresNew,
+                TransactionScopeAsyncFlowOption.Enabled);
+        }
+
         private async Task RunMessageReceptionTask()
         {
             while (!this.cancellationToken.IsCancellationRequested)
@@ -165,7 +172,7 @@ namespace SimpleDomain.Bus.MSMQ
 
         private async Task HandleMessageAsync()
         {
-            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            using (var transactionScope = CreateTransactionScope())
             {
                 try
                 {
@@ -180,7 +187,7 @@ namespace SimpleDomain.Bus.MSMQ
                 }
             }
         }
-
+        
         private async Task HandleMessageAsync(Message message)
         {
             if (message == null)

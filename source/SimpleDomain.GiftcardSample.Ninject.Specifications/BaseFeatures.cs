@@ -63,7 +63,9 @@ namespace GiftcardSample.Ninject
 
             using (var eventStream = this.EventStore.OpenStream<Giftcard>(cardId))
             {
-                await eventStream.SaveAsync(versionableEvents, expectedVersion, new Dictionary<string, object>());
+                await eventStream
+                    .SaveAsync(versionableEvents, expectedVersion, new Dictionary<string, object>())
+                    .ConfigureAwait(false);
             }
         }
     }

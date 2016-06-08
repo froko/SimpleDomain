@@ -72,7 +72,7 @@ namespace SimpleDomain.Bus
             A.CallTo(() => this.configuration.GetSummary(typeof(SimpleJitney)))
                 .Returns("Some useful configuration info");
 
-            await this.testee.StartAsync();
+            await this.testee.StartAsync().ConfigureAwait(false);
 
             "Some useful configuration info".Should().HaveBeenLogged().WithDebugLevel();
         }
@@ -85,7 +85,7 @@ namespace SimpleDomain.Bus
             A.CallTo(() => subscriptions.GetSubscribedEventTypes()).Returns(new[] { typeof(MyEvent), typeof(OtherEvent) });
             A.CallTo(() => this.configuration.Subscriptions).Returns(subscriptions);
 
-            await this.testee.StartAsync();
+            await this.testee.StartAsync().ConfigureAwait(false);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(Repeated.Exactly.Twice);
         }
@@ -93,7 +93,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public async Task LogsStart_WhenStartingAsync()
         {
-            await this.testee.StartAsync();
+            await this.testee.StartAsync().ConfigureAwait(false);
 
             "SimpleJitney has been started".Should().HaveBeenLogged().WithInfoLevel();
         }
@@ -103,7 +103,7 @@ namespace SimpleDomain.Bus
         {
             var command = new ValueCommand(11);
             
-            await this.testee.SendAsync(command);
+            await this.testee.SendAsync(command).ConfigureAwait(false);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
         }
@@ -121,7 +121,7 @@ namespace SimpleDomain.Bus
         {
             var @event = new ValueEvent(11);
             
-            await this.testee.PublishAsync(@event);
+            await this.testee.PublishAsync(@event).ConfigureAwait(false);
 
             A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
         }

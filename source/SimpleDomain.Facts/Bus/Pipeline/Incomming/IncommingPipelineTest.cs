@@ -56,7 +56,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new ValueCommand(11);
             var envelope = Envelope.Create(new EndpointAddress("sender"), new EndpointAddress("recipient"), message);
 
-            await this.testee.InvokeAsync(envelope);
+            await this.testee.InvokeAsync(envelope).ConfigureAwait(false);
 
             this.envelopeStep.HasBeenCalled.Should().BeTrue();
             this.messageStep.HasBeenCalled.Should().BeTrue();

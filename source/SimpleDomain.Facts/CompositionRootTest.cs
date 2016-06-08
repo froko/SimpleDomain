@@ -190,7 +190,7 @@ namespace SimpleDomain
 
             using (await testee.StartAsync().ConfigureAwait(false))
             {
-                Func<Task> action = async () => await testee.StartAsync();
+                Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
                 action.ShouldThrow<CompositionRootAlreadyStartedException>();
             }
         }
@@ -203,7 +203,7 @@ namespace SimpleDomain
 
             await executionContext.StopAsync().ConfigureAwait(false);
 
-            Func<Task> action = async () => await testee.StartAsync();
+            Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
             action.ShouldNotThrow<Exception>();
         }
 
@@ -215,7 +215,7 @@ namespace SimpleDomain
 
             executionContext.Dispose();
 
-            Func<Task> action = async () => await testee.StartAsync();
+            Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
             action.ShouldNotThrow<Exception>();
         }
 

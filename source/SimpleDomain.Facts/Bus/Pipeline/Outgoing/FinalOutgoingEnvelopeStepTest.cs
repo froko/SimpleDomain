@@ -61,7 +61,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         [Fact]
         public async Task ShouldInvokeGivenFinalActionForEnvelope()
         {
-            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, null);
+            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, null).ConfigureAwait(false);
 
             A.CallTo(() => this.finalActionForEnvelope.Invoke(A<Envelope>.Ignored)).MustHaveHappened();
         }
@@ -71,7 +71,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         {
             var next = A.Fake<Func<Task>>();
             
-            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, next);
+            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
         }
@@ -79,7 +79,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         [Fact]
         public async Task LogsDistributionOfMessage()
         {
-            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, null);
+            await this.testee.InvokeAsync(this.outgoingEnvelopeContext, null).ConfigureAwait(false);
 
             "Sending Command of type SimpleDomain.TestDoubles.MyCommand to recipient".Should().HaveBeenLogged().WithInfoLevel();
         }

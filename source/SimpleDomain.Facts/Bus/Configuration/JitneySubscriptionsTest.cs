@@ -62,7 +62,7 @@ namespace SimpleDomain.Bus.Configuration
             this.testee.AddCommandHandler(handler);
 
             var subscription = this.testee.GetCommandSubscription(command);
-            await subscription.HandleAsync(command);
+            await subscription.HandleAsync(command).ConfigureAwait(false);
 
             expectedValue.Should().Be(Value);
         }
@@ -80,7 +80,7 @@ namespace SimpleDomain.Bus.Configuration
             this.testee.ScanAssemblyForMessageHandlers(Assembly.GetExecutingAssembly(), register);
 
             var subscription = this.testee.GetCommandSubscription(command);
-            await subscription.HandleAsync(command);
+            await subscription.HandleAsync(command).ConfigureAwait(false);
 
             handler.Value.Should().Be(Value);
         }
@@ -107,7 +107,7 @@ namespace SimpleDomain.Bus.Configuration
             var subscriptions = this.testee.GetEventSubscriptions(@event);
             var tasks = subscriptions.Select(s => s.HandleAsync(@event));
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
 
             expectedValue.Should().Be(Value);
             eventHandlerInstance.Value.Should().Be(Value);
