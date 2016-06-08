@@ -19,7 +19,8 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
-    
+    using System.Threading.Tasks;
+
     using Raven.Client;
 
     /// <summary>
@@ -50,6 +51,12 @@ namespace SimpleDomain.EventStore.Persistence
                 aggregateId, 
                 this.configuration.DispatchEvents,
                 this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession());
+        }
+
+        /// <inheritdoc />
+        public Task ReplayAllAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

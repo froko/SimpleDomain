@@ -20,7 +20,9 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The InMemory event store
     /// </summary>
@@ -55,6 +57,15 @@ namespace SimpleDomain.EventStore.Persistence
                 this.configuration.DispatchEvents,
                 this.configuration.Get<List<EventDescriptor>>(EventDescriptors),
                 this.configuration.Get<List<SnapshotDescriptor>>(SnapshotDescriptors));
+        }
+
+        /// <inheritdoc />
+        public Task ReplayAllAsync()
+        {
+            var eventDescriptors = this.configuration.Get<List<EventDescriptor>>(EventDescriptors);
+            var tasks = eventDescriptors.Select(e => e.Event).Select(this.configuration.DispatchEvents);
+
+            return Task.WhenAll(tasks);
         }
     }
 }

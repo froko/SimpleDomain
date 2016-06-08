@@ -19,8 +19,12 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
-    
+    using System.Linq;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The SQL event store
     /// </summary>
@@ -60,6 +64,53 @@ namespace SimpleDomain.EventStore.Persistence
                 this.configuration.DispatchEvents,
                 this.Factory, 
                 EventStoreConnectionStringName);
+        }
+
+        /// <inheritdoc />
+        public async Task ReplayAllAsync()
+        {
+            const int BatchSize = 1000;
+
+            var numberOfEvents = await this.GetNumberOfEventsAsync().ConfigureAwait(false);
+            for (var lowerBound = 0; lowerBound < numberOfEvents; lowerBound += BatchSize)
+            {
+                var upperBound = lowerBound + BatchSize;
+                await this.ReplayBatchAsync(lowerBound, upperBound).ConfigureAwait(false);
+            }
+        }
+
+        private static IEnumerable<IEvent> ReadEvents(IDataReader reader)
+        {
+            while (reader.Read())
+            {
+                yield return reader.GetEvent();
+            }
+        }
+
+        private async Task<int> GetNumberOfEventsAsync()
+        {
+            using (var connection = await this.Factory.CreateAsync(EventStoreConnectionStringName).ConfigureAwait(false))
+            using (var command = new SqlCommand("SELECT COUNT(*) FROM dbo.Events", connection))
+            {
+                return (int)await command.ExecuteScalarAsync().ConfigureAwait(false);
+            }
+        }
+
+        private async Task ReplayBatchAsync(int lowerBound, int upperBound)
+        {
+            using (var connection = await this.Factory.CreateAsync(EventStoreConnectionStringName).ConfigureAwait(false))
+            using (var command = new SqlCommand(SqlCommands.GetAllEvents, connection))
+            {
+                command.AddParameter("@LowerBound", lowerBound);
+                command.AddParameter("@UpperBound", upperBound);
+
+                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+                {
+                    await Task
+                        .WhenAll(ReadEvents(reader).ToList().Select(this.configuration.DispatchEvents))
+                        .ConfigureAwait(false);
+                }
+            }
         }
 
         private void CreateEventStoreTableIfNeeded()

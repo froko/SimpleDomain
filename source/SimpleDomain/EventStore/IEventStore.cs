@@ -19,6 +19,7 @@
 namespace SimpleDomain.EventStore
 {
     using System;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The event store interface
@@ -32,5 +33,10 @@ namespace SimpleDomain.EventStore
         /// <param name="aggregateId">The aggregate root id</param>
         /// <returns>An event stream</returns>
         IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot;
+
+        /// <summary>
+        /// Replays all events which are stored in the event store
+        /// </summary>
+        Task ReplayAllAsync();
     }
 }

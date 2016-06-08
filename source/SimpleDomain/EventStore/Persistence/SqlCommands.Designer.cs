@@ -22,7 +22,7 @@ namespace SimpleDomain.EventStore.Persistence {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SqlCommands {
+    public class SqlCommands {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleDomain.EventStore.Persistence.SqlCommands", typeof(SqlCommands).Assembly);
@@ -51,7 +51,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -77,7 +77,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///	) ON [PRIMARY];
         ///END.
         /// </summary>
-        internal static string CreateEventsTable {
+        public static string CreateEventsTable {
             get {
                 return ResourceManager.GetString("CreateEventsTable", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///	) ON [PRIMARY];
         ///END.
         /// </summary>
-        internal static string CreateSnapshotsTable {
+        public static string CreateSnapshotsTable {
             get {
                 return ResourceManager.GetString("CreateSnapshotsTable", resourceCulture);
             }
@@ -107,10 +107,14 @@ namespace SimpleDomain.EventStore.Persistence {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT [EventData], [EventType]
-        ///FROM dbo.Events 
-        ///ORDER BY [Timestamp], [AggregateType], [Version].
+        ///FROM
+        ///(
+        ///	SELECT ROW_NUMBER() OVER(ORDER BY [Timestamp]) AS RowNum, [EventData], [EventType]
+        ///	FROM dbo.Events
+        ///) AS RowConstrainedResult
+        ///WHERE RowNum &gt; @LowerBound AND RowNum &lt;= @UpperBound.
         /// </summary>
-        internal static string GetAllEvents {
+        public static string GetAllEvents {
             get {
                 return ResourceManager.GetString("GetAllEvents", resourceCulture);
             }
@@ -124,7 +128,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///AND [Version] BETWEEN @VersionFrom AND @VersionTo
         ///ORDER BY [Version].
         /// </summary>
-        internal static string GetEventsByVersion {
+        public static string GetEventsByVersion {
             get {
                 return ResourceManager.GetString("GetEventsByVersion", resourceCulture);
             }
@@ -137,7 +141,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///AND [AggregateId] = @AggregateId
         ///ORDER BY [Version] DESC.
         /// </summary>
-        internal static string GetLatestSnapshot {
+        public static string GetLatestSnapshot {
             get {
                 return ResourceManager.GetString("GetLatestSnapshot", resourceCulture);
             }
@@ -149,7 +153,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///WHERE [AggregateType] = @AggregateType 
         ///AND [AggregateId] = @AggregateId.
         /// </summary>
-        internal static string GetSnapshotCount {
+        public static string GetSnapshotCount {
             get {
                 return ResourceManager.GetString("GetSnapshotCount", resourceCulture);
             }
@@ -159,7 +163,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///   Looks up a localized string similar to INSERT dbo.Events ([AggregateType], [AggregateId], [Version], [Timestamp], [EventType], [EventData], [Headers])
         ///VALUES(@AggregateType, @AggregateId, @Version, @Timestamp, @EventType, @EventData, @Headers).
         /// </summary>
-        internal static string InsertEvent {
+        public static string InsertEvent {
             get {
                 return ResourceManager.GetString("InsertEvent", resourceCulture);
             }
@@ -169,7 +173,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///   Looks up a localized string similar to INSERT dbo.Snapshots ([AggregateType], [AggregateId], [Version], [Timestamp], [SnapshotType], [SnapshotData])
         ///VALUES(@AggregateType, @AggregateId, @Version, @Timestamp, @SnapshotType, @SnapshotData).
         /// </summary>
-        internal static string InsertSnapshot {
+        public static string InsertSnapshot {
             get {
                 return ResourceManager.GetString("InsertSnapshot", resourceCulture);
             }
@@ -180,7 +184,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///WHERE [AggregateType] = @AggregateType 
         ///AND [AggregateId] = @AggregateId.
         /// </summary>
-        internal static string ResetAggregateByTypeAndId {
+        public static string ResetAggregateByTypeAndId {
             get {
                 return ResourceManager.GetString("ResetAggregateByTypeAndId", resourceCulture);
             }
@@ -190,7 +194,7 @@ namespace SimpleDomain.EventStore.Persistence {
         ///   Looks up a localized string similar to DELETE dbo.Events
         ///WHERE [AggregateType] = @AggregateType.
         /// </summary>
-        internal static string ResetAllAggregatesByType {
+        public static string ResetAllAggregatesByType {
             get {
                 return ResourceManager.GetString("ResetAllAggregatesByType", resourceCulture);
             }
@@ -199,7 +203,7 @@ namespace SimpleDomain.EventStore.Persistence {
         /// <summary>
         ///   Looks up a localized string similar to DELETE dbo.Events.
         /// </summary>
-        internal static string TruncateEvents {
+        public static string TruncateEvents {
             get {
                 return ResourceManager.GetString("TruncateEvents", resourceCulture);
             }
