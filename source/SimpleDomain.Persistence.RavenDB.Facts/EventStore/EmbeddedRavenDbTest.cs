@@ -28,12 +28,12 @@ namespace SimpleDomain.EventStore
     {
         protected EmbeddedRavenDbTest()
         {
-            this.DocumentStore = new EmbeddableDocumentStore { RunInMemory = true };
+            this.DocumentStore = new EmbeddableDocumentStore { RunInMemory = true }; // new DocumentStore { ConnectionStringName = "EventStore" };
             this.DocumentStore.Initialize();
             this.DocumentStore.Listeners.RegisterListener(new NoStaleQueriesListener());
         }
 
-        protected IDocumentStore DocumentStore { get; private set; }
+        protected IDocumentStore DocumentStore { get; }
 
         public void Dispose()
         {

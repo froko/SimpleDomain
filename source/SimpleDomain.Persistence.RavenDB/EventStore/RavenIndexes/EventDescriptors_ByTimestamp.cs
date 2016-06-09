@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="EventStoreIndexes.cs" company="frokonet.ch">
+// <copyright file="EventDescriptors_ByTimestamp.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,27 +16,26 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore
+namespace SimpleDomain.EventStore.RavenIndexes
 {
+    using System.Linq;
+
+    using Raven.Abstractions.Indexing;
+    using Raven.Client.Indexes;
+
     /// <summary>
-    /// A collection of string constants for 
-    /// RavenDB indexes used by the event store
+    /// Defines a RavenDB index for event descriptors by timestamp
     /// </summary>
-    public static class EventStoreIndexes
+    public class EventDescriptors_ByTimestamp : AbstractIndexCreationTask<EventDescriptor>
     {
         /// <summary>
-        /// Returns an index for event descriptors by aggregate id and version
+        /// Creates a new instance of <see cref="EventDescriptors_ByTimestamp"/>
         /// </summary>
-        public const string EventDescriptorsByAggregateIdAndVersion = "EventDescriptors/ByAggregateIdAndVersion";
+        public EventDescriptors_ByTimestamp()
+        {
+            this.Map = eventDescriptors => from eventDescriptor in eventDescriptors select new { eventDescriptor.Timestamp };
 
-        /// <summary>
-        /// Returns an index for event descriptors by timestamp
-        /// </summary>
-        public const string EventDescriptorsByTimestamp = "EventDescriptors/ByTimestamp";
-
-        /// <summary>
-        /// Returns an index for snapshot descriptors by aggregate id and version
-        /// </summary>
-        public const string SnapshotDescriptorsByAggregateIdAndVersion = "SnapshotDescriptors/ByAggregateIdAndVersion";
+            this.Index(e => e.Timestamp, FieldIndexing.Analyzed);
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace SimpleDomain.EventStore
     using Raven.Abstractions.Util;
     using Raven.Client;
     using Raven.Client.Indexes;
+
     using SimpleDomain.EventStore.RavenIndexes;
 
     /// <summary>
@@ -44,11 +45,11 @@ namespace SimpleDomain.EventStore
         /// <param name="documentStore">The document store</param>
         public static void RegisterIdConventions(IDocumentStore documentStore)
         {
-            documentStore.Conventions.RegisterAsyncIdConvention<EventDescriptor>((dbname, commands, eventdescriptor) => new CompletedTask<string>(
-                string.Format("EventDescriptors/{0}/{1}", eventdescriptor.AggregateId, eventdescriptor.Version)));
+            documentStore.Conventions.RegisterAsyncIdConvention<EventDescriptor>((dbname, commands, eventdescriptor) 
+                => new CompletedTask<string>($"EventDescriptors/{eventdescriptor.AggregateId}/{eventdescriptor.Version}"));
             
-            documentStore.Conventions.RegisterAsyncIdConvention<SnapshotDescriptor>((dbname, commands, snapshotdescriptor) => new CompletedTask<string>(
-                string.Format("SnapshotDescriptors/{0}/{1}", snapshotdescriptor.AggregateId, snapshotdescriptor.Version)));
+            documentStore.Conventions.RegisterAsyncIdConvention<SnapshotDescriptor>((dbname, commands, snapshotdescriptor) 
+                => new CompletedTask<string>($"SnapshotDescriptors/{snapshotdescriptor.AggregateId}/{snapshotdescriptor.Version}"));
         }
     }
 }

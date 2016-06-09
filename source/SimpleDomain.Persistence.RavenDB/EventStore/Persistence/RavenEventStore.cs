@@ -19,10 +19,11 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Raven.Client;
-
+    
     /// <summary>
     /// The RavenDB event store
     /// </summary>
@@ -54,9 +55,17 @@ namespace SimpleDomain.EventStore.Persistence
         }
 
         /// <inheritdoc />
-        public Task ReplayAllAsync()
+        public async Task ReplayAllAsync()
         {
-            throw new NotImplementedException();
+            using (var session = this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession())
+            {
+                var events = await session
+                    .Query<EventDescriptor>(EventStoreIndexes.EventDescriptorsByTimestamp)
+                    .GetAllEventsAsync()
+                    .ConfigureAwait(false);
+
+                await Task.WhenAll(events.ToList().Select(this.configuration.DispatchEvents)).ConfigureAwait(false);
+            }
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="EventStore\Persistence\RavenEventStream.cs" />
     <Compile Include="EventStore\Persistence\RavenQueryableExtensions.cs" />
     <Compile Include="EventStore\RavenIndexes\EventDescriptors_ByAggregateIdAndVersion.cs" />
+    <Compile Include="EventStore\RavenIndexes\EventDescriptors_ByTimestamp.cs" />
     <Compile Include="EventStore\RavenIndexes\SnapshotDescriptors_ByAggregateIdAndVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
