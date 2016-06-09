@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD052592-E7E4-48BD-8192-7DF1A6154163}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleDomain</RootNamespace>
+    <AssemblyName>SimpleDomain.Persistence.GetEventStore.Facts</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EventStore.ClientAPI, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EventStore.Client.3.6.3\lib\net40\EventStore.ClientAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EventStore.ClientAPI.Embedded, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EventStore.Client.Embedded.3.6.3\lib\net40\EventStore.ClientAPI.Embedded.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=2.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.2.0.0\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=4.8.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.8.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.8.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.8.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Settings.StyleCop" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleDomain.Facts\SimpleDomain.Facts.csproj">
+      <Project>{c6220ee6-cf62-4bb9-9c99-5af5abe16fa4}</Project>
+      <Name>SimpleDomain.Facts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleDomain.Persistence.GetEventStore\SimpleDomain.Persistence.GetEventStore.csproj">
+      <Project>{426d3a3e-3f15-4edf-9a46-78dba31ce7a7}</Project>
+      <Name>SimpleDomain.Persistence.GetEventStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleDomain\SimpleDomain.csproj">
+      <Project>{aeb6491c-c453-4052-98ed-0bbdaf9ba60d}</Project>
+      <Name>SimpleDomain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.Facts.1.11.1\build\froko.csprojSetup.Facts.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.Facts.1.11.1\build\froko.csprojSetup.Facts.targets'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('..\packages\EventStore.Client.Embedded.3.6.3\build\EventStore.Client.Embedded.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EventStore.Client.Embedded.3.6.3\build\EventStore.Client.Embedded.targets'))" />
+  </Target>
+  <Import Project="..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.Facts.1.11.1\build\froko.csprojSetup.Facts.targets" Condition="Exists('..\packages\froko.csprojSetup.Facts.1.11.1\build\froko.csprojSetup.Facts.targets')" />
+  <Import Project="..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" />
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" />
+  <Import Project="..\packages\EventStore.Client.Embedded.3.6.3\build\EventStore.Client.Embedded.targets" Condition="Exists('..\packages\EventStore.Client.Embedded.3.6.3\build\EventStore.Client.Embedded.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
