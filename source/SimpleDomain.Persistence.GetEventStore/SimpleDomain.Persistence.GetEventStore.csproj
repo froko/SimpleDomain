@@ -36,6 +36,10 @@
       <HintPath>..\packages\EventStore.Client.3.6.3\lib\net40\EventStore.ClientAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,11 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventStore\GetEventStoreConfigurationExtensions.cs" />
+    <Compile Include="EventStore\IConnectionBuilder.cs" />
+    <Compile Include="EventStore\Persistence\Conventions.cs" />
+    <Compile Include="EventStore\Persistence\EventDataBuilder.cs" />
+    <Compile Include="EventStore\Persistence\GetEventStore.cs" />
+    <Compile Include="EventStore\GetEventStoreConnectionBuilder.cs" />
+    <Compile Include="EventStore\Persistence\GetEventStoreExtensions.cs" />
+    <Compile Include="EventStore\Persistence\GetEventStoreStream.cs" />
+    <Compile Include="EventStore\Persistence\SnapshotDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventStore\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
@@ -69,10 +80,12 @@
     <Error Condition="!Exists('..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets'))" />
     <Error Condition="!Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets'))" />
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.11.1\build\froko.csprojSetup.XmlDocumentation.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.XmlDocumentation.1.11.1\build\froko.csprojSetup.XmlDocumentation.Targets'))" />
   </Target>
   <Import Project="..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.11.1\build\froko.csprojSetup.Targets')" />
   <Import Project="..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.5.4\build\dotnet\GitVersionTask.targets')" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.XmlDocumentation.1.11.1\build\froko.csprojSetup.XmlDocumentation.Targets" Condition="Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.11.1\build\froko.csprojSetup.XmlDocumentation.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

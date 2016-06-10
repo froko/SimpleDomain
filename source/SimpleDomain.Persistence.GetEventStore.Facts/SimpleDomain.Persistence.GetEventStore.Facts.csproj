@@ -78,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventStore\Persistence\EmbeddedEventStoreConnectionBuilder.cs" />
+    <Compile Include="EventStore\Persistence\IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
