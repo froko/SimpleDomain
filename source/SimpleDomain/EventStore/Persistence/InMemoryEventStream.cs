@@ -26,14 +26,14 @@ namespace SimpleDomain.EventStore.Persistence
     /// <summary>
     /// The InMemory event stream
     /// </summary>
-    /// <typeparam name="TAggregate">The type of the aggregate root</typeparam>
-    public class InMemoryEventStream<TAggregate> : EventStream<TAggregate> where TAggregate : IEventSourcedAggregateRoot
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    public class InMemoryEventStream<TAggregateRoot> : EventStream<TAggregateRoot> where TAggregateRoot : IEventSourcedAggregateRoot
     {
         private readonly IList<EventDescriptor> eventDescriptors;
         private readonly IList<SnapshotDescriptor> snapshotDescriptors;
 
         /// <summary>
-        /// Creates a new instance of <see cref="InMemoryEventStream{TAggregate}"/>
+        /// Creates a new instance of <see cref="InMemoryEventStream{TAggregateRoot}"/>
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
@@ -47,6 +47,12 @@ namespace SimpleDomain.EventStore.Persistence
         {
             this.eventDescriptors = eventDescriptors;
             this.snapshotDescriptors = snapshotDescriptors;
+        }
+
+        /// <inheritdoc />
+        public override Task<IEventStream> OpenAsync()
+        {
+            return Task.FromResult((IEventStream)this);
         }
 
         /// <inheritdoc />

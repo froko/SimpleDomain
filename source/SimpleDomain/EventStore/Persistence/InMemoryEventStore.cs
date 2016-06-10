@@ -48,15 +48,17 @@ namespace SimpleDomain.EventStore.Persistence
         {
             this.configuration = configuration;
         }
-
+        
         /// <inheritdoc />
-        public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
+        public Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            return new InMemoryEventStream<T>(
+            var eventStream = new InMemoryEventStream<TAggregateRoot>(
                 aggregateId,
                 this.configuration.DispatchEvents,
                 this.configuration.Get<List<EventDescriptor>>(EventDescriptors),
                 this.configuration.Get<List<SnapshotDescriptor>>(SnapshotDescriptors));
+
+            return eventStream.OpenAsync();
         }
 
         /// <inheritdoc />

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="EventStoreConfigurationExtensions.cs" company="frokonet.ch">
+// <copyright file="RavenEventStoreConfigurationExtensions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ namespace SimpleDomain.EventStore
     /// <summary>
     /// Configuration extensions for the EventStore configuration base class
     /// </summary>
-    public static class EventStoreConfigurationExtensions
+    public static class RavenEventStoreConfigurationExtensions
     {
         /// <summary>
         /// Registers the RavenDB EventStore

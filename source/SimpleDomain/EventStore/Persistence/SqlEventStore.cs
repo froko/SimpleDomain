@@ -57,13 +57,14 @@ namespace SimpleDomain.EventStore.Persistence
         private DbConnectionFactory Factory => this.configuration.Get<DbConnectionFactory>(ConnectionFactory);
 
         /// <inheritdoc />
-        public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
+        public Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            return new SqlEventStream<T>(
-                aggregateId, 
+            var eventStream = new SqlEventStream<TAggregateRoot>(
+                aggregateId,
                 this.configuration.DispatchEvents,
-                this.Factory, 
-                EventStoreConnectionStringName);
+                () => this.Factory.CreateAsync(EventStoreConnectionStringName));
+
+            return eventStream.OpenAsync();
         }
 
         /// <inheritdoc />

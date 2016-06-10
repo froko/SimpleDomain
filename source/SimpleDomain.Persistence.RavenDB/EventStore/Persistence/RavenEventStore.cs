@@ -46,12 +46,14 @@ namespace SimpleDomain.EventStore.Persistence
         }
 
         /// <inheritdoc />
-        public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
+        public Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            return new RavenEventStream<T>(
-                aggregateId, 
+            var eventStream = new RavenEventStream<TAggregateRoot>(
+                aggregateId,
                 this.configuration.DispatchEvents,
-                this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession());
+                () => Task.FromResult(this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession()));
+
+            return eventStream.OpenAsync();
         }
 
         /// <inheritdoc />

@@ -28,6 +28,12 @@ namespace SimpleDomain.EventStore
     public interface IEventStream : IDisposable
     {
         /// <summary>
+        /// Opens the connection to the persistence engine
+        /// </summary>
+        /// <returns>The event stream itself</returns>
+        Task<IEventStream> OpenAsync();
+
+        /// <summary>
         /// Persits a list of events
         /// </summary>
         /// <param name="events">A list of versionable events</param>

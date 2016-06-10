@@ -29,10 +29,10 @@ namespace SimpleDomain.EventStore
         /// <summary>
         /// Returns an event stream for an aggregate root identified by its id
         /// </summary>
-        /// <typeparam name="T">The type of the aggregate root</typeparam>
+        /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateId">The aggregate root id</param>
         /// <returns>An event stream</returns>
-        IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot;
+        Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot;
 
         /// <summary>
         /// Replays all events which are stored in the event store

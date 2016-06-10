@@ -27,25 +27,30 @@ namespace SimpleDomain.EventStore.Persistence
     /// <summary>
     /// The SQL event stream
     /// </summary>
-    /// <typeparam name="TAggregate">The type of the aggregate root</typeparam>
-    public class SqlEventStream<TAggregate> : EventStream<TAggregate>
-        where TAggregate : IEventSourcedAggregateRoot
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    public class SqlEventStream<TAggregateRoot> : EventStream<TAggregateRoot>
+        where TAggregateRoot : IEventSourcedAggregateRoot
     {
-        private readonly DbConnectionFactory factory;
-        private readonly string connectionStringName;
+        private readonly Func<Task<SqlConnection>> createConnectionAsync;
+        private SqlConnection connection;
 
         /// <summary>
-        /// Creates a new instance of <see cref="SqlEventStream{TAggregate}"/>
+        /// Creates a new instance of <see cref="SqlEventStream{TAggregateRoot}"/>
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
-        /// <param name="factory">Dependency injection for <see cref="DbConnectionFactory"/></param>
-        /// <param name="connectionStringName"></param>
-        public SqlEventStream(Guid aggregateId, Func<IEvent, Task> dispatchAsync, DbConnectionFactory factory, string connectionStringName)
+        /// <param name="createConnectionAsync">The action to create a SQL connection</param>
+        public SqlEventStream(Guid aggregateId, Func<IEvent, Task> dispatchAsync, Func<Task<SqlConnection>> createConnectionAsync)
             : base(aggregateId, dispatchAsync)
         {
-            this.factory = factory;
-            this.connectionStringName = connectionStringName;
+            this.createConnectionAsync = createConnectionAsync;
+        }
+
+        /// <inheritdoc />
+        public override async Task<IEventStream> OpenAsync()
+        {
+            this.connection = await this.createConnectionAsync();
+            return this;
         }
 
         /// <inheritdoc />
@@ -53,8 +58,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var snapshotDescriptor = new SqlSnapshotDescriptor(this.AggregateType, this.AggregateId, snapshot);
 
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.InsertSnapshot, connection))
+            using (var command = new SqlCommand(SqlCommands.InsertSnapshot, this.connection))
             {
                 command.AddParameter("@AggregateType", snapshotDescriptor.AggregateType);
                 command.AddParameter("@AggregateId", snapshotDescriptor.AggregateId);
@@ -70,8 +74,7 @@ namespace SimpleDomain.EventStore.Persistence
         /// <inheritdoc />
         public override async Task<bool> HasSnapshotAsync()
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.GetSnapshotCount, connection))
+            using (var command = new SqlCommand(SqlCommands.GetSnapshotCount, this.connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
                 command.AddParameter("@AggregateId", this.AggregateId);
@@ -86,8 +89,7 @@ namespace SimpleDomain.EventStore.Persistence
         /// <inheritdoc />
         public override async Task<ISnapshot> GetLatestSnapshotAsync()
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.GetLatestSnapshot, connection))
+            using (var command = new SqlCommand(SqlCommands.GetLatestSnapshot, this.connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
                 command.AddParameter("@AggregateId", this.AggregateId);
@@ -109,8 +111,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var eventDescriptor = new SqlEventDescriptor(this.AggregateType, this.AggregateId, versionableEvent, headers);
 
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.InsertEvent, connection))
+            using (var command = new SqlCommand(SqlCommands.InsertEvent, this.connection))
             {
                 command.AddParameter("@AggregateType", eventDescriptor.AggregateType);
                 command.AddParameter("@AggregateId", eventDescriptor.AggregateId);
@@ -127,8 +128,7 @@ namespace SimpleDomain.EventStore.Persistence
         /// <inheritdoc />
         protected override async Task<EventHistory> ReplayAsync(int fromVersion, int toVersion)
         {
-            using (var connection = await this.factory.CreateAsync(this.connectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.GetEventsByVersion, connection))
+            using (var command = new SqlCommand(SqlCommands.GetEventsByVersion, this.connection))
             {
                 command.AddParameter("@AggregateType", this.AggregateType);
                 command.AddParameter("@AggregateId", this.AggregateId);
@@ -140,6 +140,12 @@ namespace SimpleDomain.EventStore.Persistence
                     return new EventHistory(ReadEvents(reader));
                 }
             }
+        }
+
+        /// <inheritdoc />
+        protected override void DisposeManagedResources()
+        {
+            this.connection.Dispose();
         }
 
         private static IEnumerable<IEvent> ReadEvents(IDataReader reader)

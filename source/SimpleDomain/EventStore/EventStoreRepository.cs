@@ -71,7 +71,7 @@ namespace SimpleDomain.EventStore
         {
             var aggregateRoot = Activator.CreateInstance<TAggregateRoot>();
 
-            using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateId))
+            using (var eventStream = await this.eventStore.OpenStreamAsync<TAggregateRoot>(aggregateId).ConfigureAwait(false))
             {
                 if (await eventStream.HasSnapshotAsync().ConfigureAwait(false))
                 {
@@ -103,16 +103,15 @@ namespace SimpleDomain.EventStore
         }
 
         /// <inheritdoc />
-        public async Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot
+        public Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            await this.SaveAsync(aggregateRoot, new Dictionary<string, object>())
-                .ConfigureAwait(false);
+            return this.SaveAsync(aggregateRoot, new Dictionary<string, object>());
         }
 
         /// <inheritdoc />
         public async Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot, IDictionary<string, object> headers) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateRoot.Id))
+            using (var eventStream = await this.eventStore.OpenStreamAsync<TAggregateRoot>(aggregateRoot.Id).ConfigureAwait(false))
             {
                 await eventStream
                     .SaveAsync(aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), aggregateRoot.Version, headers)
@@ -124,7 +123,7 @@ namespace SimpleDomain.EventStore
             await this.SaveSnapshotAsyncIfNeeded(aggregateRoot)
                 .ConfigureAwait(false);
         }
-
+        
         private Task SaveSnapshotAsyncIfNeeded<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot
         {
             if (this.typedSnapshotStrategies.Any(s => s.AppliesToThisAggregateRoot<TAggregateRoot>()))
@@ -145,16 +144,16 @@ namespace SimpleDomain.EventStore
             return Task.CompletedTask;
         }
 
-        private Task SaveSnapshotAsync<TAggregateRoot>(Guid aggregateId, ISnapshot snapshot) where TAggregateRoot : IEventSourcedAggregateRoot
+        private async Task SaveSnapshotAsync<TAggregateRoot>(Guid aggregateId, ISnapshot snapshot) where TAggregateRoot : IEventSourcedAggregateRoot
         {
             if (snapshot == null)
             {
-                return Task.CompletedTask;
+                return;
             }
 
-            using (var eventStream = this.eventStore.OpenStream<TAggregateRoot>(aggregateId))
+            using (var eventStream = await this.eventStore.OpenStreamAsync<TAggregateRoot>(aggregateId).ConfigureAwait(false))
             {
-                return eventStream.SaveSnapshotAsync(snapshot);
+                await eventStream.SaveSnapshotAsync(snapshot).ConfigureAwait(false);
             }
         }
     }

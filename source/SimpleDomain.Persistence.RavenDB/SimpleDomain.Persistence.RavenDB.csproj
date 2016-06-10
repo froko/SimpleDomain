@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventStore\DocumentStoreSetup.cs" />
-    <Compile Include="EventStore\EventStoreConfigurationExtensions.cs" />
+    <Compile Include="EventStore\RavenEventStoreConfigurationExtensions.cs" />
     <Compile Include="EventStore\EventStoreIndexes.cs" />
     <Compile Include="EventStore\Persistence\RavenEventStore.cs" />
     <Compile Include="EventStore\Persistence\RavenEventStream.cs" />

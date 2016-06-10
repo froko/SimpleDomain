@@ -19,6 +19,7 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
+    using System.Threading.Tasks;
 
     using FakeItEasy;
 
@@ -32,7 +33,7 @@ namespace SimpleDomain.EventStore.Persistence
     public class RavenEventStoreTest : EmbeddedRavenDbTest
     {
         [Fact]
-        public void CanOpenTypedEventStream()
+        public async Task CanOpenTypedEventStream()
         {
             var factory = new EventStoreFactory();
             var configuration = new ContainerLessEventStoreConfiguration(factory);
@@ -42,7 +43,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             var testee = factory.Create(configuration, bus);
 
-            var eventStream = testee.OpenStream<MyStaticEventSourcedAggregateRoot>(Guid.NewGuid());
+            var eventStream = await testee.OpenStreamAsync<MyStaticEventSourcedAggregateRoot>(Guid.NewGuid()).ConfigureAwait(false);
 
             eventStream.Should().BeAssignableTo<RavenEventStream<MyStaticEventSourcedAggregateRoot>>();
         }

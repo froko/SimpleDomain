@@ -79,7 +79,7 @@ namespace GiftcardSample
 
             var versionableEvents = events.Select(@event => new VersionableEvent(@event).With(version++));
 
-            using (var eventStream = this.EventStore.OpenStream<Giftcard>(cardId))
+            using (var eventStream = await this.EventStore.OpenStreamAsync<Giftcard>(cardId).ConfigureAwait(false))
             {
                 await eventStream
                     .SaveAsync(versionableEvents, expectedVersion, new Dictionary<string, object>())

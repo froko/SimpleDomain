@@ -28,21 +28,21 @@ namespace GiftcardSample.Domain
     /// <summary>
     /// The event sourced AggregateRoot test fixture
     /// </summary>
-    /// <typeparam name="TAggregate">The type of the aggregate root</typeparam>
-    public abstract class EventSourcedAggregateRootFixture<TAggregate> where TAggregate : IEventSourcedAggregateRoot
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    public abstract class EventSourcedAggregateRootFixture<TAggregateRoot> where TAggregateRoot : IEventSourcedAggregateRoot
     {
-        private Func<TAggregate> create;
-        private Action<TAggregate> execute;
+        private Func<TAggregateRoot> create;
+        private Action<TAggregateRoot> execute;
         private EventHistory eventHistory;
 
         private Exception aggregateException;
 
         /// <summary>
-        /// Creates a new instance of <see cref="EventSourcedAggregateRootFixture{TAggregate}"/>
+        /// Creates a new instance of <see cref="EventSourcedAggregateRootFixture{TAggregateRoot}"/>
         /// </summary>
         protected EventSourcedAggregateRootFixture()
         {
-            this.create = Activator.CreateInstance<TAggregate>;
+            this.create = Activator.CreateInstance<TAggregateRoot>;
             this.execute = aggregate => { };
             this.eventHistory = EventHistory.Create();
         }
@@ -50,7 +50,7 @@ namespace GiftcardSample.Domain
         /// <summary>
         /// Gets the current aggregate root under test
         /// </summary>
-        protected TAggregate Testee { get; private set; }
+        protected TAggregateRoot Testee { get; private set; }
 
         /// <summary>
         /// Sets the aggregate root under test into the desired state
@@ -67,7 +67,7 @@ namespace GiftcardSample.Domain
         /// You only need to to this if you want to test a no parameterless constructor
         /// </summary>
         /// <param name="func">The function to create the aggregate root</param>
-        protected void Create(Func<TAggregate> func)
+        protected void Create(Func<TAggregateRoot> func)
         {
             this.create = func;
         }
@@ -76,7 +76,7 @@ namespace GiftcardSample.Domain
         /// Executes behavior of the aggregate root under test
         /// </summary>
         /// <param name="action">The action to perform against the aggregate root</param>
-        protected void Execute(Action<TAggregate> action)
+        protected void Execute(Action<TAggregateRoot> action)
         {
             this.execute = action;
         }
@@ -140,13 +140,10 @@ namespace GiftcardSample.Domain
                 .Select(e => e.InnerEvent)
                 .Last() as TEvent;
 
-            if (actualEvent != null)
-            {
-                actualEvent.ShouldBeEquivalentTo(
-                    expectedEvent,
-                    options =>
-                    options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000)).WhenTypeIs<DateTime>());
-            }
+            actualEvent?.ShouldBeEquivalentTo(
+                expectedEvent,
+                options =>
+                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000)).WhenTypeIs<DateTime>());
         }
     }
 }
