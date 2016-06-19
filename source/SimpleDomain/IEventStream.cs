@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore
+namespace SimpleDomain
 {
     using System;
     using System.Collections.Generic;

@@ -171,8 +171,6 @@
     <Compile Include="EventStore\GlobalEventStoreConfigurationExtensions.cs" />
     <Compile Include="EventStore\EventStoreRepository.cs" />
     <Compile Include="EventStore\EventStream.cs" />
-    <Compile Include="EventStore\IEventStore.cs" />
-    <Compile Include="EventStore\IEventStream.cs" />
     <Compile Include="EventStore\IHaveEventStoreConfiguration.cs" />
     <Compile Include="EventStore\Persistence\DataReaderExtensions.cs" />
     <Compile Include="EventStore\Persistence\DbCommandExtensions.cs" />
@@ -203,6 +201,8 @@
     <Compile Include="IEvent.cs" />
     <Compile Include="IEventSourcedAggregateRoot.cs" />
     <Compile Include="IEventSourcedRepository.cs" />
+    <Compile Include="IEventStore.cs" />
+    <Compile Include="IEventStream.cs" />
     <Compile Include="IHandleAsync.cs" />
     <Compile Include="IHaveDynamicConfiguration.cs" />
     <Compile Include="IMessage.cs" />
