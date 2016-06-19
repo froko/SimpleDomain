@@ -86,7 +86,7 @@ namespace SimpleDomain.EventStore.Persistence
         }
 
         /// <summary>
-        /// Serializes the inner event of a verionable event with its headers to an <see cref="EventData"/>
+        /// Serializes the inner event of a versionable event with its headers to an <see cref="EventData"/>
         /// </summary>
         /// <param name="versionableEvent">The versionable event</param>
         /// <param name="headers">The headers</param>
