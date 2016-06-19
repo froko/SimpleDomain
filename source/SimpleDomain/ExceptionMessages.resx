@@ -138,11 +138,8 @@
   <data name="HandlerCannotBeRegistered" xml:space="preserve">
     <value>Cannot register a handler when there is no IoC container.</value>
   </data>
-  <data name="LocalEndpointAddressMustBeSet" xml:space="preserve">
-    <value>Local endpoint address must be set.</value>
-  </data>
   <data name="LocalEndpointAddressNotDefined" xml:space="preserve">
-    <value>The local queueName address has not yet been defined.</value>
+    <value>The local endpoint address has not yet been defined.</value>
   </data>
   <data name="ParameterCannotBeEmpty" xml:space="preserve">
     <value>Parameter cannot be empty.</value>

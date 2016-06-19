@@ -124,16 +124,7 @@ namespace SimpleDomain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Local endpoint address must be set..
-        /// </summary>
-        public static string LocalEndpointAddressMustBeSet {
-            get {
-                return ResourceManager.GetString("LocalEndpointAddressMustBeSet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The local queueName address has not yet been defined..
+        ///   Looks up a localized string similar to The local endpoint address has not yet been defined..
         /// </summary>
         public static string LocalEndpointAddressNotDefined {
             get {

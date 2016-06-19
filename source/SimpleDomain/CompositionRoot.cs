@@ -34,12 +34,12 @@ namespace SimpleDomain
     {
         private readonly JitneyFactory jitneyFactory;
         private readonly EventStoreFactory eventStoreFactory;
-        private readonly AbstractJitneyConfiguration jitneyConfiguration;
-        private readonly AbstractEventStoreConfiguration eventStoreConfiguration;
         private readonly List<IBoundedContext> boundedContexts; 
         
+        private AbstractJitneyConfiguration jitneyConfiguration;
+        private AbstractEventStoreConfiguration eventStoreConfiguration;
         private ExecutionContext executionContext;
-        
+
         /// <summary>
         /// Creates a new instance of <see cref="CompositionRoot"/>
         /// </summary>
@@ -47,10 +47,10 @@ namespace SimpleDomain
         {
             this.jitneyFactory = new JitneyFactory();
             this.eventStoreFactory = new EventStoreFactory();
+            this.boundedContexts = new List<IBoundedContext>();
+
             this.jitneyConfiguration = new ContainerLessJitneyConfiguration(this.jitneyFactory);
             this.eventStoreConfiguration = new ContainerLessEventStoreConfiguration(this.eventStoreFactory);
-            this.boundedContexts = new List<IBoundedContext>();
-            
             this.executionContext = null;
         }
 
@@ -129,7 +129,13 @@ namespace SimpleDomain
             await bus.StartAsync().ConfigureAwait(false);
             
             this.executionContext = new ExecutionContext(bus, eventStore);
-            this.executionContext.ExecutionContextStopped += (sender, args) => { this.executionContext = null; };
+            this.executionContext.Stopped += (sender, args) => { this.executionContext = null; };
+            this.executionContext.Disposed += (sender, args) =>
+            {
+                this.jitneyConfiguration = new ContainerLessJitneyConfiguration(this.jitneyFactory);
+                this.eventStoreConfiguration = new ContainerLessEventStoreConfiguration(this.eventStoreFactory);
+                this.executionContext = null;
+            };
 
             return this.executionContext;
         }

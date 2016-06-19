@@ -48,7 +48,12 @@ namespace SimpleDomain
         /// <summary>
         /// Gets fired when the execution context is stopped
         /// </summary>
-        public event EventHandler ExecutionContextStopped;
+        public event EventHandler Stopped;
+
+        /// <summary>
+        /// Gets fired when the execution context is disposed
+        /// </summary>
+        public event EventHandler Disposed;
 
         /// <summary>
         /// Gets the <see cref="IDeliverMessages"/> part of the Jitney bus
@@ -91,11 +96,21 @@ namespace SimpleDomain
             {
                 this.Stop();
             }
+
+            if (!this.IsDisposed)
+            {
+                this.OnExecutionContextDisposed();
+            }
         }
 
         private void OnExecutionContextStopped()
         {
-            this.ExecutionContextStopped?.Invoke(this, EventArgs.Empty);
+            this.Stopped?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnExecutionContextDisposed()
+        {
+            this.Disposed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
