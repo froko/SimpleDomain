@@ -20,6 +20,7 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlClient;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -36,16 +37,17 @@ namespace SimpleDomain.EventStore.Persistence
     {
         private readonly Guid aggregateId;
         private readonly IDeliverMessages bus;
+        private readonly ContainerLessEventStoreConfiguration configuration;
         private readonly IEventStore testee;
 
         public SqlIntegrationTest()
         {
+            var factory = new EventStoreFactory();
+
             this.aggregateId = Guid.NewGuid();
             this.bus = A.Fake<IDeliverMessages>();
-
-            var factory = new EventStoreFactory();
-            var configuration = new ContainerLessEventStoreConfiguration(factory);
-            configuration.UseSqlEventStore();
+            this.configuration = new ContainerLessEventStoreConfiguration(factory);
+            this.configuration.UseSqlEventStore();
 
             this.testee = factory.Create(configuration, bus);
         }
@@ -58,7 +60,7 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
@@ -79,7 +81,7 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
@@ -124,7 +126,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             await this.SaveEventsAsync(aggregateRoot).ConfigureAwait(false);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 var hasSnapshot = await eventStream.HasSnapshotAsync().ConfigureAwait(false);
                 var snapshotFromEventStore = await eventStream.GetLatestSnapshotAsync().ConfigureAwait(false);
@@ -143,9 +145,26 @@ namespace SimpleDomain.EventStore.Persistence
             }
         }
 
+        [Fact, WithTransaction]
+        public async Task CanReplayAllEvents()
+        {
+            const int NumberOfEvents = 1024;
+
+            await this.CreateTestEventsAsync(NumberOfEvents);
+
+            await this.testee.ReplayAllAsync().ConfigureAwait(false);
+
+            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(Repeated.Exactly.Times(NumberOfEvents));
+        }
+
+        private Task<IEventStream> CreateEventStreamAsync()
+        {
+            return this.testee.OpenStreamAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId);
+        }
+
         private async Task SaveEventsAsync(IEventSourcedAggregateRoot aggregateRoot)
         {
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
@@ -158,9 +177,43 @@ namespace SimpleDomain.EventStore.Persistence
 
         private async Task SaveSnapshotAsync(ISnapshot snapshot)
         {
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveSnapshotAsync(snapshot).ConfigureAwait(false);
+            }
+        }
+
+        private async Task CreateTestEventsAsync(int numberOfEvents)
+        {
+            var factory = this.configuration.Get<DbConnectionFactory>(SqlEventStore.ConnectionFactory);
+            
+            for (var version = 0; version < numberOfEvents; version++)
+            {
+                var @event = new ValueEvent(version);
+                await SaveEventAsync(factory, new VersionableEvent(@event).WithVersion(version)).ConfigureAwait(false);
+            }
+        }
+
+        private async Task SaveEventAsync(DbConnectionFactory factory, VersionableEvent versionableEvent)
+        {
+            const string ConnectionStringName = "EventStore";
+
+            var aggregateType = typeof(MyDynamicEventSourcedAggregateRoot).FullName;
+            var headers = new Dictionary<string, object>();
+            var eventDescriptor = new SqlEventDescriptor(aggregateType, this.aggregateId, versionableEvent, headers);
+
+            using (var connection = await factory.CreateAsync(ConnectionStringName).ConfigureAwait(false))
+            using (var command = new SqlCommand(SqlCommands.InsertEvent, connection))
+            {
+                command.AddParameter("@AggregateType", eventDescriptor.AggregateType);
+                command.AddParameter("@AggregateId", eventDescriptor.AggregateId);
+                command.AddParameter("@Version", eventDescriptor.Version);
+                command.AddParameter("@Timestamp", eventDescriptor.Timestamp);
+                command.AddParameter("@EventType", eventDescriptor.EventType);
+                command.AddParameter("@EventData", eventDescriptor.SerializedEvent);
+                command.AddParameter("@Headers", eventDescriptor.SerializedHeaders);
+
+                await command.ExecuteNonQueryAsync().ConfigureAwait(false);
             }
         }
     }

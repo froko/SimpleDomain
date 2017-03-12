@@ -19,6 +19,7 @@
 namespace SimpleDomain.EventStore.Configuration
 {
     using System;
+    using System.Collections.Generic;
 
     using SimpleDomain.EventStore;
     using SimpleDomain.EventStore.Persistence;
@@ -36,6 +37,8 @@ namespace SimpleDomain.EventStore.Configuration
             this.Create = (config, bus) =>
             {
                 config.DefineAsyncEventDispatching(bus.PublishAsync);
+                config.AddConfigurationItem(InMemoryEventStore.EventDescriptors, new List<EventDescriptor>());
+                config.AddConfigurationItem(InMemoryEventStore.SnapshotDescriptors, new List<SnapshotDescriptor>());
                 return new InMemoryEventStore(config);
             };
         }

@@ -40,7 +40,8 @@ namespace SimpleDomain.EventStore.Persistence
             DocumentStoreSetup.CreateIndexes(this.DocumentStore);
             DocumentStoreSetup.RegisterIdConventions(this.DocumentStore);
 
-            this.testee = new RavenEventStream<MyStaticEventSourcedAggregateRoot>(aggregateId, dispatchAsync, this.DocumentStore.OpenAsyncSession());
+            this.testee = new RavenEventStream<MyStaticEventSourcedAggregateRoot>(
+                aggregateId, dispatchAsync, () => Task.FromResult(this.DocumentStore.OpenAsyncSession()));
         }
 
         [Fact]
@@ -51,6 +52,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             var events = new[] { firstEvent, secondEvent };
 
+            await this.testee.OpenAsync().ConfigureAwait(false);
             await this.testee
                 .SaveAsync(events, 1, new Dictionary<string, object>())
                 .ConfigureAwait(false);
@@ -66,6 +68,8 @@ namespace SimpleDomain.EventStore.Persistence
         public async Task CanSaveSnapshots()
         {
             bool hasSnapshot;
+
+            await this.testee.OpenAsync().ConfigureAwait(false);
 
             hasSnapshot = await this.testee.HasSnapshotAsync().ConfigureAwait(false);
             hasSnapshot.Should().BeFalse();
@@ -83,6 +87,8 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var firstSnapshot = new MySnapshot(11).WithVersion(0);
             var secondSnapshot = new MySnapshot(22).WithVersion(1);
+
+            await this.testee.OpenAsync().ConfigureAwait(false);
 
             await this.testee.SaveSnapshotAsync(firstSnapshot).ConfigureAwait(false);
             await this.testee.SaveSnapshotAsync(secondSnapshot).ConfigureAwait(false);

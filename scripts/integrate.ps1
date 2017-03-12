@@ -8,4 +8,4 @@ $solutionFile = "$sourceDir\SimpleDomain.Core.sln"
 & $scriptsDir\clean.ps1	
 & $nugetCommand restore $solutionFile
 
-msbuild $solutionFile /target:Rebuild /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPublishPackageToFileShare=$nugetDir
+msbuild $solutionFile /target:Rebuild /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPublishPackageToFileShare=$nugetDir /p:OctoPackNuGetArguments="-Symbols"

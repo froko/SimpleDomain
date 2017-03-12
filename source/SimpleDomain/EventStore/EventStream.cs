@@ -28,19 +28,19 @@ namespace SimpleDomain.EventStore
     /// <summary>
     /// The abstract base class of an event stream
     /// </summary>
-    /// <typeparam name="TAggregate">The type of the aggregate root</typeparam>
-    public abstract class EventStream<TAggregate> : Disposable, IEventStream where TAggregate : IEventSourcedAggregateRoot
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    public abstract class EventStream<TAggregateRoot> : Disposable, IEventStream where TAggregateRoot : IEventSourcedAggregateRoot
     {
         private readonly Func<IEvent, Task> dispatchAsync;
 
         /// <summary>
-        /// Creates a new instance of <see cref="EventStream{TAggregate}"/>
+        /// Creates a new instance of <see cref="EventStream{TAggregateRoot}"/>
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
         protected EventStream(Guid aggregateId, Func<IEvent, Task> dispatchAsync)
         {
-            this.AggregateType = typeof(TAggregate).FullName;
+            this.AggregateType = typeof(TAggregateRoot).FullName;
             this.AggregateId = aggregateId;
             this.dispatchAsync = dispatchAsync;
         }
@@ -54,6 +54,9 @@ namespace SimpleDomain.EventStore
         /// Gets the id of the aggregate root
         /// </summary>
         protected Guid AggregateId { get; private set; }
+
+        /// <inheritdoc />
+        public abstract Task<IEventStream> OpenAsync();
 
         /// <inheritdoc />
         public async Task SaveAsync(IEnumerable<VersionableEvent> events, int expectedVersion, IDictionary<string, object> headers)

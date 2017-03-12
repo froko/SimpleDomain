@@ -45,6 +45,11 @@ namespace SimpleDomain.EventStore.Configuration
         /// <inheritdoc />
         public virtual void AddConfigurationItem(string key, object item)
         {
+            if (this.configurationItems.ContainsKey(key))
+            {
+                return;
+            }
+
             this.configurationItems.Add(key, item);
         }
 

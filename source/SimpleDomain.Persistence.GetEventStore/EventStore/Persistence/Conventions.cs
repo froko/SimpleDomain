@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IEventStore.cs" company="frokonet.ch">
+// <copyright file="Conventions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2016
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,16 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore
+namespace SimpleDomain.EventStore.Persistence
 {
-    using System;
-
     /// <summary>
-    /// The event store interface
+    /// Provides global resources for the GetEventStore module
     /// </summary>
-    public interface IEventStore
+    public static class Conventions
     {
         /// <summary>
-        /// Returns an event stream for an aggregate root identified by its id
+        /// Gets the string key for the event CLR type
         /// </summary>
-        /// <typeparam name="T">The type of the aggregate root</typeparam>
-        /// <param name="aggregateId">The aggregate root id</param>
-        /// <returns>An event stream</returns>
-        IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot;
+        public const string EventClrTypeHeader = "EventClrTypeName";
     }
 }

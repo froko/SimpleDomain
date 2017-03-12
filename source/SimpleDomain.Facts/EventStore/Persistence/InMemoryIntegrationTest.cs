@@ -36,18 +36,19 @@ namespace SimpleDomain.EventStore.Persistence
     {
         private readonly Guid aggregateId;
         private readonly IDeliverMessages bus;
+        private readonly ContainerLessEventStoreConfiguration configuration;
         private readonly IEventStore testee;
 
         public InMemoryIntegrationTest()
         {
+            var factory = new EventStoreFactory();
+
             this.aggregateId = Guid.NewGuid();
             this.bus = A.Fake<IDeliverMessages>();
+            this.configuration = new ContainerLessEventStoreConfiguration(factory);
+            this.configuration.UseInMemoryEventStore();
 
-            var factory = new EventStoreFactory();
-            var configuration = new ContainerLessEventStoreConfiguration(factory);
-            configuration.UseInMemoryEventStore();
-
-            this.testee = factory.Create(configuration, this.bus);
+            this.testee = factory.Create(this.configuration, this.bus);
         }
 
         [Fact]
@@ -58,7 +59,7 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
@@ -79,7 +80,7 @@ namespace SimpleDomain.EventStore.Persistence
             aggregateRoot.ChangeValue(11);
             aggregateRoot.ChangeValue(22);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
@@ -124,7 +125,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             await this.SaveEventsAsync(aggregateRoot).ConfigureAwait(false);
 
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 var hasSnapshot = await eventStream.HasSnapshotAsync();
                 var snapshotFromEventStore = await eventStream.GetLatestSnapshotAsync();
@@ -142,10 +143,38 @@ namespace SimpleDomain.EventStore.Persistence
                 eventHistorySinceLatestSnapshot.Should().Contain(e => (e as ValueEvent).Value == 77);
             }
         }
-        
+
+        [Fact]
+        public async Task CanReplayAllEvents()
+        {
+            const int NumberOfEvents = 100;
+
+            var eventDescriptors = this.configuration.Get<List<EventDescriptor>>(InMemoryEventStore.EventDescriptors);
+            var aggregateType = typeof(MyDynamicEventSourcedAggregateRoot).FullName;
+            var headers = new Dictionary<string, object>();
+
+            for (var version = 0; version < NumberOfEvents; version++)
+            {
+                eventDescriptors.Add(new EventDescriptor(
+                    aggregateType,
+                    this.aggregateId,
+                    new VersionableEvent(new MyEvent()).WithVersion(version),
+                    headers));
+            }
+
+            await this.testee.ReplayAllAsync().ConfigureAwait(false);
+
+            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(Repeated.Exactly.Times(NumberOfEvents));
+        }
+
+        private Task<IEventStream> CreateEventStreamAsync()
+        {
+            return this.testee.OpenStreamAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId);
+        }
+
         private async Task SaveEventsAsync(IEventSourcedAggregateRoot aggregateRoot)
         {
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
                     aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
@@ -158,7 +187,7 @@ namespace SimpleDomain.EventStore.Persistence
 
         private async Task SaveSnapshotAsync(ISnapshot snapshot)
         {
-            using (var eventStream = this.testee.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId))
+            using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveSnapshotAsync(snapshot).ConfigureAwait(false);
             }

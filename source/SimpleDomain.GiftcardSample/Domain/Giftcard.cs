@@ -38,8 +38,7 @@ namespace GiftcardSample.Domain
             this.RegisterTransition<GiftcardLoaded>(this.Apply);
         }
 
-        public Giftcard(int cardNumber, decimal initialBalance, DateTime validUntil)
-            : this()
+        public Giftcard(int cardNumber, decimal initialBalance, DateTime validUntil) : this()
         {
             if (initialBalance < 0)
             {
@@ -54,7 +53,7 @@ namespace GiftcardSample.Domain
             this.ApplyEvent(new GiftcardCreated(Guid.NewGuid(), cardNumber, initialBalance, validUntil));
         }
 
-        public virtual void Activate()
+        public void Activate()
         {
             if (this.isActivated)
             {
@@ -69,7 +68,7 @@ namespace GiftcardSample.Domain
             this.ApplyEvent(new GiftcardActivated(this.Id));
         }
 
-        public virtual void Redeem(decimal amount)
+        public void Redeem(decimal amount)
         {
             if (!this.isActivated)
             {
@@ -89,7 +88,7 @@ namespace GiftcardSample.Domain
             this.ApplyEvent(new GiftcardRedeemed(this.Id, amount));
         }
 
-        public virtual void Load(decimal amount)
+        public void Load(decimal amount)
         {
             if (!this.isActivated)
             {

@@ -19,9 +19,11 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
-    
-    using Raven.Client;
+    using System.Linq;
+    using System.Threading.Tasks;
 
+    using Raven.Client;
+    
     /// <summary>
     /// The RavenDB event store
     /// </summary>
@@ -44,12 +46,28 @@ namespace SimpleDomain.EventStore.Persistence
         }
 
         /// <inheritdoc />
-        public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
+        public Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            return new RavenEventStream<T>(
-                aggregateId, 
+            var eventStream = new RavenEventStream<TAggregateRoot>(
+                aggregateId,
                 this.configuration.DispatchEvents,
-                this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession());
+                () => Task.FromResult(this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession()));
+
+            return eventStream.OpenAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task ReplayAllAsync()
+        {
+            using (var session = this.configuration.Get<IDocumentStore>(DocumentStore).OpenAsyncSession())
+            {
+                var events = await session
+                    .Query<EventDescriptor>(EventStoreIndexes.EventDescriptorsByTimestamp)
+                    .GetAllEventsAsync()
+                    .ConfigureAwait(false);
+
+                await Task.WhenAll(events.ToList().Select(this.configuration.DispatchEvents)).ConfigureAwait(false);
+            }
         }
     }
 }

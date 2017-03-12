@@ -44,7 +44,7 @@ namespace SimpleDomain.EventStore
             this.eventStream = A.Fake<IEventStream>();
             this.testee = new EventStoreRepository(this.eventStore);
 
-            A.CallTo(() => this.eventStore.OpenStream<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)).Returns(this.eventStream);
+            A.CallTo(() => this.eventStore.OpenStreamAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)).Returns(this.eventStream);
         }
 
         [Fact]

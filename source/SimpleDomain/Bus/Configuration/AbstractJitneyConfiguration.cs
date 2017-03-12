@@ -163,6 +163,11 @@ namespace SimpleDomain.Bus.Configuration
         /// <inheritdoc />
         public void AddConfigurationItem(string key, object item)
         {
+            if (this.configurationItems.ContainsKey(key))
+            {
+                return;
+            }
+
             this.configurationItems.Add(key, item);
         }
 

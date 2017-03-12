@@ -29,9 +29,7 @@ namespace GiftcardSample
     using GiftcardSample.ReadStore.InMemory;
 
     using SimpleDomain;
-    using SimpleDomain.Bus;
-    using SimpleDomain.EventStore;
-
+    
     public abstract class BaseFeatures : IDisposable
     {
         private readonly ExecutionContext executionContext;
@@ -41,18 +39,11 @@ namespace GiftcardSample
             var readStore = new InMemoryReadStore();
             var compositionRoot = new CompositionRoot();
 
+            compositionRoot.Register(new GiftcardContext(readStore));
             compositionRoot.ConfigureJitney()
                 .DefineLocalEndpointAddress("gc.sample")
-                .SetSubscriptionStore(new FileSubscriptionStore())
-                .MapContracts(typeof(CreateGiftcard).Assembly).ToMe()
-                .AddPipelineStep(new LogIncommingEnvelopeStep())
-                .UseSimpleJitney();
-
-            compositionRoot.ConfigureEventStore()
-                .UseInMemoryEventStore();
-
-            compositionRoot.Register(new GiftcardContext(readStore));
-
+                .MapContracts(typeof(CreateGiftcard).Assembly).ToMe();
+            
             this.executionContext = compositionRoot.Start();
             
             this.OverviewQuery = new InMemoryGiftcardOverviewQuery(readStore);
@@ -79,7 +70,7 @@ namespace GiftcardSample
 
             var versionableEvents = events.Select(@event => new VersionableEvent(@event).With(version++));
 
-            using (var eventStream = this.EventStore.OpenStream<Giftcard>(cardId))
+            using (var eventStream = await this.EventStore.OpenStreamAsync<Giftcard>(cardId).ConfigureAwait(false))
             {
                 await eventStream
                     .SaveAsync(versionableEvents, expectedVersion, new Dictionary<string, object>())

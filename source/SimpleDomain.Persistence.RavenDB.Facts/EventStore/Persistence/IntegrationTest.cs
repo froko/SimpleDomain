@@ -19,11 +19,14 @@
 namespace SimpleDomain.EventStore.Persistence
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using Raven.Client;
 
     using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.TestDoubles;
@@ -32,6 +35,8 @@ namespace SimpleDomain.EventStore.Persistence
 
     public class IntegrationTest : EmbeddedRavenDbTest
     {
+        private readonly IDeliverMessages bus;
+        private readonly IEventStore testee;
         private readonly IEventSourcedRepository repository;
 
         public IntegrationTest()
@@ -40,11 +45,9 @@ namespace SimpleDomain.EventStore.Persistence
             var configuration = new ContainerLessEventStoreConfiguration(factory);
             configuration.UseRavenEventStore(this.DocumentStore);
 
-            var bus = A.Fake<IDeliverMessages>();
-
-            var eventStore = factory.Create(configuration, bus);
-
-            this.repository = new EventStoreRepository(eventStore).WithGlobalSnapshotStrategy(10);
+            this.bus = A.Fake<IDeliverMessages>();
+            this.testee = factory.Create(configuration, bus);
+            this.repository = new EventStoreRepository(this.testee).WithGlobalSnapshotStrategy(10);
         }
 
         [Fact]
@@ -78,6 +81,42 @@ namespace SimpleDomain.EventStore.Persistence
 
             aggregateRootFromEventStore.Value.Should().Be(12);
             aggregateRootFromEventStore.Version.Should().Be(12);
+        }
+
+        [Fact]
+        public async Task CanReplayAllEvents()
+        {
+            const int NumberOfEvents = 2000;
+
+            await this.CreateTestEventsAsync(NumberOfEvents);
+
+            await this.testee.ReplayAllAsync().ConfigureAwait(false);
+
+            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(Repeated.Exactly.Times(NumberOfEvents));
+        }
+
+        private static async Task CreateTestEventsAsync(int numberOfEvents, IAsyncDocumentSession session)
+        {
+            var aggregateType = typeof(MyDynamicEventSourcedAggregateRoot).FullName;
+            var aggregateId = Guid.NewGuid();
+            var headers = new Dictionary<string, object>();
+
+            for (var version = 0; version < numberOfEvents; version++)
+            {
+                var versionableEvent = new VersionableEvent(new ValueEvent(version)).WithVersion(version);
+                var eventDescriptor = new EventDescriptor(aggregateType, aggregateId, versionableEvent, headers);
+
+                await session.StoreAsync(eventDescriptor).ConfigureAwait(false);
+            }
+        }
+
+        private async Task CreateTestEventsAsync(int numberOfEvents)
+        {
+            using (var session = this.DocumentStore.OpenAsyncSession())
+            {
+                await CreateTestEventsAsync(numberOfEvents, session);
+                await session.SaveChangesAsync().ConfigureAwait(false);
+            }
         }
     }
 }

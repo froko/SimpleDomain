@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.EventStore
+namespace SimpleDomain
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +27,12 @@ namespace SimpleDomain.EventStore
     /// </summary>
     public interface IEventStream : IDisposable
     {
+        /// <summary>
+        /// Opens the connection to the persistence engine
+        /// </summary>
+        /// <returns>The event stream itself</returns>
+        Task<IEventStream> OpenAsync();
+
         /// <summary>
         /// Persits a list of events
         /// </summary>

@@ -30,6 +30,11 @@ namespace SimpleDomain.EventStore
         public const string EventDescriptorsByAggregateIdAndVersion = "EventDescriptors/ByAggregateIdAndVersion";
 
         /// <summary>
+        /// Returns an index for event descriptors by timestamp
+        /// </summary>
+        public const string EventDescriptorsByTimestamp = "EventDescriptors/ByTimestamp";
+
+        /// <summary>
         /// Returns an index for snapshot descriptors by aggregate id and version
         /// </summary>
         public const string SnapshotDescriptorsByAggregateIdAndVersion = "SnapshotDescriptors/ByAggregateIdAndVersion";

@@ -29,21 +29,29 @@ namespace SimpleDomain.EventStore.Persistence
     /// <summary>
     /// The RavenDB event stream
     /// </summary>
-    /// <typeparam name="TAggregate">The type of the aggregate root</typeparam>
-    public class RavenEventStream<TAggregate> : EventStream<TAggregate> where TAggregate : IEventSourcedAggregateRoot
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    public class RavenEventStream<TAggregateRoot> : EventStream<TAggregateRoot> where TAggregateRoot : IEventSourcedAggregateRoot
     {
-        private readonly IAsyncDocumentSession documentSession;
+        private readonly Func<Task<IAsyncDocumentSession>> createSessionAsync;
+        private IAsyncDocumentSession session;
 
         /// <summary>
-        /// Creates a new instance of <see cref="RavenEventStream{TAggregate}"/>
+        /// Creates a new instance of <see cref="RavenEventStream{TAggregateRoot}"/>
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
-        /// <param name="documentSession">The document session</param>
-        public RavenEventStream(Guid aggregateId, Func<IEvent, Task> dispatchAsync, IAsyncDocumentSession documentSession)
+        /// <param name="createSessionAsync">The action to create a session</param>
+        public RavenEventStream(Guid aggregateId, Func<IEvent, Task> dispatchAsync, Func<Task<IAsyncDocumentSession>> createSessionAsync)
             : base(aggregateId, dispatchAsync)
         {
-            this.documentSession = documentSession;
+            this.createSessionAsync = createSessionAsync;
+        }
+
+        /// <inheritdoc />
+        public override async Task<IEventStream> OpenAsync()
+        {
+            this.session = await this.createSessionAsync().ConfigureAwait(false);
+            return this;
         }
 
         /// <inheritdoc />
@@ -51,8 +59,8 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var snapshotDescriptor = new SnapshotDescriptor(this.AggregateType, this.AggregateId, snapshot);
 
-            await this.documentSession.StoreAsync(snapshotDescriptor).ConfigureAwait(false);
-            await this.documentSession.SaveChangesAsync().ConfigureAwait(false);
+            await this.session.StoreAsync(snapshotDescriptor).ConfigureAwait(false);
+            await this.session.SaveChangesAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -74,14 +82,14 @@ namespace SimpleDomain.EventStore.Persistence
         {
             var eventDescriptor = new EventDescriptor(this.AggregateType, this.AggregateId, versionableEvent, headers);
 
-            await this.documentSession.StoreAsync(eventDescriptor).ConfigureAwait(false);
-            await this.documentSession.SaveChangesAsync().ConfigureAwait(false);
+            await this.session.StoreAsync(eventDescriptor).ConfigureAwait(false);
+            await this.session.SaveChangesAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         protected override async Task<EventHistory> ReplayAsync(int fromVersion, int toVersion)
         {
-            var events = await this.documentSession
+            var events = await this.session
                 .Query<EventDescriptor>(EventStoreIndexes.EventDescriptorsByAggregateIdAndVersion)
                 .Where(e => e.AggregateId == this.AggregateId && e.Version >= fromVersion && e.Version <= toVersion)
                 .OrderBy(e => e.Version)
@@ -94,12 +102,12 @@ namespace SimpleDomain.EventStore.Persistence
         /// <inheritdoc />
         protected override void DisposeManagedResources()
         {
-            this.documentSession.Dispose();
+            this.session.Dispose();
         }
 
         private async Task<IList<ISnapshot>> GetSnapshotsAsync()
         {
-            return await this.documentSession
+            return await this.session
                 .Query<SnapshotDescriptor>(EventStoreIndexes.SnapshotDescriptorsByAggregateIdAndVersion)
                 .Where(s => s.AggregateId == this.AggregateId)
                 .OrderBy(s => s.Version)

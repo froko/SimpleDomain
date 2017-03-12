@@ -67,38 +67,38 @@
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" messageType="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" messageType="xsd:string" />
-              <xsd:attribute name="messageType" fullNameOfEventType="xsd:string" />
-              <xsd:attribute name="mimemessageType" fullNameOfEventType="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" messageType="xsd:string" />
-              <xsd:attribute name="name" messageType="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" messageType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" messageType="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" messageType="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="messageType" fullNameOfEventType="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimemessageType" fullNameOfEventType="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" messageType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" messageType="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -152,8 +152,12 @@ END</value>
   </data>
   <data name="GetAllEvents" xml:space="preserve">
     <value>SELECT [EventData], [EventType]
-FROM dbo.Events 
-ORDER BY [Timestamp], [AggregateType], [Version]</value>
+FROM
+(
+	SELECT ROW_NUMBER() OVER(ORDER BY [Timestamp]) AS RowNum, [EventData], [EventType]
+	FROM dbo.Events
+) AS RowConstrainedResult
+WHERE RowNum &gt; @LowerBound AND RowNum &lt;= @UpperBound</value>
   </data>
   <data name="GetEventsByVersion" xml:space="preserve">
     <value>SELECT [EventData], [EventType]

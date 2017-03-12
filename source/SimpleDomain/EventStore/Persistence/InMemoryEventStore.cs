@@ -20,7 +20,9 @@ namespace SimpleDomain.EventStore.Persistence
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The InMemory event store
     /// </summary>
@@ -46,15 +48,26 @@ namespace SimpleDomain.EventStore.Persistence
         {
             this.configuration = configuration;
         }
-
+        
         /// <inheritdoc />
-        public IEventStream OpenStream<T>(Guid aggregateId) where T : IEventSourcedAggregateRoot
+        public Task<IEventStream> OpenStreamAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot
         {
-            return new InMemoryEventStream<T>(
+            var eventStream = new InMemoryEventStream<TAggregateRoot>(
                 aggregateId,
                 this.configuration.DispatchEvents,
                 this.configuration.Get<List<EventDescriptor>>(EventDescriptors),
                 this.configuration.Get<List<SnapshotDescriptor>>(SnapshotDescriptors));
+
+            return eventStream.OpenAsync();
+        }
+
+        /// <inheritdoc />
+        public Task ReplayAllAsync()
+        {
+            var eventDescriptors = this.configuration.Get<List<EventDescriptor>>(EventDescriptors);
+            var tasks = eventDescriptors.Select(e => e.Event).Select(this.configuration.DispatchEvents);
+
+            return Task.WhenAll(tasks);
         }
     }
 }
