@@ -8,7 +8,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>A library which supports DDD, CQRS and event sourcing.</description>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="8.0.3" />
+            <dependency id="Newtonsoft.Json" version="9.0.1" />
             <dependency id="Common.Logging" version="3.3.1" />
         </dependencies>
     </metadata>
