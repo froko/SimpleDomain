@@ -32,12 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore.ClientAPI, Version=3.9.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EventStore.Client.3.9.4\lib\net40\EventStore.ClientAPI.dll</HintPath>
+    <Reference Include="EventStore.ClientAPI, Version=4.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EventStore.Client.4.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -79,17 +79,17 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\OctoPack.3.5.2\build\OctoPack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OctoPack.3.5.2\build\OctoPack.targets'))" />
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.13.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.13.0\build\froko.csprojSetup.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.OctoPack.1.13.0\build\froko.csprojSetup.OctoPack.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.OctoPack.1.13.0\build\froko.csprojSetup.OctoPack.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.13.0\build\froko.csprojSetup.XmlDocumentation.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.XmlDocumentation.1.13.0\build\froko.csprojSetup.XmlDocumentation.Targets'))" />
+    <Error Condition="!Exists('..\packages\OctoPack.3.6.1\build\OctoPack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OctoPack.3.6.1\build\OctoPack.targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets'))" />
   </Target>
-  <Import Project="..\packages\OctoPack.3.5.2\build\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.5.2\build\OctoPack.targets')" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.1.13.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.13.0\build\froko.csprojSetup.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.OctoPack.1.13.0\build\froko.csprojSetup.OctoPack.Targets" Condition="Exists('..\packages\froko.csprojSetup.OctoPack.1.13.0\build\froko.csprojSetup.OctoPack.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.XmlDocumentation.1.13.0\build\froko.csprojSetup.XmlDocumentation.Targets" Condition="Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.13.0\build\froko.csprojSetup.XmlDocumentation.Targets')" />
+  <Import Project="..\packages\OctoPack.3.6.1\build\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.6.1\build\OctoPack.targets')" />
+  <Import Project="..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets" Condition="Exists('..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets')" />
+  <Import Project="..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets" Condition="Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
