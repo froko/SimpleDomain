@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
     public class IncommingMessageContextTest
     {
-        private readonly IDictionary<string, object> headers;
+        private readonly Dictionary<string, object> headers;
         private readonly IHavePipelineConfiguration pipelineConfiguration;
 
         public IncommingMessageContextTest()
@@ -53,6 +53,15 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var testee = this.CreateTestee(A.Fake<IMessage>());
 
             testee.Configuration.Should().Be(this.pipelineConfiguration);
+        }
+
+        [Fact]
+        public void ShouldExposeOriginatingEnvelopeWithHeaders()
+        {
+            var testee = this.CreateTestee(A.Fake<IMessage>());
+
+            testee.Envelope.Should().NotBeNull();
+            testee.Envelope.Headers.Should().BeSameAs(this.headers);
         }
 
         [Fact]
@@ -91,17 +100,9 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             testee.MessageIntent.Should().Be(MessageIntent.SubscriptionMessage);
         }
 
-        [Fact]
-        public void ShouldExposeHeadersOfOriginalEnvelope()
-        {
-            var testee = this.CreateTestee(A.Fake<IMessage>());
-
-            testee.Headers.Should().BeSameAs(this.headers);
-        }
-
         private IncommingMessageContext CreateTestee(IMessage message)
         {
-            return new IncommingMessageContext(message, this.headers, this.pipelineConfiguration);
+            return new IncommingMessageContext(new Envelope(this.headers, message), this.pipelineConfiguration);
         }
     }
 }

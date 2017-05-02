@@ -108,6 +108,8 @@
     <Compile Include="Bus\MSMQ\MsmqExceptionTest.cs" />
     <Compile Include="Bus\MSMQ\MsmqUtilitiesTest.cs" />
     <Compile Include="Bus\NoSubscriptionExceptionTest.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\AuditQueueStepTest.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\ErrorQueueStepTest.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStepTest.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStepTest.cs" />
     <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContextTest.cs" />

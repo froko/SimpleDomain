@@ -75,6 +75,7 @@
     <Compile Include="Bus\IMessageQueueProvider.cs" />
     <Compile Include="Bus\InMemorySubscriptionStore.cs" />
     <Compile Include="Bus\ISaveSubscriptionMessages.cs" />
+    <Compile Include="Bus\ISendEnvelopesToMessageQueue.cs" />
     <Compile Include="Bus\ISubscribeMessageHandlers.cs" />
     <Compile Include="Bus\ISubscriptionStore.cs" />
     <Compile Include="Bus\JitneyConfigurationException.cs" />
@@ -84,9 +85,12 @@
     <Compile Include="Bus\MSMQ\MsmqProvider.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Bus\MSMQ\MsmqSender.cs" />
     <Compile Include="Bus\MSMQ\MsmqUtilities.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Bus\Pipeline\Incomming\AuditQueueStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\ErrorQueueStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\IncommingPipeline.cs" />

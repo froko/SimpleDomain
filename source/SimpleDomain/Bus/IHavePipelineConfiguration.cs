@@ -34,7 +34,7 @@ namespace SimpleDomain.Bus
         /// Gets the address of the consuming endpoint for a given command
         /// </summary>
         /// <param name="command">The command</param>
-        /// <returns>The address of the consuming endpiont</returns>
+        /// <returns>The address of the consuming endpoint</returns>
         EndpointAddress GetConsumingEndpointAddress(ICommand command);
 
         /// <summary>

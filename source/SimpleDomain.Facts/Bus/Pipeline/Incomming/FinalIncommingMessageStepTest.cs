@@ -118,7 +118,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         private static IncommingMessageContext CreateIncommingMessageContext(IMessage message)
         {
             var headers = new Dictionary<string, object> { { HeaderKeys.Sender, new EndpointAddress("sender") } };
-            return new IncommingMessageContext(message, headers, A.Fake<IHavePipelineConfiguration>());
+            return new IncommingMessageContext(new Envelope(headers, message), A.Fake<IHavePipelineConfiguration>());
         }
     }
 }

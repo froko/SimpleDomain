@@ -63,7 +63,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
                 "Received {0} of type {1} from {2}",
                 context.Message.GetIntent(),
                 context.Message.GetFullName(),
-                context.Headers[HeaderKeys.Sender]);
+                context.Envelope.Headers[HeaderKeys.Sender]);
 
             return this.handlers[context.MessageIntent](context.Message);
         }
