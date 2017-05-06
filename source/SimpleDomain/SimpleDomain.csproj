@@ -73,6 +73,7 @@
     <Compile Include="Bus\IHavePipelineConfiguration.cs" />
     <Compile Include="Bus\IMapContractsToEndpoints.cs" />
     <Compile Include="Bus\IMessageQueueProvider.cs" />
+    <Compile Include="Bus\InMemoryQueueProvider.cs" />
     <Compile Include="Bus\InMemorySubscriptionStore.cs" />
     <Compile Include="Bus\ISaveSubscriptionMessages.cs" />
     <Compile Include="Bus\ISendEnvelopesToMessageQueue.cs" />
@@ -89,8 +90,8 @@
     <Compile Include="Bus\MSMQ\MsmqUtilities.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Bus\Pipeline\Incomming\AuditQueueStep.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\ErrorQueueStep.cs" />
+    <Compile Include="Bus\Pipeline\AuditQueueStep.cs" />
+    <Compile Include="Bus\Pipeline\ErrorQueueStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\IncommingPipeline.cs" />

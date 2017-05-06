@@ -23,6 +23,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
     using FakeItEasy;
 
+    using SimpleDomain.Bus.Configuration;
+
     using Xunit;
 
     public class FinalIncommingEnvelopeStepTest
@@ -31,6 +33,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public async Task ShouldSetMessageOnContext()
         {
             var incommingEnvelopeContext = A.Fake<IncommingEnvelopeContext>();
+            A.CallTo(() => incommingEnvelopeContext.Envelope).Returns(EnvelopeBuilder.Build());
+
             var testee = new FinalIncommingEnvelopeStep();
 
             await testee.InvokeAsync(incommingEnvelopeContext, null).ConfigureAwait(false);
@@ -39,9 +43,30 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         }
 
         [Fact]
+        public async Task ShouldPushCorrelationIfOfIncommingEnvelopeToTheStack()
+        {
+            var correlationId = Guid.NewGuid();
+            var envelope = EnvelopeBuilder.Build(correlationId);
+
+            var incommingEnvelopeContext = A.Fake<IncommingEnvelopeContext>();
+            A.CallTo(() => incommingEnvelopeContext.Envelope).Returns(envelope);
+
+            var configuration = A.Fake<IHavePipelineConfiguration>();
+            A.CallTo(() => incommingEnvelopeContext.Configuration).Returns(configuration);
+
+            var testee = new FinalIncommingEnvelopeStep();
+
+            await testee.InvokeAsync(incommingEnvelopeContext, null).ConfigureAwait(false);
+
+            A.CallTo(() => configuration.PushCorrelationId(correlationId)).MustHaveHappened();
+        }
+
+        [Fact]
         public async Task DoesNotCallNext()
         {
             var incommingEnvelopeContext = A.Fake<IncommingEnvelopeContext>();
+            A.CallTo(() => incommingEnvelopeContext.Envelope).Returns(EnvelopeBuilder.Build());
+
             var next = A.Fake<Func<Task>>();
             var testee = new FinalIncommingEnvelopeStep();
 

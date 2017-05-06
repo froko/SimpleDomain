@@ -18,6 +18,8 @@
 
 namespace SimpleDomain.Bus.Pipeline.Outgoing
 {
+    using System;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -71,11 +73,37 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             testee.Envelopes.Should().Contain(e => IsValidEnvelope(e, message));
         }
 
+        [Fact]
+        public void CanCreateEnvelopeWithCorrelationId()
+        {
+            var correlationId = Guid.NewGuid();
+            var message = A.Fake<IMessage>();
+            var pipelineConfiguration = A.Fake<IHavePipelineConfiguration>();
+            A.CallTo(() => pipelineConfiguration.LocalEndpointAddress).Returns(new EndpointAddress("sender"));
+            A.CallTo(() => pipelineConfiguration.HasCorrelationId).Returns(true);
+            A.CallTo(() => pipelineConfiguration.PeekCorrelationId()).Returns(correlationId);
+
+            var testee = new OutgoingMessageContext(message, pipelineConfiguration);
+
+            testee.CreateEnvelope(new EndpointAddress("recipient"));
+
+            testee.Envelopes.Should().HaveCount(1);
+            testee.Envelopes.Should().Contain(e => IsValidEnvelope(e, message, correlationId));
+        }
+
         private static bool IsValidEnvelope(Envelope envelope, IMessage message)
         {
-            return (envelope.Body == message)
+            return envelope.Body.Equals(message)
                 && ((EndpointAddress)envelope.Headers[HeaderKeys.Sender]).QueueName == "sender"
                 && ((EndpointAddress)envelope.Headers[HeaderKeys.Recipient]).QueueName == "recipient";
+        }
+
+        private static bool IsValidEnvelope(Envelope envelope, IMessage message, Guid correlationId)
+        {
+            return envelope.Body.Equals(message)
+                   && ((EndpointAddress)envelope.Headers[HeaderKeys.Sender]).QueueName == "sender"
+                   && ((EndpointAddress)envelope.Headers[HeaderKeys.Recipient]).QueueName == "recipient"
+                   && envelope.CorrelationId == correlationId;
         }
     }
 }

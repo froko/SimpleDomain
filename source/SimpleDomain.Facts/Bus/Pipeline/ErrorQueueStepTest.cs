@@ -16,16 +16,17 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.Pipeline.Incomming
+namespace SimpleDomain.Bus.Pipeline
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using FakeItEasy;
 
     using FluentAssertions;
     using FluentAssertions.Common;
+
+    using SimpleDomain.Bus.Pipeline.Incomming;
 
     using Xunit;
 
@@ -95,8 +96,8 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
         private static IncommingMessageContext CreateIncommingMessageContext(IMessage message)
         {
-            var headers = new Dictionary<string, object> { { HeaderKeys.Sender, new EndpointAddress("sender") } };
-            return new IncommingMessageContext(new Envelope(headers, message), A.Fake<IHavePipelineConfiguration>());
+            var envelope = EnvelopeBuilder.Build(message);
+            return new IncommingMessageContext(envelope, A.Fake<IHavePipelineConfiguration>());
         }
     }
 }

@@ -124,7 +124,7 @@ namespace SimpleDomain
             var bus = this.jitneyFactory.Create(this.jitneyConfiguration);
             var eventStore = this.eventStoreFactory.Create(this.eventStoreConfiguration, bus);
             
-            this.boundedContexts.ForEach(bc => bc.Configure(this.jitneyConfiguration, new EventStoreRepository(eventStore)));
+            this.boundedContexts.ForEach(bc => bc.Configure(this.jitneyConfiguration, bus, new EventStoreRepository(eventStore)));
             
             await bus.StartAsync().ConfigureAwait(false);
             

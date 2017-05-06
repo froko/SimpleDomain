@@ -40,7 +40,9 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <inheritdoc />
         public override Task InvokeAsync(IncommingEnvelopeContext context, Func<Task> next)
         {
+            context.Configuration.PushCorrelationId(context.Envelope.CorrelationId);
             context.SetMessage();
+
             return Task.CompletedTask;
         }
     }

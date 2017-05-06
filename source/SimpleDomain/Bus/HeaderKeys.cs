@@ -44,6 +44,11 @@ namespace SimpleDomain.Bus
         public const string MessageType = "MessageType";
 
         /// <summary>
+        /// Gets the header key for the message name
+        /// </summary>
+        public const string MessageName = "MessageName";
+
+        /// <summary>
         /// Gets the header key for the message id
         /// </summary>
         public const string MessageId = "MessageId";

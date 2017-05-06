@@ -34,8 +34,9 @@ namespace SimpleDomain
         /// Configures the bounded context
         /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
         /// </summary>
-        /// <param name="bus">The message handler subscriber</param>
+        /// <param name="configuration">The message handler subscription configuration</param>
+        /// <param name="bus">The message bus</param>
         /// <param name="repository">The repository</param>
-        void Configure(ISubscribeMessageHandlers bus, IEventSourcedRepository repository);
+        void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository);
     }
 }

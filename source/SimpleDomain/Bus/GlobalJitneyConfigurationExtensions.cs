@@ -34,7 +34,16 @@ namespace SimpleDomain.Bus
         }
 
         /// <summary>
-        /// Registers the <see cref="MessageQueueJitney"/> bus
+        /// Registers the <see cref="MessageQueueJitney"/> bus with the In-Memory Queue provider
+        /// </summary>
+        public static void UseInMemoryQueueJitney(this IConfigureThisJitney configuration)
+        {
+            configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new InMemoryQueueProvider());
+            configuration.Register(config => new MessageQueueJitney(config));
+        }
+
+        /// <summary>
+        /// Registers the <see cref="MessageQueueJitney"/> bus with the MSMQ provider
         /// </summary>
         public static void UseMsmqJitney(this IConfigureThisJitney configuration)
         {

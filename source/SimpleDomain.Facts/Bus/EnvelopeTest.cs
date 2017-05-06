@@ -22,7 +22,9 @@ namespace SimpleDomain.Bus
     using System.Collections.Generic;
 
     using FluentAssertions;
-    
+
+    using Newtonsoft.Json;
+
     using SimpleDomain.TestDoubles;
 
     using Xunit;
@@ -42,7 +44,7 @@ namespace SimpleDomain.Bus
         }
 
         [Fact]
-        public void CanCreateInstanceWithFactoryMethod()
+        public void CanCreateInstanceWithFactoryMethodWithoutCorrelationId()
         {
             var sender = new EndpointAddress("sender");
             var recipient = new EndpointAddress("recipient");
@@ -53,9 +55,52 @@ namespace SimpleDomain.Bus
             testee.Headers.Should().ContainKey(HeaderKeys.Sender);
             testee.Headers.Should().ContainKey(HeaderKeys.Recipient);
             testee.Headers.Should().ContainKey(HeaderKeys.TimeSent);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageType);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageName);
             testee.Headers.Should().ContainKey(HeaderKeys.MessageId);
             testee.Headers.Should().ContainKey(HeaderKeys.CorrelationId);
+
             testee.Body.Should().BeSameAs(body);
+            testee.CorrelationId.Should().NotBeEmpty();
+        }
+        
+        [Fact]
+        public void CanCreateInstanceWithFactoryMethodWithCorrelationId()
+        {
+            var sender = new EndpointAddress("sender");
+            var recipient = new EndpointAddress("recipient");
+            var correlationId = Guid.NewGuid();
+            var body = new ValueCommand(11);
+
+            var testee = Envelope.Create(sender, recipient, correlationId, body);
+
+            testee.Headers.Should().ContainKey(HeaderKeys.Sender);
+            testee.Headers.Should().ContainKey(HeaderKeys.Recipient);
+            testee.Headers.Should().ContainKey(HeaderKeys.TimeSent);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageType);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageName);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageId);
+            testee.Headers.Should().ContainKey(HeaderKeys.CorrelationId);
+
+            testee.Body.Should().BeSameAs(body);
+            testee.CorrelationId.Should().Be(correlationId);
+        }
+
+        [Fact]
+        public void CanGetCorrelationId_WhenEnvelopeWasSerializedAndDeserializedBefore()
+        {
+            var sender = new EndpointAddress("sender");
+            var recipient = new EndpointAddress("recipient");
+            var correlationId = Guid.NewGuid();
+            var body = new ValueCommand(11);
+            var serializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
+
+            var testee = Envelope.Create(sender, recipient, correlationId, body);
+
+            var serializedTestee = JsonConvert.SerializeObject(testee, serializerSettings);
+            var deserializedTestee = (Envelope)JsonConvert.DeserializeObject(serializedTestee, serializerSettings);
+            
+            deserializedTestee.CorrelationId.Should().Be(correlationId);
         }
 
         [Fact]

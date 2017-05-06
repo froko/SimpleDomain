@@ -47,6 +47,7 @@ namespace SimpleDomain.Bus.Configuration
         private readonly IList<IncommingMessageStep> incommingMessageSteps;
         private readonly IList<OutgoingMessageStep> outgoingMessageSteps;
         private readonly IList<OutgoingEnvelopeStep> outgoingEnvelopeSteps;
+        private readonly Stack<Guid> correlationIds;
 
         private ISubscriptionStore subscriptionStore;
 
@@ -64,6 +65,7 @@ namespace SimpleDomain.Bus.Configuration
             this.incommingMessageSteps = new List<IncommingMessageStep>();
             this.outgoingMessageSteps = new List<OutgoingMessageStep>();
             this.outgoingEnvelopeSteps = new List<OutgoingEnvelopeStep>();
+            this.correlationIds = new Stack<Guid>();
 
             this.subscriptionStore = new InMemorySubscriptionStore();
         }
@@ -76,6 +78,9 @@ namespace SimpleDomain.Bus.Configuration
 
         /// <inheritdoc />
         public ISaveSubscriptionMessages SubscriptionStore => this.subscriptionStore;
+
+        /// <inheritdoc />
+        public bool HasCorrelationId => this.correlationIds.Any();
 
         /// <inheritdoc />
         public IConfigureThisJitney DefineLocalEndpointAddress(string queueName)
@@ -274,6 +279,24 @@ namespace SimpleDomain.Bus.Configuration
             }
 
             return (T)this.configurationItems[key];
+        }
+
+        /// <inheritdoc />
+        public void PushCorrelationId(Guid correlationId)
+        {
+            this.correlationIds.Push(correlationId);
+        }
+
+        /// <inheritdoc />
+        public void PopCorrelationId()
+        {
+            this.correlationIds.Pop();
+        }
+
+        /// <inheritdoc />
+        public Guid PeekCorrelationId()
+        {
+            return this.correlationIds.Peek();
         }
 
         /// <summary>

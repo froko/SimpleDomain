@@ -93,6 +93,19 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         }
 
         [Fact]
+        public async Task ShouldPopCorrelationIdFromConfigurationAfterHandlingMessage()
+        {
+            var message = new ValueCommand(11);
+            var configuration = A.Fake<IHavePipelineConfiguration>();
+            var incommingMessageContext = CreateIncommingMessageContext(message, configuration);
+
+            await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
+
+            A.CallTo(() => this.finalActionForCommand.Invoke(A<ICommand>.Ignored)).MustHaveHappened()
+                .Then(A.CallTo(() => configuration.PopCorrelationId()).MustHaveHappened());
+        }
+
+        [Fact]
         public async Task DoesNotCallNext()
         {
             var message = new ValueCommand(11);
@@ -119,6 +132,13 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         {
             var headers = new Dictionary<string, object> { { HeaderKeys.Sender, new EndpointAddress("sender") } };
             return new IncommingMessageContext(new Envelope(headers, message), A.Fake<IHavePipelineConfiguration>());
+        }
+
+        private static IncommingMessageContext CreateIncommingMessageContext(
+            IMessage message,
+            IHavePipelineConfiguration configuration)
+        {
+            return new IncommingMessageContext(EnvelopeBuilder.Build(message), configuration);
         }
     }
 }

@@ -16,12 +16,13 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.Pipeline.Incomming
+namespace SimpleDomain.Bus.Pipeline
 {
     using System;
     using System.Threading.Tasks;
 
     using SimpleDomain.Bus.MSMQ;
+    using SimpleDomain.Bus.Pipeline.Incomming;
 
     /// <summary>
     /// The incomming message step which records all failed messages to an error queue

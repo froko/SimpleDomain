@@ -37,12 +37,12 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <summary>
         /// Gets the incomming envelope
         /// </summary>
-        public Envelope Envelope { get; }
+        public virtual Envelope Envelope { get; }
 
         /// <summary>
         /// Gets the incomming message
         /// </summary>
-        public IMessage Message { get; private set; }
+        public virtual IMessage Message { get; private set; }
 
         /// <summary>
         /// Sets the incomming message
