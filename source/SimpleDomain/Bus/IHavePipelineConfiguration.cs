@@ -18,6 +18,7 @@
 
 namespace SimpleDomain.Bus
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -29,12 +30,17 @@ namespace SimpleDomain.Bus
         /// Gets the local endpoint address
         /// </summary>
         EndpointAddress LocalEndpointAddress { get; }
-        
+
+        /// <summary>
+        /// Gets the fact that the correlation id stak is not empty
+        /// </summary>
+        bool HasCorrelationId { get; }
+
         /// <summary>
         /// Gets the address of the consuming endpoint for a given command
         /// </summary>
         /// <param name="command">The command</param>
-        /// <returns>The address of the consuming endpiont</returns>
+        /// <returns>The address of the consuming endpoint</returns>
         EndpointAddress GetConsumingEndpointAddress(ICommand command);
 
         /// <summary>
@@ -50,5 +56,22 @@ namespace SimpleDomain.Bus
         /// <param name="fullNameOfEventType">The full name of the event type</param>
         /// <returns>The address of the publishing endpoint</returns>
         EndpointAddress GetPublishingEndpointAddress(string fullNameOfEventType);
+
+        /// <summary>
+        /// Pushes the correlation id of an incomming message to the stack
+        /// </summary>
+        /// <param name="correlationId">The correlation id of the incomming message</param>
+        void PushCorrelationId(Guid correlationId);
+
+        /// <summary>
+        /// Pops the current correlation id from the stak
+        /// </summary>
+        void PopCorrelationId();
+
+        /// <summary>
+        /// Peeks the current correlation id from the stak
+        /// </summary>
+        /// <returns>The current correlation id</returns>
+        Guid PeekCorrelationId();
     }
 }

@@ -44,6 +44,11 @@ namespace SimpleDomain.Bus
         public const string MessageType = "MessageType";
 
         /// <summary>
+        /// Gets the header key for the message name
+        /// </summary>
+        public const string MessageName = "MessageName";
+
+        /// <summary>
         /// Gets the header key for the message id
         /// </summary>
         public const string MessageId = "MessageId";
@@ -52,5 +57,30 @@ namespace SimpleDomain.Bus
         /// Gets the header key for the correlation id
         /// </summary>
         public const string CorrelationId = "CorrelationId";
+
+        /// <summary>
+        /// Gets the header key for the processing timestamp
+        /// </summary>
+        public const string TimeProcessed = "TimeProcessed";
+
+        /// <summary>
+        /// Gets the header key for the exception name
+        /// </summary>
+        public const string ExceptionName = "ExceptionName";
+
+        /// <summary>
+        /// Gets the header key for the exception message
+        /// </summary>
+        public const string ExceptionMessage = "ExceptionMessage";
+
+        /// <summary>
+        /// Gets the header key for the exception string
+        /// </summary>
+        public const string ExceptionString = "ExceptionString";
+
+        /// <summary>
+        /// Gets the header key for the retry count
+        /// </summary>
+        public const string RetryCount = "RetryCount";
     }
 }

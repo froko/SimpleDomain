@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="IBoundedContext.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+// <copyright file="ISendEnvelopesToMessageQueue.cs" company="frokonet.ch">
+//   Copyright (c) 2014-2017
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -16,27 +16,20 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus
 {
-    using SimpleDomain.Bus;
-
     /// <summary>
-    /// The abstract technical definition of a bounded context
+    /// Defines an interface to send instances of <see cref="Envelope"/> directly to a message queue.
+    /// This interface is used for audit and error queue behavior.
     /// </summary>
-    public interface IBoundedContext
+    public interface ISendEnvelopesToMessageQueue
     {
         /// <summary>
-        /// Gets the name of the bounded context
+        /// Sends an <see cref="Envelope"/> directly to a message queue addressed by its <see cref="EndpointAddress"/>
+        /// <remarks>There is no transaction involved for this type of delivery</remarks>
         /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Configures the bounded context
-        /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
-        /// </summary>
-        /// <param name="configuration">The message handler subscription configuration</param>
-        /// <param name="bus">The message bus</param>
-        /// <param name="repository">The repository</param>
-        void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository);
+        /// <param name="envelope">The envelope to send</param>
+        /// <param name="endpointAddress">The endpoint address to send to</param>
+        void Send(Envelope envelope, EndpointAddress endpointAddress);
     }
 }

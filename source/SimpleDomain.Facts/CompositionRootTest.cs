@@ -119,7 +119,10 @@ namespace SimpleDomain
 
             using (await testee.StartAsync().ConfigureAwait(false))
             {
-                A.CallTo(() => boundedContext.Configure(A<ISubscribeMessageHandlers>.Ignored, A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
+                A.CallTo(() => boundedContext.Configure(
+                    A<ISubscribeMessageHandlers>.Ignored,
+                    A<IDeliverMessages>.Ignored,
+                    A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
             }
         }
 

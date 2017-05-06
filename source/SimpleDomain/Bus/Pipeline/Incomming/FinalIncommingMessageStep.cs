@@ -57,15 +57,17 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         public override string Name { get; }
 
         /// <inheritdoc />
-        public override Task InvokeAsync(IncommingMessageContext context, Func<Task> next)
+        public override async Task InvokeAsync(IncommingMessageContext context, Func<Task> next)
         {
             Logger.InfoFormat(
                 "Received {0} of type {1} from {2}",
                 context.Message.GetIntent(),
                 context.Message.GetFullName(),
-                context.Headers[HeaderKeys.Sender]);
+                context.Envelope.Headers[HeaderKeys.Sender]);
 
-            return this.handlers[context.MessageIntent](context.Message);
+            await this.handlers[context.MessageIntent](context.Message).ConfigureAwait(false);
+
+            context.Configuration.PopCorrelationId();
         }
     }
 }

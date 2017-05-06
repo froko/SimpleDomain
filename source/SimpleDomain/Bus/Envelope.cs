@@ -52,7 +52,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Gets the message body
         /// </summary>
-        public IMessage Body { get; private set; }
+        public IMessage Body { get; }
         
         /// <summary>
         /// Creates a new instance of <see cref="Envelope"/>
@@ -67,20 +67,38 @@ namespace SimpleDomain.Bus
             Guard.NotNull(() => recipient);
             Guard.NotNull(() => body);
 
-            var mesageId = Guid.NewGuid();
-            var headers = new Dictionary<string, object>
-            {
-                { HeaderKeys.Sender, sender },
-                { HeaderKeys.Recipient, recipient },
-                { HeaderKeys.TimeSent, DateTime.UtcNow },
-                { HeaderKeys.MessageType, body.GetFullName() },
-                { HeaderKeys.MessageId, mesageId },
-                { HeaderKeys.CorrelationId, mesageId }
-            };
-
-            return new Envelope(headers, body);
+            var messageId = Guid.NewGuid();
+            return Create(sender, recipient, messageId, messageId, body);
         }
-        
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Envelope"/>
+        /// </summary>
+        /// <param name="sender">The sending endpoint address</param>
+        /// <param name="recipient">The receiving endpoint address</param>
+        /// <param name="correlationId">The correlation id</param>
+        /// <param name="body">The message body</param>
+        /// <returns></returns>
+        public static Envelope Create(
+            EndpointAddress sender,
+            EndpointAddress recipient,
+            Guid correlationId,
+            IMessage body)
+        {
+            Guard.NotNull(() => sender);
+            Guard.NotNull(() => recipient);
+            Guard.NotNull(() => body);
+
+            var messageId = Guid.NewGuid();
+            return Create(sender, recipient, messageId, correlationId, body);
+        }
+
+        /// <summary>
+        /// Gets the correlation id
+        /// </summary>
+        [JsonIgnore]
+        public Guid CorrelationId => Guid.Parse(this.GetHeader<object>(HeaderKeys.CorrelationId).ToString());
+
         /// <summary>
         /// Adds a single header to the header collection
         /// </summary>
@@ -136,6 +154,27 @@ namespace SimpleDomain.Bus
             }
 
             return (T)this.Headers[key];
+        }
+
+        private static Envelope Create(
+            EndpointAddress sender,
+            EndpointAddress recipient,
+            Guid messageId,
+            Guid correlationId,
+            IMessage body)
+        {
+            var headers = new Dictionary<string, object>
+            {
+                { HeaderKeys.Sender, sender },
+                { HeaderKeys.Recipient, recipient },
+                { HeaderKeys.TimeSent, DateTime.UtcNow },
+                { HeaderKeys.MessageType, body.GetFullName() },
+                { HeaderKeys.MessageName, body.GetType().Name },
+                { HeaderKeys.MessageId, messageId },
+                { HeaderKeys.CorrelationId, correlationId }
+            };
+
+            return new Envelope(headers, body);
         }
     }
 }

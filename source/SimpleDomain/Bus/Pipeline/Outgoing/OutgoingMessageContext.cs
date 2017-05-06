@@ -56,7 +56,16 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         public virtual void CreateEnvelope(EndpointAddress recipient)
         {
             var sender = this.Configuration.LocalEndpointAddress;
-            this.envelopes.Add(Envelope.Create(sender, recipient, this.Message));
+
+            if (this.Configuration.HasCorrelationId)
+            {
+                var correlationId = this.Configuration.PeekCorrelationId();
+                this.envelopes.Add(Envelope.Create(sender, recipient, correlationId, this.Message));
+            }
+            else
+            {
+                this.envelopes.Add(Envelope.Create(sender, recipient, this.Message));
+            }
         }
     }
 }

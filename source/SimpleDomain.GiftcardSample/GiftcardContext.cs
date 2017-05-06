@@ -48,26 +48,26 @@ namespace GiftcardSample
 
         private IEventSourcedRepository Repository { get; set; }
 
-        public void Configure(ISubscribeMessageHandlers bus, IEventSourcedRepository repository)
+        public void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository)
         {
             this.Repository = repository;
 
-            bus.SubscribeCommandHandler<CreateGiftcard>(this.HandleAsync);
-            bus.SubscribeCommandHandler<ActivateGiftcard>(this.HandleAsync);
-            bus.SubscribeCommandHandler<RedeemGiftcard>(this.HandleAsync);
-            bus.SubscribeCommandHandler<LoadGiftcard>(this.HandleAsync);
+            configuration.SubscribeCommandHandler<CreateGiftcard>(this.HandleAsync);
+            configuration.SubscribeCommandHandler<ActivateGiftcard>(this.HandleAsync);
+            configuration.SubscribeCommandHandler<RedeemGiftcard>(this.HandleAsync);
+            configuration.SubscribeCommandHandler<LoadGiftcard>(this.HandleAsync);
 
-            bus.SubscribeEventHandler<GiftcardCreated>(this.cardNumberEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardCreated>(this.cardNumberEventHandler.HandleAsync);
 
-            bus.SubscribeEventHandler<GiftcardCreated>(this.giftcardOverviewEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardActivated>(this.giftcardOverviewEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardRedeemed>(this.giftcardOverviewEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardLoaded>(this.giftcardOverviewEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardCreated>(this.giftcardOverviewEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardActivated>(this.giftcardOverviewEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardRedeemed>(this.giftcardOverviewEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardLoaded>(this.giftcardOverviewEventHandler.HandleAsync);
 
-            bus.SubscribeEventHandler<GiftcardCreated>(this.giftcardTransactionEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardActivated>(this.giftcardTransactionEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardRedeemed>(this.giftcardTransactionEventHandler.HandleAsync);
-            bus.SubscribeEventHandler<GiftcardLoaded>(this.giftcardTransactionEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardCreated>(this.giftcardTransactionEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardActivated>(this.giftcardTransactionEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardRedeemed>(this.giftcardTransactionEventHandler.HandleAsync);
+            configuration.SubscribeEventHandler<GiftcardLoaded>(this.giftcardTransactionEventHandler.HandleAsync);
         }
 
         private async Task HandleAsync(CreateGiftcard command)

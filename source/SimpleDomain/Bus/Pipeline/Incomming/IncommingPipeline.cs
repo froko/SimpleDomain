@@ -62,8 +62,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             }
 
             var messageContext = new IncommingMessageContext(
-                envelopeContext.Message, 
-                envelopeContext.Envelope.Headers, 
+                envelopeContext.Envelope,
                 this.configuration);
             await this.InvokeIncommingMessageStepsAsync(messageContext).ConfigureAwait(false);
         }

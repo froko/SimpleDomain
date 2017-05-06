@@ -145,7 +145,7 @@ namespace SimpleDomain.Bus.Configuration
             var pipelineStep = A.Fake<IncommingMessageStep>();
             this.testee.AddPipelineStep(pipelineStep);
 
-            var envelope = new Envelope(new Dictionary<string, object> { { HeaderKeys.Sender, "sender@localhost" } }, new MyCommand());
+            var envelope = EnvelopeBuilder.Build();
 
             var pipeline = this.testee.CreateIncommingPipeline(c => Task.CompletedTask, e => Task.CompletedTask, m => Task.CompletedTask);
             await pipeline.InvokeAsync(envelope).ConfigureAwait(false);
@@ -180,6 +180,26 @@ namespace SimpleDomain.Bus.Configuration
             await pipeline.InvokeAsync(new ValueCommand(11)).ConfigureAwait(false);
 
             A.CallTo(() => pipelineStep.InvokeAsync(A<OutgoingEnvelopeContext>.Ignored, A<Func<Task>>.Ignored)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void CanHandleCorrelationIdStack()
+        {
+            var correlationId = Guid.NewGuid();
+
+            this.testee.HasCorrelationId.Should().BeFalse();
+
+            this.testee.PushCorrelationId(correlationId);
+            this.testee.HasCorrelationId.Should().BeTrue();
+
+            this.testee.PeekCorrelationId().Should().Be(correlationId);
+            this.testee.HasCorrelationId.Should().BeTrue();
+
+            this.testee.PeekCorrelationId().Should().Be(correlationId);
+            this.testee.HasCorrelationId.Should().BeTrue();
+
+            this.testee.PopCorrelationId();
+            this.testee.HasCorrelationId.Should().BeFalse();
         }
 
         [Fact]
