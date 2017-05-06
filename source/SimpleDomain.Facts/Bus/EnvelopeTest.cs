@@ -56,7 +56,7 @@ namespace SimpleDomain.Bus
             testee.Headers.Should().ContainKey(HeaderKeys.Recipient);
             testee.Headers.Should().ContainKey(HeaderKeys.TimeSent);
             testee.Headers.Should().ContainKey(HeaderKeys.MessageType);
-            testee.Headers.Should().ContainKey(HeaderKeys.MessageName);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageIntent);
             testee.Headers.Should().ContainKey(HeaderKeys.MessageId);
             testee.Headers.Should().ContainKey(HeaderKeys.CorrelationId);
 
@@ -78,7 +78,7 @@ namespace SimpleDomain.Bus
             testee.Headers.Should().ContainKey(HeaderKeys.Recipient);
             testee.Headers.Should().ContainKey(HeaderKeys.TimeSent);
             testee.Headers.Should().ContainKey(HeaderKeys.MessageType);
-            testee.Headers.Should().ContainKey(HeaderKeys.MessageName);
+            testee.Headers.Should().ContainKey(HeaderKeys.MessageIntent);
             testee.Headers.Should().ContainKey(HeaderKeys.MessageId);
             testee.Headers.Should().ContainKey(HeaderKeys.CorrelationId);
 

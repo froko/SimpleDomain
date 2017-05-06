@@ -23,6 +23,7 @@ namespace SimpleDomain.Bus.Pipeline
 
     using SimpleDomain.Bus.MSMQ;
     using SimpleDomain.Bus.Pipeline.Incomming;
+    using SimpleDomain.Common;
 
     /// <summary>
     /// The incomming message step which records all incomming message to an audit queue
@@ -50,6 +51,9 @@ namespace SimpleDomain.Bus.Pipeline
         /// <param name="messageQueueSender">Dependency injection for <see cref="ISendEnvelopesToMessageQueue"/></param>
         public AuditQueueStep(string auditQueue, ISendEnvelopesToMessageQueue messageQueueSender)
         {
+            Guard.NotNullOrEmpty(() => auditQueue);
+            Guard.NotNull(() => messageQueueSender);
+
             this.auditQueue = new EndpointAddress(auditQueue);
             this.messageQueueSender = messageQueueSender;
             this.Name = $"Audit Queue Step ({this.auditQueue})";

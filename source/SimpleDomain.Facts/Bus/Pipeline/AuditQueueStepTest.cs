@@ -60,6 +60,30 @@ namespace SimpleDomain.Bus.Pipeline
         }
 
         [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithEmptyStringAsQueueName()
+        {
+            Action action = () => new AuditQueueStep(string.Empty);
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithNullAsQueueName()
+        {
+            Action action = () => new AuditQueueStep(null);
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void ThrowsException_WhenTryingToCreateInstanceWithNullAsAsMessageQueueSender()
+        {
+            Action action = () => new AuditQueueStep(QueueName, null);
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
         public void ShouldExposeStepNameWithQueueName()
         {
             var testee = new AuditQueueStep(QueueName);

@@ -163,13 +163,30 @@ namespace SimpleDomain.Bus
             Guid correlationId,
             IMessage body)
         {
+            var messageIntent = MessageIntent.Unknown;
+
+            if (body is ICommand)
+            {
+                messageIntent = MessageIntent.Command;
+            }
+
+            if (body is IEvent)
+            {
+                messageIntent = MessageIntent.Event;
+            }
+
+            if (body is SubscriptionMessage)
+            {
+                messageIntent = MessageIntent.SubscriptionMessage;
+            }
+
             var headers = new Dictionary<string, object>
             {
                 { HeaderKeys.Sender, sender },
                 { HeaderKeys.Recipient, recipient },
                 { HeaderKeys.TimeSent, DateTime.UtcNow },
                 { HeaderKeys.MessageType, body.GetFullName() },
-                { HeaderKeys.MessageName, body.GetType().Name },
+                { HeaderKeys.MessageIntent, messageIntent },
                 { HeaderKeys.MessageId, messageId },
                 { HeaderKeys.CorrelationId, correlationId }
             };
