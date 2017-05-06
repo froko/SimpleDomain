@@ -46,7 +46,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Gets the header key for the message name
         /// </summary>
-        public const string MessageName = "MessageName";
+        public const string MessageIntent = "MessageIntent";
 
         /// <summary>
         /// Gets the header key for the message id

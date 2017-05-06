@@ -23,6 +23,7 @@ namespace SimpleDomain.Bus.Pipeline
 
     using SimpleDomain.Bus.MSMQ;
     using SimpleDomain.Bus.Pipeline.Incomming;
+    using SimpleDomain.Common;
 
     /// <summary>
     /// The incomming message step which records all failed messages to an error queue
@@ -48,6 +49,9 @@ namespace SimpleDomain.Bus.Pipeline
         /// <param name="messageQueueSender">Dependency injection for <see cref="ISendEnvelopesToMessageQueue"/></param>
         public ErrorQueueStep(string errorQueue, ISendEnvelopesToMessageQueue messageQueueSender)
         {
+            Guard.NotNullOrEmpty(() => errorQueue);
+            Guard.NotNull(() => messageQueueSender);
+
             this.errorQueue = new EndpointAddress(errorQueue);
             this.messageQueueSender = messageQueueSender;
             this.Name = $"Error Queue Step ({this.errorQueue})";
