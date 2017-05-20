@@ -45,22 +45,22 @@ namespace SimpleDomain
 
         public static void WithDebugLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[DEBUG]", "log level should be [DEBUG]");
+            logLevelAware.LogMessage.Should().Contain("[Debug]", "log level should be [Debug]");
         }
 
         public static void WithInfoLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[INFO]", "log level should be [INFO]");
+            logLevelAware.LogMessage.Should().Contain("[Info]", "log level should be [Info]");
         }
 
         public static void WithWarningLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[WARN]", "log level should be [WARN]");
+            logLevelAware.LogMessage.Should().Contain("[Warning]", "log level should be [Warning]");
         }
 
         public static void WithErrorLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[ERROR]", "log level should be [ERROR]");
+            logLevelAware.LogMessage.Should().Contain("[Error]", "log level should be [Error]");
         }
     }
 

@@ -25,15 +25,15 @@ namespace SimpleDomain.Bus.MSMQ
     using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
-
-    using global::Common.Logging;
     
+    using SimpleDomain.Common.Logging;
+
     /// <summary>
     /// The MSMQ message queue provider
     /// </summary>
     public class MsmqProvider : IMessageQueueProvider
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(MsmqProvider));
+        private static readonly ILogger Logger = LoggerFactory.Create<MsmqProvider>();
 
         private Func<Envelope, Task> callMeBackWhenEnvelopeArrives;
         private MessageQueue localQueue;
@@ -124,7 +124,7 @@ namespace SimpleDomain.Bus.MSMQ
                 }
                 catch (Exception exception)
                 {
-                    Logger.Warn("MSMQ receive task failed", exception);
+                    Logger.Warn(exception, "MSMQ receive task failed");
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace SimpleDomain.Bus.MSMQ
             }
             catch (Exception exception)
             {
-                Logger.Warn("MSMQ receive operation failed", exception);
+                Logger.Warn(exception, "MSMQ receive operation failed");
                 return Task.CompletedTask;
             }
 
@@ -183,7 +183,7 @@ namespace SimpleDomain.Bus.MSMQ
                 }
                 catch (Exception exception)
                 {
-                    Logger.Error("Could not handle message", exception);
+                    Logger.Error(exception, "Could not handle message");
                 }
             }
         }

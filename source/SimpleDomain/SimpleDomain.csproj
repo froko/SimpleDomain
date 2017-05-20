@@ -33,14 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -116,6 +108,13 @@
     <Compile Include="Bus\Pipeline\Outgoing\StepExtensions.cs" />
     <Compile Include="Bus\Pipeline\PipelineContext.cs" />
     <Compile Include="Bus\Pipeline\PipelineStep.cs" />
+    <Compile Include="Common\Logging\IFormatLogMessages.cs" />
+    <Compile Include="Common\Logging\ILogger.cs" />
+    <Compile Include="Common\Logging\LoggerFactory.cs" />
+    <Compile Include="Common\Logging\LogLevel.cs" />
+    <Compile Include="Common\Logging\LogMessageFormatter.cs" />
+    <Compile Include="Common\Logging\NullLogger.cs" />
+    <Compile Include="Common\Logging\TraceLogger.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="CompositionRootAlreadyStartedException.cs" />
     <Compile Include="EventStore\Configuration\AbstractIoCContainerEventStoreConfiguration.cs" />

@@ -19,10 +19,9 @@
 namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
-
-    using global::Common.Logging;
-
+    
     using SimpleDomain.Common;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The Jitney implementation which uses a message queue infrastructure
@@ -34,7 +33,7 @@ namespace SimpleDomain.Bus
         /// </summary>
         public const string MessageQueueProvider = "MessageQueueProvider";
 
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<Jitney>();
 
         private readonly IMessageQueueProvider provider;
 

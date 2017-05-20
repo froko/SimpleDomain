@@ -22,14 +22,14 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using global::Common.Logging;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The final incomming message pipeline step
     /// </summary>
     public class FinalIncommingMessageStep : IncommingMessageStep
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<Jitney>();
 
         private readonly IDictionary<MessageIntent, Func<IMessage, Task>> handlers; 
         

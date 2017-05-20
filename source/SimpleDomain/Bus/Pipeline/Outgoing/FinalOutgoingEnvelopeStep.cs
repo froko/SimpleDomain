@@ -20,15 +20,15 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 {
     using System;
     using System.Threading.Tasks;
-
-    using global::Common.Logging;
+    
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The final outgoing envelope pipeline step
     /// </summary>
     public class FinalOutgoingEnvelopeStep : OutgoingEnvelopeStep
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<FinalOutgoingEnvelopeStep>();
 
         private readonly Func<Envelope, Task> handleEnvelopeAsync;
 

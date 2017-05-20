@@ -20,10 +20,10 @@ namespace SimpleDomain.Common
 {
     using System;
     using System.Diagnostics;
-
-    using global::Common.Logging;
-
+    
     using FluentAssertions;
+
+    using SimpleDomain.Common.Logging;
 
     using Xunit;
 
@@ -31,13 +31,13 @@ namespace SimpleDomain.Common
     {
         private const string LogText = "This is a log text";
 
-        private const string DebugLevel = "[DEBUG]";
-        private const string InfoLevel = "[INFO]";
-        private const string WarningLevel = "[WARN]";
-        private const string ErrorLevel = "[ERROR]";
+        private const string DebugLevel = "[Debug]";
+        private const string InfoLevel = "[Info]";
+        private const string WarningLevel = "[Warning]";
+        private const string ErrorLevel = "[Error]";
 
-        private static readonly string FullClrName = typeof(InMemoryTraceListenerTest).FullName;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(InMemoryTraceListenerTest));
+        private static readonly string ClassName = typeof(InMemoryTraceListenerTest).Name;
+        private static readonly ILogger Logger = LoggerFactory.Create<InMemoryTraceListenerTest>();
 
         public InMemoryTraceListenerTest()
         {
@@ -57,7 +57,7 @@ namespace SimpleDomain.Common
 
             InMemoryTraceListener.LogMessages.Should().Contain(s => 
                 s.Contains(DebugLevel) &&
-                s.Contains(FullClrName) &&
+                s.Contains(ClassName) &&
                 s.Contains(LogText));
 
             LogText.Should().HaveBeenLogged().WithDebugLevel();
@@ -70,7 +70,7 @@ namespace SimpleDomain.Common
 
             InMemoryTraceListener.LogMessages.Should().Contain(s =>
                 s.Contains(InfoLevel) &&
-                s.Contains(FullClrName) &&
+                s.Contains(ClassName) &&
                 s.Contains(LogText));
 
             LogText.Should().HaveBeenLogged().WithInfoLevel();
@@ -83,7 +83,7 @@ namespace SimpleDomain.Common
 
             InMemoryTraceListener.LogMessages.Should().Contain(s =>
                 s.Contains(WarningLevel) &&
-                s.Contains(FullClrName) &&
+                s.Contains(ClassName) &&
                 s.Contains(LogText));
 
             LogText.Should().HaveBeenLogged().WithWarningLevel();
@@ -92,11 +92,11 @@ namespace SimpleDomain.Common
         [Fact]
         public void LoggedErrorMessagesAreAddedToTheInMemoryTraceListener()
         {
-            Logger.Error(LogText);
+            Logger.Error(new Exception(),  LogText);
 
             InMemoryTraceListener.LogMessages.Should().Contain(s =>
                 s.Contains(ErrorLevel) &&
-                s.Contains(FullClrName) &&
+                s.Contains(ClassName) &&
                 s.Contains(LogText));
 
             LogText.Should().HaveBeenLogged().WithErrorLevel();

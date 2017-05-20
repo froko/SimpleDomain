@@ -25,15 +25,15 @@ namespace SimpleDomain.Bus
     using System.Threading.Tasks;
     using System.Transactions;
 
-    using global::Common.Logging;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The In-Memory Queue provider
     /// </summary>
     public class InMemoryQueueProvider : IMessageQueueProvider
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(InMemoryQueueProvider));
-        
+        private static readonly ILogger Logger = LoggerFactory.Create<InMemoryQueueProvider>();
+
         private Func<Envelope, Task> callMeBackWhenEnvelopeArrives;
         private ConcurrentQueue<Envelope> queue;
 
@@ -104,7 +104,7 @@ namespace SimpleDomain.Bus
                 }
                 catch (Exception exception)
                 {
-                    Logger.Warn("In-Memory Queue receive task failed", exception);
+                    Logger.Warn(exception, "In-Memory Queue receive task failed");
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace SimpleDomain.Bus
                 }
                 catch (Exception exception)
                 {
-                    Logger.Error("Could not handle message", exception);
+                    Logger.Error(exception, "Could not handle message");
                 }
             }
         }

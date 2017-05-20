@@ -19,17 +19,16 @@
 namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
-
-    using global::Common.Logging;
-
+    
     using SimpleDomain.Common;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The most simple <see cref="Jitney"/> you may can think of
     /// </summary>
     public class SimpleJitney : Jitney
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<Jitney>();
 
         /// <summary>
         /// Creates a new instance of <see cref="SimpleJitney"/>
