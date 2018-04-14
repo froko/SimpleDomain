@@ -19,7 +19,7 @@
 namespace GiftcardSample.Ninject
 {
     using global::Ninject.Modules;
-    
+
     using SimpleDomain.EventStore;
 
     public class EventStoreModule : NinjectModule

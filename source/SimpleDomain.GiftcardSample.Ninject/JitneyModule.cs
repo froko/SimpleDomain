@@ -20,14 +20,14 @@ namespace GiftcardSample.Ninject
 {
     using System.Collections.Generic;
     using System.Reflection;
-    
+
     using GiftcardSample.Commands;
     using GiftcardSample.ReadStore.InMemory;
 
     using global::Ninject.Modules;
 
     using SimpleDomain.Bus;
-    
+
     public class JitneyModule : NinjectModule
     {
         public override void Load()
@@ -40,7 +40,7 @@ namespace GiftcardSample.Ninject
             configuration.SubscribeMessageHandlers(GetHandlerAssemblies());
 
             configuration.AddPipelineStep(new LogIncommingEnvelopeStep());
-            
+
             configuration.UseSimpleJitney();
         }
 
@@ -48,6 +48,6 @@ namespace GiftcardSample.Ninject
         {
             yield return typeof(GiftcardCommandHandler).Assembly;
             yield return typeof(InMemoryCardNumberEventHandler).Assembly;
-        } 
+        }
     }
 }
