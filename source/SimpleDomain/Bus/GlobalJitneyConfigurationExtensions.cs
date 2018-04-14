@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="GlobalJitneyConfigurationExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 namespace SimpleDomain.Bus
 {
-    using SimpleDomain.Bus.MSMQ;
+    using SimpleDomain.Bus.Msmq;
 
     /// <summary>
     /// Configuation extensions for the Jitney configuration base class
@@ -28,6 +28,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Registers the <see cref="SimpleJitney"/> bus
         /// </summary>
+        /// <param name="configuration">The Jintey bus configuration</param>
         public static void UseSimpleJitney(this IConfigureThisJitney configuration)
         {
             configuration.Register(config => new SimpleJitney(config));
@@ -36,6 +37,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Registers the <see cref="MessageQueueJitney"/> bus with the In-Memory Queue provider
         /// </summary>
+        /// <param name="configuration">The Jintey bus configuration</param>
         public static void UseInMemoryQueueJitney(this IConfigureThisJitney configuration)
         {
             configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new InMemoryQueueProvider());
@@ -45,6 +47,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Registers the <see cref="MessageQueueJitney"/> bus with the MSMQ provider
         /// </summary>
+        /// <param name="configuration">The Jintey bus configuration</param>
         public static void UseMsmqJitney(this IConfigureThisJitney configuration)
         {
             configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new MsmqProvider());

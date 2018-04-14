@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EventHistory.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -20,18 +20,20 @@ namespace SimpleDomain
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
     /// Represents the history of events used to bring
     /// an Aggregate Root in its desired state
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Name is intended")]
     public class EventHistory : IEnumerable<IEvent>
     {
         private readonly IReadOnlyCollection<IEvent> events;
-         
+
         /// <summary>
-        /// Creates a new instance of <see cref="EventHistory"/>
+        /// Initializes a new instance of the <see cref="EventHistory"/> class.
         /// </summary>
         /// <param name="events">All events that have been applied to the Aggregate Root in the past</param>
         public EventHistory(IEnumerable<IEvent> events)
@@ -40,7 +42,7 @@ namespace SimpleDomain
         }
 
         /// <summary>
-        /// Returns the fact that no events have been found/loaded
+        /// Gets a value indicating whether no events have been found/loaded
         /// </summary>
         public bool IsEmpty => !this.events.Any();
 

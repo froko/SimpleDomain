@@ -64,7 +64,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new AuditQueueStep(string.Empty);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new AuditQueueStep(null);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new AuditQueueStep(QueueName, null);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]

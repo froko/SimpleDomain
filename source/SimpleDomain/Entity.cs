@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="Entity.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace SimpleDomain
         private int? cachedHashCode;
 
         /// <summary>
-        /// Creates a new instance of <see cref="Entity{T}"/>
+        /// Initializes a new instance of the <see cref="Entity{T}"/> class.
         /// </summary>
         /// <param name="id">The value of the entity key</param>
         protected Entity(T id)
@@ -38,7 +38,7 @@ namespace SimpleDomain
         }
 
         /// <summary>
-        /// Gets the entity key
+        /// Gets or sets the entity key
         /// </summary>
         public T Id { get; protected set; }
 

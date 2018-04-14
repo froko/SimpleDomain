@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="ExecutionContext.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ namespace SimpleDomain
     {
         private readonly Jitney bus;
         private bool isStopped;
-        
+
         /// <summary>
-        /// Creates a new instance of <see cref="ExecutionContext"/>
+        /// Initializes a new instance of the <see cref="ExecutionContext"/> class.
         /// </summary>
         /// <param name="bus">Dependency injetion for <see cref="Jitney"/></param>
         /// <param name="eventStore">Dependency injection for <see cref="IEventStore"/></param>
@@ -64,7 +64,7 @@ namespace SimpleDomain
         /// Gets the event store
         /// </summary>
         public IEventStore EventStore { get; }
-        
+
         /// <summary>
         /// Stops the execution context
         /// </summary>
@@ -76,7 +76,7 @@ namespace SimpleDomain
         /// <summary>
         /// Stops the execution context
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A task since this is an ansync method</returns>
         public async Task StopAsync()
         {
             if (this.isStopped)

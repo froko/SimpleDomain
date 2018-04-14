@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="OutgoingMessageContext.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -25,10 +25,10 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
     /// </summary>
     public class OutgoingMessageContext : PipelineContext
     {
-        private readonly IList<Envelope> envelopes; 
+        private readonly IList<Envelope> envelopes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="OutgoingMessageContext"/>
+        /// Initializes a new instance of the <see cref="OutgoingMessageContext"/> class.
         /// </summary>
         /// <param name="message">The outgoing message</param>
         /// <param name="configuration">Dependency injection for <see cref="IHavePipelineConfiguration"/></param>

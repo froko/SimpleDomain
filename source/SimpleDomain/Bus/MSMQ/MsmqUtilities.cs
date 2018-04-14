@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="MsmqUtilities.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.MSMQ
+namespace SimpleDomain.Bus.Msmq
 {
     using System.Messaging;
     using System.Transactions;
@@ -51,7 +51,7 @@ namespace SimpleDomain.Bus.MSMQ
         public static MessageQueue GetMessageQueue(string queueName, QueueAccessMode queueAccessMode)
         {
             Guard.NotNullOrEmpty(() => queueName);
-            
+
             var messageQueue = MessageQueue.Exists(queueName)
                 ? new MessageQueue(queueName, queueAccessMode)
                 : MessageQueue.Create(queueName, true);
@@ -70,7 +70,7 @@ namespace SimpleDomain.Bus.MSMQ
         public static MessageQueue GetMessageQueue(EndpointAddress endpointAddress, QueueAccessMode queueAccessMode)
         {
             Guard.NotNull(() => endpointAddress);
-            
+
             var queueName = GetFormattedQueueName(endpointAddress);
 
             return GetMessageQueue(queueName, queueAccessMode);

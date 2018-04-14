@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="InMemoryEventStream.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace SimpleDomain.EventStore.Persistence
         private readonly IList<SnapshotDescriptor> snapshotDescriptors;
 
         /// <summary>
-        /// Creates a new instance of <see cref="InMemoryEventStream{TAggregateRoot}"/>
+        /// Initializes a new instance of the <see cref="InMemoryEventStream{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
@@ -41,7 +41,7 @@ namespace SimpleDomain.EventStore.Persistence
         /// <param name="snapshotDescriptors">A list of snapshot descriptors as persistence backend</param>
         public InMemoryEventStream(
             Guid aggregateId,
-            Func<IEvent, Task> dispatchAsync, 
+            Func<IEvent, Task> dispatchAsync,
             IList<EventDescriptor> eventDescriptors,
             IList<SnapshotDescriptor> snapshotDescriptors) : base(aggregateId, dispatchAsync)
         {

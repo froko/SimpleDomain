@@ -19,7 +19,6 @@
 namespace SimpleDomain.Common.Logging
 {
     using System;
-    using System.Threading;
 
     /// <summary>
     /// The standard log message formatter

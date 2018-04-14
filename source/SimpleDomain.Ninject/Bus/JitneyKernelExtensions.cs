@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="JitneyKernelExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ namespace SimpleDomain.Bus
         /// Tells the Jitney bus to start receiving messages
         /// </summary>
         /// <param name="kernel">The Ninject kernel</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public static Task SignalJitneyToStartWorkAsync(this IKernel kernel)
         {
             return kernel.Get<Jitney>().StartAsync();
@@ -73,6 +74,7 @@ namespace SimpleDomain.Bus
         /// Tells the Jitney bus to stop receiving messages
         /// </summary>
         /// <param name="kernel">The Ninject kernel</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public static Task SignalJitneyToStopWorkAsync(this IKernel kernel)
         {
             return kernel.Get<Jitney>().StopAsync();

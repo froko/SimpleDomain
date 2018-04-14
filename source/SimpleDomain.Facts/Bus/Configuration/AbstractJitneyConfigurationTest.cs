@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="AbstractJitneyConfigurationTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             Action action = () => this.testee.AddConfigurationItem(null, new ConfigurationItem());
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             Action action = () => this.testee.Get<string>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace SimpleDomain.Bus.Configuration
 
             Action action = () => this.testee.Get<string>("Foo");
 
-            action.ShouldThrow<InvalidCastException>();
+            action.Should().Throw<InvalidCastException>();
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             Action action = () => this.testee.Get<string>("NotExistingKey");
 
-            action.ShouldThrow<KeyNotFoundException>();
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         [Fact]

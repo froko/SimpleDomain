@@ -20,7 +20,7 @@ namespace SimpleDomain.Common.Logging
 {
     using System;
     using System.Diagnostics;
-    
+
     /// <summary>
     /// The Trace logger
     /// </summary>
@@ -30,7 +30,7 @@ namespace SimpleDomain.Common.Logging
         private readonly IFormatLogMessages formatter;
 
         /// <summary>
-        /// Creates a new instance of <see cref="TraceLogger"/>
+        /// Initializes a new instance of the <see cref="TraceLogger"/> class.
         /// </summary>
         /// <param name="classType">The type of the class from which the log entry comes from</param>
         /// <param name="formatter">Dependency injection for <see cref="IFormatLogMessages"/></param>

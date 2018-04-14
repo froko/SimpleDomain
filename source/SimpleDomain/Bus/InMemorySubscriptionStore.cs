@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="InMemorySubscriptionStore.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus
         private readonly Dictionary<string, List<EndpointAddress>> subscriptions;
 
         /// <summary>
-        /// Creates a new instance of <see cref="InMemorySubscriptionStore"/>
+        /// Initializes a new instance of the <see cref="InMemorySubscriptionStore"/> class.
         /// </summary>
         public InMemorySubscriptionStore()
         {

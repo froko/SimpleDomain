@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\froko.csprojSetup.XmlDocumentation.2.1.0\build\froko.csprojSetup.XmlDocumentation.props" Condition="Exists('..\packages\froko.csprojSetup.XmlDocumentation.2.1.0\build\froko.csprojSetup.XmlDocumentation.props')" />
+  <Import Project="..\packages\froko.csprojSetup.ProductionCode.2.1.0\build\froko.csprojSetup.ProductionCode.props" Condition="Exists('..\packages\froko.csprojSetup.ProductionCode.2.1.0\build\froko.csprojSetup.ProductionCode.props')" />
+  <Import Project="..\packages\froko.csprojSetup.2.1.0\build\froko.csprojSetup.props" Condition="Exists('..\packages\froko.csprojSetup.2.1.0\build\froko.csprojSetup.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AEB6491C-C453-4052-98ED-0BBDAF9BA60D}</ProjectGuid>
+    <ProjectGuid>{93AA5169-3E63-4960-99F1-B1467CCFB0D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleDomain</RootNamespace>
@@ -13,7 +16,6 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,9 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -50,18 +51,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateRoot.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="AggregateRoot.cs" />
     <Compile Include="AggregateRootNotFoundException.cs" />
+    <Compile Include="Bus\CommandSubscription.cs" />
+    <Compile Include="Bus\CommandSubscriptionException.cs" />
+    <Compile Include="Bus\Configuration\AbstractHandlerRegistry.cs" />
     <Compile Include="Bus\Configuration\AbstractIoCContainerJitneyConfiguration.cs" />
+    <Compile Include="Bus\Configuration\AbstractJitneyConfiguration.cs" />
+    <Compile Include="Bus\Configuration\AssemblyExtensions.cs" />
     <Compile Include="Bus\Configuration\AsyncMessageDelegate.cs" />
+    <Compile Include="Bus\Configuration\ContainerLessHandlerRegistry.cs" />
+    <Compile Include="Bus\Configuration\ContainerLessJitneyConfiguration.cs" />
+    <Compile Include="Bus\Configuration\HandlerInvocationCache.cs" />
+    <Compile Include="Bus\Configuration\IHandlerInvocationCache.cs" />
+    <Compile Include="Bus\Configuration\JitneyFactory.cs" />
+    <Compile Include="Bus\Configuration\JitneySubscriptions.cs" />
+    <Compile Include="Bus\Configuration\TypeExtensions.cs" />
     <Compile Include="Bus\ContractsToEndpointMapper.cs" />
-    <Compile Include="Bus\Envelope.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="Bus\EndpointAddress.cs" />
+    <Compile Include="Bus\Envelope.cs" />
+    <Compile Include="Bus\EventSubscription.cs" />
     <Compile Include="Bus\FileSubscriptionStore.cs" />
+    <Compile Include="Bus\GlobalJitneyConfigurationExtensions.cs" />
     <Compile Include="Bus\HeaderKeys.cs" />
+    <Compile Include="Bus\IConfigureThisJitney.cs" />
+    <Compile Include="Bus\IHaveJitneyConfiguration.cs" />
+    <Compile Include="Bus\IHaveJitneySubscriptions.cs" />
     <Compile Include="Bus\IHavePipelineConfiguration.cs" />
     <Compile Include="Bus\IMapContractsToEndpoints.cs" />
     <Compile Include="Bus\IMessageQueueProvider.cs" />
@@ -71,43 +86,46 @@
     <Compile Include="Bus\ISendEnvelopesToMessageQueue.cs" />
     <Compile Include="Bus\ISubscribeMessageHandlers.cs" />
     <Compile Include="Bus\ISubscriptionStore.cs" />
+    <Compile Include="Bus\Jitney.cs" />
     <Compile Include="Bus\JitneyConfigurationException.cs" />
     <Compile Include="Bus\MessageQueueJitney.cs" />
-    <Compile Include="Bus\MSMQ\JsonMessageFormatter.cs" />
-    <Compile Include="Bus\MSMQ\MsmqException.cs" />
-    <Compile Include="Bus\MSMQ\MsmqProvider.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\MSMQ\MsmqSender.cs" />
-    <Compile Include="Bus\MSMQ\MsmqUtilities.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="Bus\Msmq\JsonMessageFormatter.cs" />
+    <Compile Include="Bus\Msmq\MsmqException.cs" />
+    <Compile Include="Bus\Msmq\MsmqProvider.cs" />
+    <Compile Include="Bus\Msmq\MsmqSender.cs" />
+    <Compile Include="Bus\Msmq\MsmqUtilities.cs" />
+    <Compile Include="Bus\NoSubscriptionException.cs" />
     <Compile Include="Bus\Pipeline\AuditQueueStep.cs" />
     <Compile Include="Bus\Pipeline\ErrorQueueStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContext.cs" />
+    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Incomming\IncommingPipeline.cs" />
     <Compile Include="Bus\Pipeline\Incomming\StepExtensions.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeContext.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContext.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingPipeline.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContext.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeStep.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContext.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageStep.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContext.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageStep.cs" />
+    <Compile Include="Bus\Pipeline\Outgoing\OutgoingPipeline.cs" />
     <Compile Include="Bus\Pipeline\Outgoing\StepExtensions.cs" />
     <Compile Include="Bus\Pipeline\PipelineContext.cs" />
     <Compile Include="Bus\Pipeline\PipelineStep.cs" />
+    <Compile Include="Bus\SimpleJitney.cs" />
+    <Compile Include="Bus\Subscription.cs" />
+    <Compile Include="Bus\SubscriptionMessage.cs" />
+    <Compile Include="Common\Disposable.cs" />
+    <Compile Include="Common\DynamicExtensions.g.cs" />
+    <Compile Include="Common\ExceptionExtensions.cs" />
+    <Compile Include="Common\ExceptionHelper.cs" />
+    <Compile Include="Common\Guard.cs" />
+    <Compile Include="Common\IAmBetween.cs" />
+    <Compile Include="Common\InMemoryTraceListener.cs" />
+    <Compile Include="Common\Int32BetweenGuard.cs" />
     <Compile Include="Common\Logging\IFormatLogMessages.cs" />
     <Compile Include="Common\Logging\ILogger.cs" />
     <Compile Include="Common\Logging\LoggerFactory.cs" />
@@ -115,66 +133,22 @@
     <Compile Include="Common\Logging\LogMessageFormatter.cs" />
     <Compile Include="Common\Logging\NullLogger.cs" />
     <Compile Include="Common\Logging\TraceLogger.cs" />
+    <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="CompositionRootAlreadyStartedException.cs" />
-    <Compile Include="EventStore\Configuration\AbstractIoCContainerEventStoreConfiguration.cs" />
-    <Compile Include="EventStore\Configuration\EventStoreFactory.cs" />
-    <Compile Include="EventStore\IConfigureThisEventStore.cs" />
-    <Compile Include="ExecutionContext.cs" />
-    <Compile Include="IBoundedContext.cs" />
-    <Compile Include="Bus\Configuration\AbstractHandlerRegistry.cs" />
-    <Compile Include="Bus\Configuration\AbstractJitneyConfiguration.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\GlobalJitneyConfigurationExtensions.cs" />
-    <Compile Include="Bus\Configuration\AssemblyExtensions.cs" />
-    <Compile Include="Bus\CommandSubscription.cs" />
-    <Compile Include="Bus\CommandSubscriptionException.cs" />
-    <Compile Include="Bus\Configuration\ContainerLessHandlerRegistry.cs" />
-    <Compile Include="Bus\EndpointAddress.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\EventSubscription.cs" />
-    <Compile Include="Bus\Configuration\HandlerInvocationCache.cs" />
-    <Compile Include="Bus\IConfigureThisJitney.cs" />
-    <Compile Include="Bus\Configuration\IHandlerInvocationCache.cs" />
-    <Compile Include="Bus\IHaveJitneyConfiguration.cs" />
-    <Compile Include="Bus\IHaveJitneySubscriptions.cs" />
-    <Compile Include="Bus\Jitney.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Bus\Configuration\ContainerLessJitneyConfiguration.cs" />
-    <Compile Include="Bus\Configuration\JitneySubscriptions.cs" />
-    <Compile Include="Bus\NoSubscriptionException.cs" />
-    <Compile Include="Bus\SimpleJitney.cs" />
-    <Compile Include="Bus\Subscription.cs" />
-    <Compile Include="Bus\SubscriptionMessage.cs" />
-    <Compile Include="Bus\Configuration\TypeExtensions.cs" />
-    <Compile Include="Common\Disposable.cs" />
-    <Compile Include="Common\DynamicExtensions.g.cs" />
-    <Compile Include="Common\ExceptionExtensions.cs" />
-    <Compile Include="Common\ExceptionHelper.cs" />
-    <Compile Include="Common\Guard.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Common\IAmBetween.cs" />
-    <Compile Include="Common\InMemoryTraceListener.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Common\Int32BetweenGuard.cs" />
-    <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="DynamicEventSourcedAggregateRoot.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EventHistory.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="EventHistory.cs" />
     <Compile Include="EventSourcedAggregateRoot.cs" />
     <Compile Include="EventStore\Configuration\AbstractEventStoreConfiguration.cs" />
-    <Compile Include="EventStore\EventDescriptor.cs" />
+    <Compile Include="EventStore\Configuration\AbstractIoCContainerEventStoreConfiguration.cs" />
     <Compile Include="EventStore\Configuration\ContainerLessEventStoreConfiguration.cs" />
-    <Compile Include="EventStore\GlobalEventStoreConfigurationExtensions.cs" />
+    <Compile Include="EventStore\Configuration\EventStoreFactory.cs" />
+    <Compile Include="EventStore\EventDescriptor.cs" />
     <Compile Include="EventStore\EventStoreRepository.cs" />
     <Compile Include="EventStore\EventStream.cs" />
+    <Compile Include="EventStore\GlobalEventStoreConfigurationExtensions.cs" />
+    <Compile Include="EventStore\IConfigureThisEventStore.cs" />
     <Compile Include="EventStore\IHaveEventStoreConfiguration.cs" />
     <Compile Include="EventStore\Persistence\DataReaderExtensions.cs" />
     <Compile Include="EventStore\Persistence\DbCommandExtensions.cs" />
@@ -187,9 +161,7 @@
       <DependentUpon>SqlCommands.resx</DependentUpon>
     </Compile>
     <Compile Include="EventStore\Persistence\SqlEventDescriptor.cs" />
-    <Compile Include="EventStore\Persistence\SqlEventStore.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="EventStore\Persistence\SqlEventStore.cs" />
     <Compile Include="EventStore\Persistence\SqlEventStream.cs" />
     <Compile Include="EventStore\Persistence\SqlSnapshotDescriptor.cs" />
     <Compile Include="EventStore\SnapshotDescriptor.cs" />
@@ -199,7 +171,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="ExecutionContext.cs" />
     <Compile Include="IAggregateRoot.cs" />
+    <Compile Include="IBoundedContext.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IDeliverMessages.cs" />
     <Compile Include="IEvent.cs" />
@@ -212,10 +186,7 @@
     <Compile Include="IMessage.cs" />
     <Compile Include="INeedVersion.cs" />
     <Compile Include="ISnapshot.cs" />
-    <Compile Include="Bus\Configuration\JitneyFactory.cs" />
-    <Compile Include="MessageExtensions.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="MessageExtensions.cs" />
     <Compile Include="MessageIntent.cs" />
     <Compile Include="MissingConfigurationException.cs" />
     <Compile Include="PreventAutomaticHandlerRegistrationAttribute.cs" />
@@ -227,7 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Settings.StyleCop" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EventStore\Persistence\SqlCommands.resx">
@@ -246,22 +220,12 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets'))" />
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\OctoPack.3.6.1\build\OctoPack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OctoPack.3.6.1\build\OctoPack.targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets'))" />
-    <Error Condition="!Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.2.1.0\build\froko.csprojSetup.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.2.1.0\build\froko.csprojSetup.props'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.ProductionCode.2.1.0\build\froko.csprojSetup.ProductionCode.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.ProductionCode.2.1.0\build\froko.csprojSetup.ProductionCode.props'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.OctoPack.2.1.0\build\froko.csprojSetup.OctoPack.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.OctoPack.2.1.0\build\froko.csprojSetup.OctoPack.Targets'))" />
+    <Error Condition="!Exists('..\packages\froko.csprojSetup.XmlDocumentation.2.1.0\build\froko.csprojSetup.XmlDocumentation.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\froko.csprojSetup.XmlDocumentation.2.1.0\build\froko.csprojSetup.XmlDocumentation.props'))" />
+    <Error Condition="!Exists('..\packages\OctoPack.3.6.3\build\OctoPack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OctoPack.3.6.3\build\OctoPack.targets'))" />
   </Target>
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" />
-  <Import Project="..\packages\OctoPack.3.6.1\build\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.6.1\build\OctoPack.targets')" />
-  <Import Project="..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets" Condition="Exists('..\packages\froko.csprojSetup.1.15.0\build\froko.csprojSetup.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets" Condition="Exists('..\packages\froko.csprojSetup.OctoPack.1.15.0\build\froko.csprojSetup.OctoPack.Targets')" />
-  <Import Project="..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets" Condition="Exists('..\packages\froko.csprojSetup.XmlDocumentation.1.15.0\build\froko.csprojSetup.XmlDocumentation.Targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <Import Project="..\packages\froko.csprojSetup.OctoPack.2.1.0\build\froko.csprojSetup.OctoPack.Targets" Condition="Exists('..\packages\froko.csprojSetup.OctoPack.2.1.0\build\froko.csprojSetup.OctoPack.Targets')" />
+  <Import Project="..\packages\OctoPack.3.6.3\build\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.6.3\build\OctoPack.targets')" />
 </Project>

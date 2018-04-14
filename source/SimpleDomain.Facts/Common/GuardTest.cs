@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="GuardTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.NotNull(() => argument);
 
-            action.ShouldThrow<ArgumentNullException>().Where(exception => exception.Message.Contains("argument"));
+            action.Should().Throw<ArgumentNullException>().Where(exception => exception.Message.Contains("argument"));
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.NotNull(() => argument);
 
-            action.ShouldNotThrow<Exception>();
+            action.Should().NotThrow<Exception>();
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.NotNullOrEmpty(() => myString);
 
-            action.ShouldThrow<ArgumentNullException>().Where(exception => exception.Message.Contains("myString"));
+            action.Should().Throw<ArgumentNullException>().Where(exception => exception.Message.Contains("myString"));
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.NotNullOrEmpty(() => myString);
 
-            action.ShouldThrow<ArgumentException>().Where(exception => exception.Message.Contains("myString"));
+            action.Should().Throw<ArgumentException>().Where(exception => exception.Message.Contains("myString"));
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.NotNullOrEmpty(() => MyString);
 
-            action.ShouldNotThrow<Exception>();
+            action.Should().NotThrow<Exception>();
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace SimpleDomain.Common
 
             Action action = () => Guard.IsTrue(false, ExceptionMessage);
 
-            action.ShouldThrow<ArgumentException>().WithMessage(ExceptionMessage);
+            action.Should().Throw<ArgumentException>().WithMessage(ExceptionMessage);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace SimpleDomain.Common
         {
             Action action = () => Guard.IsTrue(true, "Something went wrong");
 
-            action.ShouldNotThrow<Exception>();
+            action.Should().NotThrow<Exception>();
         }
     }
 }

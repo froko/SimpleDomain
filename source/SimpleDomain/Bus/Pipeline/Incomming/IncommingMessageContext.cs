@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IncommingMessageContext.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
     public class IncommingMessageContext : PipelineContext
     {
         /// <summary>
-        /// Creates a new instance of <see cref="IncommingMessageContext"/>
+        /// Initializes a new instance of the <see cref="IncommingMessageContext"/> class.
         /// </summary>
         /// <param name="envelope">The originating envelope</param>
         /// <param name="configuration">Dependency injection for <see cref="IHavePipelineConfiguration"/></param>

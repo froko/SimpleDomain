@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FluentTestingExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -34,11 +34,13 @@ namespace SimpleDomain
         /// Asserts that a given string has been logged
         /// </summary>
         /// <param name="stringAssertions">The string that should have been logged</param>
+        /// <returns>A log level aware instance, so that the logged string can be tested for its log level</returns>
         public static LogLevelAware HaveBeenLogged(this StringAssertions stringAssertions)
         {
+            InMemoryTraceListener.Lock();
             var logMessage = InMemoryTraceListener.LogMessages.LastOrDefault(s => s.Contains(stringAssertions.Subject));
-
             logMessage.Should().NotBeNullOrEmpty($"{stringAssertions.Subject} should have been logged");
+            InMemoryTraceListener.Unlock();
 
             return new LogLevelAware(logMessage);
         }

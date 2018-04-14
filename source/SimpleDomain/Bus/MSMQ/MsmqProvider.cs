@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="MsmqProvider.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.MSMQ
+namespace SimpleDomain.Bus.Msmq
 {
     using System;
     using System.Collections.Concurrent;
@@ -25,19 +25,19 @@ namespace SimpleDomain.Bus.MSMQ
     using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
-    
+
     using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The MSMQ message queue provider
     /// </summary>
-    public class MsmqProvider : IMessageQueueProvider
+    public sealed class MsmqProvider : IMessageQueueProvider
     {
         private static readonly ILogger Logger = LoggerFactory.Create<MsmqProvider>();
 
         private Func<Envelope, Task> callMeBackWhenEnvelopeArrives;
         private MessageQueue localQueue;
-        
+
         private CancellationTokenSource cancellationTokenSource;
         private CancellationToken cancellationToken;
 
@@ -91,6 +91,7 @@ namespace SimpleDomain.Bus.MSMQ
         /// <inheritdoc />
         public void Dispose()
         {
+            this.cancellationTokenSource.Dispose();
             this.DisconnectAsync().Wait(TimeSpan.FromSeconds(30));
         }
 
@@ -187,7 +188,7 @@ namespace SimpleDomain.Bus.MSMQ
                 }
             }
         }
-        
+
         private async Task HandleMessageAsync(Message message)
         {
             if (message == null)

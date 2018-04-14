@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="GetEventStoreStream.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SimpleDomain.EventStore.Persistence
     /// <summary>
     /// The GetEventStore event stream
     /// </summary>
-    /// <typeparam name="TAggregateRoot"></typeparam>
+    /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
     public class GetEventStoreStream<TAggregateRoot> : EventStream<TAggregateRoot> where TAggregateRoot : IEventSourcedAggregateRoot
     {
         private const int MaxItemCount = 4095;
@@ -37,7 +37,7 @@ namespace SimpleDomain.EventStore.Persistence
         private IEventStoreConnection connection;
 
         /// <summary>
-        /// Creates a new instance of <see cref="GetEventStoreStream{TAggregateRoot}"/>
+        /// Initializes a new instance of the <see cref="GetEventStoreStream{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>

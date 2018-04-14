@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="GlobalEventStoreConfigurationExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ namespace SimpleDomain.EventStore
         /// <summary>
         /// Registers the InMemory EventStore
         /// </summary>
+        /// <param name="configuration">The event store configuration</param>
         public static void UseInMemoryEventStore(this IConfigureThisEventStore configuration)
         {
             configuration.AddConfigurationItem(InMemoryEventStore.EventDescriptors, new List<EventDescriptor>());
@@ -40,6 +41,7 @@ namespace SimpleDomain.EventStore
         /// <summary>
         /// Registers the SQL EventStore
         /// </summary>
+        /// <param name="configuration">The event store configuration</param>
         public static void UseSqlEventStore(this IConfigureThisEventStore configuration)
         {
             configuration.AddConfigurationItem(SqlEventStore.ConnectionFactory, new DbConnectionFactory());

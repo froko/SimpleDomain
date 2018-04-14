@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="AbstractJitneyConfiguration.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace SimpleDomain.Bus.Configuration
     /// <summary>
     /// The Jitney configuration base class
     /// </summary>
-    public abstract class AbstractJitneyConfiguration : 
+    public abstract class AbstractJitneyConfiguration :
         IConfigureThisJitney,
         ISubscribeMessageHandlers,
         IHaveJitneyConfiguration,
@@ -42,7 +42,7 @@ namespace SimpleDomain.Bus.Configuration
         private readonly IDictionary<string, object> configurationItems;
         private readonly IDictionary<Type, EndpointAddress> contractMap;
         private readonly JitneySubscriptions jitneySubscriptions;
-        
+
         private readonly IList<IncommingEnvelopeStep> incommingEnvelopeSteps;
         private readonly IList<IncommingMessageStep> incommingMessageSteps;
         private readonly IList<OutgoingMessageStep> outgoingMessageSteps;
@@ -52,7 +52,7 @@ namespace SimpleDomain.Bus.Configuration
         private ISubscriptionStore subscriptionStore;
 
         /// <summary>
-        /// Creates a new instance of <see cref="AbstractJitneyConfiguration"/>
+        /// Initializes a new instance of the <see cref="AbstractJitneyConfiguration"/> class.
         /// </summary>
         /// <param name="handlerRegistry">Dependency injection for <see cref="AbstractHandlerRegistry"/></param>
         protected AbstractJitneyConfiguration(AbstractHandlerRegistry handlerRegistry)
@@ -194,13 +194,13 @@ namespace SimpleDomain.Bus.Configuration
 
             this.jitneySubscriptions.AddEventHandler(handler);
         }
-        
+
         /// <inheritdoc />
         public OutgoingPipeline CreateOutgoingPipeline(Func<Envelope, Task> handleEnvelopeAsync)
         {
             return new OutgoingPipeline(
-                this, 
-                this.outgoingMessageSteps.WithFinalOutgoingMessageStep(), 
+                this,
+                this.outgoingMessageSteps.WithFinalOutgoingMessageStep(),
                 this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(handleEnvelopeAsync));
         }
 
@@ -228,18 +228,19 @@ namespace SimpleDomain.Bus.Configuration
             {
                 stringBuilder.AppendLine($"Subscription store: {this.SubscriptionStore.GetType().Name}");
             }
+
             AppendPipelineSteps(stringBuilder, "Outgoing message steps", this.outgoingMessageSteps.WithFinalOutgoingMessageStep());
             AppendPipelineSteps(stringBuilder, "Outgoing envelope steps", this.outgoingEnvelopeSteps.WithFinalOutgoingEnvelopeStep(null));
             AppendPipelineSteps(stringBuilder, "Incomming envelope steps", this.incommingEnvelopeSteps.WithFinalIncommingEnvelopeStep());
             AppendPipelineSteps(stringBuilder, "Incomming message steps", this.incommingMessageSteps.WithFinalIncommingMessageStep(null, null, null));
-            
+
             if (this.configurationItems.Any())
             {
                 stringBuilder.AppendLine("\r\nConfiguration items:");
                 foreach (var configurationItem in this.configurationItems)
                 {
                     stringBuilder.AppendLine($"- {configurationItem.Key}: {configurationItem.Value}");
-                }    
+                }
             }
 
             return stringBuilder.ToString();

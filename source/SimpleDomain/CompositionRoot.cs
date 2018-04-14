@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="CompositionRoot.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -34,14 +34,14 @@ namespace SimpleDomain
     {
         private readonly JitneyFactory jitneyFactory;
         private readonly EventStoreFactory eventStoreFactory;
-        private readonly List<IBoundedContext> boundedContexts; 
-        
+        private readonly List<IBoundedContext> boundedContexts;
+
         private AbstractJitneyConfiguration jitneyConfiguration;
         private AbstractEventStoreConfiguration eventStoreConfiguration;
         private ExecutionContext executionContext;
 
         /// <summary>
-        /// Creates a new instance of <see cref="CompositionRoot"/>
+        /// Initializes a new instance of the <see cref="CompositionRoot"/> class.
         /// </summary>
         public CompositionRoot()
         {
@@ -123,11 +123,11 @@ namespace SimpleDomain
 
             var bus = this.jitneyFactory.Create(this.jitneyConfiguration);
             var eventStore = this.eventStoreFactory.Create(this.eventStoreConfiguration, bus);
-            
+
             this.boundedContexts.ForEach(bc => bc.Configure(this.jitneyConfiguration, bus, new EventStoreRepository(eventStore)));
-            
+
             await bus.StartAsync().ConfigureAwait(false);
-            
+
             this.executionContext = new ExecutionContext(bus, eventStore);
             this.executionContext.Stopped += (sender, args) => { this.executionContext = null; };
             this.executionContext.Disposed += (sender, args) =>

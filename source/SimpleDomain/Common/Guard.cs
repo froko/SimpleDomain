@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Guard.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //   //   Licensed under the Apache License, Version 2.0 (the "License");
 //   //   you may not use this file except in compliance with the License.
 //   //   You may obtain a copy of the License at
@@ -28,6 +28,8 @@ namespace SimpleDomain.Common
         /// Ensures the value of the given <paramref name="argumentExpression"/> is not null.
         /// Throws <see cref="ArgumentNullException"/> otherwise.
         /// </summary>
+        /// <typeparam name="T">The type of the argument</typeparam>
+        /// <param name="argumentExpression">The function to get the value</param>
         public static void NotNull<T>(Expression<Func<T>> argumentExpression) where T : class
         {
             if (GetValue(argumentExpression) == null)
@@ -38,9 +40,10 @@ namespace SimpleDomain.Common
 
         /// <summary>
         /// Ensures the string value of the given <paramref name="argumentExpression"/> is not null or empty.
-        /// Throws <see cref="ArgumentNullException"/> in the first case, or 
+        /// Throws <see cref="ArgumentNullException"/> in the first case, or
         /// <see cref="ArgumentException"/> in the latter.
         /// </summary>
+        /// <param name="argumentExpression">The function to get the value</param>
         public static void NotNullOrEmpty(Expression<Func<string>> argumentExpression)
         {
             var value = GetValue(argumentExpression);
@@ -73,11 +76,11 @@ namespace SimpleDomain.Common
         /// <summary>
         /// Ensures that a given value is between a given range
         /// </summary>
-        /// <param name="value">The value</param>
+        /// <param name="numericValue">The value</param>
         /// <returns>An instance of <see cref="IAmBetween{T}"/></returns>
-        public static IAmBetween<int> Value(int value)
+        public static IAmBetween<int> Value(int numericValue)
         {
-            return new Int32BetweenGuard(value);
+            return new Int32BetweenGuard(numericValue);
         }
 
         private static T GetValue<T>(Expression<Func<T>> reference) where T : class

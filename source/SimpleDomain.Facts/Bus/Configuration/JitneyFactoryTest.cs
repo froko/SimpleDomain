@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="JitneyFactoryTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ namespace SimpleDomain.Bus.Configuration
         public void CanRegisterJitneyCreation()
         {
             var testee = new JitneyFactory();
-            
+
             testee.Register(config => new MessageQueueJitney(config));
 
             testee.Create(A.Fake<IHaveJitneyConfiguration>()).Should().BeAssignableTo<MessageQueueJitney>();

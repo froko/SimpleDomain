@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="JsonMessageFormatter.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.MSMQ
+namespace SimpleDomain.Bus.Msmq
 {
     using System.IO;
     using System.Messaging;
@@ -41,7 +41,7 @@ namespace SimpleDomain.Bus.MSMQ
         private readonly JsonSerializerSettings serializerSettings;
 
         /// <summary>
-        /// Creates a new instance of <see cref="JsonMessageFormatter"/>
+        /// Initializes a new instance of the <see cref="JsonMessageFormatter"/> class.
         /// </summary>
         public JsonMessageFormatter()
         {
@@ -94,7 +94,7 @@ namespace SimpleDomain.Bus.MSMQ
         /// <summary>
         /// Clones this instance
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A clone of this instance</returns>
         public object Clone()
         {
             return new JsonMessageFormatter();

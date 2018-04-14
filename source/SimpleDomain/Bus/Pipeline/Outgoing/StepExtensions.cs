@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="StepExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// Appends the <see cref="FinalOutgoingMessageStep"/> to the list of all registered outgoing message pipeline steps
         /// </summary>
         /// <param name="steps">The list of all registered outgoing message pipeline steps</param>
-        /// <returns>The list of all registered outgoing message pipeline steps</returns>
+        /// <returns>The updated list of all registered outgoing message pipeline steps</returns>
         public static IEnumerable<OutgoingMessageStep> WithFinalOutgoingMessageStep(
             this IEnumerable<OutgoingMessageStep> steps)
         {
@@ -44,12 +44,12 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// </summary>
         /// <param name="steps">The list of all registered outgoing envelope pipeline steps</param>
         /// <param name="handleEnvelopeAsync">The last async action to be performed for an outgoing envelope</param>
-        /// <returns>The list of all registered outgoing envelope pipeline steps</returns>
+        /// <returns>The updated list of all registered outgoing envelope pipeline steps</returns>
         public static IEnumerable<OutgoingEnvelopeStep> WithFinalOutgoingEnvelopeStep(
             this IEnumerable<OutgoingEnvelopeStep> steps,
             Func<Envelope, Task> handleEnvelopeAsync)
         {
             return steps.Concat(new[] { new FinalOutgoingEnvelopeStep(handleEnvelopeAsync) });
-        } 
+        }
     }
 }

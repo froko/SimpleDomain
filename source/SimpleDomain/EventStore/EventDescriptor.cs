@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EventDescriptor.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ namespace SimpleDomain.EventStore
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// This class describes an event enriched with further attributes
@@ -27,14 +28,14 @@ namespace SimpleDomain.EventStore
     public class EventDescriptor
     {
         /// <summary>
-        /// Creates a new instance of <see cref="EventDescriptor"/>
+        /// Initializes a new instance of the <see cref="EventDescriptor"/> class.
         /// </summary>
         public EventDescriptor()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="EventDescriptor"/>
+        /// Initializes a new instance of the <see cref="EventDescriptor"/> class.
         /// </summary>
         /// <param name="aggregateType">The full CLR name of the aggregate root</param>
         /// <param name="aggregateId">The id of the aggregate root</param>
@@ -84,6 +85,7 @@ namespace SimpleDomain.EventStore
         /// <summary>
         /// Gets or sets a list of arbitrary headers
         /// </summary>
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Reviewed, okay")]
         public Dictionary<string, object> Headers { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="SimpleJitney.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
-    
+
     using SimpleDomain.Common;
     using SimpleDomain.Common.Logging;
 
@@ -31,7 +31,7 @@ namespace SimpleDomain.Bus
         private static readonly ILogger Logger = LoggerFactory.Create<Jitney>();
 
         /// <summary>
-        /// Creates a new instance of <see cref="SimpleJitney"/>
+        /// Initializes a new instance of the <see cref="SimpleJitney"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
         public SimpleJitney(IHaveJitneyConfiguration configuration)

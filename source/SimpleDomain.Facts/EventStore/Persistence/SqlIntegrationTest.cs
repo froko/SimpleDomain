@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="SqlIntegrationTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ namespace SimpleDomain.EventStore.Persistence
             this.configuration = new ContainerLessEventStoreConfiguration(factory);
             this.configuration.UseSqlEventStore();
 
-            this.testee = factory.Create(configuration, bus);
+            this.testee = factory.Create(this.configuration, this.bus);
         }
 
         [Fact, WithTransaction]
@@ -186,11 +186,11 @@ namespace SimpleDomain.EventStore.Persistence
         private async Task CreateTestEventsAsync(int numberOfEvents)
         {
             var factory = this.configuration.Get<DbConnectionFactory>(SqlEventStore.ConnectionFactory);
-            
+
             for (var version = 0; version < numberOfEvents; version++)
             {
                 var @event = new ValueEvent(version);
-                await SaveEventAsync(factory, new VersionableEvent(@event).WithVersion(version)).ConfigureAwait(false);
+                await this.SaveEventAsync(factory, new VersionableEvent(@event).WithVersion(version)).ConfigureAwait(false);
             }
         }
 

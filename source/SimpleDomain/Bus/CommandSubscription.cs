@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="CommandSubscription.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace SimpleDomain.Bus
         private readonly Type commandType;
 
         /// <summary>
-        /// Creates a new instance of <see cref="CommandSubscription{TCommand}"/>
+        /// Initializes a new instance of the <see cref="CommandSubscription{TCommand}"/> class.
         /// </summary>
         /// <param name="handler">The action to handle the command asynchronously</param>
         public CommandSubscription(Func<TCommand, Task> handler)

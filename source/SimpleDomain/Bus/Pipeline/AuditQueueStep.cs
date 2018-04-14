@@ -21,7 +21,7 @@ namespace SimpleDomain.Bus.Pipeline
     using System;
     using System.Threading.Tasks;
 
-    using SimpleDomain.Bus.MSMQ;
+    using SimpleDomain.Bus.Msmq;
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Common;
 
@@ -36,16 +36,16 @@ namespace SimpleDomain.Bus.Pipeline
         private bool disableAuditForSubscriptionMessages;
 
         /// <summary>
-        /// Creates a new instance of <see cref="AuditQueueStep"/> which uses MSMQ
+        /// Initializes a new instance of the <see cref="AuditQueueStep"/> class which uses MSMQ.
         /// </summary>
         /// <param name="auditQueue">The address of the audit queue</param>
         public AuditQueueStep(string auditQueue)
             : this(auditQueue, new MsmqSender())
-        {          
+        {
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="AuditQueueStep"/>
+        /// Initializes a new instance of the <see cref="AuditQueueStep"/> class which uses MSMQ.
         /// </summary>
         /// <param name="auditQueue">The address of the audit queue</param>
         /// <param name="messageQueueSender">Dependency injection for <see cref="ISendEnvelopesToMessageQueue"/></param>

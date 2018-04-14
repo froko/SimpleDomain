@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="MessageQueueJitneyTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,14 +32,14 @@ namespace SimpleDomain.Bus
 
     using Xunit;
 
-    public class MessageQueueJitneyTest : IDisposable
+    public class MessageQueueJitneyTest
     {
         private readonly IHaveJitneyConfiguration configuration;
         private readonly IMessageQueueProvider messageQueueProvider;
         private readonly OutgoingPipeline outgoingPipeline;
         private readonly EndpointAddress localEndpointAddress;
         private readonly MessageQueueJitney testee;
-        
+
         public MessageQueueJitneyTest()
         {
             Trace.Listeners.Add(InMemoryTraceListener.Instance);
@@ -59,18 +59,12 @@ namespace SimpleDomain.Bus
             this.testee = new MessageQueueJitney(this.configuration);
         }
 
-        public void Dispose()
-        {
-            InMemoryTraceListener.ClearLogMessages();
-            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
-        }
-
         [Fact]
         public void ThrowsException_WhenTryingToInjectNullAsJitneyConfiguration()
         {
             Action action = () => { new SimpleJitney(null); };
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -89,7 +83,7 @@ namespace SimpleDomain.Bus
         {
             await this.testee.StartAsync().ConfigureAwait(false);
 
-            A.CallTo(() => messageQueueProvider.Connect(this.localEndpointAddress, A<Func<Envelope, Task>>.Ignored))
+            A.CallTo(() => this.messageQueueProvider.Connect(this.localEndpointAddress, A<Func<Envelope, Task>>.Ignored))
                 .MustHaveHappened();
         }
 
@@ -100,10 +94,10 @@ namespace SimpleDomain.Bus
 
             A.CallTo(() => subscriptions.GetSubscribedEventTypes()).Returns(new[] { typeof(MyEvent), typeof(OtherEvent) });
             A.CallTo(() => this.configuration.Subscriptions).Returns(subscriptions);
-            
+
             await this.testee.StartAsync().ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(A<SubscriptionMessage>.Ignored))
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(A<SubscriptionMessage>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Twice);
         }
 
@@ -122,7 +116,7 @@ namespace SimpleDomain.Bus
 
             await this.testee.SendAsync(command).ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
         }
 
         [Fact]
@@ -130,7 +124,7 @@ namespace SimpleDomain.Bus
         {
             Func<Task> action = () => this.testee.SendAsync<ValueCommand>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -140,7 +134,7 @@ namespace SimpleDomain.Bus
 
             await this.testee.PublishAsync(@event).ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
         }
 
         [Fact]
@@ -148,7 +142,7 @@ namespace SimpleDomain.Bus
         {
             Func<Task> action = () => this.testee.PublishAsync<ValueEvent>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

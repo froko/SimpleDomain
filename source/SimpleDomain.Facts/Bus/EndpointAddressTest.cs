@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EndpointAddressTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -58,14 +58,14 @@ namespace SimpleDomain.Bus
             Action nullStringAction = () => { new EndpointAddress(null); };
             Action emptyStringAction = () => { new EndpointAddress(string.Empty); };
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
 
             nullStringAction = () => { new EndpointAddress(null, "remoteMachine"); };
             emptyStringAction = () => { new EndpointAddress(string.Empty, "remoteMachine"); };
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -74,8 +74,8 @@ namespace SimpleDomain.Bus
             Action nullStringAction = () => { new EndpointAddress("remoteQueue", null); };
             Action emptyStringAction = () => { new EndpointAddress("remoteQueue", string.Empty); };
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -93,8 +93,8 @@ namespace SimpleDomain.Bus
             Action nullStringAction = () => EndpointAddress.Parse(null);
             Action emptyStringAction = () => EndpointAddress.Parse(string.Empty);
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace SimpleDomain.Bus
         {
             Action invalidStringAction = () => EndpointAddress.Parse("invalidStringWithNoAtSeperator");
 
-            invalidStringAction.ShouldThrow<ArgumentException>()
+            invalidStringAction.Should().Throw<ArgumentException>()
                 .Where(exception => exception.Message.Contains("must contain an @"));
         }
 
@@ -123,8 +123,8 @@ namespace SimpleDomain.Bus
             Action nullStringAction = () => testee.CreateSubScopeAddress(null);
             Action emptyStringAction = () => testee.CreateSubScopeAddress(string.Empty);
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
         }
 
         [Fact]

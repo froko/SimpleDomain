@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="JitneyConfigurationException.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace SimpleDomain.Bus
     public class JitneyConfigurationException : Exception
     {
         /// <summary>
-        /// Creates a new instance of <see cref="JitneyConfigurationException"/>
+        /// Initializes a new instance of the <see cref="JitneyConfigurationException"/> class.
         /// </summary>
         /// <param name="message">The exception message</param>
         public JitneyConfigurationException(string message) : base(message)

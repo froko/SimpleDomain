@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="SimpleJitneyTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus
 
     using Xunit;
 
-    public class SimpleJitneyTest : IDisposable
+    public class SimpleJitneyTest
     {
         private readonly IHaveJitneyConfiguration configuration;
         private readonly OutgoingPipeline outgoingPipeline;
@@ -52,18 +52,12 @@ namespace SimpleDomain.Bus
             this.testee = new SimpleJitney(this.configuration);
         }
 
-        public void Dispose()
-        {
-            InMemoryTraceListener.ClearLogMessages();
-            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
-        }
-
         [Fact]
         public void ThrowsException_WhenTryingToInjectNullAsJitneyConfiguration()
         {
             Action action = () => { new SimpleJitney(null); };
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -87,7 +81,7 @@ namespace SimpleDomain.Bus
 
             await this.testee.StartAsync().ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(Repeated.Exactly.Twice);
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(Repeated.Exactly.Twice);
         }
 
         [Fact]
@@ -102,10 +96,10 @@ namespace SimpleDomain.Bus
         public async Task CallsOutgoingPipeline_WhenSendingCommand()
         {
             var command = new ValueCommand(11);
-            
+
             await this.testee.SendAsync(command).ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(command)).MustHaveHappened();
         }
 
         [Fact]
@@ -113,17 +107,17 @@ namespace SimpleDomain.Bus
         {
             Func<Task> action = () => this.testee.SendAsync<ValueCommand>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public async Task CallsOutgoingPipeline_WhenPublishingEvent()
         {
             var @event = new ValueEvent(11);
-            
+
             await this.testee.PublishAsync(@event).ConfigureAwait(false);
 
-            A.CallTo(() => outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(@event)).MustHaveHappened();
         }
 
         [Fact]
@@ -131,7 +125,7 @@ namespace SimpleDomain.Bus
         {
             Func<Task> action = () => this.testee.PublishAsync<ValueEvent>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

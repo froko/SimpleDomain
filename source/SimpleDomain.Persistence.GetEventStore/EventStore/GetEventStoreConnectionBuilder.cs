@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="GetEventStoreConnectionBuilder.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ namespace SimpleDomain.EventStore
         private const string DefaultUserName = "admin";
         private const string DefaultPassword = "changeit";
         private const int DefaultPort = 1113;
-        
+
         private UserCredentials credentials;
         private IPEndPoint endpoint;
 
         /// <summary>
-        /// Creates a new instance of <see cref="GetEventStoreConnectionBuilder"/>
+        /// Initializes a new instance of the <see cref="GetEventStoreConnectionBuilder"/> class.
         /// </summary>
         private GetEventStoreConnectionBuilder()
         {
@@ -53,7 +53,7 @@ namespace SimpleDomain.EventStore
         {
             return new GetEventStoreConnectionBuilder();
         }
-        
+
         /// <summary>
         /// Defines the authentication
         /// </summary>
@@ -87,9 +87,9 @@ namespace SimpleDomain.EventStore
                 .SetDefaultUserCredentials(this.credentials);
 
             var connection = EventStoreConnection.Create(settings, this.endpoint);
-            
+
             await connection.ConnectAsync().ConfigureAwait(false);
-            
+
             return connection;
         }
     }

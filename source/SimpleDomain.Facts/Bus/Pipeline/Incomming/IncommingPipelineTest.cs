@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IncommingPipelineTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -40,13 +40,13 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         {
             this.envelopeStep = new FakeEnvelopeStep();
             this.messageStep = new FakeMessageStep();
-            
+
             var incommingEnvelopeSteps = new List<IncommingEnvelopeStep> { this.envelopeStep };
             var incommingMessageSteps = new List<IncommingMessageStep> { this.messageStep };
 
             this.testee = new IncommingPipeline(
-                A.Fake<IHavePipelineConfiguration>(), 
-                incommingEnvelopeSteps, 
+                A.Fake<IHavePipelineConfiguration>(),
+                incommingEnvelopeSteps,
                 incommingMessageSteps);
         }
 

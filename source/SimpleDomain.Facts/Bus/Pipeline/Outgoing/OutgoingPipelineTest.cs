@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="OutgoingPipelineTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         {
             Func<Task> action = () => this.testee.InvokeAsync(new ValueCommand(11));
 
-            action.ShouldThrow<JitneyConfigurationException>();
+            action.Should().Throw<JitneyConfigurationException>();
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 
             public override string Name
             {
-                get { return "FakeMessageStep"; } 
+                get { return "FakeMessageStep"; }
             }
 
             public override Task InvokeAsync(OutgoingMessageContext context, Func<Task> next)

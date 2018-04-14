@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="MsmqException.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.MSMQ
+namespace SimpleDomain.Bus.Msmq
 {
     using System;
 
@@ -27,7 +27,7 @@ namespace SimpleDomain.Bus.MSMQ
     public class MsmqException : Exception
     {
         /// <summary>
-        /// Creates a new instance of <see cref="MsmqException"/>
+        /// Initializes a new instance of the <see cref="MsmqException"/> class.
         /// </summary>
         /// <param name="message">The innerException message</param>
         /// <param name="innerException">The inner innerException</param>

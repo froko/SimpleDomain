@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="ExceptionHelper.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 namespace SimpleDomain.Common
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Simple helper class to deal with exceptions
@@ -29,6 +30,7 @@ namespace SimpleDomain.Common
         /// Eats an exception without doing anything.
         /// </summary>
         /// <param name="exception">The exception</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "exception", Justification = "This is by intent")]
         public static void Eat(Exception exception)
         {
         }

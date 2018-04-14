@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EventStoreRepositoryTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ namespace SimpleDomain.EventStore
         public void ThrowsException_WhenGettingAggregateRootByIdAndThereAreNoEvents()
         {
             A.CallTo(() => this.eventStream.ReplayAsync()).Returns(EventHistory.Create());
-            
+
             Func<Task> action = async () =>
             {
                 await this.testee
@@ -91,7 +91,7 @@ namespace SimpleDomain.EventStore
                     .ConfigureAwait(false);
             };
 
-            action.ShouldThrow<AggregateRootNotFoundException>();
+            action.Should().Throw<AggregateRootNotFoundException>();
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace SimpleDomain.EventStore
         {
             const int Version = 20;
             var aggregateRoot = new MyDynamicEventSourcedAggregateRoot(this.aggregateId).WithVersion(Version);
-            
+
             this.testee.WithSnapshotStrategyFor<MyDynamicEventSourcedAggregateRoot>(10);
             await this.testee.SaveAsync(aggregateRoot).ConfigureAwait(false);
 

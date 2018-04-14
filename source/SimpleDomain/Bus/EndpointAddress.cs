@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="EndpointAddress.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus
     public class EndpointAddress : ValueObject<EndpointAddress>
     {
         /// <summary>
-        /// Creates a new instance of <see cref="EndpointAddress"/>
+        /// Initializes a new instance of the <see cref="EndpointAddress"/> class.
         /// </summary>
         /// <param name="queueName">The name of the queue</param>
         public EndpointAddress(string queueName)
@@ -42,7 +42,7 @@ namespace SimpleDomain.Bus
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="EndpointAddress"/>
+        /// Initializes a new instance of the <see cref="EndpointAddress"/> class.
         /// </summary>
         /// <param name="queueName">The name of the queue</param>
         /// <param name="machineName">The name of the remote machine</param>
@@ -67,7 +67,7 @@ namespace SimpleDomain.Bus
         public string MachineName { get; }
 
         /// <summary>
-        /// Gets the fact that this endpoint is local to the current machine
+        /// Gets a value indicating whether this endpoint is local to the current machine
         /// </summary>
         [JsonIgnore]
         public bool IsLocal => this.MachineName == Environment.MachineName;

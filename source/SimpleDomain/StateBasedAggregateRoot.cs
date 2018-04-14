@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="StateBasedAggregateRoot.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ namespace SimpleDomain
     public abstract class StateBasedAggregateRoot<TState> : AggregateRoot where TState : class
     {
         /// <summary>
-        /// Creates a new instance of <see cref="StateBasedAggregateRoot{TState}"/>
+        /// Initializes a new instance of the <see cref="StateBasedAggregateRoot{TState}"/> class.
         /// </summary>
         protected StateBasedAggregateRoot()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="StateBasedAggregateRoot{TState}"/>
+        /// Initializes a new instance of the <see cref="StateBasedAggregateRoot{TState}"/> class.
         /// </summary>
         /// <param name="state">Dependency injection of the state holding entity</param>
         protected StateBasedAggregateRoot(TState state)

@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EventStream.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ namespace SimpleDomain.EventStore
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -29,12 +30,13 @@ namespace SimpleDomain.EventStore
     /// The abstract base class of an event stream
     /// </summary>
     /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
+    [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Reviewed, okay")]
     public abstract class EventStream<TAggregateRoot> : Disposable, IEventStream where TAggregateRoot : IEventSourcedAggregateRoot
     {
         private readonly Func<IEvent, Task> dispatchAsync;
 
         /// <summary>
-        /// Creates a new instance of <see cref="EventStream{TAggregateRoot}"/>
+        /// Initializes a new instance of the <see cref="EventStream{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>
@@ -104,6 +106,7 @@ namespace SimpleDomain.EventStore
         /// </summary>
         /// <param name="versionableEvent">The versionable event</param>
         /// <param name="headers">A list of arbitrary headers</param>
+        /// <returns>A task since this is an ansync method</returns>
         protected abstract Task SaveAsync(VersionableEvent versionableEvent, IDictionary<string, object> headers);
 
         /// <summary>

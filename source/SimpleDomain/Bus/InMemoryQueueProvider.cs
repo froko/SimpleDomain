@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus
     /// <summary>
     /// The In-Memory Queue provider
     /// </summary>
-    public class InMemoryQueueProvider : IMessageQueueProvider
+    public sealed class InMemoryQueueProvider : IMessageQueueProvider
     {
         private static readonly ILogger Logger = LoggerFactory.Create<InMemoryQueueProvider>();
 
@@ -80,6 +80,7 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public void Dispose()
         {
+            this.cancellationTokenSource.Dispose();
             this.DisconnectAsync().Wait(TimeSpan.FromSeconds(30));
         }
 
@@ -108,7 +109,7 @@ namespace SimpleDomain.Bus
                 }
             }
         }
-        
+
         private Task ProcessMessagesAsync()
         {
             Envelope envelope;
@@ -116,7 +117,7 @@ namespace SimpleDomain.Bus
             {
                 return Task.CompletedTask;
             }
-            
+
             var handlerTask = this.HandleMessageAsync(envelope);
             this.handlerTasks.TryAdd(handlerTask, handlerTask);
 

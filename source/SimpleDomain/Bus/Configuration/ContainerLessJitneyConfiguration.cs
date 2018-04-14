@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="ContainerLessJitneyConfiguration.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -26,11 +26,12 @@ namespace SimpleDomain.Bus.Configuration
     public class ContainerLessJitneyConfiguration : AbstractJitneyConfiguration
     {
         private readonly JitneyFactory factory;
-        
+
         /// <summary>
-        /// Creates a new instance of <see cref="ContainerLessJitneyConfiguration"/>
+        /// Initializes a new instance of the <see cref="ContainerLessJitneyConfiguration"/> class.
         /// </summary>
-        public ContainerLessJitneyConfiguration(JitneyFactory factory) 
+        /// <param name="factory">Dependency injection for <see cref="JitneyFactory"/></param>
+        public ContainerLessJitneyConfiguration(JitneyFactory factory)
             : base(new ContainerLessHandlerRegistry())
         {
             this.factory = factory;

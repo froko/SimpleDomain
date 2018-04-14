@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="Subscription.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ namespace SimpleDomain.Bus
         /// Does something useful with a given message
         /// </summary>
         /// <param name="message">The message</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public abstract Task HandleAsync(IMessage message);
     }
 }

@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IntegrationTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -29,21 +29,24 @@ namespace SimpleDomain.EventStore.Persistence
 
     using Xunit;
 
-    public class IntegrationTest
+    public sealed class IntegrationTest : IDisposable
     {
+        private readonly EmbeddedEventStoreConnectionBuilder connectionBuilder;
+
         private readonly IDeliverMessages bus;
         private readonly IEventStore testee;
         private readonly IEventSourcedRepository repository;
 
         public IntegrationTest()
         {
+            this.connectionBuilder = new EmbeddedEventStoreConnectionBuilder();
+
             var factory = new EventStoreFactory();
             var configuration = new ContainerLessEventStoreConfiguration(factory);
-            var connectionBuilder = new EmbeddedEventStoreConnectionBuilder();
-            configuration.UseGetEventStore(connectionBuilder);
+            configuration.UseGetEventStore(this.connectionBuilder);
 
             this.bus = A.Fake<IDeliverMessages>();
-            this.testee = factory.Create(configuration, bus);
+            this.testee = factory.Create(configuration, this.bus);
             this.repository = new EventStoreRepository(this.testee).WithGlobalSnapshotStrategy(10);
         }
 
@@ -91,6 +94,11 @@ namespace SimpleDomain.EventStore.Persistence
 
             aggregateRootFromEventStore.Value.Should().Be(22);
             aggregateRootFromEventStore.Version.Should().Be(22);
+        }
+
+        public void Dispose()
+        {
+            this.connectionBuilder.Dispose();
         }
     }
 }

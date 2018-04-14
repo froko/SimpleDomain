@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="Jitney.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus
     public abstract class Jitney : IDeliverMessages
     {
         /// <summary>
-        /// Creates a new instance of <see cref="Jitney"/>
+        /// Initializes a new instance of the <see cref="Jitney"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
         protected Jitney(IHaveJitneyConfiguration configuration)
@@ -47,12 +47,13 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Starts the message reception process
         /// </summary>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public abstract Task StartAsync();
 
         /// <summary>
         /// Stops the message reception process
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public abstract Task StopAsync();
 
         /// <inheritdoc />
@@ -60,11 +61,12 @@ namespace SimpleDomain.Bus
 
         /// <inheritdoc />
         public abstract Task PublishAsync<TEvent>(TEvent @event) where TEvent : class, IEvent;
-        
+
         /// <summary>
         /// Handles an incomming envelope
         /// </summary>
         /// <param name="envelope">The envelope</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         protected async Task HandleAsync(Envelope envelope)
         {
             using (var transactionScope = CreateTransactionScope())

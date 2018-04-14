@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="SubscriptionMessageTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ namespace SimpleDomain.Bus
         {
             Action action = () => { new SubscriptionMessage(null, "SimpleDomain.TestDoubles.MyEvent"); };
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -54,8 +54,8 @@ namespace SimpleDomain.Bus
             Action nullStringAction = () => { new SubscriptionMessage(handlingEnpoint, null); };
             Action emptyStringAction = () => { new SubscriptionMessage(handlingEnpoint, string.Empty); };
 
-            nullStringAction.ShouldThrow<ArgumentNullException>();
-            emptyStringAction.ShouldThrow<ArgumentException>();
+            nullStringAction.Should().Throw<ArgumentNullException>();
+            emptyStringAction.Should().Throw<ArgumentException>();
         }
     }
 }

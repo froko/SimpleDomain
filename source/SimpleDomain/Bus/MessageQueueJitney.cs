@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="MessageQueueJitney.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 namespace SimpleDomain.Bus
 {
     using System.Threading.Tasks;
-    
+
     using SimpleDomain.Common;
     using SimpleDomain.Common.Logging;
 
@@ -38,7 +38,7 @@ namespace SimpleDomain.Bus
         private readonly IMessageQueueProvider provider;
 
         /// <summary>
-        /// Creates a new instance of <see cref="MessageQueueJitney"/>
+        /// Initializes a new instance of the <see cref="MessageQueueJitney"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injection for <see cref="IHaveJitneyConfiguration"/></param>
         public MessageQueueJitney(IHaveJitneyConfiguration configuration)
@@ -53,7 +53,7 @@ namespace SimpleDomain.Bus
             Logger.Debug(this.Configuration.GetSummary(this.GetType()));
             this.provider.Connect(this.Configuration.LocalEndpointAddress, this.HandleAsync);
             await this.SendSubscriptionMessagesAsync().ConfigureAwait(false);
-            
+
             Logger.InfoFormat("MessageQueueJitney has been started with {0} as transport medium", this.provider.TransportMediumName);
         }
 

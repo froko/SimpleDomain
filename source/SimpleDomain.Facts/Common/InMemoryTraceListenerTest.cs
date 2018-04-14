@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="InMemoryTraceListenerTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ namespace SimpleDomain.Common
 {
     using System;
     using System.Diagnostics;
-    
+
     using FluentAssertions;
 
     using SimpleDomain.Common.Logging;
 
     using Xunit;
 
-    public class InMemoryTraceListenerTest : IDisposable
+    public class InMemoryTraceListenerTest
     {
         private const string LogText = "This is a log text";
 
@@ -44,18 +44,12 @@ namespace SimpleDomain.Common
             Trace.Listeners.Add(InMemoryTraceListener.Instance);
         }
 
-        public void Dispose()
-        {
-            InMemoryTraceListener.ClearLogMessages();
-            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
-        }
-
         [Fact]
         public void LoggedDebugMessagesAreAddedToTheInMemoryTraceListener()
         {
             Logger.Debug(LogText);
 
-            InMemoryTraceListener.LogMessages.Should().Contain(s => 
+            InMemoryTraceListener.LogMessages.Should().Contain(s =>
                 s.Contains(DebugLevel) &&
                 s.Contains(ClassName) &&
                 s.Contains(LogText));
@@ -92,7 +86,7 @@ namespace SimpleDomain.Common
         [Fact]
         public void LoggedErrorMessagesAreAddedToTheInMemoryTraceListener()
         {
-            Logger.Error(new Exception(),  LogText);
+            Logger.Error(new Exception(), LogText);
 
             InMemoryTraceListener.LogMessages.Should().Contain(s =>
                 s.Contains(ErrorLevel) &&

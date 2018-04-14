@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="CompositionRootTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SimpleDomain
     using SimpleDomain.Bus;
     using SimpleDomain.EventStore;
     using SimpleDomain.EventStore.Persistence;
-    
+
     using Xunit;
 
     public class CompositionRootTest
@@ -37,7 +37,7 @@ namespace SimpleDomain
         public async Task SimpleJitneyIsUsed_WhenNoJitneyIsExplicitlyConfigured()
         {
             var testee = new CompositionRoot();
-            
+
             using (var executionContext = await testee.StartAsync().ConfigureAwait(false))
             {
                 executionContext.Bus.Should().BeAssignableTo<SimpleJitney>();
@@ -134,7 +134,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Action action = () => testee.ConfigureJitney().DefineLocalEndpointAddress("unittest").UseMsmqJitney();
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -146,7 +146,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Action action = () => testee.Run(ConfigureJitney);
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -158,7 +158,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Action action = () => testee.ConfigureEventStore().UseSqlEventStore();
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -170,7 +170,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Action action = () => testee.Run(ConfigureEventStore);
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -182,7 +182,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Action action = () => testee.Register(A.Fake<IBoundedContext>());
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -194,7 +194,7 @@ namespace SimpleDomain
             using (await testee.StartAsync().ConfigureAwait(false))
             {
                 Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
-                action.ShouldThrow<CompositionRootAlreadyStartedException>();
+                action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
 
@@ -207,7 +207,7 @@ namespace SimpleDomain
             await executionContext.StopAsync().ConfigureAwait(false);
 
             Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
-            action.ShouldNotThrow<Exception>();
+            action.Should().NotThrow<Exception>();
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace SimpleDomain
             executionContext.Dispose();
 
             Func<Task> action = async () => await testee.StartAsync().ConfigureAwait(false);
-            action.ShouldNotThrow<Exception>();
+            action.Should().NotThrow<Exception>();
         }
 
         private static void ConfigureJitney(IConfigureThisJitney config)

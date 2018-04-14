@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="JitneySubscriptionsTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ namespace SimpleDomain.Bus.Configuration
 
             this.testee = new JitneySubscriptions(this.handlerRegistry, this.handlerInvocationCache);
         }
-        
+
         [Fact]
         public async Task CanGetCommandSubscription_WhenItHasBeenSubscribedAsAsyncActionBefore()
         {
@@ -66,7 +66,7 @@ namespace SimpleDomain.Bus.Configuration
 
             expectedValue.Should().Be(Value);
         }
-        
+
         [Fact]
         public async Task CanGetCommandSubscription_WhenItHasBeenSubscribedWithAssemblyScanningBefore()
         {
@@ -77,7 +77,7 @@ namespace SimpleDomain.Bus.Configuration
 
             A.CallTo(() => this.handlerRegistry.GetCommandHandler(command)).Returns(handler);
 
-            this.testee.ScanAssemblyForMessageHandlers(Assembly.GetExecutingAssembly(), register);
+            this.testee.ScanAssemblyForMessageHandlers(typeof(ValueCommand).Assembly, register);
 
             var subscription = this.testee.GetCommandSubscription(command);
             await subscription.HandleAsync(command).ConfigureAwait(false);
@@ -102,7 +102,7 @@ namespace SimpleDomain.Bus.Configuration
             A.CallTo(() => this.handlerRegistry.GetEventHandlers(@event)).Returns(new[] { eventHandlerInstance });
 
             this.testee.AddEventHandler(eventHandler);
-            this.testee.ScanAssemblyForMessageHandlers(Assembly.GetExecutingAssembly(), register);
+            this.testee.ScanAssemblyForMessageHandlers(typeof(ValueCommand).Assembly, register);
 
             var subscriptions = this.testee.GetEventSubscriptions(@event);
             var tasks = subscriptions.Select(s => s.HandleAsync(@event));
@@ -118,7 +118,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             Action action = () => this.testee.AddCommandHandler<ValueCommand>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace SimpleDomain.Bus.Configuration
         {
             Action action = () => this.testee.AddEventHandler<ValueEvent>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace SimpleDomain.Bus.Configuration
 
             Action action = () => this.testee.GetCommandSubscription(valueCommand);
 
-            action.ShouldThrow<NoSubscriptionException>();
+            action.Should().Throw<NoSubscriptionException>();
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace SimpleDomain.Bus.Configuration
 
             Action action = () => this.testee.AddCommandHandler(secondHandler);
 
-            action.ShouldThrow<CommandSubscriptionException<ValueCommand>>();
+            action.Should().Throw<CommandSubscriptionException<ValueCommand>>();
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace SimpleDomain.Bus.Configuration
             Action<Type> register = t => { };
 
             this.testee.AddEventHandler<ValueEvent>(e => Task.CompletedTask);
-            this.testee.ScanAssemblyForMessageHandlers(Assembly.GetExecutingAssembly(), register);
+            this.testee.ScanAssemblyForMessageHandlers(typeof(ValueCommand).Assembly, register);
 
             var subscribedEventTypes = this.testee.GetSubscribedEventTypes();
 

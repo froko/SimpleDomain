@@ -16,7 +16,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain.Bus.MSMQ
+namespace SimpleDomain.Bus.Msmq
 {
     using System.Messaging;
 

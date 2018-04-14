@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="StepExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// Appends the <see cref="FinalIncommingEnvelopeStep"/> to the list of all registered incomming envelope pipeline steps
         /// </summary>
         /// <param name="steps">The list of all registered incomming envelope pipeline steps</param>
-        /// <returns>The list of all registered incomming envelope pipeline steps</returns>
+        /// <returns>The updated list of all registered incomming envelope pipeline steps</returns>
         public static IEnumerable<IncommingEnvelopeStep> WithFinalIncommingEnvelopeStep(
             this IEnumerable<IncommingEnvelopeStep> steps)
         {
@@ -46,7 +46,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// <param name="handleCommandAsync">The async command handler action</param>
         /// <param name="handleEventAsync">The async event handler action</param>
         /// <param name="handleSubscriptionMessageAsync">The async subscription message handler action</param>
-        /// <returns>The list of all registered incomming message pipeline steps</returns>
+        /// <returns>The updated list of all registered incomming message pipeline steps</returns>
         public static IEnumerable<IncommingMessageStep> WithFinalIncommingMessageStep(
             this IEnumerable<IncommingMessageStep> steps,
             Func<ICommand, Task> handleCommandAsync,
@@ -59,6 +59,6 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
                 handleSubscriptionMessageAsync);
 
             return steps.Concat(new[] { finalStep });
-        } 
+        }
     }
 }
