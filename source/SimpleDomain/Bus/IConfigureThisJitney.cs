@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="IConfigureThisJitney.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ namespace SimpleDomain.Bus
         /// <param name="queueName">The name of the local endpoint queue</param>
         /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
         IConfigureThisJitney DefineLocalEndpointAddress(string queueName);
-        
+
         /// <summary>
         /// Sets the subscription store
         /// </summary>
@@ -74,6 +74,7 @@ namespace SimpleDomain.Bus
         /// <summary>
         /// Adds a pipeline step for outgoing envelopes
         /// </summary>
+        /// <param name="pipelineStep">The pipeline step</param>
         /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
         IConfigureThisJitney AddPipelineStep(OutgoingEnvelopeStep pipelineStep);
 

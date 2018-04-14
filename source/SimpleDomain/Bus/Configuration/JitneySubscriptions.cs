@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="JitneySubscriptions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -35,15 +35,15 @@ namespace SimpleDomain.Bus.Configuration
         private readonly IHandlerInvocationCache handlerInvocationCache;
         private readonly IList<Subscription> commandSubscriptions;
         private readonly IList<Subscription> eventSubscriptions;
-        private readonly IList<Type> eventTypes; 
+        private readonly IList<Type> eventTypes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="JitneySubscriptions"/>
+        /// Initializes a new instance of the <see cref="JitneySubscriptions"/> class.
         /// </summary>
         /// <param name="handlerRegistry">Dependency injection for <see cref="AbstractHandlerRegistry"/></param>
         /// <param name="handlerInvocationCache">Dependency injection for <see cref="IHandlerInvocationCache"/></param>
         public JitneySubscriptions(
-            AbstractHandlerRegistry handlerRegistry, 
+            AbstractHandlerRegistry handlerRegistry,
             IHandlerInvocationCache handlerInvocationCache)
         {
             this.handlerRegistry = handlerRegistry;

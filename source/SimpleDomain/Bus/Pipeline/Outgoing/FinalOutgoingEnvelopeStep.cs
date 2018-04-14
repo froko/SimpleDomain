@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FinalOutgoingEnvelopeStep.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -21,19 +21,19 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
     using System;
     using System.Threading.Tasks;
 
-    using global::Common.Logging;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The final outgoing envelope pipeline step
     /// </summary>
     public class FinalOutgoingEnvelopeStep : OutgoingEnvelopeStep
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<FinalOutgoingEnvelopeStep>();
 
         private readonly Func<Envelope, Task> handleEnvelopeAsync;
 
         /// <summary>
-        /// Creates a new instance of <see cref="FinalOutgoingEnvelopeStep"/>
+        /// Initializes a new instance of the <see cref="FinalOutgoingEnvelopeStep"/> class.
         /// </summary>
         /// <param name="handleEnvelopeAsync">The last async action to be performed for an outgoing envelope</param>
         public FinalOutgoingEnvelopeStep(Func<Envelope, Task> handleEnvelopeAsync)
@@ -49,8 +49,8 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         public override Task InvokeAsync(OutgoingEnvelopeContext context, Func<Task> next)
         {
             Logger.InfoFormat(
-                "Sending {0} of type {1} to {2}", 
-                context.Envelope.Body.GetIntent(), 
+                "Sending {0} of type {1} to {2}",
+                context.Envelope.Body.GetIntent(),
                 context.Envelope.Body.GetFullName(),
                 context.Envelope.Headers[HeaderKeys.Recipient]);
 

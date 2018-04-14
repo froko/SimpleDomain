@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="EventStoreFactory.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace SimpleDomain.EventStore.Configuration
     public class EventStoreFactory
     {
         /// <summary>
-        /// Creates a new instance of <see cref="EventStoreFactory"/>
+        /// Initializes a new instance of the <see cref="EventStoreFactory"/> class.
         /// </summary>
         public EventStoreFactory()
         {
@@ -51,7 +51,7 @@ namespace SimpleDomain.EventStore.Configuration
         /// <summary>
         /// Registers the function to create an event store using a configuration
         /// </summary>
-        /// <param name="create"></param>
+        /// <param name="create">A function to create the event store with a given configuration</param>
         public void Register(Func<IHaveEventStoreConfiguration, IEventStore> create)
         {
             this.Create = (config, bus) =>

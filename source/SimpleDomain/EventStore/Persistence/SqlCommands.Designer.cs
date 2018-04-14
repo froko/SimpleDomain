@@ -19,7 +19,7 @@ namespace SimpleDomain.EventStore.Persistence {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SqlCommands {
@@ -72,7 +72,6 @@ namespace SimpleDomain.EventStore.Persistence {
         ///		[EventType]			[NVARCHAR](255)		NOT NULL,
         ///		[EventData]			[NVARCHAR](MAX)		NOT NULL,
         ///		[Headers]			[NVARCHAR](MAX)		NULL,
-        ///
         ///		CONSTRAINT PK_Events PRIMARY KEY CLUSTERED ([AggregateType], [AggregateId], [Version] ASC) ON [PRIMARY]
         ///	) ON [PRIMARY];
         ///END.
@@ -94,7 +93,6 @@ namespace SimpleDomain.EventStore.Persistence {
         ///		[Timestamp]			[DATETIME]			NOT NULL,
         ///		[SnapshotType]		[NVARCHAR](255)		NOT NULL,
         ///		[SnapshotData]		[NVARCHAR](MAX)		NOT NULL,
-        ///
         ///		CONSTRAINT PK_Snapshots PRIMARY KEY CLUSTERED ([AggregateType], [AggregateId], [Version] ASC) ON [PRIMARY]
         ///	) ON [PRIMARY];
         ///END.

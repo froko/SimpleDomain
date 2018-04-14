@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FluentTestingExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -34,33 +34,35 @@ namespace SimpleDomain
         /// Asserts that a given string has been logged
         /// </summary>
         /// <param name="stringAssertions">The string that should have been logged</param>
+        /// <returns>A log level aware instance, so that the logged string can be tested for its log level</returns>
         public static LogLevelAware HaveBeenLogged(this StringAssertions stringAssertions)
         {
+            InMemoryTraceListener.Lock();
             var logMessage = InMemoryTraceListener.LogMessages.LastOrDefault(s => s.Contains(stringAssertions.Subject));
-
             logMessage.Should().NotBeNullOrEmpty($"{stringAssertions.Subject} should have been logged");
+            InMemoryTraceListener.Unlock();
 
             return new LogLevelAware(logMessage);
         }
 
         public static void WithDebugLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[DEBUG]", "log level should be [DEBUG]");
+            logLevelAware.LogMessage.Should().Contain("[Debug]", "log level should be [Debug]");
         }
 
         public static void WithInfoLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[INFO]", "log level should be [INFO]");
+            logLevelAware.LogMessage.Should().Contain("[Info]", "log level should be [Info]");
         }
 
         public static void WithWarningLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[WARN]", "log level should be [WARN]");
+            logLevelAware.LogMessage.Should().Contain("[Warning]", "log level should be [Warning]");
         }
 
         public static void WithErrorLevel(this LogLevelAware logLevelAware)
         {
-            logLevelAware.LogMessage.Should().Contain("[ERROR]", "log level should be [ERROR]");
+            logLevelAware.LogMessage.Should().Contain("[Error]", "log level should be [Error]");
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FinalOutgoingEnvelopeStepTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,10 +32,10 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 
     using Xunit;
 
-    public class FinalOutgoingEnvelopeStepTest : IDisposable
+    public class FinalOutgoingEnvelopeStepTest
     {
         private readonly OutgoingEnvelopeContext outgoingEnvelopeContext;
-        private readonly Func<Envelope, Task> finalActionForEnvelope; 
+        private readonly Func<Envelope, Task> finalActionForEnvelope;
         private readonly FinalOutgoingEnvelopeStep testee;
 
         public FinalOutgoingEnvelopeStepTest()
@@ -46,16 +46,10 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             var body = new MyCommand();
             var envelope = new Envelope(headers, body);
             var configuration = A.Fake<IHavePipelineConfiguration>();
-            
+
             this.outgoingEnvelopeContext = new OutgoingEnvelopeContext(envelope, configuration);
             this.finalActionForEnvelope = A.Fake<Func<Envelope, Task>>();
             this.testee = new FinalOutgoingEnvelopeStep(this.finalActionForEnvelope);
-        }
-
-        public void Dispose()
-        {
-            InMemoryTraceListener.ClearLogMessages();
-            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
         }
 
         [Fact]
@@ -70,7 +64,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         public async Task DoesNotCallNext()
         {
             var next = A.Fake<Func<Task>>();
-            
+
             await this.testee.InvokeAsync(this.outgoingEnvelopeContext, next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();

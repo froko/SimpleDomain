@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IMessageQueueProvider.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -42,11 +42,13 @@ namespace SimpleDomain.Bus
         /// Sends a message evelopped in an Envelope to a remote endpoint
         /// </summary>
         /// <param name="envelope">The enveloped message</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         Task SendAsync(Envelope envelope);
 
         /// <summary>
         /// Stopps the message reception process and disconnects from the local queue
         /// </summary>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         Task DisconnectAsync();
     }
 }

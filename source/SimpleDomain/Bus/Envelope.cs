@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="Envelope.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ namespace SimpleDomain.Bus
     public class Envelope
     {
         /// <summary>
-        /// Creates a new instance of <see cref="Envelope"/>
+        /// Initializes a new instance of the <see cref="Envelope"/> class.
         /// </summary>
         /// <param name="headers">The headers</param>
         /// <param name="body">The message body</param>
@@ -53,7 +53,13 @@ namespace SimpleDomain.Bus
         /// Gets the message body
         /// </summary>
         public IMessage Body { get; }
-        
+
+        /// <summary>
+        /// Gets the correlation id
+        /// </summary>
+        [JsonIgnore]
+        public Guid CorrelationId => Guid.Parse(this.GetHeader<object>(HeaderKeys.CorrelationId).ToString());
+
         /// <summary>
         /// Creates a new instance of <see cref="Envelope"/>
         /// </summary>
@@ -78,7 +84,7 @@ namespace SimpleDomain.Bus
         /// <param name="recipient">The receiving endpoint address</param>
         /// <param name="correlationId">The correlation id</param>
         /// <param name="body">The message body</param>
-        /// <returns></returns>
+        /// <returns>A new instance of <see cref="Envelope"/></returns>
         public static Envelope Create(
             EndpointAddress sender,
             EndpointAddress recipient,
@@ -92,12 +98,6 @@ namespace SimpleDomain.Bus
             var messageId = Guid.NewGuid();
             return Create(sender, recipient, messageId, correlationId, body);
         }
-
-        /// <summary>
-        /// Gets the correlation id
-        /// </summary>
-        [JsonIgnore]
-        public Guid CorrelationId => Guid.Parse(this.GetHeader<object>(HeaderKeys.CorrelationId).ToString());
 
         /// <summary>
         /// Adds a single header to the header collection

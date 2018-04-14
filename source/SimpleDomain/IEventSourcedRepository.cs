@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IEventSourcedRepository.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateId">The aggregate root id</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         Task<TAggregateRoot> GetByIdAsync<TAggregateRoot>(Guid aggregateId) where TAggregateRoot : IEventSourcedAggregateRoot;
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace SimpleDomain
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateRoot">The aggregate root</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IEventSourcedAggregateRoot;
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace SimpleDomain
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
         /// <param name="aggregateRoot">The aggregate root</param>
         /// <param name="headers">A list of arbitrary headers which serve as meta information</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         Task SaveAsync<TAggregateRoot>(TAggregateRoot aggregateRoot, IDictionary<string, object> headers) where TAggregateRoot : IEventSourcedAggregateRoot;
     }
 }

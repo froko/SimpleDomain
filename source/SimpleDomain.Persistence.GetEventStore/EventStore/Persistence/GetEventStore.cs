@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="GetEventStore.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ namespace SimpleDomain.EventStore.Persistence
         private readonly IHaveEventStoreConfiguration configuration;
 
         /// <summary>
-        /// Creates a new instance of <see cref="GetEventStore"/>
+        /// Initializes a new instance of the <see cref="GetEventStore"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injeciton for <see cref="GetEventStore"/></param>
         public GetEventStore(IHaveEventStoreConfiguration configuration)
@@ -76,7 +76,7 @@ namespace SimpleDomain.EventStore.Persistence
             {
                 currentSlice = await connection.ReadAllEventsForwardAsync(nextSliceStart, 1000, false).ConfigureAwait(false);
                 nextSliceStart = currentSlice.NextPosition;
-                
+
                 await Task
                     .WhenAll(currentSlice.Events.Deserialize().Select(this.configuration.DispatchEvents))
                     .ConfigureAwait(false);

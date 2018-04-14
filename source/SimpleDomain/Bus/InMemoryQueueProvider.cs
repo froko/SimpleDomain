@@ -25,15 +25,15 @@ namespace SimpleDomain.Bus
     using System.Threading.Tasks;
     using System.Transactions;
 
-    using global::Common.Logging;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The In-Memory Queue provider
     /// </summary>
-    public class InMemoryQueueProvider : IMessageQueueProvider
+    public sealed class InMemoryQueueProvider : IMessageQueueProvider
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(InMemoryQueueProvider));
-        
+        private static readonly ILogger Logger = LoggerFactory.Create<InMemoryQueueProvider>();
+
         private Func<Envelope, Task> callMeBackWhenEnvelopeArrives;
         private ConcurrentQueue<Envelope> queue;
 
@@ -80,6 +80,7 @@ namespace SimpleDomain.Bus
         /// <inheritdoc />
         public void Dispose()
         {
+            this.cancellationTokenSource.Dispose();
             this.DisconnectAsync().Wait(TimeSpan.FromSeconds(30));
         }
 
@@ -104,11 +105,11 @@ namespace SimpleDomain.Bus
                 }
                 catch (Exception exception)
                 {
-                    Logger.Warn("In-Memory Queue receive task failed", exception);
+                    Logger.Warn(exception, "In-Memory Queue receive task failed");
                 }
             }
         }
-        
+
         private Task ProcessMessagesAsync()
         {
             Envelope envelope;
@@ -116,7 +117,7 @@ namespace SimpleDomain.Bus
             {
                 return Task.CompletedTask;
             }
-            
+
             var handlerTask = this.HandleMessageAsync(envelope);
             this.handlerTasks.TryAdd(handlerTask, handlerTask);
 
@@ -138,7 +139,7 @@ namespace SimpleDomain.Bus
                 }
                 catch (Exception exception)
                 {
-                    Logger.Error("Could not handle message", exception);
+                    Logger.Error(exception, "Could not handle message");
                 }
             }
         }

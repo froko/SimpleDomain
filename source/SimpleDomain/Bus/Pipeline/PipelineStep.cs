@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="PipelineStep.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ namespace SimpleDomain.Bus.Pipeline
         /// </summary>
         /// <param name="context">The pipeline context</param>
         /// <param name="next">The next action in the pipeline</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public abstract Task InvokeAsync(TContext context, Func<Task> next);
 
         /// <inheritdoc />

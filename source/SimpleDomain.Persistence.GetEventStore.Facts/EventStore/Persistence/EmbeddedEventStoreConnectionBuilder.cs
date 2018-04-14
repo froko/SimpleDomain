@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="EmbeddedEventStoreConnectionBuilder.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SimpleDomain.EventStore.Persistence
     using global::EventStore.Core;
     using global::EventStore.Core.Data;
 
-    public class EmbeddedEventStoreConnectionBuilder : IConnectionBuilder
+    public sealed class EmbeddedEventStoreConnectionBuilder : IConnectionBuilder, IDisposable
     {
         private readonly ClusterVNode node;
 
@@ -46,6 +46,11 @@ namespace SimpleDomain.EventStore.Persistence
             return connection;
         }
 
+        public void Dispose()
+        {
+            this.node.StopNonblocking(true, true);
+        }
+
         private void WaitToBecomeMasterNode()
         {
             var isMasterNode = false;
@@ -53,7 +58,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             this.node.NodeStatusChanged += (sender, eventArgs) => { isMasterNode = eventArgs.NewVNodeState == VNodeState.Master; };
             this.node.Start();
-            
+
             stopwatch.Start();
 
             while (!isMasterNode)

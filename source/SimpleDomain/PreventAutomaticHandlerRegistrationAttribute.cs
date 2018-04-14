@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="PreventAutomaticHandlerRegistrationAttribute.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ namespace SimpleDomain
     using System;
 
     /// <summary>
-    /// Marks a handler class as non-registerable 
+    /// Marks a handler class as non-registerable
     /// when it comes to automatic handler registration with an IoC container
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class PreventAutomaticHandlerRegistrationAttribute : Attribute
+    public sealed class PreventAutomaticHandlerRegistrationAttribute : Attribute
     {
     }
 }

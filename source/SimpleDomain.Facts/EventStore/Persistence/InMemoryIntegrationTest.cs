@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="InMemoryIntegrationTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -83,8 +83,8 @@ namespace SimpleDomain.EventStore.Persistence
             using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
-                    aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
-                    aggregateRoot.Version, 
+                    aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
+                    aggregateRoot.Version,
                     new Dictionary<string, object>()).ConfigureAwait(false);
 
                 var eventHistory = await eventStream.ReplayAsync().ConfigureAwait(false);
@@ -177,8 +177,8 @@ namespace SimpleDomain.EventStore.Persistence
             using (var eventStream = await this.CreateEventStreamAsync().ConfigureAwait(false))
             {
                 await eventStream.SaveAsync(
-                    aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(), 
-                    aggregateRoot.Version, 
+                    aggregateRoot.UncommittedEvents.OfType<VersionableEvent>(),
+                    aggregateRoot.Version,
                     new Dictionary<string, object>()).ConfigureAwait(false);
             }
 

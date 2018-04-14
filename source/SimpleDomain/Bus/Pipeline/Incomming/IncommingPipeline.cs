@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IncommingPipeline.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         private readonly Queue<IncommingMessageStep> incommingMessageSteps;
 
         /// <summary>
-        /// Creates a new instance of <see cref="IncommingPipeline"/>
+        /// Initializes a new instance of the <see cref="IncommingPipeline"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injection for <see cref="IHavePipelineConfiguration"/></param>
         /// <param name="incommingEnvelopeSteps">All registered pipeline steps for incomming envelopes</param>
@@ -51,6 +51,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         /// Invokes the pipeline
         /// </summary>
         /// <param name="envelope">The envelope</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public async Task InvokeAsync(Envelope envelope)
         {
             var envelopeContext = new IncommingEnvelopeContext(envelope, this.configuration);

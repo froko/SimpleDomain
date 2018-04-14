@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="SqlEventStream.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ namespace SimpleDomain.EventStore.Persistence
         private SqlConnection connection;
 
         /// <summary>
-        /// Creates a new instance of <see cref="SqlEventStream{TAggregateRoot}"/>
+        /// Initializes a new instance of the <see cref="SqlEventStream{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="aggregateId">The id of the aggregate root</param>
         /// <param name="dispatchAsync">The action to dispatch an event asynchronously</param>

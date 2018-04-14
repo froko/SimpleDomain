@@ -1,11 +1,28 @@
-$baseDir = Resolve-Path ..
-$scriptsDir = "$baseDir\scripts"
-$sourceDir = "$baseDir\source"
-$nugetDir = "$baseDir\nuget"
-$nugetCommand = "$sourceDir\.nuget\NuGet.exe"
-$solutionFile = "$sourceDir\SimpleDomain.Core.sln"
+. ".\environment.ps1"
+. ".\projects.ps1"
+. ".\msbuild.ps1"
 
-& $scriptsDir\clean.ps1	
-& $nugetCommand restore $solutionFile
+Invoke-Command {
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
 
-msbuild $solutionFile /target:Rebuild /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPublishPackageToFileShare=$nugetDir /p:OctoPackNuGetArguments="-Symbols"
+    Stop-MsBuild
+
+    Write-Title "Clean up workspace"
+    & ".\clean.ps1"
+
+    Write-Title "Create new test results directory"
+    New-Item -ItemType Directory -Force $resultsDir\TestResults
+    
+    $projects | ForEach-Object {
+        $projectName = $_.name
+        Write-Title "Build $projectName"
+
+        Invoke-NugetRestore $_.solutionFile
+        Invoke-MsBuild $_.solutionFile
+        Invoke-Tests $_.testProjectFile
+    }
+
+    Stop-MsBuild
+    
+    Write-Summary $stopWatch.Elapsed
+} 2>&1 | Tee-Object $resultsDir\integrate.log

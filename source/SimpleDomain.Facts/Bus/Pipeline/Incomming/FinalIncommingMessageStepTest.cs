@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="FinalIncommingMessageStepTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
     using Xunit;
 
-    public class FinalIncommingMessageStepTest : IDisposable
+    public class FinalIncommingMessageStepTest
     {
         private readonly Func<ICommand, Task> finalActionForCommand;
         private readonly Func<IEvent, Task> finalActionForEvent;
@@ -53,18 +53,12 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
                 this.finalActionForSubscriptionMessage);
         }
 
-        public void Dispose()
-        {
-            InMemoryTraceListener.ClearLogMessages();
-            Trace.Listeners.Remove(InMemoryTraceListener.Instance);
-        }
-
         [Fact]
         public async Task ShouldInvokeGivenFinalActionForCommand()
         {
             var message = new ValueCommand(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
-            
+
             await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => this.finalActionForCommand.Invoke(message)).MustHaveHappened();
@@ -111,7 +105,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
             var message = new ValueCommand(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
             var next = A.Fake<Func<Task>>();
-            
+
             await this.testee.InvokeAsync(incommingMessageContext, next).ConfigureAwait(false);
 
             A.CallTo(() => next.Invoke()).MustNotHaveHappened();
@@ -122,7 +116,7 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
         {
             var message = new ValueCommand(11);
             var incommingMessageContext = CreateIncommingMessageContext(message);
-            
+
             await this.testee.InvokeAsync(incommingMessageContext, null).ConfigureAwait(false);
 
             "Received Command of type SimpleDomain.TestDoubles.ValueCommand from sender".Should().HaveBeenLogged().WithInfoLevel();

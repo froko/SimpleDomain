@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="AbstractHandlerRegistry.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace SimpleDomain.Bus.Configuration
         private readonly IDictionary<Type, List<Type>> handlerList;
 
         /// <summary>
-        /// Creates a new instance of <see cref="AbstractHandlerRegistry"/>
+        /// Initializes a new instance of the <see cref="AbstractHandlerRegistry"/> class.
         /// </summary>
         protected AbstractHandlerRegistry()
         {
@@ -55,8 +55,8 @@ namespace SimpleDomain.Bus.Configuration
         public virtual object GetCommandHandler(ICommand command)
         {
             var commandHandlerType = this.GetHandlerTypes(command.GetType()).FirstOrDefault();
-            return commandHandlerType != null 
-                ? this.Resolve(commandHandlerType) 
+            return commandHandlerType != null
+                ? this.Resolve(commandHandlerType)
                 : null;
         }
 
@@ -68,7 +68,7 @@ namespace SimpleDomain.Bus.Configuration
         public virtual IEnumerable<object> GetEventHandlers(IEvent @event)
         {
             var eventHandlerTypes = this.GetHandlerTypes(@event.GetType()).ToList();
-            
+
             if (eventHandlerTypes.Any())
             {
                 return from eventHandlerType in eventHandlerTypes
@@ -104,8 +104,8 @@ namespace SimpleDomain.Bus.Configuration
         private IEnumerable<Type> GetHandlerTypes(Type messageType)
         {
             return from keyValue in this.handlerList
-                where keyValue.Value.Any(msgTypeHandled => msgTypeHandled.IsAssignableFrom(messageType))
-                select keyValue.Key;
+                   where keyValue.Value.Any(msgTypeHandled => msgTypeHandled.IsAssignableFrom(messageType))
+                   select keyValue.Key;
         }
     }
 }

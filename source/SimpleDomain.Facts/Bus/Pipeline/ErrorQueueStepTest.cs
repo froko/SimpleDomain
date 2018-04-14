@@ -64,7 +64,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new ErrorQueueStep(string.Empty);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new ErrorQueueStep(null);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace SimpleDomain.Bus.Pipeline
         {
             Action action = () => new ErrorQueueStep(QueueName, null);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace SimpleDomain.Bus.Pipeline
 
             Func<Task> action = () => testee.InvokeAsync(context, this.nextStep);
 
-            action.ShouldThrow<ApplicationException>().Which.IsSameOrEqualTo(exception);
+            action.Should().Throw<ApplicationException>().Which.IsSameOrEqualTo(exception);
 
             A.CallTo(() => this.messageQueueSender.Send(A<Envelope>.Ignored, A<EndpointAddress>.Ignored)).MustHaveHappened();
         }

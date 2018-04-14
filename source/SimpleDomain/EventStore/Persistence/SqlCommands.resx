@@ -129,7 +129,6 @@ BEGIN
 		[EventType]			[NVARCHAR](255)		NOT NULL,
 		[EventData]			[NVARCHAR](MAX)		NOT NULL,
 		[Headers]			[NVARCHAR](MAX)		NULL,
-
 		CONSTRAINT PK_Events PRIMARY KEY CLUSTERED ([AggregateType], [AggregateId], [Version] ASC) ON [PRIMARY]
 	) ON [PRIMARY];
 END</value>
@@ -145,7 +144,6 @@ BEGIN
 		[Timestamp]			[DATETIME]			NOT NULL,
 		[SnapshotType]		[NVARCHAR](255)		NOT NULL,
 		[SnapshotData]		[NVARCHAR](MAX)		NOT NULL,
-
 		CONSTRAINT PK_Snapshots PRIMARY KEY CLUSTERED ([AggregateType], [AggregateId], [Version] ASC) ON [PRIMARY]
 	) ON [PRIMARY];
 END</value>

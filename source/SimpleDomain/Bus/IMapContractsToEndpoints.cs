@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="IMapContractsToEndpoints.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ namespace SimpleDomain.Bus
         /// Maps contracts to a given endpoint on the local machine
         /// </summary>
         /// <param name="queueName">The name of the queue</param>
+        /// <returns>The Jitney bus configuration itself since this is a builder method</returns>
         IConfigureThisJitney To(string queueName);
 
         /// <summary>
@@ -34,17 +35,20 @@ namespace SimpleDomain.Bus
         /// </summary>
         /// <param name="queueName">The name of the endpoint</param>
         /// <param name="machineName">The server name where the endpoint resides</param>
+        /// <returns>The Jitney bus configuration itself since this is a builder method</returns>
         IConfigureThisJitney To(string queueName, string machineName);
 
         /// <summary>
         /// Maps contracts to a given endpoint
         /// </summary>
         /// <param name="remoteEndpointAddress">The endpoint</param>
+        /// <returns>The Jitney bus configuration itself since this is a builder method</returns>
         IConfigureThisJitney To(EndpointAddress remoteEndpointAddress);
 
         /// <summary>
         /// Maps contracts to the calling endpoint itself
         /// </summary>
+        /// <returns>The Jitney bus configuration itself since this is a builder method</returns>
         IConfigureThisJitney ToMe();
     }
 }

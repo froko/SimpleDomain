@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EnvelopeTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ namespace SimpleDomain.Bus
             testee.Body.Should().BeSameAs(body);
             testee.CorrelationId.Should().NotBeEmpty();
         }
-        
+
         [Fact]
         public void CanCreateInstanceWithFactoryMethodWithCorrelationId()
         {
@@ -99,7 +99,7 @@ namespace SimpleDomain.Bus
 
             var serializedTestee = JsonConvert.SerializeObject(testee, serializerSettings);
             var deserializedTestee = (Envelope)JsonConvert.DeserializeObject(serializedTestee, serializerSettings);
-            
+
             deserializedTestee.CorrelationId.Should().Be(correlationId);
         }
 
@@ -116,7 +116,7 @@ namespace SimpleDomain.Bus
         {
             Action action = () => Envelope.Create(null, new EndpointAddress("recipient"), new ValueCommand(11));
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace SimpleDomain.Bus
         {
             Action action = () => Envelope.Create(new EndpointAddress("sender"), null, new ValueCommand(11));
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace SimpleDomain.Bus
         {
             Action action = () => Envelope.Create(new EndpointAddress("sender"), new EndpointAddress("recipient"), null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -168,7 +168,7 @@ namespace SimpleDomain.Bus
 
             Action action = () => testee.AddHeader(null, 666);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -204,7 +204,7 @@ namespace SimpleDomain.Bus
 
             Action action = () => testee.ReplaceHeader(null, 666);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -222,7 +222,7 @@ namespace SimpleDomain.Bus
 
             Action action = () => testee.GetHeader<string>(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -232,7 +232,7 @@ namespace SimpleDomain.Bus
 
             Action action = () => testee.GetHeader<string>(HeaderKeys.MessageId);
 
-            action.ShouldThrow<InvalidCastException>();
+            action.Should().Throw<InvalidCastException>();
         }
 
         [Fact]
@@ -242,7 +242,7 @@ namespace SimpleDomain.Bus
 
             Action action = () => testee.GetHeader<string>("NotExistingHeaderKey");
 
-            action.ShouldThrow<KeyNotFoundException>();
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         private static Envelope CreateTestee()

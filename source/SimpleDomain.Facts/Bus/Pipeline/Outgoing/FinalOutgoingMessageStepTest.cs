@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FinalOutgoingMessageStepTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 
             A.CallTo(() => configuration.GetConsumingEndpointAddress(A<ICommand>.Ignored))
                 .Returns(endpointAddress);
-            
+
             await testee.InvokeAsync(outgoingMessageContext, null).ConfigureAwait(false);
 
             A.CallTo(() => outgoingMessageContext.CreateEnvelope(endpointAddress)).MustHaveHappened();

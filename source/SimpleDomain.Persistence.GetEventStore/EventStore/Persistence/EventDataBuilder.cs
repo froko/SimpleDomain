@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="EventDataBuilder.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ namespace SimpleDomain.EventStore.Persistence
         private readonly IDictionary<string, object> eventHeaders;
 
         /// <summary>
-        /// Creates a new instance of <see cref="EventDataBuilder"/> with an enclosed event
+        /// Initializes a new instance of the <see cref="EventDataBuilder"/> class with an enclosed event.
         /// </summary>
         /// <param name="event">The event</param>
         private EventDataBuilder(IEvent @event)
@@ -51,7 +51,7 @@ namespace SimpleDomain.EventStore.Persistence
                 }
             };
         }
-        
+
         /// <summary>
         /// Creates a new instance of <see cref="EventDataBuilder"/> with an enclosed event
         /// </summary>
@@ -61,7 +61,7 @@ namespace SimpleDomain.EventStore.Persistence
         {
             return new EventDataBuilder(@event);
         }
-        
+
         /// <summary>
         /// Adds a key/value pair to the header dictionary
         /// </summary>

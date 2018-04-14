@@ -23,6 +23,7 @@ namespace SimpleDomain.Bus
     using FakeItEasy;
 
     using SimpleDomain.Bus.Configuration;
+    using SimpleDomain.Bus.Msmq;
     using SimpleDomain.Bus.MSMQ;
 
     using Xunit;

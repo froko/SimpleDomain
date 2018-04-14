@@ -1,9 +1,6 @@
 ﻿using System.Reflection;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("SimpleDomain.Persistence.GetEventStore.Facts")]
-[assembly: AssemblyCompany("Frokonet")]
+[assembly: AssemblyCompany("frokonet.ch")]
 [assembly: AssemblyProduct("SimpleDomain")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © frokonet.ch 2018")]

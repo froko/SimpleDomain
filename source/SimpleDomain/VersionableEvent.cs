@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="VersionableEvent.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ namespace SimpleDomain
     public class VersionableEvent : IEvent, INeedVersion
     {
         /// <summary>
-        /// Creates a new instance of <see cref="VersionableEvent"/>
+        /// Initializes a new instance of the <see cref="VersionableEvent"/> class.
         /// </summary>
         /// <param name="innerEvent">The inner event</param>
         public VersionableEvent(IEvent innerEvent)

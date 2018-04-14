@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IEventStream.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -39,12 +39,14 @@ namespace SimpleDomain
         /// <param name="events">A list of versionable events</param>
         /// <param name="expectedVersion">The actual version of the aggregate root</param>
         /// <param name="headers">A list of arbitrary headers</param>
+        /// <returns>A task since this is an ansync method</returns>
         Task SaveAsync(IEnumerable<VersionableEvent> events, int expectedVersion, IDictionary<string, object> headers);
 
         /// <summary>
         /// Persists a sapshot
         /// </summary>
         /// <param name="snapshot">The snapshot</param>
+        /// <returns>A task since this is an ansync method</returns>
         Task SaveSnapshotAsync(ISnapshot snapshot);
 
         /// <summary>
@@ -58,12 +60,12 @@ namespace SimpleDomain
         /// </summary>
         /// <param name="snapshot">The snapshot</param>
         /// <returns>An observable of events ordered by their version</returns>
-        Task<EventHistory> ReplayAsyncFromSnapshot(ISnapshot snapshot); 
+        Task<EventHistory> ReplayAsyncFromSnapshot(ISnapshot snapshot);
 
         /// <summary>
         /// Returns the fact that there exists at least one snapshot
         /// </summary>
-        /// <returns></returns>
+        /// <returns><c>True</c> if this stream has a snapshot or <c>false</c> if not</returns>
         Task<bool> HasSnapshotAsync();
 
         /// <summary>

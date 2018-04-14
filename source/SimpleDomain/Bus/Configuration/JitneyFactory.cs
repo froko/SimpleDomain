@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="JitneyFactory.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SimpleDomain.Bus.Configuration
     public class JitneyFactory
     {
         /// <summary>
-        /// Creates a new instance of <see cref="JitneyFactory"/>
+        /// Initializes a new instance of the <see cref="JitneyFactory"/> class.
         /// </summary>
         public JitneyFactory()
         {
@@ -43,7 +43,7 @@ namespace SimpleDomain.Bus.Configuration
         /// <summary>
         /// Registers the function to create a Jitney bus using a configuration
         /// </summary>
-        /// <param name="create"></param>
+        /// <param name="create">A function to create the Jitney bus with a given configuration</param>
         public void Register(Func<IHaveJitneyConfiguration, Jitney> create)
         {
             this.Create = create;

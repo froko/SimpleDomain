@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="FinalOutgoingMessageStep.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 {
     using System;
     using System.Threading.Tasks;
-    
+
     /// <summary>
     /// The final outgoing message pipeline step
     /// </summary>
     public class FinalOutgoingMessageStep : OutgoingMessageStep
     {
         /// <summary>
-        /// Creates a new instance of <see cref="FinalOutgoingMessageStep"/>
+        /// Initializes a new instance of the <see cref="FinalOutgoingMessageStep"/> class.
         /// </summary>
         public FinalOutgoingMessageStep()
         {
@@ -40,26 +40,27 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// <inheritdoc />
         public override Task InvokeAsync(OutgoingMessageContext context, Func<Task> next)
         {
-            switch (context.Message.GetIntent())
+            var messageIntent = context.Message.GetIntent();
+            switch (messageIntent)
             {
                 case MessageIntent.Command:
                     CreateCommandEnvelope(
-                        context.Message as ICommand, 
-                        context.Configuration, 
+                        context.Message as ICommand,
+                        context.Configuration,
                         context.CreateEnvelope);
                     break;
 
                 case MessageIntent.Event:
                     CreateEventEnvelopes(
-                        context.Message as IEvent, 
-                        context.Configuration, 
+                        context.Message as IEvent,
+                        context.Configuration,
                         context.CreateEnvelope);
                     break;
 
                 case MessageIntent.SubscriptionMessage:
                     CreateSubscriptionMessageEnvelope(
-                        context.Message as SubscriptionMessage, 
-                        context.Configuration, 
+                        context.Message as SubscriptionMessage,
+                        context.Configuration,
                         context.CreateEnvelope);
                     break;
 
@@ -67,7 +68,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Cannot create envelope for {messageIntent}");
             }
 
             return Task.CompletedTask;
@@ -75,7 +76,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
 
         private static void CreateCommandEnvelope(
             ICommand command,
-            IHavePipelineConfiguration configuration, 
+            IHavePipelineConfiguration configuration,
             Action<EndpointAddress> createEnvelope)
         {
             var endpointAddress = configuration.GetConsumingEndpointAddress(command);

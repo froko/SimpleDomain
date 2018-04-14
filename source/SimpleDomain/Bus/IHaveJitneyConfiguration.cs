@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IHaveJitneyConfiguration.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ namespace SimpleDomain.Bus
         /// Gets the Jitney subscriptions
         /// </summary>
         IHaveJitneySubscriptions Subscriptions { get; }
-        
+
         /// <summary>
         /// Gets the subscription store persister interface
         /// </summary>
@@ -67,6 +67,7 @@ namespace SimpleDomain.Bus
         /// Gets a user friendly formatted content summary of this configuration
         /// </summary>
         /// <param name="jitneyType">The type of <see cref="Jitney"/> using this configuration</param>
+        /// <returns>A summary</returns>
         string GetSummary(Type jitneyType);
     }
 }

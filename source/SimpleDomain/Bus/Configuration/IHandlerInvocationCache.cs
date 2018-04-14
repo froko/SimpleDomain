@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="IHandlerInvocationCache.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Configuration
         /// <param name="asyncHandlerType">The type of the async handler</param>
         /// <param name="messageType">The type of the message</param>
         void Add(Type asyncHandlerType, Type messageType);
-        
+
         /// <summary>
         /// Asynchronously invokes a handler instance with a message it can handle
         /// </summary>

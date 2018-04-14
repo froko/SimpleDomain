@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="MsmqUtilitiesTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ namespace SimpleDomain.Bus.MSMQ
 
     using FluentAssertions;
 
+    using SimpleDomain.Bus.Msmq;
+
     using Xunit;
 
     public class MsmqUtilitiesTest
@@ -31,7 +33,7 @@ namespace SimpleDomain.Bus.MSMQ
         public void CanGetFormattedQueueNameForLocalEndpointAddress()
         {
             var localEndpointAddress = new EndpointAddress("myQueue");
-            
+
             var formattedQueueName = MsmqUtilities.GetFormattedQueueName(localEndpointAddress);
 
             formattedQueueName.Should().Be(@".\Private$\myQueue");
@@ -41,7 +43,7 @@ namespace SimpleDomain.Bus.MSMQ
         public void CanGetFormattedQueueNameForRemoteEndpointAddress()
         {
             var remoteEndpointAddress = new EndpointAddress("remoteQueue", "remoteMachine");
-            
+
             var formattedQueueName = MsmqUtilities.GetFormattedQueueName(remoteEndpointAddress);
 
             formattedQueueName.Should().Be(@"FormatName:Direct=OS:remoteMachine\Private$\remoteQueue");

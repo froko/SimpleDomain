@@ -21,7 +21,7 @@ namespace SimpleDomain.Bus.Pipeline
     using System;
     using System.Threading.Tasks;
 
-    using SimpleDomain.Bus.MSMQ;
+    using SimpleDomain.Bus.Msmq;
     using SimpleDomain.Bus.Pipeline.Incomming;
     using SimpleDomain.Common;
 
@@ -34,7 +34,7 @@ namespace SimpleDomain.Bus.Pipeline
         private readonly ISendEnvelopesToMessageQueue messageQueueSender;
 
         /// <summary>
-        /// Creates a new instance of <see cref="ErrorQueueStep"/> which uses MSMQ
+        /// Initializes a new instance of the <see cref="ErrorQueueStep"/> class, which uses MSMQ.
         /// </summary>
         /// <param name="errorQueue">The address of the error queue</param>
         public ErrorQueueStep(string errorQueue)
@@ -43,7 +43,7 @@ namespace SimpleDomain.Bus.Pipeline
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ErrorQueueStep"/>
+        /// Initializes a new instance of the <see cref="ErrorQueueStep"/> class, which uses MSMQ.
         /// </summary>
         /// <param name="errorQueue">The address of the error queue</param>
         /// <param name="messageQueueSender">Dependency injection for <see cref="ISendEnvelopesToMessageQueue"/></param>
@@ -77,7 +77,7 @@ namespace SimpleDomain.Bus.Pipeline
         private void SendToErrorQueue(IncommingMessageContext context, Exception exception)
         {
             var envelope = context.Envelope
-                .ReplaceHeader(HeaderKeys.TimeProcessed, DateTime.UtcNow)    
+                .ReplaceHeader(HeaderKeys.TimeProcessed, DateTime.UtcNow)
                 .ReplaceHeader(HeaderKeys.ExceptionName, exception.GetType().Name)
                 .ReplaceHeader(HeaderKeys.ExceptionMessage, exception.Message)
                 .ReplaceHeader(HeaderKeys.ExceptionString, exception.ToString())

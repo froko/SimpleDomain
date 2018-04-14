@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="AbstractEventStoreConfiguration.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.EventStore.Configuration
         private readonly IDictionary<string, object> configurationItems;
 
         /// <summary>
-        /// Creates a new instance of <see cref="AbstractEventStoreConfiguration"/>
+        /// Initializes a new instance of the <see cref="AbstractEventStoreConfiguration"/> class.
         /// </summary>
         protected AbstractEventStoreConfiguration()
         {
@@ -53,7 +53,10 @@ namespace SimpleDomain.EventStore.Configuration
             this.configurationItems.Add(key, item);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Defines how an event is dispatched
+        /// </summary>
+        /// <param name="dispatchEvents">The method to dispatch events</param>
         public void DefineAsyncEventDispatching(Func<IEvent, Task> dispatchEvents)
         {
             this.DispatchEvents = dispatchEvents;

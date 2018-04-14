@@ -11,6 +11,7 @@
         /// <summary>
         /// Defines the action how to resolve a bus and asynchronously publish events over this bus
         /// </summary>
+        /// <typeparam name="TBus">The type of the bus</typeparam>
         /// <param name="dispatchEventsUsingResolvedBus">The async resolve and publish action</param>
         public abstract void DefineAsyncEventDispatching<TBus>(Func<TBus, IEvent, Task> dispatchEventsUsingResolvedBus);
     }

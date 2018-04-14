@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="FinalIncommingMessageStep.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -22,19 +22,19 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using global::Common.Logging;
+    using SimpleDomain.Common.Logging;
 
     /// <summary>
     /// The final incomming message pipeline step
     /// </summary>
     public class FinalIncommingMessageStep : IncommingMessageStep
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Jitney));
+        private static readonly ILogger Logger = LoggerFactory.Create<Jitney>();
 
-        private readonly IDictionary<MessageIntent, Func<IMessage, Task>> handlers; 
-        
+        private readonly IDictionary<MessageIntent, Func<IMessage, Task>> handlers;
+
         /// <summary>
-        /// Creates a new instance of <see cref="FinalIncommingMessageStep"/>
+        /// Initializes a new instance of the <see cref="FinalIncommingMessageStep"/> class.
         /// </summary>
         /// <param name="handleCommandAsync">The async command handler action</param>
         /// <param name="handleEventAsync">The async event handler action</param>

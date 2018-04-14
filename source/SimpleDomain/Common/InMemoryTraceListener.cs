@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="InMemoryTraceListener.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -21,14 +21,17 @@ namespace SimpleDomain.Common
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
 
     /// <summary>
     /// A trace listener which holds all traced messages in a list
     /// </summary>
-    public class InMemoryTraceListener : TraceListener 
+    public class InMemoryTraceListener : TraceListener
     {
-        private static readonly Lazy<InMemoryTraceListener> InternalInstance = new Lazy<InMemoryTraceListener>(() => new InMemoryTraceListener()); 
+        private static readonly Lazy<InMemoryTraceListener> InternalInstance = new Lazy<InMemoryTraceListener>(() => new InMemoryTraceListener());
         private static readonly List<string> InternalLogMessages = new List<string>();
+
+        private static bool locked;
 
         /// <summary>
         /// Gets a singleton instance of this class
@@ -45,19 +48,46 @@ namespace SimpleDomain.Common
         /// </summary>
         public static void ClearLogMessages()
         {
+            WaitForUnlock();
             InternalLogMessages.Clear();
+        }
+
+        /// <summary>
+        /// Locks the listener
+        /// </summary>
+        public static void Lock()
+        {
+            locked = true;
+        }
+
+        /// <summary>
+        /// Unlocks the listener
+        /// </summary>
+        public static void Unlock()
+        {
+            locked = false;
         }
 
         /// <inheritdoc />
         public override void Write(string message)
         {
+            WaitForUnlock();
             InternalLogMessages.Add(message);
         }
 
         /// <inheritdoc />
         public override void WriteLine(string message)
         {
+            WaitForUnlock();
             InternalLogMessages.Add(message);
+        }
+
+        private static void WaitForUnlock()
+        {
+            while (locked)
+            {
+                Thread.Sleep(100);
+            }
         }
     }
 }

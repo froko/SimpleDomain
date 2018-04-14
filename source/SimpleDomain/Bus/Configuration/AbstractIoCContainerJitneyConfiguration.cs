@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="AbstractIoCContainerJitneyConfiguration.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SimpleDomain.Bus.Configuration
     public abstract class AbstractIoCContainerJitneyConfiguration : AbstractJitneyConfiguration
     {
         /// <summary>
-        /// Creates a new instance of <see cref="AbstractIoCContainerJitneyConfiguration"/>
+        /// Initializes a new instance of the <see cref="AbstractIoCContainerJitneyConfiguration"/> class.
         /// </summary>
         /// <param name="handlerRegistry">Dependency injection for <see cref="AbstractHandlerRegistry"/></param>
         protected AbstractIoCContainerJitneyConfiguration(AbstractHandlerRegistry handlerRegistry)

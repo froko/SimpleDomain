@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="ValueObject.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ namespace SimpleDomain
         /// </summary>
         /// <param name="x">The first value object</param>
         /// <param name="y">The second value object</param>
-        /// <returns></returns>
+        /// <returns><c>True</c> if they are equal or <c>False</c> if not</returns>
         public static bool operator ==(ValueObject<T> x, ValueObject<T> y)
         {
             if (ReferenceEquals(x, y))
@@ -59,7 +59,7 @@ namespace SimpleDomain
         /// </summary>
         /// <param name="x">The first value object</param>
         /// <param name="y">The second value object</param>
-        /// <returns></returns>
+        /// <returns><c>True</c> if they are equal or <c>False</c> if not</returns>
         public static bool operator !=(ValueObject<T> x, ValueObject<T> y)
         {
             return !(x == y);
@@ -111,15 +111,15 @@ namespace SimpleDomain
         }
 
         /// <inheritdoc />
-        public virtual bool Equals(T obj)
+        public virtual bool Equals(T other)
         {
-            if (obj == null)
+            if (other == null)
             {
                 return false;
             }
 
             var thisType = this.GetType();
-            var otherType = obj.GetType();
+            var otherType = other.GetType();
 
             if (thisType != otherType)
             {
@@ -130,7 +130,7 @@ namespace SimpleDomain
 
             foreach (var field in fields)
             {
-                var valueOfOtherInstance = field.GetValue(obj);
+                var valueOfOtherInstance = field.GetValue(other);
                 var valueOfThisInstance = field.GetValue(this);
 
                 if (valueOfOtherInstance == null)

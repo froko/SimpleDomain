@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="IConfigureThisEventStore.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 namespace SimpleDomain.EventStore
 {
     using System;
-    
+
     /// <summary>
     /// The event store configuration interface
     /// </summary>
@@ -31,7 +31,7 @@ namespace SimpleDomain.EventStore
         /// <param name="key">The key</param>
         /// <param name="item">The item</param>
         void AddConfigurationItem(string key, object item);
-        
+
         /// <summary>
         /// Registers an <see cref="IEventStore"/> instance
         /// <remarks>This method is intended for extension methods only</remarks>

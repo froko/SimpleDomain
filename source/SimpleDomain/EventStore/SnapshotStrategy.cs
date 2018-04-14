@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="SnapshotStrategy.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace SimpleDomain.EventStore
         private readonly Type aggregateType;
 
         /// <summary>
-        /// Creates a new instance of <see cref="SnapshotStrategy"/>
+        /// Initializes a new instance of the <see cref="SnapshotStrategy"/> class.
         /// </summary>
         /// <param name="threshold">The version threshold on which a snapshot is taken</param>
         public SnapshotStrategy(int threshold) : this(threshold, typeof(IEventSourcedAggregateRoot))
@@ -37,7 +37,7 @@ namespace SimpleDomain.EventStore
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="SnapshotStrategy"/>
+        /// Initializes a new instance of the <see cref="SnapshotStrategy"/> class.
         /// </summary>
         /// <param name="threshold">The version threshold on which a snapshot is taken</param>
         /// <param name="aggregateType">The type of the aggregate root</param>
@@ -53,14 +53,14 @@ namespace SimpleDomain.EventStore
         /// is not the type of the <see cref="EventSourcedAggregateRoot"/> base class
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>
-        /// <returns></returns>
+        /// <returns><c>True</c> if the given type of the aggregate root is assignable to this or <c>false</c> if not</returns>
         public bool AppliesToThisAggregateRoot<TAggregateRoot>() where TAggregateRoot : IEventSourcedAggregateRoot
         {
             return this.IsAssignableToMe<TAggregateRoot>() && this.IamNotTheAggregateRootBaseType();
         }
 
         /// <summary>
-        /// Checks if the given aggregate root needs to be snapshotted due to its version 
+        /// Checks if the given aggregate root needs to be snapshotted due to its version
         /// compared with the threshold.
         /// </summary>
         /// <typeparam name="TAggregateRoot">The type of the aggregate root</typeparam>

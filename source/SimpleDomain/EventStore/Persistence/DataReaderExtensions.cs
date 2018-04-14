@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="DataReaderExtensions.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,11 +30,11 @@ namespace SimpleDomain.EventStore.Persistence
     public static class DataReaderExtensions
     {
         /// <summary>
-        /// Deserializes and gets an event out of a <see cref="IDataReader"/>
+        /// Deserializes and gets an event out of a <see cref="IDataRecord"/>
         /// </summary>
         /// <param name="reader">The data reader</param>
         /// <returns>A deserialized event</returns>
-        public static IEvent GetEvent(this IDataReader reader)
+        public static IEvent GetEvent(this IDataRecord reader)
         {
             var serializedEvent = reader.GetString(0);
             var eventType = reader.GetString(1);
@@ -43,11 +43,11 @@ namespace SimpleDomain.EventStore.Persistence
         }
 
         /// <summary>
-        /// Deserializes and gets a snapshot out of a <see cref="IDataReader"/>
+        /// Deserializes and gets a snapshot out of a <see cref="IDataRecord"/>
         /// </summary>
         /// <param name="reader">The data reader</param>
         /// <returns>A deserialized snapshot</returns>
-        public static ISnapshot GetSnapshot(this IDataReader reader)
+        public static ISnapshot GetSnapshot(this IDataRecord reader)
         {
             var serializedSnapshot = reader.GetString(0);
             var snapshotType = reader.GetString(1);

@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="OutgoingPipeline.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2016
+//   Copyright (C) frokonet.ch, 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         private readonly Queue<OutgoingEnvelopeStep> outgoingEnvelopeSteps;
 
         /// <summary>
-        /// Creates a new instance of <see cref="OutgoingPipeline"/>
+        /// Initializes a new instance of the <see cref="OutgoingPipeline"/> class.
         /// </summary>
         /// <param name="configuration">Dependency injection for <see cref="IHavePipelineConfiguration"/></param>
         /// <param name="outgoingMessageSteps">All registered pipeline steps for outgoing messages</param>
@@ -51,6 +51,7 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
         /// Invokes the pipeline
         /// </summary>
         /// <param name="message">The message</param>
+        /// <returns>A <see cref="Task"/> since this is an async method</returns>
         public virtual async Task InvokeAsync(IMessage message)
         {
             if (this.configuration.LocalEndpointAddress == null)
@@ -65,11 +66,11 @@ namespace SimpleDomain.Bus.Pipeline.Outgoing
             {
                 return;
             }
-            
+
             var outgoingEnvelopeTasks = messageContext.Envelopes
                 .Select(envelope => new OutgoingEnvelopeContext(envelope, this.configuration))
                 .Select(this.InvokeOutgoingEnvelopeStepsAsync);
-            
+
             await Task.WhenAll(outgoingEnvelopeTasks).ConfigureAwait(false);
         }
 
