@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="CompositionRootTest.cs" company="frokonet.ch">
+// <copyright file="ByteArrayExtensions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,31 +16,24 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus.RabbitMq
 {
-    using System.Threading.Tasks;
+    using System.Text;
 
-    using FluentAssertions;
+    using Newtonsoft.Json;
 
-    using SimpleDomain.Bus;
-
-    using Xunit;
-
-    public class CompositionRootTest
+    public static class ByteArrayExtensions
     {
-        [Fact]
-        public async Task CanConfigureJitneyToUseMsmq()
+        private static readonly JsonSerializerSettings DefaultSerializerSettings =
+            new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects
+                };
+
+        public static Envelope AsEnvelope(this byte[] byteArray)
         {
-            var testee = new CompositionRoot();
-
-            testee.ConfigureJitney()
-                .DefineLocalEndpointAddress("simpledomain.compositionroot.test")
-                .UseMsmqJitney();
-
-            using (var executionContext = await testee.StartAsync().ConfigureAwait(false))
-            {
-                executionContext.Bus.Should().BeAssignableTo<MessageQueueJitney>();
-            }
+            var json = Encoding.UTF8.GetString(byteArray);
+            return JsonConvert.DeserializeObject<Envelope>(json, DefaultSerializerSettings);
         }
     }
 }

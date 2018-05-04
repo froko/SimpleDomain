@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.MSMQ", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.MSMQ.Facts", "SimpleDomain.Bus.MSMQ.Facts\SimpleDomain.Bus.MSMQ.Facts.csproj", "{24863783-72FD-4598-BD87-C9D94C1E1BEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.RabbitMq", "SimpleDomain.Bus.RabbitMq\SimpleDomain.Bus.RabbitMq.csproj", "{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.RabbitMq.Facts", "SimpleDomain.Bus.RabbitMq.Facts\SimpleDomain.Bus.RabbitMq.Facts.csproj", "{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{24863783-72FD-4598-BD87-C9D94C1E1BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24863783-72FD-4598-BD87-C9D94C1E1BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24863783-72FD-4598-BD87-C9D94C1E1BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +92,8 @@ Global
 		{08627F9C-19CF-4BBC-9F7E-FEF926059E24} = {FFA1A93C-E3EF-4C06-A062-1B096BD8888C}
 		{F38DDC6D-3335-4FD6-85B5-453BC0704140} = {AEDA854E-9877-4BD6-893B-3B8019E199B4}
 		{24863783-72FD-4598-BD87-C9D94C1E1BEC} = {AEDA854E-9877-4BD6-893B-3B8019E199B4}
+		{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB} = {AEDA854E-9877-4BD6-893B-3B8019E199B4}
+		{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA} = {AEDA854E-9877-4BD6-893B-3B8019E199B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5D698CD-191F-4DBA-9AE8-E9DB131B3B07}

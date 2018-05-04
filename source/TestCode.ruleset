@@ -33,4 +33,7 @@
     <Rule Id="SA1649" Action="None" />
     <Rule Id="SA1652" Action="None" />
   </Rules>
+  <Rules AnalyzerId="xunit.analyzers" RuleNamespace="xunit.analyzers">
+    <Rule Id="xUnit1013" Action="None" />
+  </Rules>
 </RuleSet>

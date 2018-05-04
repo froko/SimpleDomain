@@ -49,23 +49,33 @@ namespace SimpleDomain.Bus.Pipeline
         public async Task ShouldUseSameCorrelationIdForAllMessagesInSameContext_WhenUsingMsmqJitney()
         {
             this.compositionRoot.ConfigureJitney()
-                .DefineLocalEndpointAddress("integrationtest")
+                .DefineLocalEndpointAddress("simpledomain.correlationid.test")
                 .AddPipelineStep(this.registerIncommingCorrelationIdStep)
                 .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
-                .AddPipelineStep(new AuditQueueStep("integrationtest.audit"))
                 .MapContracts(typeof(ValueCommand).Assembly).ToMe()
                 .UseMsmqJitney();
 
             using (var context = await this.compositionRoot.StartAsync().ConfigureAwait(false))
             {
+                // Wait for subscription message
+                await WaitForMessageHandlerToExecute().ConfigureAwait(false);
+
                 await context.Bus.SendAsync(new ValueCommand(42)).ConfigureAwait(false);
-                await Task.Delay(2000).ConfigureAwait(false);
+                await WaitForMessageHandlerToExecute().ConfigureAwait(false);
 
                 var incommingCorrelationId = this.registerIncommingCorrelationIdStep.CorrelationId;
                 var outgoingCorrelationIds = this.registerOutgoingCorrelationIdStep.CorrelationIds;
 
                 outgoingCorrelationIds.Should().HaveCount(2);
                 outgoingCorrelationIds.All(id => id == incommingCorrelationId).Should().BeTrue();
+            }
+        }
+
+        private static async Task WaitForMessageHandlerToExecute()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                await Task.Delay(10).ConfigureAwait(false);
             }
         }
 

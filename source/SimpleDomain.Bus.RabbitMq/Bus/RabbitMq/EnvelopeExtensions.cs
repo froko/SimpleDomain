@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="CompositionRootTest.cs" company="frokonet.ch">
+// <copyright file="EnvelopeExtensions.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,31 +16,24 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace SimpleDomain
+namespace SimpleDomain.Bus.RabbitMq
 {
-    using System.Threading.Tasks;
+    using System.Text;
 
-    using FluentAssertions;
+    using Newtonsoft.Json;
 
-    using SimpleDomain.Bus;
-
-    using Xunit;
-
-    public class CompositionRootTest
+    public static class EnvelopeExtensions
     {
-        [Fact]
-        public async Task CanConfigureJitneyToUseMsmq()
+        private static readonly JsonSerializerSettings DefaultSerializerSettings =
+            new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects
+                };
+
+        public static byte[] AsByteArray(this Envelope envelope)
         {
-            var testee = new CompositionRoot();
-
-            testee.ConfigureJitney()
-                .DefineLocalEndpointAddress("simpledomain.compositionroot.test")
-                .UseMsmqJitney();
-
-            using (var executionContext = await testee.StartAsync().ConfigureAwait(false))
-            {
-                executionContext.Bus.Should().BeAssignableTo<MessageQueueJitney>();
-            }
+            return Encoding.UTF8.GetBytes(
+                JsonConvert.SerializeObject(envelope, Formatting.None, DefaultSerializerSettings));
         }
     }
 }
