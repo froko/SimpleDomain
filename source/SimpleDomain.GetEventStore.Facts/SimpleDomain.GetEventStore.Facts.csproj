@@ -8,11 +8,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{54E44DB5-0BDE-4B21-893B-375577534B81}</ProjectGuid>
+    <ProjectGuid>{08627F9C-19CF-4BBC-9F7E-FEF926059E24}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleDomain</RootNamespace>
-    <AssemblyName>SimpleDomain.Facts</AssemblyName>
+    <AssemblyName>SimpleDomain.GetEventStore.Facts</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EventStore.ClientAPI.NetCore, Version=4.1.0.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EventStore.ClientAPI.NetCore.4.1.0.23\lib\netstandard2.0\EventStore.ClientAPI.NetCore.dll</HintPath>
+    </Reference>
     <Reference Include="FakeItEasy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeItEasy.4.5.1\lib\net45\FakeItEasy.dll</HintPath>
     </Reference>
@@ -45,16 +48,14 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net, Version=2.3.7.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.3.7\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlClient, Version=4.2.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SqlClient.4.4.3\lib\net461\System.Data.SqlClient.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Transactions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,73 +76,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bus\CommandSubscriptionExceptionTest.cs" />
-    <Compile Include="Bus\CommandSubscriptionTest.cs" />
-    <Compile Include="Bus\Configuration\AbstractHandlerRegistryTest.cs" />
-    <Compile Include="Bus\Configuration\AbstractJitneyConfigurationTest.cs" />
-    <Compile Include="Bus\Configuration\AssemblyExtensionsTest.cs" />
-    <Compile Include="Bus\Configuration\AsyncMessageDelegateTest.cs" />
-    <Compile Include="Bus\Configuration\ContainerLessHandlerRegistryTest.cs" />
-    <Compile Include="Bus\Configuration\HandlerInvocationCacheTest.cs" />
-    <Compile Include="Bus\Configuration\JitneyFactoryTest.cs" />
-    <Compile Include="Bus\Configuration\JitneySubscriptionsTest.cs" />
-    <Compile Include="Bus\Configuration\TypeExtensionsTest.cs" />
-    <Compile Include="Bus\ContractsToEndpointMapperTest.cs" />
-    <Compile Include="Bus\EndpointAddressTest.cs" />
-    <Compile Include="Bus\EnvelopeBuilder.cs" />
-    <Compile Include="Bus\EnvelopeTest.cs" />
-    <Compile Include="Bus\EventSubscriptionTest.cs" />
-    <Compile Include="Bus\FileSubscriptionStoreTest.cs" />
-    <Compile Include="Bus\GlobalJitneyConfigurationExtensionsTest.cs" />
-    <Compile Include="Bus\InMemorySubscriptionStoreTest.cs" />
-    <Compile Include="Bus\JitneyConfigurationExceptionTest.cs" />
-    <Compile Include="Bus\MessageQueueJitneyTest.cs" />
-    <Compile Include="Bus\NoSubscriptionExceptionTest.cs" />
-    <Compile Include="Bus\Pipeline\CorrelationIdIntegrationTest.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\FinalIncommingEnvelopeStepTest.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\FinalIncommingMessageStepTest.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingEnvelopeContextTest.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingMessageContextTest.cs" />
-    <Compile Include="Bus\Pipeline\Incomming\IncommingPipelineTest.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingEnvelopeStepTest.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\FinalOutgoingMessageStepTest.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingEnvelopeContextTest.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingMessageContextTest.cs" />
-    <Compile Include="Bus\Pipeline\Outgoing\OutgoingPipelineTest.cs" />
-    <Compile Include="Bus\SimpleJitneyTest.cs" />
-    <Compile Include="Bus\SubscriptionMessageTest.cs" />
-    <Compile Include="Common\DisposableTest.cs" />
-    <Compile Include="Common\ExceptionHelperTest.cs" />
-    <Compile Include="Common\GuardTest.cs" />
-    <Compile Include="Common\InMemoryTraceListenerTest.cs" />
-    <Compile Include="Common\TypeHelperTest.cs" />
-    <Compile Include="CompositionRootAlreadyStartedExceptionTest.cs" />
-    <Compile Include="CompositionRootTest.cs" />
-    <Compile Include="DynamicEventSourcedAggregateRootTest.cs" />
-    <Compile Include="EntityTest.cs" />
-    <Compile Include="EventHistoryTest.cs" />
-    <Compile Include="EventStore\Configuration\AbstractEventStoreConfigurationTest.cs" />
-    <Compile Include="EventStore\Configuration\EventStoreFactoryTest.cs" />
-    <Compile Include="EventStore\EventDescriptorTest.cs" />
-    <Compile Include="EventStore\EventStoreRepositoryTest.cs" />
-    <Compile Include="EventStore\GlobalEventStoreConfigurationExtensionsTest.cs" />
-    <Compile Include="EventStore\Persistence\InMemoryIntegrationTest.cs" />
-    <Compile Include="EventStore\Persistence\SqlEventDescriptorTest.cs" />
-    <Compile Include="EventStore\Persistence\SqlIntegrationTest.cs" />
-    <Compile Include="EventStore\Persistence\SqlSnapshotDescriptorTest.cs" />
-    <Compile Include="EventStore\Persistence\WithTransactionAttribute.cs" />
-    <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
-    <Compile Include="FluentTestingExtensions.cs" />
-    <Compile Include="MissingConfigurationExceptionTest.cs" />
+    <Compile Include="EventStore\Persistence\IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnapshotTest.cs" />
-    <Compile Include="StateBasedAggregateRootTest.cs" />
-    <Compile Include="StaticEventSourcedAggregateRootTest.cs" />
-    <Compile Include="ValueObjectTest.cs" />
-    <Compile Include="VersionableEventTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -150,17 +89,21 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\SimpleDomain.GetEventStore\SimpleDomain.GetEventStore.csproj">
+      <Project>{faa98cbd-eecc-4de2-94ec-1571911e1870}</Project>
+      <Name>SimpleDomain.GetEventStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleDomain.TestDoubles\SimpleDomain.TestDoubles.csproj">
-      <Project>{366EB2EC-31E3-44C9-A36A-32D935A101F8}</Project>
+      <Project>{366eb2ec-31e3-44c9-a36a-32d935a101f8}</Project>
       <Name>SimpleDomain.TestDoubles</Name>
     </ProjectReference>
     <ProjectReference Include="..\SimpleDomain\SimpleDomain.csproj">
       <Project>{08675a09-411d-4c12-98f3-08754adc3ef6}</Project>
       <Name>SimpleDomain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

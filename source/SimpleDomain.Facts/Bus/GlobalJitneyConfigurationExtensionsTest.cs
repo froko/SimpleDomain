@@ -22,10 +22,6 @@ namespace SimpleDomain.Bus
 
     using FakeItEasy;
 
-    using SimpleDomain.Bus.Configuration;
-    using SimpleDomain.Bus.Msmq;
-    using SimpleDomain.Bus.MSMQ;
-
     using Xunit;
 
     public class GlobalJitneyConfigurationExtensionsTest
@@ -49,20 +45,6 @@ namespace SimpleDomain.Bus
             A.CallTo(() => configuration.AddConfigurationItem(
                 MessageQueueJitney.MessageQueueProvider,
                 A<InMemoryQueueProvider>.Ignored)).MustHaveHappened();
-
-            A.CallTo(() => configuration.Register(A<Func<IHaveJitneyConfiguration, Jitney>>.Ignored))
-                .MustHaveHappened();
-        }
-
-        [Fact]
-        public void CanRegisterMsmqJitney()
-        {
-            var configuration = A.Fake<IConfigureThisJitney>();
-            configuration.UseMsmqJitney();
-
-            A.CallTo(() => configuration.AddConfigurationItem(
-                MessageQueueJitney.MessageQueueProvider,
-                A<MsmqProvider>.Ignored)).MustHaveHappened();
 
             A.CallTo(() => configuration.Register(A<Func<IHaveJitneyConfiguration, Jitney>>.Ignored))
                 .MustHaveHappened();

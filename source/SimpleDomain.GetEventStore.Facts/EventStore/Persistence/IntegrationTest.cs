@@ -29,28 +29,24 @@ namespace SimpleDomain.EventStore.Persistence
 
     using Xunit;
 
-    public sealed class IntegrationTest : IDisposable
+    // Start local instance of EventStore by running EventStore.ClusterNode.exe
+    // Can be installed via chocolatey by running "choco install eventstore-oss"
+    public class IntegrationTest
     {
-        private readonly EmbeddedEventStoreConnectionBuilder connectionBuilder;
-
-        private readonly IDeliverMessages bus;
-        private readonly IEventStore testee;
         private readonly IEventSourcedRepository repository;
 
         public IntegrationTest()
         {
-            this.connectionBuilder = new EmbeddedEventStoreConnectionBuilder();
-
             var factory = new EventStoreFactory();
             var configuration = new ContainerLessEventStoreConfiguration(factory);
-            configuration.UseGetEventStore(this.connectionBuilder);
+            configuration.UseGetEventStore(GetEventStoreConnectionBuilder.Initialize());
 
-            this.bus = A.Fake<IDeliverMessages>();
-            this.testee = factory.Create(configuration, this.bus);
-            this.repository = new EventStoreRepository(this.testee).WithGlobalSnapshotStrategy(10);
+            var bus = A.Fake<IDeliverMessages>();
+            var eventStore = factory.Create(configuration, bus);
+            this.repository = new EventStoreRepository(eventStore).WithGlobalSnapshotStrategy(10);
         }
 
-        [Fact]
+        [Fact(Skip = "Needs connection to local EventStore instance")]
         public async Task CanSaveAndRetrieveAggregateRoots()
         {
             var aggregateId = Guid.NewGuid();
@@ -94,11 +90,6 @@ namespace SimpleDomain.EventStore.Persistence
 
             aggregateRootFromEventStore.Value.Should().Be(22);
             aggregateRootFromEventStore.Version.Should().Be(22);
-        }
-
-        public void Dispose()
-        {
-            this.connectionBuilder.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿//-------------------------------------------------------------------------------
 // <copyright file="CorrelationIdIntegrationTest.cs" company="frokonet.ch">
-//   Copyright (c) 2014-2017
+//   Copyright (c) 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -46,41 +46,20 @@ namespace SimpleDomain.Bus.Pipeline
         }
 
         [Fact]
-        public async Task ShouldUseSameCorrelationIdForAllMessagesInSameContext_WhenUsingSimpleJitney()
+        public async Task ShouldUseSameCorrelationIdForAllMessagesInSameContext_WhenUsingMsmqJitney()
         {
             this.compositionRoot.ConfigureJitney()
                 .DefineLocalEndpointAddress("integrationtest")
                 .AddPipelineStep(this.registerIncommingCorrelationIdStep)
                 .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
+                .AddPipelineStep(new AuditQueueStep("integrationtest.audit"))
                 .MapContracts(typeof(ValueCommand).Assembly).ToMe()
-                .UseSimpleJitney();
+                .UseMsmqJitney();
 
             using (var context = await this.compositionRoot.StartAsync().ConfigureAwait(false))
             {
                 await context.Bus.SendAsync(new ValueCommand(42)).ConfigureAwait(false);
-
-                var incommingCorrelationId = this.registerIncommingCorrelationIdStep.CorrelationId;
-                var outgoingCorrelationIds = this.registerOutgoingCorrelationIdStep.CorrelationIds;
-
-                outgoingCorrelationIds.Should().HaveCount(2);
-                outgoingCorrelationIds.All(id => id == incommingCorrelationId).Should().BeTrue();
-            }
-        }
-
-        [Fact]
-        public async Task ShouldUseSameCorrelationIdForAllMessagesInSameContext_WhenUsingInMemoryQueueJitney()
-        {
-            this.compositionRoot.ConfigureJitney()
-                .DefineLocalEndpointAddress("integrationtest")
-                .AddPipelineStep(this.registerIncommingCorrelationIdStep)
-                .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
-                .MapContracts(typeof(ValueCommand).Assembly).ToMe()
-                .UseInMemoryQueueJitney();
-
-            using (var context = await this.compositionRoot.StartAsync().ConfigureAwait(false))
-            {
-                await context.Bus.SendAsync(new ValueCommand(42)).ConfigureAwait(false);
-                await Task.Delay(1000).ConfigureAwait(false);
+                await Task.Delay(2000).ConfigureAwait(false);
 
                 var incommingCorrelationId = this.registerIncommingCorrelationIdStep.CorrelationId;
                 var outgoingCorrelationIds = this.registerOutgoingCorrelationIdStep.CorrelationIds;

@@ -1,6 +1,6 @@
-//-------------------------------------------------------------------------------
-// <copyright file="GlobalJitneyConfigurationExtensions.cs" company="frokonet.ch">
-//   Copyright (C) frokonet.ch, 2014-2018
+﻿//-------------------------------------------------------------------------------
+// <copyright file="MsmqJitneyConfigurationExtensions.cs" company="frokonet.ch">
+//   Copyright (c) 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -18,27 +18,20 @@
 
 namespace SimpleDomain.Bus
 {
+    using SimpleDomain.Bus.Msmq;
+
     /// <summary>
     /// Configuation extensions for the Jitney configuration base class
     /// </summary>
-    public static class GlobalJitneyConfigurationExtensions
+    public static class MsmqJitneyConfigurationExtensions
     {
         /// <summary>
-        /// Registers the <see cref="SimpleJitney"/> bus
+        /// Registers the <see cref="MessageQueueJitney"/> bus with the MSMQ provider
         /// </summary>
         /// <param name="configuration">The Jintey bus configuration</param>
-        public static void UseSimpleJitney(this IConfigureThisJitney configuration)
+        public static void UseMsmqJitney(this IConfigureThisJitney configuration)
         {
-            configuration.Register(config => new SimpleJitney(config));
-        }
-
-        /// <summary>
-        /// Registers the <see cref="MessageQueueJitney"/> bus with the In-Memory Queue provider
-        /// </summary>
-        /// <param name="configuration">The Jintey bus configuration</param>
-        public static void UseInMemoryQueueJitney(this IConfigureThisJitney configuration)
-        {
-            configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new InMemoryQueueProvider());
+            configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new MsmqProvider());
             configuration.Register(config => new MessageQueueJitney(config));
         }
     }
