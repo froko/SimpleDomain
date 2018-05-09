@@ -7,6 +7,18 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ProductionCode.ruleset</CodeAnalysisRuleSet>
     <RootNamespace>SimpleDomain</RootNamespace>
+    <Product>SimpleDomain</Product>
+    <Authors>Patrick Ineichen</Authors>
+    <Company>frokonet.ch</Company>
+    <Copyright>Copyright © frokonet.ch 2018</Copyright>
+    <PackageProjectUrl>https://github.com/froko/SimpleDomain</PackageProjectUrl>
+    <PackageTags>ddd, cqrs, event-sourcing, bus</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DocumentationFile>bin\Release\netstandard2.0\SimpleDomain.GetEventStore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.1.0.23" />
     <PackageReference Include="GitVersionTask" Version="4.0.0-beta0012" />
+    <PackageReference Include="Octopack" Version="3.6.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="StyleCop.Analyzers.Error" Version="1.0.2" />
   </ItemGroup>

@@ -20,8 +20,20 @@ namespace SimpleDomain.Bus.RabbitMq
 {
     using RabbitMQ.Client;
 
+    /// <summary>
+    /// Some helpers for RabbitMQ
+    /// </summary>
     public static class RabbitMqUtilities
     {
+        /// <summary>
+        /// Creates a new connection to the RabbitMQ server
+        /// </summary>
+        /// <param name="username">The RabbitMQ user name</param>
+        /// <param name="password">The RabbitMQ password</param>
+        /// <param name="virtualHost">The RabbitMQ virtual host</param>
+        /// <param name="port">The RabbitMQ port</param>
+        /// <param name="endpointAddress">The endpoint address containing the RabbitMQ host</param>
+        /// <returns>A connection to the RabbitMQ server</returns>
         public static IConnection CreateConnection(
             string username,
             string password,
@@ -42,6 +54,12 @@ namespace SimpleDomain.Bus.RabbitMq
             return connectionFactory.CreateConnection();
         }
 
+        /// <summary>
+        /// Creates a channel to a queue of the RabbitMQ server
+        /// </summary>
+        /// <param name="connection">The RabbitMQ connection</param>
+        /// <param name="endpointAddress">The endpoint address containing the queue name</param>
+        /// <returns>A channel to a queue of the RabbitMQ server</returns>
         public static IModel CreateChannel(IConnection connection, EndpointAddress endpointAddress)
         {
             var channel = connection.CreateModel();

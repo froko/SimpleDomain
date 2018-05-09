@@ -32,7 +32,14 @@ namespace SimpleDomain.Bus.RabbitMq
     /// </summary>
     public class RabbitMqProvider : IMessageQueueProvider
     {
+        /// <summary>
+        /// Default RabbitMQ virtual host
+        /// </summary>
         public const string DefaultVirtualHost = "/";
+
+        /// <summary>
+        /// Default RabbitMQ port
+        /// </summary>
         public const int DefaultPort = 5672;
 
         private const string DefaultUsername = "guest";
@@ -111,7 +118,7 @@ namespace SimpleDomain.Bus.RabbitMq
             catch (Exception exception)
             {
                 var message = $"Could not send {envelope.Body.GetIntent()} of type {envelope.Body.GetFullName()} to {recipientEndpointAddress}";
-                throw new Exception(message, exception);
+                throw new RabbitMqException(message, exception);
             }
         }
 
@@ -135,9 +142,7 @@ namespace SimpleDomain.Bus.RabbitMq
             {
                 try
                 {
-                    var envelope = @event.Body.AsEnvelope();
-                    await this.callMeBackWhenEnvelopeArrives(envelope);
-
+                    await this.HandleMessageAsync(@event.Body).ConfigureAwait(false);
                     transactionScope.Complete();
                 }
                 catch (Exception exception)
@@ -145,6 +150,19 @@ namespace SimpleDomain.Bus.RabbitMq
                     Logger.Error(exception, "Could not handle message");
                 }
             }
+        }
+
+        private async Task HandleMessageAsync(byte[] body)
+        {
+            var message = body.Deserialize();
+            if (!(message is Envelope))
+            {
+                Logger.Warn("Received a message that is not an Envelope. That's strange but should cause no error");
+                return;
+            }
+
+            var envelope = (Envelope)message;
+            await this.callMeBackWhenEnvelopeArrives(envelope).ConfigureAwait(false);
         }
 
         private void Send(Envelope envelope, EndpointAddress recipientEndpointAddress)

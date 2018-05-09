@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="EnvelopeExtensions.cs" company="frokonet.ch">
+// <copyright file="RabbitMqException.cs" company="frokonet.ch">
 //   Copyright (c) 2014-2018
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,30 +18,21 @@
 
 namespace SimpleDomain.Bus.RabbitMq
 {
-    using System.Text;
-
-    using Newtonsoft.Json;
+    using System;
 
     /// <summary>
-    /// Extension methods for envelopes
+    /// The Exception that is thrown when something goes wrong with the RabbitMQ provider
     /// </summary>
-    public static class EnvelopeExtensions
+    [Serializable]
+    public class RabbitMqException : Exception
     {
-        private static readonly JsonSerializerSettings DefaultSerializerSettings =
-            new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Objects
-                };
-
         /// <summary>
-        /// Serializes an envelope as Json string and encodes it into a byte array
+        /// Initializes a new instance of the <see cref="RabbitMqException"/> class.
         /// </summary>
-        /// <param name="envelope">The envelope</param>
-        /// <returns>A byte array containing the serialized Json string of the envelope</returns>
-        public static byte[] AsByteArray(this Envelope envelope)
+        /// <param name="message">The innerException message</param>
+        /// <param name="innerException">The inner innerException</param>
+        public RabbitMqException(string message, Exception innerException) : base(message, innerException)
         {
-            return Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(envelope, Formatting.None, DefaultSerializerSettings));
         }
     }
 }

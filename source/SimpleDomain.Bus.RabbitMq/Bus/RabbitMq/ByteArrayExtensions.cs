@@ -22,6 +22,9 @@ namespace SimpleDomain.Bus.RabbitMq
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Extensions methods for byte arrays
+    /// </summary>
     public static class ByteArrayExtensions
     {
         private static readonly JsonSerializerSettings DefaultSerializerSettings =
@@ -30,10 +33,15 @@ namespace SimpleDomain.Bus.RabbitMq
                     TypeNameHandling = TypeNameHandling.Objects
                 };
 
-        public static Envelope AsEnvelope(this byte[] byteArray)
+        /// <summary>
+        /// Deserializes a Json string encoded in a byte array to an untyped object
+        /// </summary>
+        /// <param name="byteArray">The byte array</param>
+        /// <returns>A deserialized untyped object</returns>
+        public static object Deserialize(this byte[] byteArray)
         {
             var json = Encoding.UTF8.GetString(byteArray);
-            return JsonConvert.DeserializeObject<Envelope>(json, DefaultSerializerSettings);
+            return JsonConvert.DeserializeObject(json, DefaultSerializerSettings);
         }
     }
 }
