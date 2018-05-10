@@ -33,6 +33,16 @@ namespace SimpleDomain.Bus.RabbitMq
     public class RabbitMqProvider : IMessageQueueProvider
     {
         /// <summary>
+        /// Default RabbitMQ user name
+        /// </summary>
+        public const string DefaultUsername = "guest";
+
+        /// <summary>
+        /// Default RabbitMQ password
+        /// </summary>
+        public const string DefaultPassword = "guest";
+
+        /// <summary>
         /// Default RabbitMQ virtual host
         /// </summary>
         public const string DefaultVirtualHost = "/";
@@ -42,8 +52,6 @@ namespace SimpleDomain.Bus.RabbitMq
         /// </summary>
         public const int DefaultPort = 5672;
 
-        private const string DefaultUsername = "guest";
-        private const string DefaultPassword = "guest";
         private const string DefaultExchange = "";
 
         private static readonly ILogger Logger = LoggerFactory.Create<RabbitMqProvider>();

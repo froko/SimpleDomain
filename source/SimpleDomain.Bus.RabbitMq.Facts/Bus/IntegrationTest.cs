@@ -39,7 +39,7 @@ namespace SimpleDomain.Bus
             configuration.SubscribeEventHandler<MyEvent>(this.HandleMyEvent);
         }
 
-        [Fact]
+        [Fact(Skip = "Needs connection to local RabbitMQ server instance")]
         public async Task CanSendAndReceiveCommandsWithRabbitMq()
         {
             var compositionRoot = new CompositionRoot();
@@ -60,7 +60,7 @@ namespace SimpleDomain.Bus
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Needs connection to local RabbitMQ server instance")]
         public async Task CanSendAndReceiveEventsWithRabbitMq()
         {
             var compositionRoot = new CompositionRoot();

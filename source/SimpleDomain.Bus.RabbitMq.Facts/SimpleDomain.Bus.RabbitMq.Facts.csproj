@@ -74,6 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bus\IntegrationTest.cs" />
+    <Compile Include="Bus\Pipeline\AuditQueueStepTest.cs" />
+    <Compile Include="Bus\Pipeline\ErrorQueueStepTest.cs" />
+    <Compile Include="Bus\RabbitMq\RabbitMqExceptionTest.cs" />
+    <Compile Include="CompositionRootTest.cs" />
+    <Compile Include="Bus\EnvelopeBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
