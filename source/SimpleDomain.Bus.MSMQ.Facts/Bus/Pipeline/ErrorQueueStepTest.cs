@@ -19,7 +19,6 @@
 namespace SimpleDomain.Bus.Pipeline
 {
     using System;
-    using System.Runtime.Remoting.Messaging;
     using System.Threading.Tasks;
 
     using FakeItEasy;
