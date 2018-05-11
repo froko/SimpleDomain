@@ -92,6 +92,15 @@ namespace SimpleDomain.Bus.Configuration
         }
 
         /// <inheritdoc />
+        public IConfigureThisJitney DefineLocalEndpointAddress(string queueName, string machineName)
+        {
+            Guard.NotNullOrEmpty(() => queueName);
+
+            this.LocalEndpointAddress = new EndpointAddress(queueName, machineName);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IConfigureThisJitney SetSubscriptionStore(ISubscriptionStore store)
         {
             Guard.NotNull(() => store);
