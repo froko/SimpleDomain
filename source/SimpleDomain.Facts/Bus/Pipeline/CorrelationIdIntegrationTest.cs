@@ -131,7 +131,11 @@ namespace SimpleDomain.Bus.Pipeline
         {
             public string Name => "TestContext";
 
-            public void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository)
+            public void Configure(
+                ISubscribeMessageHandlers configuration,
+                IFeatureSelector featureSelector,
+                IDeliverMessages bus,
+                IEventSourcedRepository repository)
             {
                 configuration.SubscribeCommandHandler<ValueCommand>(c => HandleCommand(bus));
                 configuration.SubscribeEventHandler<ValueEvent>(e => Task.CompletedTask);

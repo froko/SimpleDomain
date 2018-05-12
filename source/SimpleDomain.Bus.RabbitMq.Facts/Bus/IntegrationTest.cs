@@ -33,7 +33,11 @@ namespace SimpleDomain.Bus
 
         public string Name => "IntegrationTest";
 
-        public void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository)
+        public void Configure(
+            ISubscribeMessageHandlers configuration,
+            IFeatureSelector featureSelector,
+            IDeliverMessages bus,
+            IEventSourcedRepository repository)
         {
             configuration.SubscribeCommandHandler<MyCommand>(this.HandleMyCommand);
             configuration.SubscribeEventHandler<MyEvent>(this.HandleMyEvent);

@@ -131,6 +131,7 @@
     <Compile Include="EventStore\Persistence\SqlSnapshotDescriptorTest.cs" />
     <Compile Include="EventStore\Persistence\WithTransactionAttribute.cs" />
     <Compile Include="EventStore\SnapshotDescriptorTest.cs" />
+    <Compile Include="FeatureNotFoundExceptionTest.cs" />
     <Compile Include="FluentTestingExtensions.cs" />
     <Compile Include="MissingConfigurationExceptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.MSMQ", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.MSMQ.Facts", "SimpleDomain.Bus.MSMQ.Facts\SimpleDomain.Bus.MSMQ.Facts.csproj", "{24863783-72FD-4598-BD87-C9D94C1E1BEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.RabbitMq", "SimpleDomain.Bus.RabbitMq\SimpleDomain.Bus.RabbitMq.csproj", "{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDomain.Bus.RabbitMq", "SimpleDomain.Bus.RabbitMq\SimpleDomain.Bus.RabbitMq.csproj", "{BEBA6205-6F89-4365-A9AA-E0C82F65BFBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDomain.Bus.RabbitMq.Facts", "SimpleDomain.Bus.RabbitMq.Facts\SimpleDomain.Bus.RabbitMq.Facts.csproj", "{0CA1916C-AE1F-43A9-A55E-2B964B7E99FA}"
 EndProject

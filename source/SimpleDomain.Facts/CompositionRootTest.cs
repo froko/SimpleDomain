@@ -121,6 +121,7 @@ namespace SimpleDomain
             {
                 A.CallTo(() => boundedContext.Configure(
                     A<ISubscribeMessageHandlers>.Ignored,
+                    A<IFeatureSelector>.Ignored,
                     A<IDeliverMessages>.Ignored,
                     A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
             }
