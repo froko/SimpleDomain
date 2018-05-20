@@ -10,6 +10,7 @@
     <description>A library which supports DDD, CQRS and event sourcing. This is the GetEventStore suport package.</description>
     <dependencies>
       <dependency id="EventStore.ClientAPI.NetCore" version="4.1.0.23" />
+      <dependency id="SimpleDomain" version="2.0.0" />
     </dependencies>
   </metadata>
   <files>
