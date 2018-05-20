@@ -35,6 +35,7 @@ namespace SimpleDomain
         private readonly JitneyFactory jitneyFactory;
         private readonly EventStoreFactory eventStoreFactory;
         private readonly List<IBoundedContext> boundedContexts;
+        private readonly List<AbstractFeature> features;
 
         private AbstractJitneyConfiguration jitneyConfiguration;
         private AbstractEventStoreConfiguration eventStoreConfiguration;
@@ -48,6 +49,7 @@ namespace SimpleDomain
             this.jitneyFactory = new JitneyFactory();
             this.eventStoreFactory = new EventStoreFactory();
             this.boundedContexts = new List<IBoundedContext>();
+            this.features = new List<AbstractFeature>();
 
             this.jitneyConfiguration = new ContainerLessJitneyConfiguration(this.jitneyFactory);
             this.eventStoreConfiguration = new ContainerLessEventStoreConfiguration(this.eventStoreFactory);
@@ -95,6 +97,16 @@ namespace SimpleDomain
         }
 
         /// <summary>
+        /// Registers a feature
+        /// </summary>
+        /// <param name="feature">An instance of a class implementing <see cref="AbstractFeature"/></param>
+        public void Register(AbstractFeature feature)
+        {
+            this.ThrowExceptionIfAlreadyStarted();
+            this.features.Add(feature);
+        }
+
+        /// <summary>
         /// Registers a bounded context
         /// </summary>
         /// <param name="boundedContext">An instance of a class implementing <see cref="IBoundedContext"/></param>
@@ -124,7 +136,17 @@ namespace SimpleDomain
             var bus = this.jitneyFactory.Create(this.jitneyConfiguration);
             var eventStore = this.eventStoreFactory.Create(this.eventStoreConfiguration, bus);
 
-            this.boundedContexts.ForEach(bc => bc.Configure(this.jitneyConfiguration, bus, new EventStoreRepository(eventStore)));
+            this.features.ForEach(f =>
+            {
+                f.Configure(this.jitneyConfiguration, bus);
+                f.Configure(this.eventStoreConfiguration, new EventStoreRepository(eventStore));
+            });
+
+            this.boundedContexts.ForEach(bc => bc.Configure(
+                this.jitneyConfiguration,
+                new FeatureSelector(this.features),
+                bus,
+                new EventStoreRepository(eventStore)));
 
             await bus.StartAsync().ConfigureAwait(false);
 

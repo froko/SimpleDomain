@@ -52,7 +52,6 @@ namespace SimpleDomain.Bus.Pipeline
                 .DefineLocalEndpointAddress("integrationtest")
                 .AddPipelineStep(this.registerIncommingCorrelationIdStep)
                 .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
-                .AddPipelineStep(new AuditQueueStep("integrationtest.audit"))
                 .MapContracts(typeof(ValueCommand).Assembly).ToMe()
                 .UseSimpleJitney();
 
@@ -75,7 +74,6 @@ namespace SimpleDomain.Bus.Pipeline
                 .DefineLocalEndpointAddress("integrationtest")
                 .AddPipelineStep(this.registerIncommingCorrelationIdStep)
                 .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
-                .AddPipelineStep(new AuditQueueStep("integrationtest.audit"))
                 .MapContracts(typeof(ValueCommand).Assembly).ToMe()
                 .UseInMemoryQueueJitney();
 
@@ -83,30 +81,6 @@ namespace SimpleDomain.Bus.Pipeline
             {
                 await context.Bus.SendAsync(new ValueCommand(42)).ConfigureAwait(false);
                 await Task.Delay(1000).ConfigureAwait(false);
-
-                var incommingCorrelationId = this.registerIncommingCorrelationIdStep.CorrelationId;
-                var outgoingCorrelationIds = this.registerOutgoingCorrelationIdStep.CorrelationIds;
-
-                outgoingCorrelationIds.Should().HaveCount(2);
-                outgoingCorrelationIds.All(id => id == incommingCorrelationId).Should().BeTrue();
-            }
-        }
-
-        [Fact]
-        public async Task ShouldUseSameCorrelationIdForAllMessagesInSameContext_WhenUsingMsmqJitney()
-        {
-            this.compositionRoot.ConfigureJitney()
-                .DefineLocalEndpointAddress("integrationtest")
-                .AddPipelineStep(this.registerIncommingCorrelationIdStep)
-                .AddPipelineStep(this.registerOutgoingCorrelationIdStep)
-                .AddPipelineStep(new AuditQueueStep("integrationtest.audit"))
-                .MapContracts(typeof(ValueCommand).Assembly).ToMe()
-                .UseMsmqJitney();
-
-            using (var context = await this.compositionRoot.StartAsync().ConfigureAwait(false))
-            {
-                await context.Bus.SendAsync(new ValueCommand(42)).ConfigureAwait(false);
-                await Task.Delay(2000).ConfigureAwait(false);
 
                 var incommingCorrelationId = this.registerIncommingCorrelationIdStep.CorrelationId;
                 var outgoingCorrelationIds = this.registerOutgoingCorrelationIdStep.CorrelationIds;
@@ -157,7 +131,11 @@ namespace SimpleDomain.Bus.Pipeline
         {
             public string Name => "TestContext";
 
-            public void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository)
+            public void Configure(
+                ISubscribeMessageHandlers configuration,
+                IFeatureSelector featureSelector,
+                IDeliverMessages bus,
+                IEventSourcedRepository repository)
             {
                 configuration.SubscribeCommandHandler<ValueCommand>(c => HandleCommand(bus));
                 configuration.SubscribeEventHandler<ValueEvent>(e => Task.CompletedTask);

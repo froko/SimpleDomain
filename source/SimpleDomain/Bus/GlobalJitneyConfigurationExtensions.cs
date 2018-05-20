@@ -18,8 +18,6 @@
 
 namespace SimpleDomain.Bus
 {
-    using SimpleDomain.Bus.Msmq;
-
     /// <summary>
     /// Configuation extensions for the Jitney configuration base class
     /// </summary>
@@ -41,16 +39,6 @@ namespace SimpleDomain.Bus
         public static void UseInMemoryQueueJitney(this IConfigureThisJitney configuration)
         {
             configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new InMemoryQueueProvider());
-            configuration.Register(config => new MessageQueueJitney(config));
-        }
-
-        /// <summary>
-        /// Registers the <see cref="MessageQueueJitney"/> bus with the MSMQ provider
-        /// </summary>
-        /// <param name="configuration">The Jintey bus configuration</param>
-        public static void UseMsmqJitney(this IConfigureThisJitney configuration)
-        {
-            configuration.AddConfigurationItem(MessageQueueJitney.MessageQueueProvider, new MsmqProvider());
             configuration.Register(config => new MessageQueueJitney(config));
         }
     }

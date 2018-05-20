@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package
+  xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SimpleDomain.Bus.MSMQ</id>
+    <version>1.0.0</version>
+    <authors>Patrick Ineichen</authors>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A library which supports DDD, CQRS and event sourcing. This is the MSMQ support package.</description>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="11.0.2" />
+      <dependency id="SimpleDomain" version="2.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\SimpleDomain.Bus.MSMQ.dll" target="lib\net471" />
+    <file src="bin\Release\SimpleDomain.Bus.MSMQ.pdb" target="lib\net471" />
+    <file src="bin\Release\SimpleDomain.Bus.MSMQ.xml" target="lib\net471" />
+    <file src="**\*.cs" target="src" />
+  </files>
+</package>

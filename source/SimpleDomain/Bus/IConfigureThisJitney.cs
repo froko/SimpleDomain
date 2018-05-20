@@ -37,6 +37,14 @@ namespace SimpleDomain.Bus
         IConfigureThisJitney DefineLocalEndpointAddress(string queueName);
 
         /// <summary>
+        /// Defines the local endpoint address
+        /// </summary>
+        /// <param name="queueName">The name of the endpoint queue</param>
+        /// <param name="machineName">The name of the machine, on which the queue is hosted on</param>
+        /// <returns>The instance of the class implementing this interface since this is a fluent interface</returns>
+        IConfigureThisJitney DefineLocalEndpointAddress(string queueName, string machineName);
+
+        /// <summary>
         /// Sets the subscription store
         /// </summary>
         /// <param name="store">An instance of <see cref="ISubscriptionStore"/></param>

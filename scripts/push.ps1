@@ -1,7 +1,7 @@
 . ".\environment.ps1"
 
 function NugetPackages {
-	return Get-ChildItem $nugetDir\*.nupkg
+	return Get-ChildItem $resultsDir\*.nupkg
 }
 
 NugetPackages | Foreach-Object {

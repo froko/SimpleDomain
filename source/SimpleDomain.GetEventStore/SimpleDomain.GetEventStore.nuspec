@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package
+  xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SimpleDomain.GetEventStore</id>
+    <version>1.0.0</version>
+    <authors>Patrick Ineichen</authors>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A library which supports DDD, CQRS and event sourcing. This is the GetEventStore suport package.</description>
+    <dependencies>
+      <dependency id="EventStore.ClientAPI.NetCore" version="4.1.0.23" />
+      <dependency id="SimpleDomain" version="2.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.0\SimpleDomain.GetEventStore.dll" target="lib\netstandard2.0" />
+    <file src="bin\Release\netstandard2.0\SimpleDomain.GetEventStore.pdb" target="lib\netstandard2.0" />
+    <file src="bin\Release\netstandard2.0\SimpleDomain.GetEventStore.xml" target="lib\netstandard2.0" />
+    <file src="**\*.cs" target="src" />
+  </files>
+</package>

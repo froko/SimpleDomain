@@ -35,8 +35,13 @@ namespace SimpleDomain
         /// <remarks>Derived classes will define the message subscriptions in this method</remarks>
         /// </summary>
         /// <param name="configuration">The message handler subscription configuration</param>
+        /// <param name="featureSelector">The feature selector</param>
         /// <param name="bus">The message bus</param>
         /// <param name="repository">The repository</param>
-        void Configure(ISubscribeMessageHandlers configuration, IDeliverMessages bus, IEventSourcedRepository repository);
+        void Configure(
+            ISubscribeMessageHandlers configuration,
+            IFeatureSelector featureSelector,
+            IDeliverMessages bus,
+            IEventSourcedRepository repository);
     }
 }

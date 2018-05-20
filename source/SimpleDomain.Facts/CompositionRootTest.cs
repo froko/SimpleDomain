@@ -62,7 +62,7 @@ namespace SimpleDomain
 
             testee.ConfigureJitney()
                 .DefineLocalEndpointAddress("unittest")
-                .UseMsmqJitney();
+                .UseInMemoryQueueJitney();
 
             using (var executionContext = await testee.StartAsync().ConfigureAwait(false))
             {
@@ -121,6 +121,7 @@ namespace SimpleDomain
             {
                 A.CallTo(() => boundedContext.Configure(
                     A<ISubscribeMessageHandlers>.Ignored,
+                    A<IFeatureSelector>.Ignored,
                     A<IDeliverMessages>.Ignored,
                     A<IEventSourcedRepository>.Ignored)).MustHaveHappened();
             }
@@ -133,7 +134,7 @@ namespace SimpleDomain
 
             using (await testee.StartAsync().ConfigureAwait(false))
             {
-                Action action = () => testee.ConfigureJitney().DefineLocalEndpointAddress("unittest").UseMsmqJitney();
+                Action action = () => testee.ConfigureJitney().DefineLocalEndpointAddress("unittest").UseInMemoryQueueJitney();
                 action.Should().Throw<CompositionRootAlreadyStartedException>();
             }
         }
@@ -225,7 +226,7 @@ namespace SimpleDomain
         private static void ConfigureJitney(IConfigureThisJitney config)
         {
             config.DefineLocalEndpointAddress("unittest");
-            config.UseMsmqJitney();
+            config.UseInMemoryQueueJitney();
         }
 
         private static void ConfigureEventStore(IConfigureThisEventStore config)

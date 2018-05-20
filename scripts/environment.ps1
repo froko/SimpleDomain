@@ -3,6 +3,7 @@ $scriptsDir = "$baseDir\scripts"
 $toolsDir = "$baseDir\tools"
 $resultsDir = "$baseDir\results"
 $nugetCommand = "$toolsDir\NuGet.exe"
+$gitVersionCommand = "$toolsDir\GitVersion.exe"
 
 function Write-Title($title) {
 	Write-Host "`n`n===== $title =====" -f Yellow
@@ -16,7 +17,7 @@ function Write-Error($project) {
 	Write-Host "`n`n===== Failed to build $project. =====" -f Red
 }
 
-function GitVersion() {
+function Get-PackageVersion() {
 	& cmd /c "$gitVersionCommand > $baseDir\version.json"
 	$version = [IO.File]::ReadAllText("$baseDir\version.json") | ConvertFrom-Json
 	
