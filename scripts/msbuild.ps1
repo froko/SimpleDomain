@@ -9,7 +9,8 @@ function Invoke-NugetRestore ($solutionFile) {
 }
 
 function Invoke-MsBuild ($solutionFile) {
-    msbuild $solutionFile /v:minimal /m /target:Rebuild /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPublishPackageToFileShare=$resultsDir /p:OctoPackNuGetArguments="-Symbols"
+    $packageVersion = Get-PackageVersion
+    msbuild $solutionFile /v:minimal /m /target:Rebuild /p:Configuration=Release /p:RunOctoPack=true /p:OctoPackPackageVersion=$packageVersion /p:OctoPackPublishPackageToFileShare=$resultsDir /p:OctoPackNuGetArguments="-Symbols"
     if (-not $?) { 
         Write-Error $solutionFile
         exit 1
