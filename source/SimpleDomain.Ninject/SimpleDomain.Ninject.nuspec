@@ -10,6 +10,7 @@
     <description>A library which supports DDD, CQRS and event sourcing. This is the Ninject support package.</description>
     <dependencies>
       <dependency id="Ninject" version="3.3.4" />
+	  <dependency id="SimpleDomain" version="2.0.0" />
     </dependencies>
   </metadata>
   <files>
