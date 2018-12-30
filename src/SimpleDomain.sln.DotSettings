@@ -1,0 +1,38 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Shortcut/@EntryValue">apache</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Description/@EntryValue">File Header</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Text/@EntryValue">//-------------------------------------------------------------------------------&#xD;
+// &lt;copyright file="$fileName$" company="frokonet.ch"&gt;&#xD;
+//   Copyright (c) 2014-2018&#xD;
+//&#xD;
+//   Licensed under the Apache License, Version 2.0 (the "License");&#xD;
+//   you may not use this file except in compliance with the License.&#xD;
+//   You may obtain a copy of the License at&#xD;
+//&#xD;
+//       http://www.apache.org/licenses/LICENSE-2.0&#xD;
+//&#xD;
+//   Unless required by applicable law or agreed to in writing, software&#xD;
+//   distributed under the License is distributed on an "AS IS" BASIS,&#xD;
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.&#xD;
+//   See the License for the specific language governing permissions and&#xD;
+//   limitations under the License.&#xD;
+// &lt;/copyright&gt;&#xD;
+//-------------------------------------------------------------------------------&#xD;
+</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Field/=fileName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Field/=fileName/Expression/@EntryValue">getFileName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Field/=fileName/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Shortcut/@EntryValue">inheritdoc</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Text/@EntryValue">/// &lt;inheritdoc /&gt;</s:String></wpf:ResourceDictionary>
