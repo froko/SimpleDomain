@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.abstractions.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.reporters.net452.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.utility.net452.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.visualstudio.testadapter.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\patrickineichen\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_SimpleDomain.-201915713.00" t="ExcludeRecursive" />
+    <e p="D:\GIT\GitHub\SimpleDomain\src" t="IncludeFlat">
+      <e p="Bus" t="Include" />
+      <e p="EventStore" t="Include" />
+      <e p="IoC Support" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="SimpleDomain" t="IncludeRecursive">
+        <e p="AbstractFeature.cs" t="Include" />
+        <e p="AggregateRoot.cs" t="Include" />
+        <e p="AggregateRootNotFoundException.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="CommandSubscription.cs" t="Include" />
+          <e p="CommandSubscriptionException.cs" t="Include" />
+          <e p="Configuration" t="Include">
+            <e p="AbstractHandlerRegistry.cs" t="Include" />
+            <e p="AbstractIoCContainerJitneyConfiguration.cs" t="Include" />
+            <e p="AbstractJitneyConfiguration.cs" t="Include" />
+            <e p="AssemblyExtensions.cs" t="Include" />
+            <e p="AsyncMessageDelegate.cs" t="Include" />
+            <e p="ContainerLessHandlerRegistry.cs" t="Include" />
+            <e p="ContainerLessJitneyConfiguration.cs" t="Include" />
+            <e p="HandlerInvocationCache.cs" t="Include" />
+            <e p="IHandlerInvocationCache.cs" t="Include" />
+            <e p="JitneyFactory.cs" t="Include" />
+            <e p="JitneySubscriptions.cs" t="Include" />
+            <e p="TypeExtensions.cs" t="Include" />
+          </e>
+          <e p="ContractsToEndpointMapper.cs" t="Include" />
+          <e p="EndpointAddress.cs" t="Include" />
+          <e p="Envelope.cs" t="Include" />
+          <e p="EventSubscription.cs" t="Include" />
+          <e p="FileSubscriptionStore.cs" t="Include" />
+          <e p="GlobalJitneyConfigurationExtensions.cs" t="Include" />
+          <e p="HeaderKeys.cs" t="Include" />
+          <e p="IConfigureThisJitney.cs" t="Include" />
+          <e p="IHaveJitneyConfiguration.cs" t="Include" />
+          <e p="IHaveJitneySubscriptions.cs" t="Include" />
+          <e p="IHavePipelineConfiguration.cs" t="Include" />
+          <e p="IMapContractsToEndpoints.cs" t="Include" />
+          <e p="IMessageQueueProvider.cs" t="Include" />
+          <e p="InMemoryQueueProvider.cs" t="Include" />
+          <e p="InMemorySubscriptionStore.cs" t="Include" />
+          <e p="ISaveSubscriptionMessages.cs" t="Include" />
+          <e p="ISendEnvelopesToMessageQueue.cs" t="Include" />
+          <e p="ISubscribeMessageHandlers.cs" t="Include" />
+          <e p="ISubscriptionStore.cs" t="Include" />
+          <e p="Jitney.cs" t="Include" />
+          <e p="JitneyConfigurationException.cs" t="Include" />
+          <e p="MessageQueueJitney.cs" t="Include" />
+          <e p="NoSubscriptionException.cs" t="Include" />
+          <e p="Pipeline" t="Include">
+            <e p="Incomming" t="Include">
+              <e p="FinalIncommingEnvelopeStep.cs" t="Include" />
+              <e p="FinalIncommingMessageStep.cs" t="Include" />
+              <e p="IncommingEnvelopeContext.cs" t="Include" />
+              <e p="IncommingEnvelopeStep.cs" t="Include" />
+              <e p="IncommingMessageContext.cs" t="Include" />
+              <e p="IncommingMessageStep.cs" t="Include" />
+              <e p="IncommingPipeline.cs" t="Include" />
+              <e p="StepExtensions.cs" t="Include" />
+            </e>
+            <e p="Outgoing" t="Include">
+              <e p="FinalOutgoingEnvelopeStep.cs" t="Include" />
+              <e p="FinalOutgoingMessageStep.cs" t="Include" />
+              <e p="OutgoingEnvelopeContext.cs" t="Include" />
+              <e p="OutgoingEnvelopeStep.cs" t="Include" />
+              <e p="OutgoingMessageContext.cs" t="Include" />
+              <e p="OutgoingMessageStep.cs" t="Include" />
+              <e p="OutgoingPipeline.cs" t="Include" />
+              <e p="StepExtensions.cs" t="Include" />
+            </e>
+            <e p="PipelineContext.cs" t="Include" />
+            <e p="PipelineStep.cs" t="Include" />
+          </e>
+          <e p="SimpleJitney.cs" t="Include" />
+          <e p="Subscription.cs" t="Include" />
+          <e p="SubscriptionMessage.cs" t="Include" />
+        </e>
+        <e p="Common" t="Include">
+          <e p="Disposable.cs" t="Include" />
+          <e p="DynamicExtensions.g.cs" t="Include" />
+          <e p="ExceptionExtensions.cs" t="Include" />
+          <e p="ExceptionHelper.cs" t="Include" />
+          <e p="Guard.cs" t="Include" />
+          <e p="IAmBetween.cs" t="Include" />
+          <e p="InMemoryTraceListener.cs" t="Include" />
+          <e p="Int32BetweenGuard.cs" t="Include" />
+          <e p="Logging" t="Include">
+            <e p="IFormatLogMessages.cs" t="Include" />
+            <e p="ILogger.cs" t="Include" />
+            <e p="LoggerFactory.cs" t="Include" />
+            <e p="LogLevel.cs" t="Include" />
+            <e p="LogMessageFormatter.cs" t="Include" />
+            <e p="NullLogger.cs" t="Include" />
+            <e p="TraceLogger.cs" t="Include" />
+          </e>
+          <e p="TypeHelper.cs" t="Include" />
+        </e>
+        <e p="CompositionRoot.cs" t="Include" />
+        <e p="CompositionRootAlreadyStartedException.cs" t="Include" />
+        <e p="DynamicEventSourcedAggregateRoot.cs" t="Include" />
+        <e p="Entity.cs" t="Include" />
+        <e p="EventHistory.cs" t="Include" />
+        <e p="EventSourcedAggregateRoot.cs" t="Include" />
+        <e p="EventStore" t="Include">
+          <e p="Configuration" t="Include">
+            <e p="AbstractEventStoreConfiguration.cs" t="Include" />
+            <e p="AbstractIoCContainerEventStoreConfiguration.cs" t="Include" />
+            <e p="ContainerLessEventStoreConfiguration.cs" t="Include" />
+            <e p="EventStoreFactory.cs" t="Include" />
+          </e>
+          <e p="EventDescriptor.cs" t="Include" />
+          <e p="EventStoreRepository.cs" t="Include" />
+          <e p="EventStream.cs" t="Include" />
+          <e p="GlobalEventStoreConfigurationExtensions.cs" t="Include" />
+          <e p="IConfigureThisEventStore.cs" t="Include" />
+          <e p="IHaveEventStoreConfiguration.cs" t="Include" />
+          <e p="Persistence" t="Include">
+            <e p="DataReaderExtensions.cs" t="Include" />
+            <e p="DbCommandExtensions.cs" t="Include" />
+            <e p="DbConnectionFactory.cs" t="Include" />
+            <e p="InMemoryEventStore.cs" t="Include" />
+            <e p="InMemoryEventStream.cs" t="Include" />
+            <e p="SqlCommands.Designer.cs" t="Include" />
+            <e p="SqlCommands.resx" t="Include" />
+            <e p="SqlEventDescriptor.cs" t="Include" />
+            <e p="SqlEventStore.cs" t="Include" />
+            <e p="SqlEventStream.cs" t="Include" />
+            <e p="SqlSnapshotDescriptor.cs" t="Include" />
+          </e>
+          <e p="SnapshotDescriptor.cs" t="Include" />
+          <e p="SnapshotStrategy.cs" t="Include" />
+        </e>
+        <e p="ExceptionMessages.Designer.cs" t="Include" />
+        <e p="ExceptionMessages.resx" t="Include" />
+        <e p="ExecutionContext.cs" t="Include" />
+        <e p="FeatureNotFoundException.cs" t="Include" />
+        <e p="FeatureSelector.cs" t="Include" />
+        <e p="IAggregateRoot.cs" t="Include" />
+        <e p="IBoundedContext.cs" t="Include" />
+        <e p="ICommand.cs" t="Include" />
+        <e p="IDeliverMessages.cs" t="Include" />
+        <e p="IEvent.cs" t="Include" />
+        <e p="IEventSourcedAggregateRoot.cs" t="Include" />
+        <e p="IEventSourcedRepository.cs" t="Include" />
+        <e p="IEventStore.cs" t="Include" />
+        <e p="IEventStream.cs" t="Include" />
+        <e p="IFeatureSelector.cs" t="Include" />
+        <e p="IHandleAsync.cs" t="Include" />
+        <e p="IHaveDynamicConfiguration.cs" t="Include" />
+        <e p="IMessage.cs" t="Include" />
+        <e p="INeedVersion.cs" t="Include" />
+        <e p="ISnapshot.cs" t="Include" />
+        <e p="MessageExtensions.cs" t="Include" />
+        <e p="MessageIntent.cs" t="Include" />
+        <e p="MissingConfigurationException.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="PreventAutomaticHandlerRegistrationAttribute.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimpleDomain.csproj" t="IncludeRecursive" />
+        <e p="StateBasedAggregateRoot.cs" t="Include" />
+        <e p="StaticEventSourcedAggregateRoot.cs" t="Include" />
+        <e p="ValueObject.cs" t="Include" />
+        <e p="VersionableEvent.cs" t="Include" />
+      </e>
+      <e p="SimpleDomain.Facts" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="CommandSubscriptionExceptionTest.cs" t="Include" />
+          <e p="CommandSubscriptionTest.cs" t="Include" />
+          <e p="Configuration" t="Include">
+            <e p="AbstractHandlerRegistryTest.cs" t="Include" />
+            <e p="AbstractJitneyConfigurationTest.cs" t="Include" />
+            <e p="AssemblyExtensionsTest.cs" t="Include" />
+            <e p="AsyncMessageDelegateTest.cs" t="Include" />
+            <e p="ContainerLessHandlerRegistryTest.cs" t="Include" />
+            <e p="HandlerInvocationCacheTest.cs" t="Include" />
+            <e p="JitneyFactoryTest.cs" t="Include" />
+            <e p="JitneySubscriptionsTest.cs" t="Include" />
+            <e p="TypeExtensionsTest.cs" t="Include" />
+          </e>
+          <e p="ContractsToEndpointMapperTest.cs" t="Include" />
+          <e p="EndpointAddressTest.cs" t="Include" />
+          <e p="EnvelopeBuilder.cs" t="Include" />
+          <e p="EnvelopeTest.cs" t="Include" />
+          <e p="EventSubscriptionTest.cs" t="Include" />
+          <e p="FileSubscriptionStoreTest.cs" t="Include" />
+          <e p="GlobalJitneyConfigurationExtensionsTest.cs" t="Include" />
+          <e p="InMemorySubscriptionStoreTest.cs" t="Include" />
+          <e p="JitneyConfigurationExceptionTest.cs" t="Include" />
+          <e p="MessageQueueJitneyTest.cs" t="Include" />
+          <e p="NoSubscriptionExceptionTest.cs" t="Include" />
+          <e p="Pipeline" t="Include">
+            <e p="CorrelationIdIntegrationTest.cs" t="Include" />
+            <e p="Incomming" t="Include">
+              <e p="FinalIncommingEnvelopeStepTest.cs" t="Include" />
+              <e p="FinalIncommingMessageStepTest.cs" t="Include" />
+              <e p="IncommingEnvelopeContextTest.cs" t="Include" />
+              <e p="IncommingMessageContextTest.cs" t="Include" />
+              <e p="IncommingPipelineTest.cs" t="Include" />
+            </e>
+            <e p="Outgoing" t="Include">
+              <e p="FinalOutgoingEnvelopeStepTest.cs" t="Include" />
+              <e p="FinalOutgoingMessageStepTest.cs" t="Include" />
+              <e p="OutgoingEnvelopeContextTest.cs" t="Include" />
+              <e p="OutgoingMessageContextTest.cs" t="Include" />
+              <e p="OutgoingPipelineTest.cs" t="Include" />
+            </e>
+          </e>
+          <e p="SimpleJitneyTest.cs" t="Include" />
+          <e p="SubscriptionMessageTest.cs" t="Include" />
+        </e>
+        <e p="Common" t="Include">
+          <e p="DisposableTest.cs" t="Include" />
+          <e p="ExceptionHelperTest.cs" t="Include" />
+          <e p="GuardTest.cs" t="Include" />
+          <e p="InMemoryTraceListenerTest.cs" t="Include" />
+          <e p="TypeHelperTest.cs" t="Include" />
+        </e>
+        <e p="CompositionRootAlreadyStartedExceptionTest.cs" t="Include" />
+        <e p="CompositionRootTest.cs" t="Include" />
+        <e p="DynamicEventSourcedAggregateRootTest.cs" t="Include" />
+        <e p="EntityTest.cs" t="Include" />
+        <e p="EventHistoryTest.cs" t="Include" />
+        <e p="EventStore" t="Include">
+          <e p="Configuration" t="Include">
+            <e p="AbstractEventStoreConfigurationTest.cs" t="Include" />
+            <e p="EventStoreFactoryTest.cs" t="Include" />
+          </e>
+          <e p="EventDescriptorTest.cs" t="Include" />
+          <e p="EventStoreRepositoryTest.cs" t="Include" />
+          <e p="GlobalEventStoreConfigurationExtensionsTest.cs" t="Include" />
+          <e p="Persistence" t="Include">
+            <e p="InMemoryIntegrationTest.cs" t="Include" />
+            <e p="SqlEventDescriptorTest.cs" t="Include" />
+            <e p="SqlIntegrationTest.cs" t="Include" />
+            <e p="SqlSnapshotDescriptorTest.cs" t="Include" />
+            <e p="WithTransactionAttribute.cs" t="Include" />
+          </e>
+          <e p="SnapshotDescriptorTest.cs" t="Include" />
+        </e>
+        <e p="FeatureNotFoundExceptionTest.cs" t="Include" />
+        <e p="FluentTestingExtensions.cs" t="Include" />
+        <e p="MissingConfigurationExceptionTest.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="SimpleDomain.Facts.AssemblyInfo.cs" t="Include" />
+              <e p="SimpleDomain.Facts.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.Facts.csproj" t="IncludeRecursive" />
+        <e p="SnapshotTest.cs" t="Include" />
+        <e p="StateBasedAggregateRootTest.cs" t="Include" />
+        <e p="StaticEventSourcedAggregateRootTest.cs" t="Include" />
+        <e p="ValueObjectTest.cs" t="Include" />
+        <e p="VersionableEventTest.cs" t="Include" />
+      </e>
+      <e p="SimpleDomain.GetEventStore" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EventStore" t="Include">
+          <e p="GetEventStoreConfigurationExtensions.cs" t="Include" />
+          <e p="GetEventStoreConnectionBuilder.cs" t="Include" />
+          <e p="IConnectionBuilder.cs" t="Include" />
+          <e p="Persistence" t="Include">
+            <e p="Conventions.cs" t="Include" />
+            <e p="EventDataBuilder.cs" t="Include" />
+            <e p="GetEventStore.cs" t="Include" />
+            <e p="GetEventStoreExtensions.cs" t="Include" />
+            <e p="GetEventStoreStream.cs" t="Include" />
+            <e p="SnapshotDataBuilder.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimpleDomain.GetEventStore.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.GetEventStore.Facts" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EventStore" t="Include">
+          <e p="Persistence" t="Include">
+            <e p="IntegrationTest.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="SimpleDomain.GetEventStore.Facts.AssemblyInfo.cs" t="Include" />
+              <e p="SimpleDomain.GetEventStore.Facts.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.GetEventStore.Facts.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.MSMQ" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="Msmq" t="Include">
+            <e p="JsonMessageFormatter.cs" t="Include" />
+            <e p="MsmqException.cs" t="Include" />
+            <e p="MsmqProvider.cs" t="Include" />
+            <e p="MsmqSender.cs" t="Include" />
+            <e p="MsmqUtilities.cs" t="Include" />
+          </e>
+          <e p="MsmqJitneyConfigurationExtensions.cs" t="Include" />
+          <e p="Pipeline" t="Include">
+            <e p="AuditQueueStep.cs" t="Include" />
+            <e p="ErrorQueueStep.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimpleDomain.MSMQ.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.MSMQ.Facts" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="EnvelopeBuilder.cs" t="Include" />
+          <e p="IntegrationTest.cs" t="Include" />
+          <e p="Msmq" t="Include">
+            <e p="MsmqExceptionTest.cs" t="Include" />
+            <e p="MsmqUtilitiesTest.cs" t="Include" />
+          </e>
+          <e p="Pipeline" t="Include">
+            <e p="AuditQueueStepTest.cs" t="Include" />
+            <e p="CorrelationIdIntegrationTest.cs" t="Include" />
+            <e p="ErrorQueueStepTest.cs" t="Include" />
+          </e>
+        </e>
+        <e p="CompositionRootTest.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net461" t="Include">
+              <e p="SimpleDomain.MSMQ.Facts.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.MSMQ.Facts.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.Ninject" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="Configuration" t="Include">
+            <e p="HandlerRegistry.cs" t="Include" />
+          </e>
+          <e p="JitneyConfiguration.cs" t="Include" />
+          <e p="JitneyKernelExtensions.cs" t="Include" />
+        </e>
+        <e p="EventStore" t="Include">
+          <e p="EventStoreConfiguration.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimpleDomain.Ninject.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.Ninject.Facts" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="Configuration" t="Include">
+            <e p="HandlerRegistryTest.cs" t="Include" />
+            <e p="JitneyConfigurationTest.cs" t="Include" />
+          </e>
+          <e p="JitneyKernelExtensionsTest.cs" t="Include" />
+        </e>
+        <e p="EventStore" t="Include">
+          <e p="Configuration" t="Include">
+            <e p="EventStoreConfigurationTest.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="SimpleDomain.Ninject.Facts.AssemblyInfo.cs" t="Include" />
+              <e p="SimpleDomain.Ninject.Facts.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.Ninject.Facts.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.RabbitMq" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="Pipeline" t="Include">
+            <e p="AuditQueueStep.cs" t="Include" />
+            <e p="ErrorQueueStep.cs" t="Include" />
+          </e>
+          <e p="RabbitMq" t="Include">
+            <e p="ByteArrayExtensions.cs" t="Include" />
+            <e p="EnvelopeExtensions.cs" t="Include" />
+            <e p="RabbitMqException.cs" t="Include" />
+            <e p="RabbitMqProvider.cs" t="Include" />
+            <e p="RabbitMqSender.cs" t="Include" />
+            <e p="RabbitMqUtilities.cs" t="Include" />
+          </e>
+          <e p="RabbitMqJitneyConfigurationExtensions.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="SimpleDomain.RabbitMq.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.RabbitMq.Facts" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Bus" t="Include">
+          <e p="EnvelopeBuilder.cs" t="Include" />
+          <e p="IntegrationTest.cs" t="Include" />
+          <e p="Pipeline" t="Include">
+            <e p="AuditQueueStepTest.cs" t="Include" />
+            <e p="ErrorQueueStepTest.cs" t="Include" />
+          </e>
+          <e p="RabbitMq" t="Include">
+            <e p="RabbitMqExceptionTest.cs" t="Include" />
+          </e>
+        </e>
+        <e p="CompositionRootTest.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="SimpleDomain.RabbitMq.Facts.AssemblyInfo.cs" t="Include" />
+              <e p="SimpleDomain.RabbitMq.Facts.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.RabbitMq.Facts.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="SimpleDomain.sln" t="IncludeFlat" />
+      <e p="SimpleDomain.TestDoubles" t="IncludeRecursive">
+        <e p="AggregateRoots.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Commands.cs" t="Include" />
+        <e p="Events.cs" t="Include" />
+        <e p="IContainer.cs" t="Include" />
+        <e p="MessageHandlers.cs" t="Include" />
+        <e p="Messages.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="SimpleDomain.TestDoubles.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SimpleDomain.TestDoubles.csproj" t="IncludeRecursive" />
+        <e p="Snapshots.cs" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>
