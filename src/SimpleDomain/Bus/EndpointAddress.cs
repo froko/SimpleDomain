@@ -125,5 +125,41 @@ namespace SimpleDomain.Bus
         {
             return $"{this.QueueName}@{this.MachineName}";
         }
+
+        /// <inheritdoc />
+        public override bool Equals(EndpointAddress other)
+        {
+            return other != null && this.QueueName == other.QueueName && this.MachineName == other.MachineName;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var otherInstance = obj as EndpointAddress;
+
+            return this.Equals(otherInstance);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                const int StartValue = 17;
+                const int Multiplier = 23;
+
+                var hashCode = StartValue;
+
+                hashCode = (hashCode * Multiplier) + this.QueueName.GetHashCode();
+                hashCode = (hashCode * Multiplier) + this.MachineName.GetHashCode();
+
+                return hashCode;
+            }
+        }
     }
 }
