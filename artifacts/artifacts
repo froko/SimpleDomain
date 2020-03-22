@@ -1,0 +1,10 @@
+nuget:SimpleDomain.3.0.0.nupkg
+nugetSymbols:SimpleDomain.3.0.0.symbols.nupkg
+nuget:SimpleDomain.Ninject.3.0.0.nupkg
+nugetSymbols:SimpleDomain.Ninject.3.0.0.symbols.nupkg
+nuget:SimpleDomain.MSMQ.3.0.0.nupkg
+nugetSymbols:SimpleDomain.MSMQ.3.0.0.symbols.nupkg
+nuget:SimpleDomain.RabbitMq.3.0.0.nupkg
+nugetSymbols:SimpleDomain.RabbitMq.3.0.0.symbols.nupkg
+nuget:SimpleDomain.GetEventStore.3.0.0.nupkg
+nugetSymbols:SimpleDomain.GetEventStore.3.0.0.symbols.nupkg

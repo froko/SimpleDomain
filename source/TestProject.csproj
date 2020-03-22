@@ -1,9 +1,0 @@
-<Project DefaultTargets="Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
-  <UsingTask AssemblyFile=".\packages\xunit.runner.msbuild.2.3.1\build\net452\xunit.runner.msbuild.net452.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
-  <ItemGroup>
-    <TestAssemblies Include="**\bin\Release\*.Facts.dll;**\bin\Release\*.Scenarios.dll" />
-  </ItemGroup>
-  <Target Name="Test">
-    <xunit Assemblies="@(TestAssemblies)" Xml="..\results\TestResults\SimpleDomain.xml" />
-  </Target>
-</Project>
