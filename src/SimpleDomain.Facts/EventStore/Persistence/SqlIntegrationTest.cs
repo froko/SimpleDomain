@@ -154,7 +154,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             await this.testee.ReplayAllAsync().ConfigureAwait(false);
 
-            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(Repeated.Exactly.Times(NumberOfEvents));
+            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(NumberOfEvents, Times.Exactly);
         }
 
         private Task<IEventStream> CreateEventStreamAsync()
@@ -202,19 +202,18 @@ namespace SimpleDomain.EventStore.Persistence
             var headers = new Dictionary<string, object>();
             var eventDescriptor = new SqlEventDescriptor(aggregateType, this.aggregateId, versionableEvent, headers);
 
-            using (var connection = await factory.CreateAsync(ConnectionStringName).ConfigureAwait(false))
-            using (var command = new SqlCommand(SqlCommands.InsertEvent, connection))
-            {
-                command.AddParameter("@AggregateType", eventDescriptor.AggregateType);
-                command.AddParameter("@AggregateId", eventDescriptor.AggregateId);
-                command.AddParameter("@Version", eventDescriptor.Version);
-                command.AddParameter("@Timestamp", eventDescriptor.Timestamp);
-                command.AddParameter("@EventType", eventDescriptor.EventType);
-                command.AddParameter("@EventData", eventDescriptor.SerializedEvent);
-                command.AddParameter("@Headers", eventDescriptor.SerializedHeaders);
+            await using var connection = await factory.CreateAsync(ConnectionStringName).ConfigureAwait(false);
+            await using var command = new SqlCommand(SqlCommands.InsertEvent, connection);
 
-                await command.ExecuteNonQueryAsync().ConfigureAwait(false);
-            }
+            command.AddParameter("@AggregateType", eventDescriptor.AggregateType);
+            command.AddParameter("@AggregateId", eventDescriptor.AggregateId);
+            command.AddParameter("@Version", eventDescriptor.Version);
+            command.AddParameter("@Timestamp", eventDescriptor.Timestamp);
+            command.AddParameter("@EventType", eventDescriptor.EventType);
+            command.AddParameter("@EventData", eventDescriptor.SerializedEvent);
+            command.AddParameter("@Headers", eventDescriptor.SerializedHeaders);
+
+            await command.ExecuteNonQueryAsync().ConfigureAwait(false);
         }
     }
 }

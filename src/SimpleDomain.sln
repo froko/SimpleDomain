@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDomain", "SimpleDomain\SimpleDomain.csproj", "{DA35E5D1-EC46-4944-8F76-8D9F46D66D3A}"
 EndProject
@@ -30,6 +30,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDomain.GetEventStore.Facts", "SimpleDomain.GetEventStore.Facts\SimpleDomain.GetEventStore.Facts.csproj", "{4473D9B7-BF42-4E69-8579-6A3688EE189D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{D3AC3563-4A35-4C08-B945-2E1798A5AAD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1E841EAC-4EAF-46FC-9BA5-32A3E2337A1C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

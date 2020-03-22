@@ -164,7 +164,7 @@ namespace SimpleDomain.EventStore.Persistence
 
             await this.testee.ReplayAllAsync().ConfigureAwait(false);
 
-            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(Repeated.Exactly.Times(NumberOfEvents));
+            A.CallTo(() => this.bus.PublishAsync(A<IEvent>.Ignored)).MustHaveHappened(NumberOfEvents, Times.Exactly);
         }
 
         private Task<IEventStream> CreateEventStreamAsync()

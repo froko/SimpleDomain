@@ -55,6 +55,7 @@ namespace SimpleDomain.Bus
         [Fact]
         public void ThrowsException_WhenTryingToInjectNullAsJitneyConfiguration()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action action = () => { new SimpleJitney(null); };
 
             action.Should().Throw<ArgumentNullException>();
@@ -81,7 +82,7 @@ namespace SimpleDomain.Bus
 
             await this.testee.StartAsync().ConfigureAwait(false);
 
-            A.CallTo(() => this.outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(Repeated.Exactly.Twice);
+            A.CallTo(() => this.outgoingPipeline.InvokeAsync(A<IMessage>.Ignored)).MustHaveHappened(2, Times.Exactly);
         }
 
         [Fact]

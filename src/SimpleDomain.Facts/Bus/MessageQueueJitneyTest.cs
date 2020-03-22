@@ -98,7 +98,7 @@ namespace SimpleDomain.Bus
             await this.testee.StartAsync().ConfigureAwait(false);
 
             A.CallTo(() => this.outgoingPipeline.InvokeAsync(A<SubscriptionMessage>.Ignored))
-                .MustHaveHappened(Repeated.Exactly.Twice);
+                .MustHaveHappened(2, Times.Exactly);
         }
 
         [Fact]
