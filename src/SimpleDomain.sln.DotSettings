@@ -62,7 +62,7 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Description/@EntryValue">File Header</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2C717527942B5B42A549E58B1E91B5E4/Text/@EntryValue">//-------------------------------------------------------------------------------&#xD;
 // &lt;copyright file="$fileName$" company="frokonet.ch"&gt;&#xD;
-//   Copyright (C) frokonet.ch, 2014-2019&#xD;
+//   Copyright (C) frokonet.ch, 2014-2020&#xD;
 //&#xD;
 //   Licensed under the Apache License, Version 2.0 (the "License");&#xD;
 //   you may not use this file except in compliance with the License.&#xD;
