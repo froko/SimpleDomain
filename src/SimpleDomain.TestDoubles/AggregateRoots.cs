@@ -61,6 +61,7 @@ namespace SimpleDomain.TestDoubles
             base.ApplyEvent(new ValueEvent(value));
         }
 
+        // ReSharper disable once UnusedMember.Local
         private void Apply(ValueEvent @event)
         {
             this.Value = @event.Value;

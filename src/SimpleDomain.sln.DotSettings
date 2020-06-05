@@ -95,5 +95,6 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BBCBB908C8693542A331F84D6FF00359/Text/@EntryValue">/// &lt;inheritdoc /&gt;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=frokonet/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=incomming/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=testee/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=versionable/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

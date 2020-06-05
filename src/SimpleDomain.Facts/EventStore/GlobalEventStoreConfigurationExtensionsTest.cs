@@ -23,8 +23,6 @@ namespace SimpleDomain.EventStore
 
     using FakeItEasy;
 
-    using FluentAssertions;
-
     using SimpleDomain.EventStore.Configuration;
     using SimpleDomain.EventStore.Persistence;
 

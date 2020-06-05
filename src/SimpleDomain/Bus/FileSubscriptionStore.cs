@@ -140,7 +140,7 @@ namespace SimpleDomain.Bus
             foreach (var key in this.subscriptions.Keys)
             {
                 writer.Write("{0}: ", key);
-                this.subscriptions[key].ForEach(endpoint => writer.Write("{0}; ", endpoint.ToString()));
+                this.subscriptions[key].ForEach(endpoint => writer.Write("{0}; ", endpoint));
                 writer.WriteLine();
             }
 

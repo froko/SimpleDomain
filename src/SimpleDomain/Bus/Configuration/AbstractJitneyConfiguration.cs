@@ -70,7 +70,9 @@ namespace SimpleDomain.Bus.Configuration
             this.subscriptionStore = new InMemorySubscriptionStore();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the local endpoint address
+        /// </summary>
         public EndpointAddress LocalEndpointAddress { get; private set; }
 
         /// <inheritdoc />

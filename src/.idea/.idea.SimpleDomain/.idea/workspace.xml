@@ -1,248 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfe58271-08dc-415e-b1ea-eff02dc346c5" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="dfe58271-08dc-415e-b1ea-eff02dc346c5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleDomain/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AssemblyExtensionsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AssemblyExtensionsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/JitneySubscriptionsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/JitneySubscriptionsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStepTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStepTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/EventStoreRepositoryTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/EventStoreRepositoryTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/GlobalEventStoreConfigurationExtensionsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/GlobalEventStoreConfigurationExtensionsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/MSMQ/MsmqUtilitiesTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/MSMQ/MsmqUtilitiesTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/SimpleDomain.MSMQ.Facts.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/SimpleDomain.MSMQ.Facts.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.MSMQ/Bus/Msmq/MsmqProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.MSMQ/Bus/Msmq/MsmqProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.MSMQ/SimpleDomain.MSMQ.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.MSMQ/SimpleDomain.MSMQ.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.RabbitMq.Facts/Bus/Pipeline/ErrorQueueStepTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.RabbitMq.Facts/Bus/Pipeline/ErrorQueueStepTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain.TestDoubles/AggregateRoots.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain.TestDoubles/AggregateRoots.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/Bus/FileSubscriptionStore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/Bus/FileSubscriptionStore.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/Bus/InMemoryQueueProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/Bus/InMemoryQueueProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/ExecutionContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/ExecutionContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleDomain/ValueObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleDomain/ValueObject.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHavePipelineConfiguration.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="34" column="66" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="66" />
-              <folding>
-                <marker date="1550410362923" expanded="true" signature="0:871" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1550410362923" expanded="true" signature="899:3054" ph="{...}" />
-                <marker date="1550410362923" expanded="false" signature="912:957" ph="..." />
-                <marker date="1550410362923" expanded="true" signature="963:1047" ph="/// The pipeline configuration holder interface ... " />
-                <marker date="1550410362923" expanded="true" signature="1095:3052" ph="{...}" />
-                <marker date="1550410362923" expanded="true" signature="1110:1190" ph="/// Gets the local endpoint address ... " />
-                <marker date="1550410362923" expanded="true" signature="1254:1371" ph="/// Gets a value indicating whether the correlation id stak is not empty ... " />
-                <marker date="1550410362923" expanded="true" signature="1420:1654" ph="/// Gets the address of the consuming endpoint for a given command ... " />
-                <marker date="1550410362923" expanded="true" signature="1735:2000" ph="/// Gets a list of endpoint addresses for the subscribed enpoints of a given event ... " />
-                <marker date="1550410362923" expanded="true" signature="2094:2365" ph="/// Gets the address of the publishing endpoint for a given event type ... " />
-                <marker date="1550410362923" expanded="true" signature="2457:2660" ph="/// Pushes the correlation id of an incomming message to the stack ... " />
-                <marker date="1550410362923" expanded="true" signature="2722:2816" ph="/// Pops the current correlation id from the stak ... " />
-                <marker date="1550410362923" expanded="true" signature="2859:3012" ph="/// Peeks the current correlation id from the stak ... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/CommandSubscriptionTest.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="82" column="49" lean-forward="true" selection-start-line="82" selection-start-column="49" selection-end-line="82" selection-end-column="49" />
-              <folding>
-                <marker date="1550410362876" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1550410362876" expanded="true" signature="896:2952" ph="{...}" />
-                <marker date="1550410362876" expanded="false" signature="909:1034" ph="..." />
-                <marker date="1550410362876" expanded="true" signature="1076:2950" ph="{...}" />
-                <marker date="1550410362876" expanded="true" signature="1172:1590" ph="{...}" />
-                <marker date="1550410362876" expanded="true" signature="1677:1974" ph="{...}" />
-                <marker date="1550410362876" expanded="true" signature="2038:2478" ph="{...}" />
-                <marker date="1550410362876" expanded="true" signature="2237:2351" ph="{...}" />
-                <marker date="1550410362876" expanded="true" signature="2873:2944" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/CommandSubscription.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-              <folding>
-                <marker date="1550410362907" expanded="true" signature="0:864" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1550410362907" expanded="true" signature="892:2327" ph="{...}" />
-                <marker date="1550410362907" expanded="false" signature="905:978" ph="..." />
-                <marker date="1550410362907" expanded="true" signature="984:1125" ph="/// The subscription of a command ... " />
-                <marker date="1550410362907" expanded="true" signature="1213:2325" ph="{...}" />
-                <marker date="1550410362907" expanded="true" signature="1327:1550" ph="/// Initializes a new instance of the &lt;see cref=&quot;CommandSubscription{TCommand}&quot;/&gt; class. ... " />
-                <marker date="1550410362907" expanded="true" signature="1615:1720" ph="{...}" />
-                <marker date="1550410362907" expanded="true" signature="1805:1940" ph="{...}" />
-                <marker date="1550410362907" expanded="true" signature="2019:2111" ph="{...}" />
-                <marker date="1550410362907" expanded="true" signature="2198:2319" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/FeatureNotFoundException.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="1" lean-forward="true" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
-              <folding>
-                <marker date="1546172152127" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172152127" expanded="true" signature="893:1443" ph="{...}" />
-                <marker date="1546172152127" expanded="true" signature="919:1094" ph="/// Exception that is thrown when a requested feature was not found ... " />
-                <marker date="1546172152127" expanded="true" signature="1158:1441" ph="{...}" />
-                <marker date="1546172152127" expanded="true" signature="1173:1311" ph="/// Initializes a new instance of the &lt;see cref=&quot;FeatureNotFoundException{TFeature}&quot;/&gt; class. ... " />
-                <marker date="1546172152127" expanded="true" signature="1415:1435" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/IEventSourcedRepository.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-              <folding>
-                <marker date="1546172081017" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081017" expanded="true" signature="892:2666" ph="{...}" />
-                <marker date="1546172081017" expanded="false" signature="905:984" ph="..." />
-                <marker date="1546172081017" expanded="true" signature="990:1089" ph="/// The event sourced repository interface for aggregate roots ... " />
-                <marker date="1546172081017" expanded="true" signature="1134:2664" ph="{...}" />
-                <marker date="1546172081017" expanded="true" signature="1149:1479" ph="/// Gets an aggregate root identified by its id ... " />
-                <marker date="1546172081017" expanded="true" signature="1616:1942" ph="/// Persits a new or modified aggregate root ... " />
-                <marker date="1546172081017" expanded="true" signature="2072:2501" ph="/// Persists a new or modified aggregate root ... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/MessageExtensions.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-              <folding>
-                <marker date="1546172081282" expanded="true" signature="0:862" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081282" expanded="true" signature="886:2740" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="922:1000" ph="/// Common extension methods for messages ... " />
-                <marker date="1546172081282" expanded="true" signature="1042:2738" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="1057:1256" ph="/// Gets the full CLR type name of the message ... " />
-                <marker date="1546172081282" expanded="true" signature="1320:1387" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="1397:1587" ph="/// Gets the intent of the message ... " />
-                <marker date="1546172081282" expanded="true" signature="1656:2073" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="1703:1777" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="1813:1885" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="1934:2020" ph="{...}" />
-                <marker date="1546172081282" expanded="true" signature="2083:2458" ph="/// Sets the version in a fluent manner ... " />
-                <marker date="1546172081282" expanded="true" signature="2549:2732" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/StateBasedAggregateRoot.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" column="1" lean-forward="true" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
-              <folding>
-                <marker date="1546172081053" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081053" expanded="true" signature="892:1868" ph="{...}" />
-                <marker date="1546172081053" expanded="true" signature="899:1068" ph="/// Base class for all state based aggregate roots ... " />
-                <marker date="1546172081053" expanded="true" signature="1163:1866" ph="{...}" />
-                <marker date="1546172081053" expanded="true" signature="1178:1313" ph="/// Initializes a new instance of the &lt;see cref=&quot;StateBasedAggregateRoot{TState}&quot;/&gt; class. ... " />
-                <marker date="1546172081053" expanded="true" signature="1357:1377" ph="{...}" />
-                <marker date="1546172081053" expanded="true" signature="1387:1611" ph="/// Initializes a new instance of the &lt;see cref=&quot;StateBasedAggregateRoot{TState}&quot;/&gt; class. ... " />
-                <marker date="1546172081053" expanded="true" signature="1667:1719" ph="{...}" />
-                <marker date="1546172081053" expanded="true" signature="1729:1815" ph="/// Gets or sets the state holding entity ... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStep.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="43" column="23" lean-forward="true" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-              <folding>
-                <marker date="1546172081348" expanded="true" signature="0:871" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081348" expanded="true" signature="918:1775" ph="{...}" />
-                <marker date="1546172081348" expanded="false" signature="931:972" ph="..." />
-                <marker date="1546172081348" expanded="true" signature="978:1061" ph="/// The final incomming envelope pipleine step ... " />
-                <marker date="1546172081348" expanded="true" signature="1129:1773" ph="{...}" />
-                <marker date="1546172081348" expanded="true" signature="1144:1274" ph="/// Initializes a new instance of the &lt;see cref=&quot;FinalIncommingEnvelopeStep&quot;/&gt; class. ... " />
-                <marker date="1546172081348" expanded="true" signature="1318:1395" ph="{...}" />
-                <marker date="1546172081348" expanded="true" signature="1588:1767" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/IncommingEnvelopeContext.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
-              <folding>
-                <marker date="1546172081118" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081118" expanded="true" signature="916:2133" ph="{...}" />
-                <marker date="1546172081118" expanded="true" signature="923:1003" ph="/// The incomming envelope pipeline context ... " />
-                <marker date="1546172081118" expanded="true" signature="1063:2131" ph="{...}" />
-                <marker date="1546172081118" expanded="true" signature="1078:1386" ph="/// Initializes a new instance of the &lt;see cref=&quot;IncommingEnvelopeContext&quot;/&gt; class. ... " />
-                <marker date="1546172081118" expanded="true" signature="1521:1579" ph="{...}" />
-                <marker date="1546172081118" expanded="true" signature="1589:1665" ph="/// Gets the incomming envelope ... " />
-                <marker date="1546172081118" expanded="true" signature="1725:1800" ph="/// Gets the incomming message ... " />
-                <marker date="1546172081118" expanded="true" signature="1872:1947" ph="/// Sets the incomming message ... " />
-                <marker date="1546172081118" expanded="true" signature="1988:2125" ph="{...}" />
-                <marker date="1546172081118" expanded="true" signature="2036:2115" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/PipelineContext.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="27" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
-              <folding>
-                <marker date="1546172081087" expanded="true" signature="0:860" ph="/* ------------------------------------------------------------------------------- ... */" />
-                <marker date="1546172081087" expanded="true" signature="897:1603" ph="{...}" />
-                <marker date="1546172081087" expanded="true" signature="904:985" ph="/// The base class for all pipeline contexts ... " />
-                <marker date="1546172081087" expanded="true" signature="1027:1601" ph="{...}" />
-                <marker date="1546172081087" expanded="true" signature="1042:1275" ph="/// Initializes a new instance of the &lt;see cref=&quot;PipelineContext&quot;/&gt; class. ... " />
-                <marker date="1546172081087" expanded="true" signature="1351:1419" ph="{...}" />
-                <marker date="1546172081087" expanded="true" signature="1429:1509" ph="/// Gets the pipeline configuration ... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AsyncMessageDelegateTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/IEventSourcedRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/MessageExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Common/Logging/LoggerFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ/Bus/Msmq/MsmqProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/EventSubscriptionTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Subscription.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AbstractJitneyConfigurationTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Jitney.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain.TestDoubles/MessageHandlers.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHavePipelineConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/IHandleAsync.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain.Ninject.Facts/Bus/JitneyKernelExtensionsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/IConfigureThisJitney.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/CommandSubscription.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingMessageStep.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStep.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/StepExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/IncommingEnvelopeContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/FeatureNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain/StateBasedAggregateRoot.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/ContractsToEndpointMapperTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/EndpointAddress.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Jitney.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/CommandSubscriptionTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/FileSubscriptionStore.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Common/GuardTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/EventStore/Persistence/SqlEventStore.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/EndpointAddressTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/EventStore/GlobalEventStoreConfigurationExtensionsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/EventStore/EventStoreRepositoryTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHaveJitneyConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/EventStore/Persistence/InMemoryIntegrationTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/EventStore/Persistence/SqlIntegrationTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/InMemoryQueueProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHavePipelineConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStepTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Ninject/EventStore/EventStoreConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/JitneySubscriptionsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AsyncMessageDelegateTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AbstractJitneyConfigurationTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AssemblyExtensionsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStep.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/IncommingEnvelopeContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/StepExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingMessageStep.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.Ninject.Facts/Bus/JitneyKernelExtensionsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/MSMQ/MsmqUtilitiesTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/Pipeline/AuditQueueStepTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/Pipeline/ErrorQueueStepTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/ValueObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/StateBasedAggregateRoot.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/FeatureNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/MessageExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Entity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/ExecutionContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.TestDoubles/MessageHandlers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/IEventSourcedRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.RabbitMq.Facts/Bus/Pipeline/ErrorQueueStepTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.RabbitMq.Facts/Bus/Pipeline/AuditQueueStepTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain.TestDoubles/AggregateRoots.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/IHandleAsync.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SimpleDomain/Common/InMemoryTraceListener.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -254,58 +119,49 @@
         <option value="$PROJECT_DIR$/SimpleDomain/Bus/Subscription.cs" />
         <option value="$PROJECT_DIR$/SimpleDomain/Bus/IHaveJitneyConfiguration.cs" />
         <option value="$PROJECT_DIR$/SimpleDomain/Bus/Jitney.cs" />
-        <option value="$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" />
         <option value="$PROJECT_DIR$/SimpleDomain/Bus/IHavePipelineConfiguration.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.MSMQ.Facts/Bus/MSMQ/MsmqUtilitiesTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.MSMQ/Bus/Msmq/MsmqProvider.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.RabbitMq.Facts/Bus/Pipeline/ErrorQueueStepTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AssemblyExtensionsTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/JitneySubscriptionsTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/Bus/CommandSubscriptionTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStepTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/EventStoreRepositoryTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.Facts/EventStore/GlobalEventStoreConfigurationExtensionsTest.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain.TestDoubles/AggregateRoots.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/Bus/FileSubscriptionStore.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/Bus/InMemoryQueueProvider.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/Entity.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/ExecutionContext.cs" />
+        <option value="$PROJECT_DIR$/SimpleDomain/ValueObject.cs" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="485" />
-    <option name="width" value="1400" />
-    <option name="height" value="1167" />
-  </component>
+  <component name="ProjectId" id="1crkcwhanBCufroDmqZxvna9x3x" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator currentView="SolutionExplorer" proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="FileSystemExplorer" />
-      <pane id="SolutionExplorer">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="SimpleDomain" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <option name="show-all-files" value="false" />
-      </pane>
-      <pane id="AssemblyExplorer" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -315,6 +171,8 @@
       <option name="presentableId" value="Default" />
       <updated>1550401703319</updated>
       <workItem from="1550401706194" duration="3559000" />
+      <workItem from="1591294195571" duration="1208000" />
+      <workItem from="1591361433327" duration="826000" />
     </task>
     <task id="LOCAL-00001" summary="Add .idea folder">
       <created>1550401914791</created>
@@ -326,57 +184,32 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3559000" />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="485" y="0" width="1400" height="1167" extended-state="0" />
-    <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info id="Image Layers" />
-      <window_info id="Capture Tool" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="NuGet" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" weight="0.32967034" />
-      <window_info anchor="bottom" id="Unit Tests" weight="0.32967034" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Performance Profiler" />
-      <window_info anchor="bottom" id="Build" weight="0.32967034" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Errors In Solution" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Unit Tests Coverage" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Add .idea folder" />
     <option name="LAST_COMMIT_MESSAGE" value="Add .idea folder" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="738" y="300" key="SettingsEditor" timestamp="1591361779894">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="461" y="185" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1591346403467" />
+    <state x="738" y="300" key="SettingsEditor/0.0.3072.1688/-3840.0.3072.1688@0.0.3072.1688" timestamp="1591361779894" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -387,491 +220,5 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/.name">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/encodings.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/.idea.SimpleDomain/.idea/vcs.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.MSMQ/Properties/AssemblyInfo.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Properties/AssemblyInfo.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/IMessageContext.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AbstractJitneyConfigurationTest.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <marker date="1550410362891" expanded="true" signature="0:876" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362891" expanded="true" signature="918:10770" ph="{...}" />
-            <marker date="1550410362891" expanded="false" signature="931:1233" ph="..." />
-            <marker date="1550410362891" expanded="true" signature="1283:10768" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1447:1620" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1688:1919" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="2019:2199" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="2299:2445" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="2541:2766" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="2855:3012" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="3080:3321" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="3386:3512" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="3937:4145" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="4201:4389" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="4469:4964" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="5043:5579" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="5657:6160" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="6239:6822" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="6888:7509" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="7589:8805" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="8878:9349" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9082:9154" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9250:9339" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9390:9410" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9477:9744" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9653:9734" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9813:10082" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="9991:10072" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="10153:10424" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="10333:10414" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="10493:10762" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="10671:10752" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.TestDoubles/MessageHandlers.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146">
-          <folding>
-            <marker date="1550410362907" expanded="true" signature="0:860" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362907" expanded="true" signature="896:2084" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="999:1106" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1132:1209" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1260:1320" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1389:1712" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1520:1597" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1646:1706" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1832:1980" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1915:1974" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="2016:2082" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="2017:2076" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/Configuration/AsyncMessageDelegateTest.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <marker date="1550410362891" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362891" expanded="true" signature="911:2226" ph="{...}" />
-            <marker date="1550410362891" expanded="false" signature="924:1031" ph="..." />
-            <marker date="1550410362891" expanded="true" signature="1074:2224" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1177:1401" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1481:1650" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1735:1904" ph="{...}" />
-            <marker date="1550410362891" expanded="true" signature="1969:2218" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.Ninject.Facts/Bus/JitneyKernelExtensionsTest.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="66" column="22" selection-start-line="66" selection-start-column="22" selection-end-line="66" selection-end-column="22" />
-          <folding>
-            <marker date="1546172081048" expanded="true" signature="0:871" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081048" expanded="true" signature="899:3019" ph="{...}" />
-            <marker date="1546172081048" expanded="false" signature="912:1020" ph="..." />
-            <marker date="1546172081048" expanded="true" signature="1079:3017" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="1171:1397" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="1462:1660" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="1724:1921" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="1952:2007" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2055:3011" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2178:2246" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2431:2541" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2587:2697" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2769:2850" ph="{...}" />
-            <marker date="1546172081048" expanded="true" signature="2920:3001" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Subscription.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="45" column="60" selection-start-line="45" selection-start-column="60" selection-end-line="45" selection-end-column="60" />
-          <folding>
-            <marker date="1550410362923" expanded="true" signature="0:857" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362923" expanded="true" signature="885:2083" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="927:1009" ph="/// The abstract base class for subscriptions ... " />
-            <marker date="1550410362923" expanded="true" signature="1048:2081" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1063:1337" ph="/// Returns the fact that a given message cann be handled by this subscription ... " />
-            <marker date="1550410362923" expanded="true" signature="1405:1700" ph="/// Returns the fact that a given message can be handeled by this subscription ... " />
-            <marker date="1550410362923" expanded="true" signature="1788:1947" ph="/// Does something useful with a given message ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHaveJitneyConfiguration.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
-          <folding>
-            <marker date="1550410362923" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362923" expanded="true" signature="897:3222" ph="{...}" />
-            <marker date="1550410362923" expanded="false" signature="910:1045" ph="..." />
-            <marker date="1550410362923" expanded="true" signature="1051:1133" ph="/// The Jitney configuration holder interface ... " />
-            <marker date="1550410362923" expanded="true" signature="1207:3220" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1222:1302" ph="/// Gets the local endpoint address ... " />
-            <marker date="1550410362923" expanded="true" signature="1366:1444" ph="/// Gets the Jitney subscriptions ... " />
-            <marker date="1550410362923" expanded="true" signature="1510:1606" ph="/// Gets the subscription store persister interface ... " />
-            <marker date="1550410362923" expanded="true" signature="1677:1987" ph="/// Creates the outgoing pipeline with all registered pipeline steps ... " />
-            <marker date="1550410362923" expanded="true" signature="2088:2669" ph="/// Creates the incomming pipeline with all registered pipeline steps ... " />
-            <marker date="1550410362923" expanded="true" signature="2909:3170" ph="/// Gets a user friendly formatted content summary of this configuration ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Jitney.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="100" column="98" selection-start-line="100" selection-start-column="98" selection-end-line="100" selection-end-column="98" />
-          <folding>
-            <marker date="1550410362923" expanded="true" signature="0:851" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362923" expanded="true" signature="879:4193" ph="{...}" />
-            <marker date="1550410362923" expanded="false" signature="892:1001" ph="..." />
-            <marker date="1550410362923" expanded="true" signature="1007:1064" ph="/// The abstract bus ... " />
-            <marker date="1550410362923" expanded="true" signature="1116:4191" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1131:1353" ph="/// Initializes a new instance of the &lt;see cref=&quot;Jitney&quot;/&gt; class. ... " />
-            <marker date="1550410362923" expanded="true" signature="1418:1534" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1544:1622" ph="/// Gets the Jitney configuration ... " />
-            <marker date="1550410362923" expanded="true" signature="1698:1865" ph="/// Starts the message reception process ... " />
-            <marker date="1550410362923" expanded="true" signature="1918:2084" ph="/// Stops the message reception process ... " />
-            <marker date="1550410362923" expanded="true" signature="2388:2604" ph="/// Handles an incomming envelope ... " />
-            <marker date="1550410362923" expanded="true" signature="2664:3142" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="2742:3132" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="3208:3376" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="3473:3695" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="3900:3983" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="4077:4185" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/IHandleAsync.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="72" lean-forward="true" selection-start-line="26" selection-start-column="72" selection-end-line="26" selection-end-column="72" />
-          <folding>
-            <marker date="1550410362923" expanded="true" signature="0:857" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362923" expanded="true" signature="881:1454" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="923:1104" ph="/// Typed async handler interface for messages such as commands or events ... " />
-            <marker date="1550410362923" expanded="true" signature="1177:1452" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1192:1334" ph="/// Handles the typed message ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Configuration/AbstractJitneyConfiguration.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="224" column="66" lean-forward="true" selection-start-line="224" selection-start-column="66" selection-end-line="224" selection-end-column="66" />
-          <folding>
-            <marker date="1550410362907" expanded="true" signature="0:872" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362907" expanded="true" signature="914:12877" ph="{...}" />
-            <marker date="1550410362907" expanded="false" signature="927:1243" ph="..." />
-            <marker date="1550410362907" expanded="true" signature="1249:1325" ph="/// The Jitney configuration base class ... " />
-            <marker date="1550410362907" expanded="true" signature="1515:12875" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="2156:2400" ph="/// Initializes a new instance of the &lt;see cref=&quot;AbstractJitneyConfiguration&quot;/&gt; class. ... " />
-            <marker date="1550410362907" expanded="true" signature="2487:3187" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="3718:3887" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="4016:4198" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="4309:4439" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="4547:4924" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="4660:4794" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5040:5294" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5167:5258" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5409:5661" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5535:5625" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5775:6025" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="5900:5989" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="6140:6392" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="6266:6356" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="6486:6669" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="6554:6606" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="6927:7055" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="7183:7309" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="7434:7687" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="7951:8258" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="8336:9785" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="8674:8808" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="9417:9729" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="9576:9715" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="9890:9966" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10084:10178" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10294:10392" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10456:10845" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10571:10649" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10704:10782" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="10931:11004" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="11071:11130" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="11198:11265" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="11275:11582" ph="/// Subscribes all message handlers in a given list of assemblies ... " />
-            <marker date="1550410362907" expanded="true" signature="11698:11934" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="11944:12152" ph="/// Subscribes all message handlers in the calling assembly ... " />
-            <marker date="1550410362907" expanded="true" signature="12248:12373" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="12576:12869" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="12740:12859" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/StepExtensions.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
-          <folding>
-            <marker date="1546172081118" expanded="true" signature="0:859" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081118" expanded="true" signature="906:2997" ph="{...}" />
-            <marker date="1546172081118" expanded="false" signature="919:1021" ph="..." />
-            <marker date="1546172081118" expanded="true" signature="1027:1097" ph="/// Some pipeline step extensions ... " />
-            <marker date="1546172081118" expanded="true" signature="1136:2995" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="1151:1517" ph="/// Appends the &lt;see cref=&quot;FinalIncommingEnvelopeStep&quot;/&gt; to the list of all registered incomming envelope pipelin ... " />
-            <marker date="1546172081118" expanded="true" signature="1665:1762" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="1772:2413" ph="/// Appends the &lt;see cref=&quot;FinalIncommingMessageStep&quot;/&gt; to the list of all registered incomming message pipeline  ... " />
-            <marker date="1546172081118" expanded="true" signature="2736:2989" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingMessageStep.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="69" column="47" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
-          <folding>
-            <marker date="1546172081364" expanded="true" signature="0:870" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081364" expanded="true" signature="917:3136" ph="{...}" />
-            <marker date="1546172081364" expanded="false" signature="930:1049" ph="..." />
-            <marker date="1546172081364" expanded="true" signature="1055:1137" ph="/// The final incomming message pipeline step ... " />
-            <marker date="1546172081364" expanded="true" signature="1203:3134" ph="{...}" />
-            <marker date="1546172081364" expanded="true" signature="1385:1793" ph="/// Initializes a new instance of the &lt;see cref=&quot;FinalIncommingMessageStep&quot;/&gt; class. ... " />
-            <marker date="1546172081364" expanded="true" signature="2013:2521" ph="{...}" />
-            <marker date="1546172081364" expanded="true" signature="2719:3128" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/FinalIncommingEnvelopeStep.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="43" column="23" lean-forward="true" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding>
-            <marker date="1546172081348" expanded="true" signature="0:871" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081348" expanded="true" signature="918:1775" ph="{...}" />
-            <marker date="1546172081348" expanded="false" signature="931:972" ph="..." />
-            <marker date="1546172081348" expanded="true" signature="978:1061" ph="/// The final incomming envelope pipleine step ... " />
-            <marker date="1546172081348" expanded="true" signature="1129:1773" ph="{...}" />
-            <marker date="1546172081348" expanded="true" signature="1144:1274" ph="/// Initializes a new instance of the &lt;see cref=&quot;FinalIncommingEnvelopeStep&quot;/&gt; class. ... " />
-            <marker date="1546172081348" expanded="true" signature="1318:1395" ph="{...}" />
-            <marker date="1546172081348" expanded="true" signature="1588:1767" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/Incomming/IncommingEnvelopeContext.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
-          <folding>
-            <marker date="1546172081118" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081118" expanded="true" signature="916:2133" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="923:1003" ph="/// The incomming envelope pipeline context ... " />
-            <marker date="1546172081118" expanded="true" signature="1063:2131" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="1078:1386" ph="/// Initializes a new instance of the &lt;see cref=&quot;IncommingEnvelopeContext&quot;/&gt; class. ... " />
-            <marker date="1546172081118" expanded="true" signature="1521:1579" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="1589:1665" ph="/// Gets the incomming envelope ... " />
-            <marker date="1546172081118" expanded="true" signature="1725:1800" ph="/// Gets the incomming message ... " />
-            <marker date="1546172081118" expanded="true" signature="1872:1947" ph="/// Sets the incomming message ... " />
-            <marker date="1546172081118" expanded="true" signature="1988:2125" ph="{...}" />
-            <marker date="1546172081118" expanded="true" signature="2036:2115" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/Pipeline/PipelineContext.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="27" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
-          <folding>
-            <marker date="1546172081087" expanded="true" signature="0:860" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081087" expanded="true" signature="897:1603" ph="{...}" />
-            <marker date="1546172081087" expanded="true" signature="904:985" ph="/// The base class for all pipeline contexts ... " />
-            <marker date="1546172081087" expanded="true" signature="1027:1601" ph="{...}" />
-            <marker date="1546172081087" expanded="true" signature="1042:1275" ph="/// Initializes a new instance of the &lt;see cref=&quot;PipelineContext&quot;/&gt; class. ... " />
-            <marker date="1546172081087" expanded="true" signature="1351:1419" ph="{...}" />
-            <marker date="1546172081087" expanded="true" signature="1429:1509" ph="/// Gets the pipeline configuration ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/IHavePipelineConfiguration.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="34" column="66" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="66" />
-          <folding>
-            <marker date="1550410362923" expanded="true" signature="0:871" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362923" expanded="true" signature="899:3054" ph="{...}" />
-            <marker date="1550410362923" expanded="false" signature="912:957" ph="..." />
-            <marker date="1550410362923" expanded="true" signature="963:1047" ph="/// The pipeline configuration holder interface ... " />
-            <marker date="1550410362923" expanded="true" signature="1095:3052" ph="{...}" />
-            <marker date="1550410362923" expanded="true" signature="1110:1190" ph="/// Gets the local endpoint address ... " />
-            <marker date="1550410362923" expanded="true" signature="1254:1371" ph="/// Gets a value indicating whether the correlation id stak is not empty ... " />
-            <marker date="1550410362923" expanded="true" signature="1420:1654" ph="/// Gets the address of the consuming endpoint for a given command ... " />
-            <marker date="1550410362923" expanded="true" signature="1735:2000" ph="/// Gets a list of endpoint addresses for the subscribed enpoints of a given event ... " />
-            <marker date="1550410362923" expanded="true" signature="2094:2365" ph="/// Gets the address of the publishing endpoint for a given event type ... " />
-            <marker date="1550410362923" expanded="true" signature="2457:2660" ph="/// Pushes the correlation id of an incomming message to the stack ... " />
-            <marker date="1550410362923" expanded="true" signature="2722:2816" ph="/// Pops the current correlation id from the stak ... " />
-            <marker date="1550410362923" expanded="true" signature="2859:3012" ph="/// Peeks the current correlation id from the stak ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain.Facts/Bus/CommandSubscriptionTest.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="82" column="49" lean-forward="true" selection-start-line="82" selection-start-column="49" selection-end-line="82" selection-end-column="49" />
-          <folding>
-            <marker date="1550410362876" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362876" expanded="true" signature="896:2952" ph="{...}" />
-            <marker date="1550410362876" expanded="false" signature="909:1034" ph="..." />
-            <marker date="1550410362876" expanded="true" signature="1076:2950" ph="{...}" />
-            <marker date="1550410362876" expanded="true" signature="1172:1590" ph="{...}" />
-            <marker date="1550410362876" expanded="true" signature="1677:1974" ph="{...}" />
-            <marker date="1550410362876" expanded="true" signature="2038:2478" ph="{...}" />
-            <marker date="1550410362876" expanded="true" signature="2237:2351" ph="{...}" />
-            <marker date="1550410362876" expanded="true" signature="2873:2944" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/Bus/CommandSubscription.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-          <folding>
-            <marker date="1550410362907" expanded="true" signature="0:864" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1550410362907" expanded="true" signature="892:2327" ph="{...}" />
-            <marker date="1550410362907" expanded="false" signature="905:978" ph="..." />
-            <marker date="1550410362907" expanded="true" signature="984:1125" ph="/// The subscription of a command ... " />
-            <marker date="1550410362907" expanded="true" signature="1213:2325" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1327:1550" ph="/// Initializes a new instance of the &lt;see cref=&quot;CommandSubscription{TCommand}&quot;/&gt; class. ... " />
-            <marker date="1550410362907" expanded="true" signature="1615:1720" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="1805:1940" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="2019:2111" ph="{...}" />
-            <marker date="1550410362907" expanded="true" signature="2198:2319" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/FeatureNotFoundException.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="1" lean-forward="true" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
-          <folding>
-            <marker date="1546172152127" expanded="true" signature="0:869" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172152127" expanded="true" signature="893:1443" ph="{...}" />
-            <marker date="1546172152127" expanded="true" signature="919:1094" ph="/// Exception that is thrown when a requested feature was not found ... " />
-            <marker date="1546172152127" expanded="true" signature="1158:1441" ph="{...}" />
-            <marker date="1546172152127" expanded="true" signature="1173:1311" ph="/// Initializes a new instance of the &lt;see cref=&quot;FeatureNotFoundException{TFeature}&quot;/&gt; class. ... " />
-            <marker date="1546172152127" expanded="true" signature="1415:1435" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/IEventSourcedRepository.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-          <folding>
-            <marker date="1546172081017" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081017" expanded="true" signature="892:2666" ph="{...}" />
-            <marker date="1546172081017" expanded="false" signature="905:984" ph="..." />
-            <marker date="1546172081017" expanded="true" signature="990:1089" ph="/// The event sourced repository interface for aggregate roots ... " />
-            <marker date="1546172081017" expanded="true" signature="1134:2664" ph="{...}" />
-            <marker date="1546172081017" expanded="true" signature="1149:1479" ph="/// Gets an aggregate root identified by its id ... " />
-            <marker date="1546172081017" expanded="true" signature="1616:1942" ph="/// Persits a new or modified aggregate root ... " />
-            <marker date="1546172081017" expanded="true" signature="2072:2501" ph="/// Persists a new or modified aggregate root ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/MessageExtensions.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <marker date="1546172081282" expanded="true" signature="0:862" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081282" expanded="true" signature="886:2740" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="922:1000" ph="/// Common extension methods for messages ... " />
-            <marker date="1546172081282" expanded="true" signature="1042:2738" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="1057:1256" ph="/// Gets the full CLR type name of the message ... " />
-            <marker date="1546172081282" expanded="true" signature="1320:1387" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="1397:1587" ph="/// Gets the intent of the message ... " />
-            <marker date="1546172081282" expanded="true" signature="1656:2073" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="1703:1777" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="1813:1885" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="1934:2020" ph="{...}" />
-            <marker date="1546172081282" expanded="true" signature="2083:2458" ph="/// Sets the version in a fluent manner ... " />
-            <marker date="1546172081282" expanded="true" signature="2549:2732" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleDomain/StateBasedAggregateRoot.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="1" lean-forward="true" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
-          <folding>
-            <marker date="1546172081053" expanded="true" signature="0:868" ph="/* ------------------------------------------------------------------------------- ... */" />
-            <marker date="1546172081053" expanded="true" signature="892:1868" ph="{...}" />
-            <marker date="1546172081053" expanded="true" signature="899:1068" ph="/// Base class for all state based aggregate roots ... " />
-            <marker date="1546172081053" expanded="true" signature="1163:1866" ph="{...}" />
-            <marker date="1546172081053" expanded="true" signature="1178:1313" ph="/// Initializes a new instance of the &lt;see cref=&quot;StateBasedAggregateRoot{TState}&quot;/&gt; class. ... " />
-            <marker date="1546172081053" expanded="true" signature="1357:1377" ph="{...}" />
-            <marker date="1546172081053" expanded="true" signature="1387:1611" ph="/// Initializes a new instance of the &lt;see cref=&quot;StateBasedAggregateRoot{TState}&quot;/&gt; class. ... " />
-            <marker date="1546172081053" expanded="true" signature="1667:1719" ph="{...}" />
-            <marker date="1546172081053" expanded="true" signature="1729:1815" ph="/// Gets or sets the state holding entity ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

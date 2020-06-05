@@ -33,18 +33,18 @@ namespace SimpleDomain.EventStore
     public class EventStoreRepositoryTest
     {
         private readonly Guid aggregateId;
-        private readonly IEventStore eventStore;
         private readonly IEventStream eventStream;
         private readonly EventStoreRepository testee;
 
         public EventStoreRepositoryTest()
         {
+            var eventStore = A.Fake<IEventStore>();
+            
             this.aggregateId = Guid.NewGuid();
-            this.eventStore = A.Fake<IEventStore>();
             this.eventStream = A.Fake<IEventStream>();
-            this.testee = new EventStoreRepository(this.eventStore);
+            this.testee = new EventStoreRepository(eventStore);
 
-            A.CallTo(() => this.eventStore.OpenStreamAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)).Returns(this.eventStream);
+            A.CallTo(() => eventStore.OpenStreamAsync<MyDynamicEventSourcedAggregateRoot>(this.aggregateId)).Returns(this.eventStream);
         }
 
         [Fact]

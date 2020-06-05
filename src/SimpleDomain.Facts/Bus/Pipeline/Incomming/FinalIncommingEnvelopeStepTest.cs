@@ -23,8 +23,6 @@ namespace SimpleDomain.Bus.Pipeline.Incomming
 
     using FakeItEasy;
 
-    using SimpleDomain.Bus.Configuration;
-
     using Xunit;
 
     public class FinalIncommingEnvelopeStepTest

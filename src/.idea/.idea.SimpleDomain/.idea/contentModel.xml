@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.abstractions.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.reporters.net452.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.utility.net452.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\_common\xunit.runner.visualstudio.testadapter.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="C:\Users\patrickineichen\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\patrickineichen\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_SimpleDomain.-201915713.00" t="ExcludeRecursive" />
-    <e p="D:\GIT\GitHub\SimpleDomain\src" t="IncludeFlat">
+    <e p="C:\Users\patrickineichen\.nuget\packages\microsoft.net.test.sdk\16.5.0\build\netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\patrickineichen\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.exe" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.abstractions.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.reporters.net452.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.utility.net452.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.visualstudio.testadapter.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\patrickineichen\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\patrickineichen\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_SimpleDomain.-975548335.00" t="ExcludeRecursive" />
+    <e p="D:\Projects\GitHub\SimpleDomain\src" t="IncludeFlat">
+      <e p=".editorconfig" t="Include" />
       <e p="Bus" t="Include" />
       <e p="EventStore" t="Include" />
       <e p="IoC Support" t="Include" />
@@ -259,9 +265,8 @@
         <e p="MissingConfigurationExceptionTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="netcoreapp2.2" t="Include">
+            <e p="netcoreapp3.1" t="Include">
               <e p="SimpleDomain.Facts.AssemblyInfo.cs" t="Include" />
-              <e p="SimpleDomain.Facts.Program.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -302,9 +307,8 @@
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="netcoreapp2.2" t="Include">
+            <e p="netcoreapp3.1" t="Include">
               <e p="SimpleDomain.GetEventStore.Facts.AssemblyInfo.cs" t="Include" />
-              <e p="SimpleDomain.GetEventStore.Facts.Program.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -350,7 +354,7 @@
         <e p="CompositionRootTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="net461" t="Include">
+            <e p="net48" t="Include">
               <e p="SimpleDomain.MSMQ.Facts.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
@@ -391,9 +395,8 @@
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="netcoreapp2.2" t="Include">
+            <e p="netcoreapp3.1" t="Include">
               <e p="SimpleDomain.Ninject.Facts.AssemblyInfo.cs" t="Include" />
-              <e p="SimpleDomain.Ninject.Facts.Program.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -438,9 +441,8 @@
         <e p="CompositionRootTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="netcoreapp2.2" t="Include">
+            <e p="netcoreapp3.1" t="Include">
               <e p="SimpleDomain.RabbitMq.Facts.AssemblyInfo.cs" t="Include" />
-              <e p="SimpleDomain.RabbitMq.Facts.Program.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -465,6 +467,7 @@
         <e p="SimpleDomain.TestDoubles.csproj" t="IncludeRecursive" />
         <e p="Snapshots.cs" t="Include" />
       </e>
+      <e p="Solution Items" t="Include" />
     </e>
   </component>
 </project>

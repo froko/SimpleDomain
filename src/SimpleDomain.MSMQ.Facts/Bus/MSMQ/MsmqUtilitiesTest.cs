@@ -58,7 +58,7 @@ namespace SimpleDomain.Bus.MSMQ
         [Fact]
         public void ReturnsAutomaticMessageQueueTransactionType_WhenTransactionScopeIsInvolved()
         {
-            using (var transactionScope = new TransactionScope())
+            using (new TransactionScope())
             {
                 MsmqUtilities.GetTransactionType().Should().Be(MessageQueueTransactionType.Automatic);
             }

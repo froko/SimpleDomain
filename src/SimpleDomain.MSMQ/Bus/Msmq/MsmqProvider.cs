@@ -166,8 +166,7 @@ namespace SimpleDomain.Bus.Msmq
 
             return handlerTask.ContinueWith(t =>
             {
-                Task toBeRemoved;
-                this.handlerTasks.TryRemove(t, out toBeRemoved);
+                this.handlerTasks.TryRemove(t, out _);
             }, TaskContinuationOptions.ExecuteSynchronously);
         }
 

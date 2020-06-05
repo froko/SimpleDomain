@@ -23,8 +23,7 @@ namespace SimpleDomain
 
     using SimpleDomain.Bus;
     using SimpleDomain.Common;
-    using SimpleDomain.EventStore;
-
+    
     /// <summary>
     /// The execution context which is created when starting the <see cref="CompositionRoot"/>
     /// </summary>

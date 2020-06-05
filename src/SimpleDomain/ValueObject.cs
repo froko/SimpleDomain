@@ -20,6 +20,7 @@ namespace SimpleDomain
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
 
     /// <summary>
@@ -79,6 +80,7 @@ namespace SimpleDomain
         }
 
         /// <inheritdoc />
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             if (this.cachedHashCode.HasValue)

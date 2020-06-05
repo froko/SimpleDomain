@@ -19,7 +19,6 @@
 namespace SimpleDomain.Bus.Configuration
 {
     using System.Linq;
-    using System.Reflection;
 
     using FluentAssertions;
 

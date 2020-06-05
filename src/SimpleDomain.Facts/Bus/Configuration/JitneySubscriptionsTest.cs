@@ -20,7 +20,6 @@ namespace SimpleDomain.Bus.Configuration
 {
     using System;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
 
     using FakeItEasy;
@@ -36,15 +35,14 @@ namespace SimpleDomain.Bus.Configuration
         private const int Value = 42;
 
         private readonly AbstractHandlerRegistry handlerRegistry;
-        private readonly IHandlerInvocationCache handlerInvocationCache;
         private readonly JitneySubscriptions testee;
 
         public JitneySubscriptionsTest()
         {
             this.handlerRegistry = A.Fake<AbstractHandlerRegistry>();
-            this.handlerInvocationCache = new HandlerInvocationCache();
+            var handlerInvocationCache = new HandlerInvocationCache();
 
-            this.testee = new JitneySubscriptions(this.handlerRegistry, this.handlerInvocationCache);
+            this.testee = new JitneySubscriptions(this.handlerRegistry, handlerInvocationCache);
         }
 
         [Fact]

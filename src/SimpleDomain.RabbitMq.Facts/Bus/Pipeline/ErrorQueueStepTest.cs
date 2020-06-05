@@ -94,7 +94,7 @@ namespace SimpleDomain.Bus.Pipeline
         [Fact]
         public async Task MustNotSendMessageToErrorQueue_WhenNextStepSucceeds()
         {
-            var context = CreateIncommingMessageContext(A.Fake<SimpleDomain.IMessage>());
+            var context = CreateIncommingMessageContext(A.Fake<IMessage>());
             var testee = new ErrorQueueStep(QueueName, this.messageQueueSender);
 
             await testee.InvokeAsync(context, this.nextStep).ConfigureAwait(false);
@@ -108,7 +108,7 @@ namespace SimpleDomain.Bus.Pipeline
             var exception = new ApplicationException("Somthing went wrong...");
             A.CallTo(() => this.nextStep.Invoke()).Throws(exception);
 
-            var context = CreateIncommingMessageContext(A.Fake<SimpleDomain.IMessage>());
+            var context = CreateIncommingMessageContext(A.Fake<IMessage>());
             var testee = new ErrorQueueStep(QueueName, this.messageQueueSender);
 
             Func<Task> action = () => testee.InvokeAsync(context, this.nextStep);
@@ -118,7 +118,7 @@ namespace SimpleDomain.Bus.Pipeline
             A.CallTo(() => this.messageQueueSender.Send(A<Envelope>.Ignored, A<EndpointAddress>.Ignored)).MustHaveHappened();
         }
 
-        private static IncommingMessageContext CreateIncommingMessageContext(SimpleDomain.IMessage message)
+        private static IncommingMessageContext CreateIncommingMessageContext(IMessage message)
         {
             var envelope = EnvelopeBuilder.Build(message);
             return new IncommingMessageContext(envelope, A.Fake<IHavePipelineConfiguration>());
